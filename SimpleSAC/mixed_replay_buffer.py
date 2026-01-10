@@ -8,13 +8,52 @@ import logging
 import numpy as np
 from gym.spaces import Box, Discrete, Tuple
 import ipdb
+import gym
+import d4rl
 
 # from envs import get_dim
 try:
     from replay_buffer import ReplayBuffer
 except:
     from SimpleSAC.replay_buffer import ReplayBuffer
-# import ipdb
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+DEFAULT_DATASET_DIR = os.path.join(PROJECT_ROOT, 'd4rl_mujoco_dataset')
+DATASET_DIR = os.environ.get('D4RL_DATASET_DIR', DEFAULT_DATASET_DIR)
+os.makedirs(DATASET_DIR, exist_ok=True)
+
+def _build_d4rl_env_name(task, data_source):
+    env_prefix = task.lower()   
+    suffix = data_source.replace('_', '-').lower()
+    return f"{env_prefix}-{suffix}-v2"
+
+
+def _load_local_dataset(task, data_source):
+    filename = f"{task}_{data_source}-v2.hdf5"
+    path = os.path.join(DATASET_DIR, filename)
+    if not os.path.exists(path):
+        return None
+    logging.info(f"Loading offline dataset from {path}")
+    data = {}
+    with h5py.File(path, "r") as dataset:
+        for key in dataset.keys():
+            data[key] = np.array(dataset[key])
+    return data
+
+
+def _load_d4rl_dataset(task, data_source):
+    env_name = _build_d4rl_env_name(task, data_source)
+    logging.info(f"Falling back to d4rl.qlearning_dataset for {env_name}")
+    env = gym.make(env_name)
+    dataset = d4rl.qlearning_dataset(env)
+    # ensure numpy arrays
+    return {key: np.array(value) for key, value in dataset.items()}
+
+
+def _get_offline_dataset(task, data_source):
+    data = _load_local_dataset(task, data_source)
+    if data is not None:
+        return data
+    return _load_d4rl_dataset(task, data_source)
 
 
 class MixedReplayBuffer(ReplayBuffer):
@@ -84,24 +123,30 @@ class MixedReplayBuffer(ReplayBuffer):
                 s_ = np.array([dataset[i][3] for i in idx]).astype(np.float32) # An (N, dim_observation)-dimensional numpy array of next observations
                 done = np.expand_dims(np.array([dataset[i][4] for i in idx]), axis=1) # An (N,)-dimensional numpy array of terminal flags
         else:
-            path = os.path.join("../d4rl_mujoco_dataset", "{}_{}-v2.hdf5".format(task, data_source))
-            with h5py.File(path, "r") as dataset:
-                total_num = dataset['observations'].shape[0]
-                use_timeouts = ('timeouts' in dataset)
-                # idx = random.sample(range(total_num), int(total_num * self.residual_ratio))
-                idx = np.sort(np.random.choice(range(total_num), int(total_num * self.residual_ratio), replace=False))
-                # ipdb.set_trace()
-                s = np.vstack(np.array(dataset['observations'])).astype(np.float32)[idx, :] # An (N, dim_observation)-dimensional numpy array of observations
-                a = np.vstack(np.array(dataset['actions'])).astype(np.float32)[idx, :] # An (N, dim_action)-dimensional numpy array of actions
-                r = np.vstack(np.array(dataset['rewards'])).astype(np.float32)[idx, :] # An (N,)-dimensional numpy array of rewards
-                s_ = np.vstack(np.array(dataset['next_observations'])).astype(np.float32)[idx, :] # An (N, dim_observation)-dimensional numpy array of next observations
-                done = np.vstack(np.array(dataset['terminals']))[idx, :] # An (N,)-dimensional numpy array of terminal flags
-                if use_timeouts:
-                    is_final_timestep = np.array(dataset['timeouts'])[idx]
-                else:
-                    is_final_timestep = np.zeros(done.shape)
-                    is_final_timestep[np.arange(1, total_num + 1, self.max_episode_steps)] = True
-                    is_final_timestep = is_final_timestep[idx, :]
+            dataset = _get_offline_dataset(task, data_source)
+            observations = np.array(dataset['observations']).astype(np.float32)
+            actions = np.array(dataset['actions']).astype(np.float32)
+            rewards = np.array(dataset['rewards']).astype(np.float32).reshape(-1, 1)
+            next_observations = np.array(dataset['next_observations']).astype(np.float32)
+            terminals = np.array(dataset['terminals']).reshape(-1, 1)
+            timeouts = np.array(dataset['timeouts']).reshape(-1, 1) if 'timeouts' in dataset else None
+
+            total_num = observations.shape[0]
+            idx = np.sort(np.random.choice(range(total_num), int(total_num * self.residual_ratio), replace=False))
+
+            s = observations[idx, :]
+            a = actions[idx, :]
+            r = rewards[idx, :]
+            s_ = next_observations[idx, :]
+            done = terminals[idx, :]
+
+            if timeouts is not None:
+                is_final_timestep = timeouts[idx, :]
+            else:
+                is_final_timestep = np.zeros(done.shape)
+                final_indices = np.arange(self.max_episode_steps - 1, total_num, self.max_episode_steps)
+                is_final_timestep[final_indices, 0] = True
+                is_final_timestep = is_final_timestep[idx, :]
 
         # whether to bias the reward
         r = r * self.reward_scale + self.reward_bias
@@ -313,6 +358,3 @@ class NewReplayBuffer(MixedReplayBuffer, ReplayBuffer):
         demo_a2 = np.reshape(demo_a2, (-1, 1)) / self._max_push_effort
 
         return demo_s1, demo_a1, demo_s2, demo_a2, demo_r.reshape((-1, 1)), demo_d.reshape((-1, 1))
-
-
-
