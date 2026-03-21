@@ -20,6 +20,52 @@
 
 **执行优先**: 在编写任何环境代码前，必须先定义好共享的数据结构和工具函数。建议新建文件 `common/data_utils.py`。
 
+### 0.0 坐标对齐工具 (Edge → Linear Distance Mapper)
+
+**必做前置任务**。`SUMO_ruiguang` 原生坐标系是 Edge ID + lane offset，而 Snapshot 协议要求 `pos` 是归一化到线路起点的**一维线性绝对距离 (m)**（与 `LSTM-RL/env/bus.py` 中 `absolute_distance` 一致）。这个映射在两处都是关键依赖：
+- **Reset 时**：从 offline buffer 抽取 snapshot，需把 `pos` 还原为 SimBus 的坐标，否则车辆位置错乱。
+- **特征提取时**：`extract_structured_context` 依赖 `pos` 做空间装箱 (Spatial Binning)，两边坐标系不一致则 `z_t` 和 `z_{t+1}` 的 Real/Sim 比较完全失效。
+
+```python
+# common/data_utils.py
+
+def build_edge_to_linear_map(sumo_net_xml_path: str, route_edge_ids: list) -> dict:
+    """
+    解析 SUMO 路网 XML，沿路线计算每条 Edge 起点到线路起点的累计距离。
+    返回字典: edge_id -> cumulative_start_distance (m)
+    使用时: linear_pos = edge_map[edge_id] + lane_offset
+
+    Args:
+        sumo_net_xml_path: SUMO .net.xml 文件路径
+        route_edge_ids:    路线上各 Edge 的有序列表（从起点到终点）
+    """
+    import xml.etree.ElementTree as ET
+    tree = ET.parse(sumo_net_xml_path)
+    root = tree.getroot()
+    edge_lengths = {}
+    for edge in root.findall('edge'):
+        eid = edge.get('id')
+        lane = edge.find('lane')
+        if lane is not None:
+            edge_lengths[eid] = float(lane.get('length', 0.0))
+
+    edge_map = {}
+    cumulative = 0.0
+    for eid in route_edge_ids:
+        edge_map[eid] = cumulative
+        cumulative += edge_lengths.get(eid, 0.0)
+    return edge_map   # {edge_id: 该 Edge 起点距线路起点的累计距离 (m)}
+
+
+ROUTE_EDGE_MAP = {}   # 全局单例，由 main() 初始化后注入
+
+def sumo_pos_to_linear(edge_id: str, lane_offset: float) -> float:
+    """将 traci 返回的 (edge_id, lanePosition) 转为线性绝对距离。"""
+    return ROUTE_EDGE_MAP.get(edge_id, 0.0) + lane_offset
+```
+
+
+
 ### 0.1 快照数据结构 (Snapshot Schema)
 `LSTM-RL/env/sim.py` 和 `SUMO_ruiguang` 必须生成**结构完全一致**的字典，用于描述某一时刻的全局系统状态,每一次 "公交到站决策事件"，产生一个snapshot，包括一个传统RL用的tuple，用于训练offline RL，以及包含其他所有车辆当前时刻信息的infors。
 这个结构代表了我们对客观世界状态的最佳估计 (Best Estimate)。在 SUMO 实验中直接取真值；在实车部署中，这代表经过清洗和推断后的数据。
@@ -124,34 +170,18 @@ def extract_structured_context(snapshot: dict, num_segments=10) -> np.ndarray:
     return z.astype(np.float32)
 
 
-# [新增] 在 extract_structured_context 之后添加
-import torch
-
-def aggregate_temporal_contexts(z_list: list) -> np.ndarray:
-    """
-    解决异步问题：在 Ego Bus 从上一站到本站的时间段内，可能产生了 n 个不同的 z。
-    利用统计池化 (Statistical Pooling) 将这 n 个 (30,) 维向量，
-    聚合成一个定长的、描述这段时间整体路况波动的特征向量。
-    
-    Input: z_list, 长度为 n 的 List[np.ndarray(30,)]
-    Output: Z_temporal, shape=(120,), 包含[Mean, Max, Min, Var]
-    """
-    if len(z_list) == 0:
-        return np.zeros(30 * 4, dtype=np.float32)
-        
-    z_tensor = torch.tensor(np.array(z_list)) # Shape: (n, 30)
-    
-    z_mean = torch.mean(z_tensor, dim=0)
-    z_max, _ = torch.max(z_tensor, dim=0)
-    z_min, _ = torch.min(z_tensor, dim=0)
-    # 如果只有1个z，方差为0
-    z_var = torch.var(z_tensor, dim=0, unbiased=False) if len(z_list) > 1 else torch.zeros(30)
-    
-    # 拼接：30*4 = 120 维
-    z_temporal = torch.cat([z_mean, z_max, z_min, z_var], dim=-1).numpy()
-    
-    return z_temporal.astype(np.float32)
 ```
+
+> ⚠️ **【设计决策】宏观特征 z 最终方案：双快照 `z_t` / `z_{t+1}`（各 30 维，共 60 维）**
+>
+> - **废弃方案**：将 $T_1→T_2$ 期间所有快照压缩为统计分布（`z_temporal` 120 维）。将时序信息折叠为静态分布会损失语义；不压缩的变长序列在数据量不足时更难对 Real/Sim 做相似性比较。
+> - **最终方案**：只保留决策时刻 ($T_1$) 和到站结算时刻 ($T_2$) 的两个 30 维快照向量 `z_t`、`z_{t+1}`。Discriminator 输入为 `[obs, act, next_obs, z_t, z_{t+1}]`，简洁且符合因果律。
+> - **`aggregate_temporal_contexts` 函数已废弃，不再实现。**
+
+> ⚠️ **【早截断等待策略】First-step 不触发截断**
+>
+> 每次从 snapshot reset 后，Ego Bus 必须完成一段完整的站间行驶才能凑齐 $z_{t+1}$。因此在 H2O+ 训练循环 `for t in range(max_steps)` 内，**仅当 `t > 0`** 才检查 `w < W_THRESHOLD`；`t == 0` 时无论 `w` 多低都强制放行，保证至少一步有效 Rollout 并避免因 Discriminator 冷启动噪声导致立即截断。
+
 
 <!-- **新方案** : 输入 30 个数（空间图谱）。判别器能判断 “为什么第 3 段（十字路口）没有降速？” 或者 “为什么第 5 段（学校）没有很多人？”
 结果: 这极大地增强了 H2O+ 区分 Sim/Real 的能力，迫使 Policy 在那些 SimBus 模拟不准的“特征路段”（红绿灯、拥堵点）更加保守，而在路况简单的路段更加自信。 -->
@@ -195,107 +225,93 @@ def step(self, action):
 **注意**:无论在offline环境还是online环境，都要采样相同的数据格式，即(s, a, r, s', snapshot_T1, snapshot_T2)，并记录来源是sim还是real
 
 #### A. 时序逻辑定义
-一条用于 Offline RL 和 H2O+ 的标准数据 `(s, a, r, s', snapshot_T1, snapshot_T2)` 必须由两个时间点的事件共同构成：
+一条用于 Offline RL 和 H2O+ 的标准数据必须由两个时间点的事件共同构成：
 
 *   **时刻 $T_1$ (上一站)**: 车辆到达站点 $k$。
-    *   产生: `current_obs` ($s$), `action` ($a$), **`snapshot` ($Snapshot_{T1}$)**。
+    *   产生: `obs` ($s$), `action` ($a$), **`snapshot_T1`**（完整全网快照），**`z_t`**（30 维路网特征）。
     *   动作: **暂存 (Cache)** 这些数据，因为此时不知道奖励和下一状态。
-    *   *注意: Snapshot 必须捕获 $T_1$ 时刻的全网状态，用于后续 Reset 回到做出决策的那一刻。*
+    *   *注意: `snapshot_T1` 捕获 $T_1$ 时刻全网状态，用于后续 Reset；`z_t` 在新开单时立即提取。*
 *   **时刻 $T_2$ (当前站)**: 车辆到达站点 $k+1$。
-    *   产生: `next_obs` ($s'$), `reward` ($r$)。
-    *   动作: **结算 (Settle)** 上一站的缓存，生成完整 Tuple 并存入 Buffer。
-    *   *注意: 此时也要捕获 $T_2$ 时刻的全网状态，用于后面给discriminator判别sim还是real*
+    *   产生: `next_obs` ($s'$), `reward` ($r$), **`z_t1`**（30 维路网特征）。
+    *   动作: **结算 (Settle)** 上一站的缓存，生成完整 Tuple `(s, a, r, s', z_t, z_t1, snapshot_T1)` 并存入 Buffer。
+
+> **【Pending Cache 放置策略】**
+> - **第一版实现（首选）**：cache dict 维护在 **主循环脚本**（`collect_data_sumo.py`）里，风格参考 `sac_ensemble_SUMO_linear_penalty.py` 的 `state_dict`/`action_dict` 多级字典，易于调试。
+> - **优化方向（后续重构）**：封装进 `BusSimEnv.stop()` 内部，`step()` 阻塞直到组装好完整 Transition 再返回，对外隐藏异步复杂度。首版暂不做，降低引入新 bug 的风险。
+
 #### B. `collect_data_sumo.py` 核心实现逻辑
 
 ```python
-# 缓存字典: Key=VehicleID, Value=Dict(上一次决策时的上下文)
-global_z_buffer =[]     # 用于暂存仿真步推进过程中产生的所有 z
+# ===========================================================================
+# 缓存字典，参考 sac_ensemble_SUMO_linear_penalty.py 风格
+# Key = bus_id, Value = T1 时刻的决策上下文
+# ===========================================================================
+pending_transitions = {}  # {bus_id: {'obs', 'action', 'z_t', 'snapshot_T1', 'timestamp'}}
 
 def on_simulation_step():
-    # 获取当前仿真步内所有完成靠站、需要决策的车辆列表
-
-    global global_z_buffer
-
     arrived_buses = sumo_env.get_arrived_buses()
+
+    # 若同一仿真步有多辆车同时到站，共享同一次 snapshot 采集（节省开销）
+    if arrived_buses:
+        shared_snapshot = capture_full_system_snapshot()  # T2 时刻全网快照
+        z_t1 = extract_structured_context(shared_snapshot)  # 30 维, z_{t+1}
     
-    # 如果有车到站，说明路网状态发生了有意义的更新
-    if len(arrived_buses) > 0:
-        current_snapshot = capture_full_system_snapshot()
-        current_z = extract_structured_context(current_snapshot)
-        global_z_buffer.append(current_z)
-
     for bus_id in arrived_buses:
-        # 1. 获取当前时刻(T2)的状态 -> 作为 s'
-        current_obs = sumo_env.get_state(bus_id)
-        
+        current_obs  = sumo_env.get_state(bus_id)
         current_time = sumo_env.get_time()
-        current_snapshot = sumo_env.get_snapshot()
-        z_t = extract_structured_context(current_snapshot) #压缩得到30维向量z_t
-        # ---> 挂起 (obs_t, action_t, z_t)，Ego Bus 继续开往下一站 ...
-        next_obs = current_obs
-        next_snapshot = current_snapshot
-        z_next = extract_structured_context(next_snapshot)
 
-
-        # --- [结算逻辑] ---
-        # 如果该车在上一站有未结单的决策
+        # --- [结算逻辑: 若该车有挂起的上一站决策] ---
         if bus_id in pending_transitions:
-            prev_data = pending_transitions.pop(bus_id)
-            
-            # 计算延迟奖励 r (根据 T1 的预测和 T2 的实际情况)
-            # 例如: reward = -(current_headway_variance)
-            reward = calculate_reward(prev_data['obs'], current_obs) #复用LSTM-RL/env/bus.py中的reward计算方式一样
-            # 【关键变动】提取从上一站到这一站期间累积的所有 z
-            # prev_data['z_list_start_idx'] 记录了当时全局 buffer 的长度
-            z_list_for_this_transition = global_z_buffer[prev_data['z_list_start_idx']:]
-            z_temporal_fixed = aggregate_temporal_contexts(z_list_for_this_transition)
-            
-            # 存入 Replay Buffer
-            # 关键: info['snapshot'] 必须是 prev_data['snapshot'] (T1时刻的快照)
+            prev = pending_transitions.pop(bus_id)  # pop 即 GC，无残留
+            reward = calculate_reward(prev['obs'], current_obs)  # 复用 bus.py
+
             replay_buffer.add(
-                obs=prev_data['obs'],
-                action=prev_data['action'],
-                reward=reward,
-                next_obs=current_obs,
-                terminal=False,
-                z_temporal=z_temporal_fixed,
-                infos={'snapshot': prev_data['snapshot']} 
+                obs      = prev['obs'],
+                action   = prev['action'],
+                reward   = reward,
+                next_obs = current_obs,
+                terminal = False,
+                z_t      = prev['z_t'],         # 30 维, T1 出发时路网
+                z_t1     = z_t1,                # 30 维, T2 到站时路网（共享）
+                snapshot = prev['snapshot_T1'], # 完整原始快照，用于 Reset
+                source   = 'real',
             )
-            
-        # --- [新开单逻辑] ---
-        # 如果车辆未到达终点，需要进行下一次决策
+        # GC 说明：pending_transitions.pop() 是 O(1) 的隐式 GC。
+        # 车辆 terminal 时不挂新决策，因此不会留下悬挂项。
+        # 同一仿真步 2 辆车同时到站 → 各自独立结算 + 共享 z_t1，内存不会膨胀。
+
+        # --- [新开单逻辑: 若车辆未到达终点] ---
         if not is_route_end(bus_id):
-            # 1. 立即捕获当前时刻(T2)的全网快照 -> 作为下一次的 snapshot
-            # 注意: 必须标记当前的 bus_id 为 ego_vehicle
-            snapshot_now = capture_full_system_snapshot(ego_id=bus_id)
-            
-            # 2. 决策
+            snapshot_T1 = capture_full_system_snapshot(ego_id=bus_id)
+            z_t         = extract_structured_context(snapshot_T1)  # 30 维, z_t
+
             action = behavior_policy.get_action(current_obs)
             sumo_env.apply_action(bus_id, action)
-            
-            # 3. 存入缓存，等待下一次到达
+
             pending_transitions[bus_id] = {
-                'obs': current_obs,
-                'action': action,
-                'snapshot': snapshot_now,
-                'timestamp': current_time,
-                'z_list_start_idx': len(global_z_buffer) # 记录当前累积起点
+                'obs'         : current_obs,
+                'action'      : action,
+                'z_t'         : z_t,
+                'snapshot_T1' : snapshot_T1,
+                'timestamp'   : current_time,
             }
 ```
 
 #### C. 对 H2O+ 的影响
 这种采集方式确保了：
-1.  **Reset 有效性**: 当我们用 Buffer 中的 `snapshot` 重置 SimBus 时，SimBus 会回到 $T_1$ 时刻。此时 Agent 看到的观测值正是 $s$，它可以尝试输出一个新的动作 $a'$，从而产生新的反事实轨迹。
-2.  **Critic 训练正确性**: $r$ 和 $s'$ 真实反映了在真实动力学下，执行 $a$ 后的结果。
+1.  **Reset 有效性**: 用 Buffer 中的 `snapshot_T1` 重置 SimBus 时，SimBus 回到 $T_1$ 时刻，Agent 看到正是 $s$，可以输出新动作产生反事实轨迹。
+2.  **Critic 训练正确性**: $r$ 和 $s'$ 真实反映了在真实动力学下执行 $a$ 后的结果。
+3.  **Discriminator 输入一致**: Real 和 Sim 侧的 `z_t`/`z_t1` 使用同一 `extract_structured_context()` 函数，且都依赖 `sumo_pos_to_linear()` 做坐标对齐，保证双边特征可比。
 
-*   **输出**: `datasets/sumo_offline_full.hdf5` (或 pickle)。
+*   **输出**: `datasets/sumo_offline_full.hdf5`（含字段 `obs, action, reward, next_obs, z_t, z_t1, snapshot, source`）。
 
 #### 验证：通过训练offline RL,用collect_data_sumo.py和SumoGymWrapper采集的数据训练offline RL，并通过收敛性确认以上工作的完成情况。
+
 ---
 
 ## Phase 2: 仿真环境改造 (Sim World - /LSTM-RL/env)
 
-**目标**: 改造 `LSTM-RL/env`中的`sim.py`/`bus.py`等依赖，使其支持多线路仿真，和并使其支持“写入快照(Step)”和“读取快照(Reset)”。
+**目标**: 改造 `LSTM-RL/env`中的`sim.py`/`bus.py`等依赖，使其支持多线路仿真，和并使其支持"写入快照(Step)"和"读取快照(Reset)"。
 
 **动机**: 为了减小 Dynamics Gap，必须确保 `LSTM-RL/env` (Sim) 的基础数据和运行特性与 `SUMO_ruiguang` (Real) 高度一致。
 
@@ -319,6 +335,7 @@ def on_simulation_step():
 *   **文件**: `LSTM-RL/env`
 *   **需求 A: 输出快照 (Symmetry for Discriminator)**
     *   在 `step()` 返回的 `info` 字典中，必须调用 `self._build_snapshot()`，返回符合 **Phase 0 定义** 的 `SnapshotDict`。
+    *   `info` 必须包含两个 snapshot key：`snapshot_T1`（Ego Bus 上一站出发时捕获）和 `snapshot_T2`（本站到达时捕获），供 H2O+ 训练循环提取 `z_t` 和 `z_t1`。
     
 *   **需求 B: 快照重置 (Reset Mechanism)**
     *   实现 `reset(snapshot=None)` 接口。
@@ -374,11 +391,9 @@ def on_simulation_step():
 *   **文件**: `algorithms/h2o_plus/train.py`
 *   **伪代码逻辑**:
     ```python
-    # 初始化
+    WARMUP_EPISODES = 20  # 或者是前 10% 的训练步数
 
-    WARMUP_EPISODES = 20 # 或者是前 10% 的训练步数
-
-    offline_buffer.load("sumo_offline_full.pkl")
+    offline_buffer.load("sumo_offline_full.pkl")  # 含 z_t, z_t1, snapshot 字段
     online_buffer = ReplayBuffer()
 
     for episode in range(MAX_EPISODES):
@@ -386,78 +401,71 @@ def on_simulation_step():
         if random.random() < P_RESET (e.g., 0.5):
             # Mode: Buffer Reset (解决 Drift)
             real_batch = offline_buffer.sample(1)
-            snapshot = real_batch['infos']['snapshot'][0]
-            obs = sim_env.reset(snapshot=snapshot)
-            z_sim_curr = extract_structured_context(snapshot_curr[0])
-            z_sim_next = extract_structured_context(snapshot_next[0])
-            max_steps = H_ROLLOUT (e.g., 20) # 短程修补
+            snapshot   = real_batch['snapshot'][0]   # 完整 SnapshotDict (T1 时刻)
+            obs        = sim_env.reset(snapshot=snapshot)
+            max_steps  = H_ROLLOUT  # e.g., 20，短程修补
         else:
             # Mode: Standard (全程规划)
-            obs = sim_env.reset(snapshot=None)
-            z_sim_curr = extract_structured_context(sim_env.get_current_snapshot())
-            z_sim_next = extract_structured_context(sim_env.get_next_snapshot())
+            obs       = sim_env.reset(snapshot=None)
             max_steps = FULL_LENGTH
-            
+        # z_t 和 z_t1 由 sim_env.step() 返回后在到站事件时提取，episode 开始时不预取
+
         # --- B. 数据交互与收集 ---
         for t in range(max_steps):
-            action = agent.select_action(obs)
+            action = agent.select_action(obs)  # Actor 只看 obs，不看 z（防止信息泄露）
             next_obs, reward, done, info = sim_env.step(action)
-            
-            # 实时提取 Sim 的宏观特征
-            z_sim_curr = extract_structured_context(info['snapshot'][0])
-            z_sim_next = extract_structured_context(info['snapshot'][1])
-            # 实时计算当前转移的"真实度" w
+
+            # T2 时刻：Ego Bus 到达下一站后才能提取 z_t 和 z_t1
+            z_t  = extract_structured_context(info['snapshot_T1'])  # 出发时(T1)路网, 30维
+            z_t1 = extract_structured_context(info['snapshot_T2'])  # 到站时(T2)路网, 30维
+
+            # 事后计算"真实度" w（仅用于 Buffer 存储和截断判断，不泄露给 Actor）
             with torch.no_grad():
-                # 判别器输出的是 logit，需要经过 sigmoid 映射到 0~1 表示概率
-                logit = discriminator(obs, action, next_obs, z_sim_curr, z_sim_next)
+                logit     = discriminator(obs, action, next_obs, z_t, z_t1)
                 prob_real = torch.sigmoid(logit).item()
-                
-                # 在 H2O 中，w = P(real) / P(sim) = prob_real / (1 - prob_real + epsilon)
-                # 为防止除零，加入微小常数；为防止截断过于敏感，可用 prob_real 直接替代评估信度
-                w = prob_real / (1.0 - prob_real + 1e-8)
-            
+                w         = prob_real / (1.0 - prob_real + 1e-8)
+
             # 核心：动态截断 (Early Exit)
-            if w < W_THRESHOLD and episode > WARMUP_EPISODES: # e.g., 0.1
-                # 仿真器已经严重偏离真实动力学，立即截断
-                online_buffer.add(obs, action, reward, next_obs, done=False, truncated=True, z=z_sim)
-                break # 提前跳出循环，重新从真实快照 Reset
+            # 【t>0 规则】Reset 后第一步强制放行：z_t1 刚刚凑齐，Discriminator 冷启动噪声大，
+            # 保证至少一步有效 Rollout 进入 Buffer，防止 episode 立即终止。
+            if w < W_THRESHOLD and episode > WARMUP_EPISODES and t > 0:
+                online_buffer.add(obs, action, reward, next_obs,
+                                  z_t=z_t, z_t1=z_t1,
+                                  done=False, truncated=True, source='sim')
+                break  # 提前跳出，重新从真实快照 Reset
             else:
-                # 表现合理，继续 Rollout
-                online_buffer.add(obs, action, reward, next_obs, done, truncated=False, z=z_sim)
+                online_buffer.add(obs, action, reward, next_obs,
+                                  z_t=z_t, z_t1=z_t1,
+                                  done=done, truncated=False, source='sim')
                 obs = next_obs
-                z_sim_curr = z_sim_next
-            
+
             if done: break
-            
+
             # --- C. H2O+ 更新步骤 (每步或每N步) ---
             if ready_to_train:
-                # 1. 采样
-                batch_real = offline_buffer.sample(BATCH_SIZE) # 带 z_real
-                batch_sim = online_buffer.sample(BATCH_SIZE)   # 带 z_sim
-                
-                # 2. 训练 Discriminator
+                # 1. 采样（两侧 Buffer 均含 z_t, z_t1 字段）
+                batch_real = offline_buffer.sample(BATCH_SIZE)
+                batch_sim  = online_buffer.sample(BATCH_SIZE)
+
+                # 2. 训练 Discriminator（参考 Appendix C）
                 d_loss = update_discriminator(batch_real, batch_sim)
-                
-                # 3. 计算 Importance Weight
-                # w = P_real / P_sim ≈ exp(logit_real - logit_sim) 
-                # 具体公式参考 H2O 论文，通常使用 sigmoid 输出处理
+
+                # 3. 计算 Importance Weight（参考 H2O 论文）
                 w = compute_weights(discriminator, batch_sim)
-                
+
                 # 4. 训练 Critic (带权重)
-                # Loss = w * (Q - Target_Q)^2 + (1-w) * (Q - Target_Q_Conservative)^2 (可选保守项)
                 # 简化版: Loss = w * (Q_sim - Target)^2 + (Q_real - Target)^2
                 c_loss = update_critic(batch_real, batch_sim, w)
-                
-                # 5. 训练 Actor (标准 SAC)
-                a_loss = update_actor(batch_sim) # 通常只在 Sim 数据上更新 Actor
-    ```
 
+                # 5. 训练 Actor (标准 SAC，只在 Sim 数据上更新)
+                a_loss = update_actor(batch_sim)
+    ```
     
 > ⚠️ **CRITICAL PROMPT FOR AI CODING ASSISTANTS (关于因果律与防信息泄露):**
 > 在编写 Actor 动作选择与 Discriminator 推断逻辑时，必须严格区分“决策时刻 ($T_1$)”与“结算时刻 ($T_2$)”，严禁发生未来信息泄露 (Information Leakage)！
-> 1. **动作决策 (Action Selection)**：在 $T_1$ 时刻（公交刚到站），Actor 网络 `policy(obs)` 只能且必须只能接收当前的局部微观观测 `obs_t`。此时路网的宏观演变 `z_temporal` 尚未发生，绝不能将其作为 Actor 的输入。
-> 2. **信度评估 (Weight Calculation)**：Discriminator 的计算 $w = D(obs_t, a_t, obs_{t+1}, z\_temporal)$ 必须是**事后诸葛亮 (Post-evaluation)**。只有当公交车在 $T_2$ 时刻到达下一站，凑齐了从 $T_1$ 到 $T_2$ 期间收集到的宏观快照序列并聚合出 `z_temporal` 后，才能进行前向推断。
-> 3. **变量边界**：计算出的信度权重 $w$ 仅用于两处：(A) 存入 Buffer，在更新 Critic 损失函数时作为 Importance Weight；(B) 决定是否触发 Early Truncation 放弃该条轨迹的后续 rollout。**绝对不能将 $w$ 或 $z\_temporal$ 泄露给当前的 Actor。**
+> 1. **动作决策 (Action Selection)**：在 $T_1$ 时刻（公交刚到站），Actor 网络 `policy(obs)` 只能且必须只能接收当前的局部微观观测 `obs_t`。此时 $T_2$ 时刻的路网快照 `z_t1` 尚未产生，绝不能将其作为 Actor 的输入。
+> 2. **信度评估 (Weight Calculation)**：Discriminator 的计算 $w = D(obs_t, a_t, obs_{t+1}, z_t, z_{t+1})$ 必须是**事后诸葛亮 (Post-evaluation)**。只有当公交车在 $T_2$ 时刻到达下一站，凑齐了 `z_t`（出发时路网）和 `z_t1`（到站时路网）后，才能进行前向推断。
+> 3. **变量边界**：计算出的信度权重 $w$ 仅用于两处：(A) 存入 Buffer，在更新 Critic 损失函数时作为 Importance Weight；(B) 决定是否触发 Early Truncation 放弃该条轨迹的后续 rollout。**绝对不能将 $w$、`z_t` 或 `z_t1` 泄露给当前的 Actor。**
 
 
 
@@ -624,49 +632,41 @@ def train_discriminator_step(offline_buffer, online_buffer, optimizer_D, batch_s
     # 1. 真实数据 (SUMO) 前向传播
     # ---------------------------------------------------------
     real_batch = offline_buffer.sample(batch_size)
-    
-    real_obs = real_batch['obs']
-    real_act = real_batch['action']
+
+    real_obs      = real_batch['obs']
+    real_act      = real_batch['action']
     real_next_obs = real_batch['next_obs']
-    
-        # 【更新】现在的 z 已经是聚合了 t 到 t+1 期间波动的 120 维特征
-    real_z_temporal = real_batch['z_temporal'] 
-    
-    # 注入噪声增强鲁棒性
-    noise = torch.randn_like(real_z_temporal) * 0.05
-    
-    # 判别器输入：微观起点 + 微观动作 + 微观终点 + 期间的宏观波动
-    real_logits = discriminator(real_obs, real_act, real_next_obs, real_z_temporal + noise)
-    
-    # [关键防御 1: 数据增强] 为真实的交通图谱注入 5% 的高斯噪声
-    # 迫使判别器学习“拥堵的范围”而不是“拥堵的绝对数值”
-    noise_curr = torch.randn_like(real_z_curr) * 0.05
-    noise_next = torch.randn_like(real_z_next) * 0.05
-    
-    real_logits = discriminator(real_obs, real_act, real_next_obs, 
-                                real_z_curr + noise_curr, 
-                                real_z_next + noise_next)
-    
+    real_z_t      = real_batch['z_t']    # (Batch, 30) — T1 快照
+    real_z_t1     = real_batch['z_t1']   # (Batch, 30) — T2 快照
+
+    # [关键防御 1: 数据增强] 为真实路网特征注入 5% 高斯噪声
+    # 迫使判别器学习"拥堵的空间分布"而非"绝对数值"
+    noise_t  = torch.randn_like(real_z_t)  * 0.05
+    noise_t1 = torch.randn_like(real_z_t1) * 0.05
+
+    real_logits = discriminator(real_obs, real_act, real_next_obs,
+                                real_z_t + noise_t, real_z_t1 + noise_t1)
+
     # [关键防御 2: 标签平滑] 真实数据标签设为 0.9，而非绝对的 1.0
     real_labels = torch.full_like(real_logits, 0.9)
-    loss_real = criterion(real_logits, real_labels)
+    loss_real   = criterion(real_logits, real_labels)
 
     # ---------------------------------------------------------
     # 2. 仿真数据 (SimBus) 前向传播
     # ---------------------------------------------------------
     sim_batch = online_buffer.sample(batch_size)
-    
-    sim_obs = sim_batch['obs']
-    sim_act = sim_batch['action']
+
+    sim_obs      = sim_batch['obs']
+    sim_act      = sim_batch['action']
     sim_next_obs = sim_batch['next_obs']
-    sim_z_curr = sim_batch['z_curr']
-    sim_z_next = sim_batch['z_next']
-    
-    sim_logits = discriminator(sim_obs, sim_act, sim_next_obs, sim_z_curr, sim_z_next)
-    
+    sim_z_t      = sim_batch['z_t']      # (Batch, 30)
+    sim_z_t1     = sim_batch['z_t1']     # (Batch, 30)
+
+    sim_logits  = discriminator(sim_obs, sim_act, sim_next_obs, sim_z_t, sim_z_t1)
+
     # 仿真数据标签设为 0.1，而非绝对的 0.0
-    sim_labels = torch.full_like(sim_logits, 0.1)
-    loss_sim = criterion(sim_logits, sim_labels)
+    sim_labels  = torch.full_like(sim_logits, 0.1)
+    loss_sim    = criterion(sim_logits, sim_labels)
 
     # ---------------------------------------------------------
     # 3. 梯度回传
@@ -675,7 +675,7 @@ def train_discriminator_step(offline_buffer, online_buffer, optimizer_D, batch_s
     optimizer_D.zero_grad()
     total_d_loss.backward()
     optimizer_D.step()
-    
+
     return total_d_loss.item()
 ```
 
