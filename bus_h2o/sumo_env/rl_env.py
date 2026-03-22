@@ -42,6 +42,7 @@ class DecisionEvent:
     segment_mean_speed: float = 10.0
     metadata: Dict[str, Any] = field(default_factory=dict)
     assigned_action: Optional[float] = None
+    fleet_idx: int = -1   # physical-bus index (FIFO reuse); -1 means not set
 
 
 class SumoBusHoldingEnv:
@@ -90,11 +91,13 @@ class SumoBusHoldingEnv:
         self.line_departures: Dict[str, List[Tuple[float, str]]] = defaultdict(list)
         self._line_headway: Dict[str, float] = {}
         self._line_index: Dict[str, int] = {}
-        self._bus_index: Dict[str, int] = {}
+        self._bus_index: Dict[str, int] = {}   # trip_id → trip index (kept for compatibility)
+        self._fleet_index: Dict[str, int] = {} # fleet_id string → fleet index (physical bus)
         self._station_index: Dict[Tuple[str, str], int] = {}
         self._time_period_index: Dict[int, int] = {}
 
-        self.cat_cols = ["line_id", "bus_id", "station_id", "time_period", "direction"]
+        # 5 categorical features: line, fleet_bus, station, time_period, direction
+        self.cat_cols = ["line_id", "fleet_id", "station_id", "time_period", "direction"]
         self.continuous_features = ["forward_headway", "backward_headway", "waiting_passengers", "target_headway", "base_stop_duration", "sim_time", "gap", "co_line_forward_headway", "co_line_backward_headway", "segment_mean_speed"]
 
         self._state_buffers: Dict[str, Dict[str, List[List[float]]]] = defaultdict(lambda: defaultdict(list))
@@ -169,11 +172,11 @@ class SumoBusHoldingEnv:
 
     def get_feature_spec(self) -> Dict[str, Any]:
         cat_sizes = {
-            "line_id": max(len(self._line_index), 1),
-            "bus_id": max(len(self._bus_index), 1),
-            "station_id": max(len(self._station_index), 1) or 1,
+            "line_id":     max(len(self._line_index), 1),
+            "fleet_id":    max(len(self._fleet_index), 1),
+            "station_id":  max(len(self._station_index), 1) or 1,
             "time_period": max(len(self._time_period_index), 1) or 1,
-            "direction": 2,
+            "direction":   2,
         }
         return {
             "cat_cols": list(self.cat_cols),
@@ -324,6 +327,12 @@ class SumoBusHoldingEnv:
         if event.bus_id not in self._bus_index:
             self._bus_index[event.bus_id] = len(self._bus_index)
         bus_idx = self._bus_index[event.bus_id]
+        # Physical fleet index: use event.fleet_idx if bridge populated it,
+        # else fall back to trip bus_idx (for backward compat with envs that don't set it)
+        raw_fleet_id = str(event.fleet_idx) if event.fleet_idx >= 0 else event.bus_id
+        if raw_fleet_id not in self._fleet_index:
+            self._fleet_index[raw_fleet_id] = len(self._fleet_index)
+        fleet_idx = self._fleet_index[raw_fleet_id]
         station_idx = self._encode_station(event.line_id, event.stop_id, event.stop_idx)
         time_period_idx = self._encode_time_period(event.sim_time)
         direction = int(event.direction)
@@ -332,11 +341,11 @@ class SumoBusHoldingEnv:
         gap = (event.target_forward_headway - event.forward_headway) if getattr(event, 'forward_bus_present', True) else 0.0
         
         obs = [
-            float(line_idx),
-            float(bus_idx),
-            float(station_idx),
-            float(time_period_idx),
-            float(direction),
+            float(line_idx),          # 0:  line_id        (cat)
+            float(fleet_idx),         # 1:  fleet_bus_id   (cat, physical bus)
+            float(station_idx),       # 2:  station_id     (cat)
+            float(time_period_idx),   # 3:  time_period    (cat)
+            float(direction),         # 4:  direction      (cat)
             float(event.forward_headway),
             float(event.backward_headway),
             float(event.waiting_passengers),

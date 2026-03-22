@@ -16,6 +16,44 @@
 
 ---
 
+## 项目目录结构 (Project Layout)
+
+所有代码均位于 `H2Oplus/bus_h2o/` 下，必须在该目录下运行 (`cd H2Oplus/bus_h2o`).
+
+```
+H2Oplus/bus_h2o/
+├── common/
+│   └── data_utils.py          # build_edge_linear_map, extract_structured_context,
+│                              # set_route_length, ZOnlyDiscriminator, compute_z_importance_weight
+├── sim_core/
+│   ├── sim.py                 # env_bus (单线基类), MultiLineEnv (多线聚合)
+│   ├── bus.py                 # Bus, BusState 枚举
+│   ├── route.py               # Route (路段降速模型)
+│   └── station.py             # Station
+├── envs/
+│   └── bus_sim_env.py         # BusSimEnv(env_bus), MultiLineSimEnv(MultiLineEnv)
+├── sumo_env/
+│   ├── rl_bridge.py           # SumoRLBridge — SUMO侧的核心接口
+│   ├── sumo_snapshot.py       # bridge_to_snapshot, bridge_to_full_snapshot
+│   └── rl_env.py              # SumoBusHoldingEnv (勿在快照测试中导入, 会冲突 libsumo)
+├── calibrated_env/            # MultiLineSimEnv 各线路标定数据 (Excel + config.json)
+│   ├── 7X/data/*.xlsx
+│   ├── 7S/data/*.xlsx
+│   └── ...                    # 每条线路一个子目录
+├── network_data/
+│   └── a_sorted_busline_edge.xml  # build_edge_linear_map 的输入文件 (非 .net.xml!)
+└── test_snapshot_reset.py      # 方案 2 验证脚本
+
+“真实”侧 SUMO 文件位于上两层:
+  SUMO_ruiguang/online_control/          # SumoRLBridge 的 root_dir
+  SUMO_ruiguang/online_control/sim_obj/  # SUMO 对象模型 (需加入 sys.path)
+```
+
+> [!IMPORTANT]
+> **环境变量**: 必须设置 `LIBSUMO_AS_TRACI=1`，否则 `import traci` 会走 TraCI 协议而非直接调用 libsumo。
+
+---
+
 ## Phase 0: 核心数据协议定义 (Core Data Protocols)
 
 **执行优先**: 在编写任何环境代码前，必须先定义好共享的数据结构和工具函数。建议新建文件 `common/data_utils.py`。
@@ -120,6 +158,41 @@ Transition = {
 }
 ```
 
+> [!WARNING]
+> **Schema 一致性说明**: 以上 0.1 是初始设计文档，包含 `last_stop_index`, `ratio_to_next`, `is_ego` 等字段。实际实现中，`restore_full_system_snapshot` 需要的字段已扩展为 14 个（参见 §2.4 的全保真 SnapshotDict Schema）。`bridge_to_full_snapshot` 和 `capture_full_system_snapshot` 输出的都是 §2.4 中的实际 Schema，而非上面的简化版。简化版仅用于理解设计意图。
+
+#### env_bus 内部属性速查 (快照操作需读写的字段)
+
+```python
+# sim_core/sim.py  class env_bus
+self.bus_all: list[Bus]          # 所有上路车辆列表
+self.stations: list[Station]     # 站点列表(station.station_id 为整数)
+self.timetables: list[Timetable] # 发车时刻表(timetable.launched 标记是否已发车)
+self.routes: list[Route]         # 路段列表
+self.current_time: int/float     # 当前仿真时间 (s)
+self.bus_id: int                 # 下一个新车辆的 fleet ID
+self.max_agent_num: int          # 固定 25
+self.one_directional: bool       # SUMO 标定线路为 True
+
+# sim_core/bus.py  class Bus
+bus.bus_id: int                  # fleet 编号
+bus.trip_id: int                 # 当前车次
+bus.trip_id_list: list[int]      # 已执行的所有车次列表
+bus.direction: bool              # True=S方向, False=X方向
+bus.absolute_distance: float     # 绝对距离 (m)
+bus.current_speed: float         # m/s
+bus.passengers: np.ndarray       # 车内乘客数组, len(passengers) = 乘客数
+bus.on_route: bool               # 是否在路上
+bus.state: BusState              # 枚举: TRAVEL/HOLDING/DWELLING/WAITING_ACTION
+bus.last_station: Station        # 上一站对象引用
+bus.next_station: Station        # 下一站对象引用
+bus.forward_headway: float       # 前车间距 (s)
+bus.backward_headway: float      # 后车间距 (s)
+bus.holding_time: float          # 驻站时间 (s)
+bus.next_station_dis: float      # 距下一站 (m)
+bus.last_station_dis: float      # 距上一站 (m)
+```
+
 ### 0.2 上下文提取函数 (Context Extractor)
 为了保留空间信息，我们将路网离散化为K个空间段 (Segments)，生成一个矩阵作为 Discriminator 的输入，而不是几个标量。
 
@@ -186,6 +259,23 @@ def extract_structured_context(snapshot: dict, num_segments=10) -> np.ndarray:
 <!-- **新方案** : 输入 30 个数（空间图谱）。判别器能判断 “为什么第 3 段（十字路口）没有降速？” 或者 “为什么第 5 段（学校）没有很多人？”
 结果: 这极大地增强了 H2O+ 区分 Sim/Real 的能力，迫使 Policy 在那些 SimBus 模拟不准的“特征路段”（红绿灯、拥堵点）更加保守，而在路况简单的路段更加自信。 -->
 
+### 0.3 Phase 0 实现笔记 (实际文件与 API)
+
+> **状态: 已完成.** 以下是实际的文件位置和 API 签名，可供后续信号控制等模块复用。
+
+| 功能 | 文件 | 签名 |
+|----------|------|-----------|
+| 路网距离映射 (Edge map) | `common/data_utils.py` | `build_edge_linear_map(edge_xml, line_id)` 返回 `{edge_id: cum_dist}` |
+| z 特征提取 | `common/data_utils.py` | `extract_structured_context(snapshot)` 返回 `np.ndarray(30,)` |
+| 路线总长设置 | `common/data_utils.py` | `set_route_length(meters)` -- **必须**在调用 `extract_structured_context` 前调用 |
+| SUMO 轻量快照 | `sumo_env/sumo_snapshot.py` | `bridge_to_snapshot(bridge, edge_map)` -- 仅用于提取 z 特征 |
+| SUMO 全保真快照 | `sumo_env/sumo_snapshot.py` | `bridge_to_full_snapshot(bridge, edge_map)` 返回 `{line_id: SnapshotDict}` |
+| z-only 判别器 | `common/data_utils.py` | `ZOnlyDiscriminator(context_dim=30)` |
+| w 权重计算 | `common/data_utils.py` | `compute_z_importance_weight(D, z_t, z_t1)` |
+
+> [!CAUTION]
+> **注意事项 (Gotcha)**: `build_edge_linear_map` 解析的是 `a_sorted_busline_edge.xml` (预排序的公交 Edge 列表)，**不是** `.net.xml`。实际调用为 `build_edge_linear_map(edge_xml_path, line_id)`。`set_route_length()` 是全局单例 -- 如果不提前设置，空间分箱计算的分母将默认为 0，导致提取的 z 特征全为 0。
+
 ---
 
 ## Phase 1: 真实环境封装与数据采集 (Real World - /SUMO_ruiguang)
@@ -213,6 +303,70 @@ def step(self, action):
             self.last_ego_id = arrived_bus
             return self._get_state(arrived_bus), ...
 ```
+
+### 1.1.1 `SumoRLBridge` 实际 API 参考
+
+> **注意**: 以上 1.1 是初始设计文档 (`SumoGymWrapper`).实际实现中用的是 `SumoRLBridge` (`sumo_env/rl_bridge.py`)，API 完全不同。
+
+#### 初始化与生命周期
+
+```python
+from sumo_env.rl_bridge import SumoRLBridge
+
+# root_dir 指向 SUMO_ruiguang/online_control/
+bridge = SumoRLBridge(root_dir=SUMO_DIR, gui=False, max_steps=25000)
+bridge.reset()    # 启动 libsumo 会话，加载路网，初始化所有对象
+
+# 事件循环 (核心模式)
+while True:
+    events, done, _ = bridge.fetch_events()  # 进一步到下一个决策事件
+    if done:
+        break
+    if not events:      # 可能没有车到站，继续
+        continue
+    for ev in events:
+        bridge.apply_action(ev, hold_seconds=0.0)  # 应用动作
+    # 在此多次调用 bridge_to_snapshot 或 bridge_to_full_snapshot
+
+bridge.close()    # 关闭 libsumo 会话
+```
+
+#### `bridge` 对象内部属性速查 (快照函数需读取的字段)
+
+```python
+# 核心对象字典
+bridge.bus_obj_dic:   {sumo_trip_id: BusObj}     # 所有活跃公交车对象
+bridge.stop_obj_dic:  {stop_id: StopObj}         # 全网站点对象
+bridge.fleet_obj_dic: {sumo_trip_id: FleetBus}   # Fleet 复用映射
+
+# 活跃车辆 ID 列表 (用于遍历)
+bridge.active_bus_ids: list[str]
+
+# 位置/头距查找
+bridge.line_stop_distances: {line_id: {stop_id: float}}  # 各站线性距离
+bridge.line_headways:       {line_id: float}             # 平均发车间距
+bridge.current_time:        float                        # 当前 SUMO 仿真时间 (s)
+
+# BusObj 属性 (快照中用到的)
+bus_obj.belong_line_id_s: str     # 所属线路 ID ("7X", "7S", ...)
+bus_obj.current_stop_id:  str     # 当前站点 ID
+bus_obj.bus_state_s:      str     # "Running" 或 "Stop"
+bus_obj.current_load_n:   int     # 车内乘客数
+bus_obj.direction_n:      int     # 方向
+
+# FleetBus 属性
+fb.fleet_id:   str               # 编号字符串 ("7X_0", "7X_1", ...), 末尾数字为 fleet_idx
+fb.trip_ids:   list[str]         # 该 fleet 已执行的所有 trip ID
+fb.on_route:   bool              # 是否在路上
+
+# StopObj 属性
+stop_obj.wait_passenger_num_n: int  # 站台等待人数
+```
+
+> [!CAUTION]
+> **致命注意: libsumo 单会话限制**
+>
+> libsumo 全局只能有一个活跃会话。如果在任何地方 `import` 了会触发 `import traci` 的模块 (如 `rl_env.py` 中的 `SumoBusHoldingEnv`)，会静默导致 bridge 的 `reset()`/`fetch_events()` 失效（无输出，无事件，exit code 0）。快照测试脚本中**绝对不能** `from sumo_env.rl_env import SumoBusHoldingEnv`。
 
 ### 1.2 `collect_data_sumo.py` 实现
 
@@ -367,6 +521,65 @@ def on_simulation_step():
             return self._get_bus_state(snapshot['ego_bus_id'])
     ```
 *   **验证**: 通过训练online RL,用之前已收敛的`sac_v2_bus.py`或`sac_v2_bus_SUMO.py`在改造后的`LSTM-RL/env`上训练,以验证该部分改造工作的正确性。
+
+### 2.4 Phase 2 实现笔记
+
+> **状态: 已完成.** 包含实际架构、全保真 Schema 以及记录的各种坑。
+
+#### 核心架构
+
+```
+sim_core/sim.py
+  class env_bus                        # 单线仿真基类
+    restore_full_system_snapshot()     # 上帝模式注入 (实现在此，而非 BusSimEnv)
+  class MultiLineEnv                   # 多线聚合器
+    line_map: {line_id: env_bus}
+
+envs/bus_sim_env.py
+  class BusSimEnv(env_bus)             # 单线 + gym 适配
+    capture_full_system_snapshot()     # 输出全保真 SnapshotDict
+  class MultiLineSimEnv(MultiLineEnv)  # 多线 gym 适配
+```
+
+**关键设计**: `restore_full_system_snapshot` 实现在 `env_bus` (基类) 中，而不是 `BusSimEnv`。这是因为 `MultiLineSimEnv.line_map` 中持有的是 `env_bus` 实例，而非 `BusSimEnv` 实例。
+
+#### 全保真 SnapshotDict (包含 14 个公交字段)
+
+`restore_full_system_snapshot` 所需的每辆车字段：
+`bus_id(int)`, `trip_id`, `trip_id_list`, `direction(bool)`, `absolute_distance`, `current_speed`, `holding_time`, `forward_headway`, `backward_headway`, `last_station_id(int)`, `next_station_id(int)`, `next_station_dis`, `last_station_dis`, `state(str: TRAVEL/HOLDING/DWELLING)`, `on_route(bool)`, `load(int)`。另外为了 `extract_structured_context` 的兼容性，还包含 `pos` 和 `speed` 别名。
+
+站点字段：`station_id(int)`, `station_name(str)`, `direction(bool)`, `waiting_count(int)`, `pos(float)`。
+
+顶层字段：`sim_time`, `current_time`, `launched_trips: [int]`。
+
+#### SUMO 到 Sim 的快照重置模式 (Snapshot Reset)
+
+```python
+# 1. 在 T 时刻从 SUMO 捕获各线路的全保真快照
+full_snap = bridge_to_full_snapshot(bridge, edge_map)  # {line_id: SnapshotDict}
+
+# 2. 创建并初始化 sim
+sim_env = MultiLineSimEnv(calib_path)
+sim_env.reset()
+
+# 3. 注入各线路快照 (仅针对在 SUMO 中有活跃车辆的线路)
+for line_id, le in sim_env.line_map.items():
+    if line_id in full_snap:
+        le.restore_full_system_snapshot(full_snap[line_id])
+```
+
+> [!WARNING]
+> **已记录的坑 (Documented Pitfalls - 后续信号控制复用时务必参考)**
+>
+> | # | 问题 | 根因 | 修复方案 |
+> |---|---------|------------|-----|
+> | 1 | SUMO bridge 静默退出 (code 0, 无事件输出) | `from sumo_env.rl_env import SumoBusHoldingEnv` 在模块级别触发了 `import traci` (=libsumo)，这会与 bridge 自身的 libsumo 会话冲突 | 移除未使用的 rl_env 导入，或改为延迟导入 |
+> | 2 | MultiLineSimEnv 报错 `env.done` AttributeError | `self.done` 仅在首次调用 `step()` 后被赋值 (sim.py L513)，`reset()` 并未初始化该属性 | 使用 `step()` 返回值中的 `done`，而非直接访问 `env.done` 属性 |
+> | 3 | `route.route_update` 报错 TypeError: 列表索引必须是整数 (float) | `restore_full_system_snapshot` 将 `current_time` 设置为 float 类型，导致 `current_time//3600` 返回 float | 在 route.py 中将索引强制转换为 `int(current_time//3600)` |
+> | 4 | 线路环境 (env_bus) 缺少 `restore_full_system_snapshot` 方法 | `MultiLineSimEnv.line_map` 存储的是 `env_bus` 实例，而非 `BusSimEnv` | 将该方法下沉到 `env_bus` 基类中实现 |
+> | 5 | 仅有 3/12 条线路在 SUMO 快照中被重置 | SUMO 是事件驱动的；在 T=1388s 时只有 7S/7X/122S 有到战决策事件 | `bridge_to_full_snapshot` 仅生成有活跃车辆的线路快照；未重置的线路按 t=0 默认运行 |
+> | 6 | z 特征向量全为 0 | 在调用 `extract_structured_context` 前未调用 `set_route_length()` | 务必在脚本初始化阶段提前调用 `set_route_length()` |
+
 ---
 
 ## Phase 3: H2O+ 算法深度集成 (H2O+ Integration)
@@ -491,6 +704,41 @@ def on_simulation_step():
     *   检查 Discriminator 是否能给出显著不同的分数。
 #### Structured Contex & Buffer Reset消融实验
     分别用简单的mean/var only contex对比structured contex，以及buffer reset vs 直接用sim的策略在SUMO跑做评价。
+
+### 4.1 已通过的验证 (快照发散测试)
+
+两种方案均已通过，端到端地验证了 z 提取、判别器训练和 w 计算的正确性。
+
+#### 方案 1: z 特征平行对比 (`test_snapshot_headtohead.py`)
+
+SUMO 和 Sim 同时从 t=0 出发，采取零驻留策略。在匹配的 SUMO 决策时刻点提取 z，比较 z 的散度。
+
+| 指标 (Metric) | 起始 (Start) | 终止 (End) | 结果 |
+|--------|-------|-----|--------|
+| L2 距离 | 12.4 | 187.4 | **通过 (PASS)** |
+| 余弦相似度 (cos) | 0.34 | 0.006 | **通过 (PASS)** |
+| w_SUMO / w_sim | 9.0 / 0.11 | -- | **通过 (PASS)** |
+
+#### 方案 2: 全保真快照重置 (`test_snapshot_reset.py`)
+
+SUMO 运行到 T=1388 (80 个事件)，捕获全保真快照并注入 Sim，两边以此为起点同时向前运行 100 个事件。
+
+| 指标 (Metric) | 重置瞬间 (At Reset) | 终止 (End) | 结果 |
+|--------|----------|-----|--------|
+| z 保真度 | L2=1.14, cos=0.92 | -- | **极高 (HIGH)** |
+| L2 距离 | 1.14 | 62.1 | **通过 (PASS)** |
+| 余弦相似度 (cos) | 0.92 | 0.03 | **通过 (PASS)** |
+| w_SUMO / w_sim | 9.0 / 0.11 | -- | **通过 (PASS)** |
+
+> [!IMPORTANT]
+> 方案 2 证实了**快照重置的保真度**：在重置瞬间余弦相似度高达 0.92，随后自然发散。这验证了 H2O+ 的核心假设：快照重置能有效消除仿真器的时间漂移。
+
+```bash
+# 如何运行验证脚本 (在 H2Oplus/bus_h2o/ 下)
+python test_snapshot_headtohead.py --max_events 200 --plot   # 运行约 15s
+python test_snapshot_reset.py --T_events 80 --K_events 100 --plot  # 运行约 20s
+```
+
 ---
 ## Appendix A: 上下文感知判别器 (Context-Aware Discriminator)
 

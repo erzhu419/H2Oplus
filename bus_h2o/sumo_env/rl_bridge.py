@@ -34,6 +34,34 @@ from .case import d_8_compute_running_time
 from .rl_env import DecisionEvent
 
 
+from dataclasses import dataclass, field
+
+
+@dataclass
+class FleetBus:
+    """Represents one physical bus in the fleet across its full service day.
+
+    A FleetBus can be reused for multiple SUMO trips in FIFO order, exactly
+    mirroring LSTM-RL env/sim.py's `launch_bus()` logic.
+    """
+    fleet_id: str                    # Permanent identifier, e.g. '7S_fleet_0'
+    direction: int                   # 0=northbound / 1=southbound (matches line suffix X/S)
+    line_id: str                     # Line this bus operates on
+    back_to_terminal_time: float = float('inf')   # Time bus returned to terminal
+    on_route: bool = False           # True while assigned to an active SUMO trip
+    current_trip_id: str = ''        # Currently assigned SUMO vehicle ID
+    trip_ids: list = field(default_factory=list)  # All SUMO trip IDs served so far
+    cumulative_trajectory: list = field(default_factory=list)  # Cross-trip stop history
+
+    def reset_trip(self, new_trip_id: str, departure_time: float) -> None:
+        """Reassign this fleet bus to a new SUMO trip (mirrors Bus.reset_bus)."""
+        self.current_trip_id = new_trip_id
+        self.trip_ids.append(new_trip_id)
+        self.back_to_terminal_time = float('inf')
+        self.on_route = True
+
+
+
 class SumoRLBridge:
     def __init__(
         self,
@@ -88,6 +116,13 @@ class SumoRLBridge:
         self.involved_tl_ID_l = []
         self.line_headways = {}  # Store median headway per line
         self.line_stop_distances = defaultdict(dict)  # Absolute distance of each stop along each line
+
+        # ── Fleet reuse (FIFO, mirrors LSTM-RL sim.py launch_bus) ────────────
+        # fleet_obj_dic: sumo_trip_id → FleetBus (current assignment)
+        self.fleet_obj_dic: Dict[str, FleetBus] = {}
+        # terminal_pool: direction(int) → FIFO deque of FleetBus objects
+        self.terminal_pool: Dict[int, deque] = {0: deque(), 1: deque()}
+        self._fleet_counter: Dict[str, int] = {}  # line_id → next fleet index
     # region SUMO lifecycle
     def reset(self) -> None:
         # Optimization: Load network once and reuse state
@@ -146,6 +181,14 @@ class SumoRLBridge:
         self.active_bus_ids = set()
         self.active_passenger_ids = set()
         self.just_departed_buses = []
+
+        # Reset fleet terminal pool (keep FleetBus objects, just clear queues)
+        for q in self.terminal_pool.values():
+            q.clear()
+        # Mark all fleet buses as not on route
+        for fb in self.fleet_obj_dic.values():
+            fb.on_route = False
+            fb.back_to_terminal_time = float('inf')
 
     def close(self) -> None:
         # Optimization: Do NOT close traci if using libsumo reuse strategy
@@ -267,6 +310,29 @@ class SumoRLBridge:
                 self.line_stop_distances[line_id][stop_id] = dist
         # print(f"Computed Line Headways: {self.line_headways}")
 
+        # ── Initialise fleet objects from bus_obj_dic ─────────────────────
+        # One FleetBus per unique (line_id, direction) slot.
+        # At episode start all buses are pending departure, so pool is empty.
+        self.fleet_obj_dic.clear()
+        self._fleet_counter.clear()
+        for q in self.terminal_pool.values():
+            q.clear()
+        for bus_id, bus_obj in self.bus_obj_dic.items():
+            line_id = bus_obj.belong_line_id_s
+            direction = 1 if line_id.endswith('S') else 0
+            idx = self._fleet_counter.get(line_id, 0)
+            fleet_id = f"{line_id}_fleet_{idx}"
+            self._fleet_counter[line_id] = idx + 1
+            fb = FleetBus(
+                fleet_id=fleet_id,
+                direction=direction,
+                line_id=line_id,
+                current_trip_id=bus_id,
+                on_route=False,  # not yet departed
+            )
+            fb.trip_ids.append(bus_id)
+            self.fleet_obj_dic[bus_id] = fb
+
     # endregion
 
     # region RL hooks
@@ -356,13 +422,14 @@ class SumoRLBridge:
         for veh_id in departed_ids:
             if veh_id in self.bus_obj_dic:
                 self.active_bus_ids.add(veh_id)
+                self._launch_from_terminal(veh_id, simulation_current_time)
 
-        
         arrived_ids = traci.simulation.getArrivedIDList()
         for veh_id in arrived_ids:
             if veh_id in self.active_bus_ids:
                 self.active_bus_ids.discard(veh_id)
                 self.just_departed_buses.append(veh_id)
+                self._return_to_terminal(veh_id, simulation_current_time)
                 
         # Update active passengers
         departed_persons = traci.simulation.getDepartedPersonIDList()
@@ -613,6 +680,16 @@ class SumoRLBridge:
             stop_data = traci.vehicle.getStops(bus_id, 1)
             stopping_place = stop_data[0].stoppingPlaceID if stop_data else stop_id
             
+            # Resolve physical fleet index for obs[2]
+            _fleet_idx = -1
+            _fb = self.fleet_obj_dic.get(bus_id)
+            if _fb is not None:
+                # fleet_id is e.g. '7S_fleet_3' — extract the numeric suffix
+                try:
+                    _fleet_idx = int(_fb.fleet_id.rsplit('_', 1)[-1])
+                except (ValueError, IndexError):
+                    _fleet_idx = -1
+
             event = DecisionEvent(
                 line_id=line_id,
                 bus_id=bus_id,
@@ -632,6 +709,7 @@ class SumoRLBridge:
                 co_line_backward_headway=co_line_bwd,
                 segment_mean_speed=segment_mean_speed,
                 metadata={'arrive_time': arrive_time, 'stopping_place': stopping_place},
+                fleet_idx=_fleet_idx,
             )
             
             # Pre-emptive Holding:
@@ -695,9 +773,76 @@ class SumoRLBridge:
 
     # endregion
 
+    # region Fleet reuse (FIFO) — mirrors LSTM-RL sim.py launch_bus()
 
+    @property
+    def bus_in_terminal(self) -> List[FleetBus]:
+        """All FleetBus objects currently resting at the terminal (not on route)."""
+        return [fb for fb in self.fleet_obj_dic.values() if not fb.on_route]
 
+    def _return_to_terminal(self, bus_id: str, current_time: float) -> None:
+        """Called when a SUMO bus finishes its route and is removed by SUMO.
 
+        Marks the corresponding FleetBus as in-terminal and enqueues it
+        in the FIFO pool for the correct direction.
+        """
+        fb = self.fleet_obj_dic.get(bus_id)
+        if fb is None:
+            return
+        fb.on_route = False
+        fb.back_to_terminal_time = current_time
+        # Enqueue FIFO — pool ordered by insertion (= arrival) time
+        self.terminal_pool[fb.direction].append(fb)
+
+    def _launch_from_terminal(
+        self, new_bus_id: str, departure_time: float
+    ) -> FleetBus:
+        """Called when a new SUMO bus departs.
+
+        Reuse the earliest-arrived FleetBus from the same direction/line
+        (FIFO, exactly like LSTM-RL sim.py), or create a new one if the
+        pool is empty.
+        """
+        bus_obj = self.bus_obj_dic.get(new_bus_id)
+        if bus_obj is None:
+            return None  # type: ignore[return-value]
+        line_id  = bus_obj.belong_line_id_s
+        direction = 1 if line_id.endswith('S') else 0
+
+        pool = self.terminal_pool[direction]
+        # FIFO: pick the fleet bus that returned to terminal earliest
+        # (deque is ordered by arrival time — leftmost = earliest)
+        candidate = None
+        for fb in pool:
+            if fb.line_id == line_id:
+                candidate = fb
+                pool.remove(fb)   # O(n) but pool is small (≤ fleet size)
+                break
+
+        if candidate is not None:
+            # Reuse existing fleet bus — update its trip assignment
+            candidate.reset_trip(new_bus_id, departure_time)
+            # Remap: old trip_id entry stays in fleet_obj_dic for history;
+            # also register under new_bus_id for fast lookup
+            self.fleet_obj_dic[new_bus_id] = candidate
+        else:
+            # No matching bus in terminal — allocate a new FleetBus
+            idx = self._fleet_counter.get(line_id, 0)
+            fleet_id = f"{line_id}_fleet_{idx}"
+            self._fleet_counter[line_id] = idx + 1
+            candidate = FleetBus(
+                fleet_id=fleet_id,
+                direction=direction,
+                line_id=line_id,
+                current_trip_id=new_bus_id,
+                on_route=True,
+            )
+            candidate.trip_ids.append(new_bus_id)
+            self.fleet_obj_dic[new_bus_id] = candidate
+
+        return candidate
+
+    # endregion
 
 
 

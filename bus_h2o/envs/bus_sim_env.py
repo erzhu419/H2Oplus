@@ -323,7 +323,7 @@ class BusSimEnv(env_bus):
                 count = int(station_snap[st.station_id]["waiting_count"])
                 # Keep existing passengers if count matches, else reset
                 if len(st.waiting_passengers) != count:
-                    st.waiting_passengers = np.array([None] * count, dtype=object)
+                    st.waiting_passengers = [None] * count
 
     # ------------------------------------------------------------------
     # Internal helpers

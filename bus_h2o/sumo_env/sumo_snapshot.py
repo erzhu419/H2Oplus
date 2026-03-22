@@ -135,6 +135,185 @@ def bridge_to_snapshot(bridge, edge_map: Dict[str, float]) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Full-fidelity snapshot — compatible with BusSimEnv.restore_full_system_snapshot
+# ---------------------------------------------------------------------------
+
+def bridge_to_full_snapshot(
+    bridge,
+    edge_map: Dict[str, float],
+    sim_env=None,
+) -> Dict[str, dict]:
+    """
+    Build per-line SnapshotDicts from a live SumoRLBridge, compatible with
+    BusSimEnv.restore_full_system_snapshot().
+
+    Parameters
+    ----------
+    bridge : SumoRLBridge
+    edge_map : dict   {edge_id → cumulative distance}
+    sim_env  : MultiLineSimEnv (optional)
+        Used to resolve station_id integers and timetable slot indices
+        from the corresponding line env.
+
+    Returns
+    -------
+    dict[str, dict]
+        {line_id → SnapshotDict} for each line that has active buses.
+    """
+    import traci as _traci
+
+    # Group bridge buses by line
+    line_buses: Dict[str, list] = {}
+    for bus_id in bridge.active_bus_ids:
+        bus_obj = bridge.bus_obj_dic.get(bus_id)
+        if bus_obj is None:
+            continue
+        line_id = getattr(bus_obj, "belong_line_id_s", None)
+        if not line_id:
+            continue
+        line_buses.setdefault(line_id, []).append((bus_id, bus_obj))
+
+    result: Dict[str, dict] = {}
+
+    for line_id, bus_list in line_buses.items():
+        # Resolve sim_env line environment for this line
+        line_env = None
+        if sim_env is not None:
+            line_env = sim_env.line_map.get(line_id)
+
+        # Build station position lookup for this line
+        stop_dists = bridge.line_stop_distances.get(line_id, {})
+        # Sort stops by distance to build ordered station list
+        sorted_stops = sorted(stop_dists.items(), key=lambda x: x[1])
+        stop_to_idx = {stop_id: i for i, (stop_id, _) in enumerate(sorted_stops)}
+
+        all_buses_data = []
+        launched_trip_indices = set()
+
+        for bus_id, bus_obj in bus_list:
+            fb = bridge.fleet_obj_dic.get(bus_id)
+
+            # ── Position via traci ───────────────────────────────────
+            try:
+                road_id  = _traci.vehicle.getRoadID(bus_id)
+                lane_pos = _traci.vehicle.getLanePosition(bus_id)
+                speed    = _traci.vehicle.getSpeed(bus_id)
+            except Exception:
+                road_id = ""
+                lane_pos = 0.0
+                speed = 0.0
+
+            if road_id in edge_map:
+                pos = edge_map[road_id] + lane_pos
+            else:
+                pos = stop_dists.get(
+                    getattr(bus_obj, "current_stop_id", ""), 0.0)
+
+            # ── Trip/fleet info ──────────────────────────────────────
+            fleet_idx = -1
+            trip_ids_served = []
+            if fb is not None:
+                try:
+                    fleet_idx = int(fb.fleet_id.rsplit('_', 1)[-1])
+                except (ValueError, IndexError):
+                    fleet_idx = 0
+                trip_ids_served = list(range(len(fb.trip_ids)))
+
+            # ── Station pointers ─────────────────────────────────────
+            # Find closest station behind and ahead based on position
+            last_sid = 0
+            next_sid = 0
+            last_s_dis = pos
+            next_s_dis = 0.0
+            for i, (sid, sdist) in enumerate(sorted_stops):
+                if sdist <= pos:
+                    last_sid = i
+                    last_s_dis = pos - sdist
+                else:
+                    next_sid = i
+                    next_s_dis = sdist - pos
+                    break
+            else:
+                # past all stations
+                if sorted_stops:
+                    next_sid = len(sorted_stops) - 1
+                    next_s_dis = 0.0
+
+            # ── State ────────────────────────────────────────────────
+            bus_state_str = getattr(bus_obj, "bus_state_s", "Running")
+            if bus_state_str == "Stop":
+                state_name = "HOLDING"
+            else:
+                state_name = "TRAVEL"
+
+            # ── Headway (from last decision event or fallback) ───────
+            fwd_hw = getattr(bus_obj, "last_forward_headway",
+                             bridge.line_headways.get(line_id, 360.0))
+            if fwd_hw is None:
+                fwd_hw = bridge.line_headways.get(line_id, 360.0)
+            bwd_hw = fwd_hw  # symmetric fallback
+
+            direction = 1 if line_id.endswith('S') else 0
+
+            # ── Mark launched timetable slots ────────────────────────
+            # Use trip count to infer which timetable entries were used
+            trip_id = len(fb.trip_ids) - 1 if fb and fb.trip_ids else 0
+            if fb:
+                for t_idx in range(len(fb.trip_ids)):
+                    launched_trip_indices.add(t_idx)
+
+            load = getattr(bus_obj, "current_load_n", 0)
+            on_route = fb.on_route if fb else True
+
+            all_buses_data.append({
+                "bus_id":            fleet_idx,
+                "trip_id":           trip_id,
+                "trip_id_list":      trip_ids_served if trip_ids_served else [trip_id],
+                "direction":         direction,
+                "absolute_distance": float(pos),
+                "current_speed":     float(speed),
+                "load":              int(load),
+                "holding_time":      0.0,
+                "forward_headway":   float(fwd_hw),
+                "backward_headway":  float(bwd_hw),
+                "last_station_id":   last_sid,
+                "next_station_id":   next_sid,
+                "next_station_dis":  float(next_s_dis),
+                "last_station_dis":  float(last_s_dis),
+                "state":             state_name,
+                "on_route":          bool(on_route),
+                "pos":               float(pos),
+                "speed":             float(speed),
+            })
+
+        # ── Stations ─────────────────────────────────────────────────
+        all_stations_data = []
+        for i, (stop_id, sdist) in enumerate(sorted_stops):
+            stop_obj = bridge.stop_obj_dic.get(stop_id)
+            waiting = 0
+            if stop_obj:
+                waiting = getattr(stop_obj, "wait_passenger_num_n",
+                                  getattr(stop_obj, "waiting_passenger_num", 0))
+            all_stations_data.append({
+                "station_id":    i,
+                "station_name":  stop_id,
+                "direction":     True if line_id.endswith('S') else False,
+                "waiting_count": int(waiting),
+                "pos":           float(sdist),
+            })
+
+        result[line_id] = {
+            "sim_time":       float(bridge.current_time),
+            "current_time":   float(bridge.current_time),
+            "all_buses":      all_buses_data,
+            "all_stations":   all_stations_data,
+            "launched_trips": sorted(launched_trip_indices),
+        }
+
+    return result
+
+
+# ---------------------------------------------------------------------------
 # Mock helper — lets tests verify the schema without a live SUMO session
 # ---------------------------------------------------------------------------
 

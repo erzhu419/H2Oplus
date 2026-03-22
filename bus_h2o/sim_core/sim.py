@@ -2,7 +2,7 @@ import json
 import time
 import numpy as np
 from sim_core.timetable import Timetable
-from sim_core.bus import Bus
+from sim_core.bus import Bus, BusState
 from sim_core.route import Route
 from sim_core.station import Station
 from sim_core.visualize import visualize
@@ -16,7 +16,14 @@ import json
 
 
 class env_bus(object):
-    
+
+    # ── Class-level static data cache ─────────────────────────────────────
+    # Keyed by absolute data-dir path → {od, station_set, routes_set,
+    # timetable_set, args, effective_station_name, effective_period}.
+    # Survives across reset() and across multiple env_bus instances that
+    # share the same underlying data directory (e.g. multi-line envs).
+    _DATA_CACHE: dict = {}
+
     def __init__(self, path, debug=False, render=False):
         if render:
             # pygame.init()
@@ -24,32 +31,53 @@ class env_bus(object):
 
         self.path = path
         pass  # H2Oplus: path managed by BusSimEnv
-        config_path = os.path.join(path, 'config.json')
-        with open(config_path, 'r') as f:
-            args = json.load(f)
-        self.args = args
+
+        data_dir = os.path.abspath(os.path.join(path, 'data'))
+        if data_dir not in env_bus._DATA_CACHE:
+            # First time: read from disk and cache
+            config_path = os.path.join(path, 'config.json')
+            with open(config_path, 'r') as f:
+                args = json.load(f)
+
+            od           = pd.read_excel(os.path.join(path, "data/passenger_OD.xlsx"), index_col=[1, 0])
+            station_set  = pd.read_excel(os.path.join(path, "data/stop_news.xlsx"))
+            routes_set   = pd.read_excel(os.path.join(path, "data/route_news.xlsx"))
+            timetable_set = pd.read_excel(os.path.join(path, "data/time_table.xlsx"))
+            timetable_set = timetable_set.sort_values(
+                by=['launch_time', 'direction']
+            )[:264].reset_index(drop=True)
+            timetable_set['launch_turn'] = range(timetable_set.shape[0])
+
+            eff_station = sorted(set(od.index[i][0] for i in range(od.shape[0])))
+            eff_period  = sorted(list(set(od.index[i][1] for i in range(od.shape[0]))))
+
+            env_bus._DATA_CACHE[data_dir] = {
+                'args':         args,
+                'od':           od,
+                'station_set':  station_set,
+                'routes_set':   routes_set,
+                'timetable_set': timetable_set,
+                'effective_station_name': eff_station,
+                'effective_period':       eff_period,
+            }
+
+        # Pull from cache (zero I/O after first load)
+        cached = env_bus._DATA_CACHE[data_dir]
+        self.args                   = cached['args']
+        self.od                     = cached['od']
+        self.station_set            = cached['station_set']
+        self.routes_set             = cached['routes_set']
+        self.timetable_set          = cached['timetable_set']
+        self.effective_station_name = cached['effective_station_name']
+        self.effective_period       = cached['effective_period']
+
         self.effective_trip_num = 264
-        
-        self.time_step = args["time_step"]
-        self.passenger_update_freq = args["passenger_state_update_freq"]
-        # read data, multi-index used here
-        self.od = pd.read_excel(os.path.join(path, "data/passenger_OD.xlsx"), index_col=[1, 0])
-        self.station_set = pd.read_excel(os.path.join(path, "data/stop_news.xlsx"))
-        self.routes_set = pd.read_excel(os.path.join(path, "data/route_news.xlsx"))
-        self.timetable_set = pd.read_excel(os.path.join(path, "data/time_table.xlsx"))
-        # Truncate the original timetable by first 50 trips to reduce the calculation pressure
-        self.timetable_set = self.timetable_set.sort_values(by=['launch_time', 'direction'])[:self.effective_trip_num].reset_index(drop=True)
-        # add index for timetable
-        self.timetable_set['launch_turn'] = range(self.timetable_set.shape[0])
+        self.time_step = self.args["time_step"]
+        self.passenger_update_freq = self.args["passenger_state_update_freq"]
         self.max_agent_num = 25
 
         self.visualizer = visualize(self)
-        # Allow disabling automatic plotting when simulation ends
         self.enable_plot = True
-
-        # Set effective station and time period
-        self.effective_station_name = sorted(set([self.od.index[i][0] for i in range(self.od.shape[0])]))
-        self.effective_period = sorted(list(set([self.od.index[i][1] for i in range(self.od.shape[0])])))
 
         self.action_space = Box(0, 60, shape=(1,))
 
@@ -87,6 +115,7 @@ class env_bus(object):
         # For these, do NOT mirror the stop list; buses only travel forward and are retired at terminal.
         all_dirs = set(self.timetable_set['direction'].unique())
         one_directional = (all_dirs == {1})
+        self.one_directional = one_directional
 
         if one_directional:
             # SUMO-style: one-way only — stations listed once, all direction=True
@@ -161,7 +190,8 @@ class env_bus(object):
         ))
         if len(candidates) == 0:
             # No reusable bus available — create a new one
-            bus = Bus(self.bus_id, trip.launch_turn, trip.launch_time, trip.direction, self.routes, self.stations)
+            bus = Bus(self.bus_id, trip.launch_turn, trip.launch_time, trip.direction, self.routes, self.stations,
+                      one_directional=self.one_directional)
             self.bus_all.append(bus)
             self.bus_id += 1
         else:
@@ -171,9 +201,84 @@ class env_bus(object):
             bus.on_route = True
 
 
+    def restore_full_system_snapshot(self, snapshot: dict) -> None:
+        """
+        God-mode state injection.  Overwrites the current simulation state
+        with the given SnapshotDict.  Must be called after reset() so
+        objects are properly initialised before being overwritten.
+        """
+        self.current_time = float(snapshot["current_time"])
+
+        # Mark timetable entries as launched and pre-launch buses
+        launched_set = set(snapshot.get("launched_trips", []))
+        for i, t in enumerate(self.timetables):
+            t.launched = (i in launched_set)
+            if i in launched_set:
+                self.launch_bus(t)
+
+        bus_by_id = {b.bus_id: b for b in self.bus_all}
+        station_by_id = {s.station_id: s for s in self.stations}
+
+        restored_bus_ids = set()
+        for bd in snapshot["all_buses"]:
+            bid = bd["bus_id"]
+            if bid in bus_by_id:
+                bus = bus_by_id[bid]
+            else:
+                unrestored = [b for b in self.bus_all if b.bus_id not in restored_bus_ids]
+                if unrestored:
+                    bus = unrestored[0]
+                else:
+                    continue
+
+            bus.trip_id            = bd["trip_id"]
+            bus.trip_id_list       = list(bd.get("trip_id_list", [bd["trip_id"]]))
+            bus.direction          = bool(bd["direction"])
+            bus.absolute_distance  = float(bd["absolute_distance"])
+            bus.current_speed      = float(bd["current_speed"])
+            bus.holding_time       = float(bd["holding_time"])
+            bus.forward_headway    = float(bd["forward_headway"])
+            bus.backward_headway   = float(bd["backward_headway"])
+            bus.next_station_dis   = float(bd["next_station_dis"])
+            bus.last_station_dis   = float(bd["last_station_dis"])
+            bus.on_route           = bool(bd["on_route"])
+
+            lst_id = bd["last_station_id"]
+            nxt_id = bd["next_station_id"]
+            if lst_id in station_by_id:
+                bus.last_station = station_by_id[lst_id]
+            if nxt_id in station_by_id:
+                bus.next_station = station_by_id[nxt_id]
+
+            state_name = bd.get("state", "TRAVEL")
+            try:
+                bus.state = BusState[state_name]
+            except KeyError:
+                bus.state = BusState.TRAVEL
+
+            target_load = int(bd.get("load", 0))
+            current_load = len(bus.passengers)
+            if current_load > target_load:
+                bus.passengers = bus.passengers[:target_load]
+            elif current_load < target_load:
+                padding = np.array([None] * (target_load - current_load), dtype=object)
+                bus.passengers = np.concatenate([bus.passengers, padding])
+
+            bus.in_station = bus.state in (
+                BusState.HOLDING, BusState.WAITING_ACTION, BusState.DWELLING)
+            restored_bus_ids.add(bus.bus_id)
+
+        station_snap = {sd["station_id"]: sd for sd in snapshot.get("all_stations", [])}
+        for st in self.stations:
+            if st.station_id in station_snap:
+                count = int(station_snap[st.station_id]["waiting_count"])
+                if len(st.waiting_passengers) != count:
+                    st.waiting_passengers = [None] * count
+
     def step(self, action, debug=False, render=False, episode = 0):
         # Reset per-step state so only THIS tick's obs are visible (not accumulated history).
-        self.state = {key: [] for key in self.state}
+        for k in self.state:
+            self.state[k] = []
 
         # Enumerate trips in timetables, if current_time<=launch_time of the trip, then launch it.
         for i, trip in enumerate(self.timetables):
@@ -201,12 +306,13 @@ class env_bus(object):
             # 每次开始前，清零状态和奖励
             bus.reward = None
             bus.obs = []
-            if bus.in_station:
+            if bus.in_station and hasattr(bus, 'trajectory'):
                 bus.trajectory.append([bus.last_station.station_name, self.current_time, bus.absolute_distance, bus.direction, bus.trip_id])
-                bus.trajectory_dict[bus.last_station.station_name].append([bus.last_station.station_name, self.current_time + bus.holding_time, bus.absolute_distance, bus.direction, bus.trip_id])
+                traj_list = bus.trajectory_dict.get(bus.last_station.station_name)
+                if traj_list is not None:
+                    traj_list.append([bus.last_station.station_name, self.current_time + bus.holding_time, bus.absolute_distance, bus.direction, bus.trip_id])
             if bus.on_route:
-                # 在路上行驶的时候也添加trajectory,但是很慢，只是为了画图
-                bus.trajectory.append([bus.last_station.station_name, self.current_time, bus.absolute_distance, bus.direction, bus.trip_id])
+                # NOTE: in-route trajectory.append removed (was O(n_buses * n_steps), only for drawing)
                 bus.drive(self.current_time, action.get(bus.bus_id, 0.0), self.bus_all, debug=debug)
 
         self.state_bus_list = state_bus_list = list(filter(lambda x: len(x.obs) != 0, self.bus_all))
@@ -257,12 +363,10 @@ class env_bus(object):
             self.done = True
             if not debug:
                 for bus in self.bus_all:
-                    bus.trajectory.clear()  # 清空轨迹列表
-                    bus.trajectory_dict.clear()  # 清空轨迹字典
-                    del bus.trajectory  # 强制删除对象，帮助 GC
-                    del bus.trajectory_dict
+                    bus.trajectory.clear()      # 清空轨迹列表 (keep attr alive for next episode)
+                    bus.trajectory_dict.clear() # 清空轨迹字典 (keep attr alive for next episode)
                 for station in self.stations:
-                    station.waiting_passengers = np.array([])
+                    station.waiting_passengers = []
                     station.total_passenger.clear()
         else:
             self.done = False
@@ -482,6 +586,35 @@ class MultiLineEnv:
         done = all(done_flags)
         self.done = done
         return state, reward, done
+
+    def step_to_event(self, action_dict: dict, debug=False, render=False, episode=0):
+        """Step until at least one bus emits obs/reward (decision event), or done.
+
+        Returns the same (state, reward, done) as step(), but internally
+        fast-forwards through idle ticks where no decisions occur.
+        This is critical for training speed: avoids the Python-level dict
+        creation overhead on ~60% of ticks that produce zero decisions.
+        """
+        while True:
+            state, reward, done = self.step(action_dict, debug=debug,
+                                            render=render, episode=episode)
+            if done:
+                return state, reward, done
+            # Check if ANY line produced a decision this tick
+            has_event = False
+            for lid, bus_dict in state.items():
+                for bid, obs_list in bus_dict.items():
+                    if obs_list:
+                        has_event = True
+                        break
+                if has_event:
+                    break
+            if has_event:
+                return state, reward, done
+            # No decisions: clear actions and loop (zero-hold for idle tick)
+            for lid in action_dict:
+                for k in action_dict[lid]:
+                    action_dict[lid][k] = None
 
     def _aggregate_state(self):
         return {lid: le.state for lid, le in self.line_map.items()}

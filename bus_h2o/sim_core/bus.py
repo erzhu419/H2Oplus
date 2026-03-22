@@ -3,6 +3,7 @@ import numbers
 import numpy as np
 
 
+
 class BusState(Enum):
     HOLDING = auto()
     WAITING_ACTION = auto()
@@ -11,22 +12,23 @@ class BusState(Enum):
 
 
 class Bus(object):
-    def __init__(self, bus_id, trip_id, launch_time, direction, routes, stations):
+    def __init__(self, bus_id, trip_id, launch_time, direction, routes, stations, one_directional=False):
         self.bus_id = bus_id
         self.trip_id = trip_id
         self.trip_id_list = [trip_id]
         self.launch_time = launch_time
         self.direction = direction
+        self.one_directional = one_directional
 
         self.routes_list = routes
         self.stations_list = stations
         self.in_station = True
-        self.passengers = np.array([]) # list of passengers on bus
+        self.passengers = []  # list of Passenger objects on bus
         self.capacity = 50 # upper bound of passengers on bus
         self.current_speed = 0. # current speed of bus
 
         self.trip_turn = len(self.trip_id_list)
-        self.effective_station = self.stations_list[:round(len(self.stations_list) / 2)] if self.direction else self.stations_list[round(len(self.stations_list) / 2) - 1:] # 从所有站点中抽取有效站点
+        self.effective_station = self._compute_effective_station()
         self.last_station = self.effective_station[0] # 初始化首站
         self.next_station = self.effective_station[1] # 初始化次站
         self.last_station_dis = 0. # 上一站到当前站的距离
@@ -45,6 +47,13 @@ class Bus(object):
         self.forward_headway = 360. # 前车车头时距
         self.backward_headway = 360. # 后车车头时距
         self.reward = None # 奖励值
+
+        # SUMO-style fields (rl_bridge.py compatibility)
+        self.last_forward_headway: float = 360.0   # cached for backward bus to read
+        self.forward_bus_present:  bool  = False
+        self.backward_bus_present: bool  = False
+        self.target_forward_headway:  float = 360.0
+        self.target_backward_headway: float = 360.0
 
         self.alight_num = 0. # 下车人数
         self.board_num = 0. # 上车人数
@@ -67,6 +76,13 @@ class Bus(object):
         self._stop_start_time = None
         self._stop_station = None
 
+        # per-stop board/alight counts — parallel lists matching stop_records
+        # (lists avoid overwrite when bus visits same stop on return trip)
+        self.stop_board_l:  list = []   # boardings per stop visit
+        self.stop_alight_l: list = []   # alightings per stop visit
+        self.stop_strand_l: list = []   # stranded per stop visit
+        self.stop_load_l:   list = []   # load on departure per stop visit
+
     @property
     def occupancy(self):
         return str(len(self.passengers)) + '/' + str(self.capacity)
@@ -76,10 +92,21 @@ class Bus(object):
     def direction_int(self):
         return 1 if self.direction else -1
 
+    def _compute_effective_station(self):
+        """Return the stations this bus should visit on its current trip."""
+        if self.one_directional:
+            return list(self.stations_list)  # all stations, single direction
+        # Legacy bi-directional: first half = forward, second half = reverse
+        half = round(len(self.stations_list) / 2)
+        return self.stations_list[:half] if self.direction else self.stations_list[half - 1:]
+
     # effective_route is effective routes for every bus, same as effective_station
     @property
     def effective_route(self):
-        return self.routes_list[:round(len(self.routes_list) / 2)] if self.direction else self.routes_list[round(len(self.routes_list) / 2):]
+        if self.one_directional:
+            return list(self.routes_list)  # all routes, single direction
+        half = round(len(self.routes_list) / 2)
+        return self.routes_list[:half] if self.direction else self.routes_list[half:]
 
     # searching for next_station when last_station changed
     @property
@@ -124,47 +151,51 @@ class Bus(object):
 
     # When bus is arrived in a station, passengers have to alight and boarding.
     def exchange_passengers(self, current_time, debug):
-        # Because we cannot mutate the list inter iteration. Record the index of every passenger we want to remove from
-        # original passengers list then remove them with the pre-record index
-        index_of_passenger_on_bus = []
-        index_of_passenger_in_station = []
-        # passengers alight from bus(self)
-        for i, passenger in enumerate(self.passengers):
-            if passenger is None:
-                index_of_passenger_on_bus.append(i)  # drop placeholder
+        """Board/alight with O(n) list ops (no numpy rebuild).
+
+        waiting_passengers is now a plain list (per station.py v2).
+        self.passengers on the bus is a plain list too.
+        """
+        station = self.next_station
+
+        # ── Alight ───────────────────────────────────────────────────────────
+        keep_on_bus = []
+        for pax in self.passengers:
+            if pax is None:
                 continue
-            if passenger.destination_station.station_name == self.next_station.station_name:
-                passenger.arrived = True
-                passenger.arrive_time = current_time
+            if pax.destination_station.station_name == station.station_name:
+                pax.arrived = True
+                pax.arrive_time = current_time
                 self.alight_num += 1
-                index_of_passenger_on_bus.append(i)
-        # remove passengers from bus
-        self.passengers = self.passengers[
-            list(set(range(len(self.passengers))) - set(index_of_passenger_on_bus))] if len(
-            self.passengers) > 0 else np.array([])
-        # passengers boarding from station(self.next_station)
-        for i, passenger in enumerate(self.next_station.waiting_passengers):
-            if passenger is None:
-                index_of_passenger_in_station.append(i)  # drop placeholder
+            else:
+                keep_on_bus.append(pax)
+        self.passengers = keep_on_bus
+
+        # ── Board ─────────────────────────────────────────────────────────────
+        remaining = []
+        for pax in station.waiting_passengers:
+            if pax is None:
                 continue
             if len(self.passengers) < self.capacity:
-                passenger.boarded = True
-                passenger.boarding_time = current_time
-                passenger.travel_bus = self
-                self.passengers = np.append(self.passengers, passenger)
+                pax.boarded = True
+                pax.boarding_time = current_time
+                pax.travel_bus = self
+                self.passengers.append(pax)
                 self.board_num += 1
-                index_of_passenger_in_station.append(i)
+            else:
+                remaining.append(pax)
+        station.waiting_passengers = remaining
 
-        self.next_station.waiting_passengers = self.next_station.waiting_passengers[
-            list(set(range(len(self.next_station.waiting_passengers))) - set(index_of_passenger_in_station))] if len(
-            self.next_station.waiting_passengers) > 0 else np.array([])
+        self.holding_time = max(self.alight_num, self.board_num * 2.0) + 4.0
 
-        self.holding_time = max(self.alight_num, (self.board_num * 2.)) + 4.
-        # print('Bus id: ',self.bus_id, ', stop id: ', self.last_station.station_id," ,holding time: ", self.holding_time)
-        # if self.bus_id == 2 and debug:
-        #     print('Bus: ', self.bus_id, ' at station: ', self.next_station.station_id ,' ,current time: ', current_time,' ,holding time: ', self.holding_time)
+        # Per-stop accounting
+        self.stop_board_l.append(int(self.board_num))
+        self.stop_alight_l.append(int(self.alight_num))
+        self.stop_strand_l.append(len(remaining))
+        self.stop_load_l.append(len(self.passengers))
         self.alight_num = 0.
-        self.board_num = 0.
+        self.board_num  = 0.
+
 
     def bus_update(self):
         # update the bus state
@@ -246,55 +277,87 @@ class Bus(object):
         else:
             self.holding_time -= 1
 
-    def _prepare_for_action(self, current_time, bus_all, debug):
-        self.forward_bus = list(filter(lambda x: self.trip_id - 2 in x.trip_id_list, bus_all))
-        self.backward_bus = list(filter(lambda x: self.trip_id + 2 in x.trip_id_list, bus_all))
+    def _find_neighbors(self, bus_all):
+        """SUMO-style neighbor detection: sort on-route buses by launch_time,
+        then take the bus immediately before (forward) and after (backward) in
+        the sequence.  Replaces the legacy trip_id±2 filter which only worked
+        for the original single-line bidirectional scenario.
 
-        if self.next_station in self.effective_station[2:] and (len(self.forward_bus) != 0 or len(self.backward_bus) != 0):
-            # 15-dim obs, aligned with SUMO rl_env.py _register_event():
-            # [line_idx, bus_idx, station_idx, time_period, direction,
-            #  fwd_hw, bwd_hw, waiting_pax, target_hw, base_stop_dur,
-            #  sim_time, gap, co_fwd_hw, co_bwd_hw, seg_speed]
-            _line_idx   = getattr(self, 'line_idx', 0)   # 0 for single-line; set by multi-line sim
-            _gap        = 360.0 - self.forward_headway
-            _seg_speed  = self.current_route.speed_limit
+        Returns (forward_bus, backward_bus) — either may be None.
+        """
+        # Only consider buses that are actively on route (same logic as SUMO)
+        active = [b for b in bus_all if b.on_route]
+        active.sort(key=lambda b: b.launch_time)
+        try:
+            idx = active.index(self)
+        except ValueError:
+            return None, None
+        fwd = active[idx - 1] if idx > 0 else None
+        bwd = active[idx + 1] if idx < len(active) - 1 else None
+        return fwd, bwd
+
+    def _compute_reward_linear(self) -> float:
+        """SUMO-style linear-penalty reward matching rl_env.py _compute_reward_linear."""
+        def headway_reward(hw, target):
+            return -abs(hw - target)
+
+        fwd_r = headway_reward(self.forward_headway, self.target_forward_headway)  if self.forward_bus_present  else None
+        bwd_r = headway_reward(self.backward_headway, self.target_backward_headway) if self.backward_bus_present else None
+
+        if fwd_r is not None and bwd_r is not None:
+            fwd_dev = abs(self.forward_headway  - self.target_forward_headway)
+            bwd_dev = abs(self.backward_headway - self.target_backward_headway)
+            weight  = fwd_dev / (fwd_dev + bwd_dev + 1e-6)
+            R = self.target_forward_headway / max(self.target_backward_headway, 1e-6)
+            similarity_bonus = -abs(self.forward_headway - R * self.backward_headway) * 0.5 / ((1 + R) / 2)
+            reward = fwd_r * weight + bwd_r * (1 - weight) + similarity_bonus
+        elif fwd_r is not None:
+            reward = fwd_r
+        elif bwd_r is not None:
+            reward = bwd_r
+        else:
+            return None  # isolated bus — no obs/reward
+
+        # Smooth large-deviation penalty (matches SUMO rl_env.py)
+        f_pen = (20.0 * np.tanh((abs(self.forward_headway  - self.target_forward_headway)  - 0.5 * self.target_forward_headway)  / 30.0)
+                 if self.forward_bus_present  and self.target_forward_headway  > 0 else 0.0)
+        b_pen = (20.0 * np.tanh((abs(self.backward_headway - self.target_backward_headway) - 0.5 * self.target_backward_headway) / 30.0)
+                 if self.backward_bus_present and self.target_backward_headway > 0 else 0.0)
+        reward -= max(0.0, f_pen + b_pen)
+        return reward
+
+    def _prepare_for_action(self, current_time, bus_all, debug):
+        # Neighbors and headways are already computed in arrive_station().
+        # Only emit obs/reward at non-terminal, non-first-stop positions AND
+        # only when at least one neighbour bus is present (matches SUMO logic:
+        # isolated buses get no control).
+        if (self.next_station in self.effective_station[2:]
+                and (self.forward_bus_present or self.backward_bus_present)):
+
+            _line_idx  = getattr(self, 'line_idx', 0)
+            _gap       = self.target_forward_headway - self.forward_headway   # SUMO: target - actual
+            _seg_speed = self.current_route.speed_limit
+
             self.obs = [
-                float(_line_idx),                                   # 0: line_id (categorical)
-                float(self.bus_id),                                 # 1: bus_id (categorical)
-                float(self.last_station.station_id),                # 2: station_id (categorical)
-                float(int(current_time) // 3600),                   # 3: time_period (categorical)
-                float(self.direction),                              # 4: direction (categorical)
-                float(self.forward_headway),                        # 5: forward_headway (s)
-                float(self.backward_headway),                       # 6: backward_headway (s)
-                float(len(self.next_station.waiting_passengers)),   # 7: waiting_passengers
-                360.0,                                              # 8: target_headway
-                float(self.holding_time),                           # 9: base_stop_duration
-                float(current_time),                                # 10: sim_time (s)
-                float(_gap),                                        # 11: gap = target - fwd_hw
-                360.0,                                              # 12: co_line_forward_hw (no co-line)
-                360.0,                                              # 13: co_line_backward_hw (no co-line)
-                float(_seg_speed),                                  # 14: segment_mean_speed
+                float(_line_idx),                                    # 0: line_id (categorical)
+                float(self.bus_id),                                  # 1: bus_id (categorical)
+                float(self.last_station.station_id),                 # 2: station_id (categorical)
+                float(int(current_time) // 3600),                    # 3: time_period (categorical)
+                float(self.direction),                               # 4: direction (categorical)
+                float(self.forward_headway),                         # 5: forward_headway (s)
+                float(self.backward_headway),                        # 6: backward_headway (s)
+                float(len(self.next_station.waiting_passengers)),    # 7: waiting_passengers
+                float(self.target_forward_headway),                  # 8: target_headway (dynamic)
+                float(self.holding_time),                            # 9: base_stop_duration
+                float(current_time),                                 # 10: sim_time (s)
+                float(_gap),                                         # 11: gap = target - fwd_hw
+                360.0,                                               # 12: co_line_fwd_hw (no co-line)
+                360.0,                                               # 13: co_line_bwd_hw (no co-line)
+                float(_seg_speed),                                   # 14: segment_mean_speed
             ]
 
-            def headway_reward(headway):
-                return -abs(headway - 360)
-
-            forward_reward = headway_reward(self.forward_headway) if len(self.forward_bus) != 0 else None
-            backward_reward = headway_reward(self.backward_headway) if len(self.backward_bus) != 0 else None
-            if forward_reward is not None and backward_reward is not None:
-                weight = abs(self.forward_headway - 360) / (abs(self.forward_headway - 360) + abs(self.backward_headway - 360) + 1e-6)
-                similarity_bonus = -abs(self.forward_headway - self.backward_headway) * 0.5
-                self.reward = forward_reward * weight + backward_reward * (1 - weight) + similarity_bonus
-            elif forward_reward is not None:
-                self.reward = forward_reward
-            elif backward_reward is not None:
-                self.reward = backward_reward
-            else:
-                self.reward = -50
-
-            if abs(self.forward_headway - 360) > 180 or abs(self.backward_headway - 360) > 180:
-                self.reward -= 20
-                self.is_unhealthy = True
+            reward = self._compute_reward_linear()
+            self.reward = reward  # may be None if isolated (shouldn't happen given guard above)
 
         self.state = BusState.WAITING_ACTION
 
@@ -348,56 +411,97 @@ class Bus(object):
             return None
 
     def arrive_station(self, current_time, bus_all, debug):
-        # Because we have to use the self.holding_time later, so we exchange passenger first when arrived a station
-        # self.exchange_passengers(current_time) # self.holding_time is set in this function
-        # Update forward_bus backward_bus and relative reward when a bus is arrived a station(except terminal)
+        """Called when bus arrives at a stop.
 
-        # record the start time and station when the bus stops
+        Neighbor detection and headway computation now follow SUMO
+        rl_bridge.py exactly:
+          - Neighbors found by sorting active buses by launch_time.
+          - forward_headway = service_completion_time - front_bus last-arrival-time at this stop
+            (trajectory_dict timestamp, index 1).
+          - backward_headway = backward_bus.last_forward_headway (cached value).
+          - Default headway = schedule gap between consecutive trips.
+          - self.last_forward_headway cached so the bus behind can read it.
+        """
         self.current_speed = 0
         self._stop_start_time = current_time
         self._stop_station = self.next_station.station_name
 
-        self.forward_bus = list(filter(lambda x: self.trip_id - 2 in x.trip_id_list, bus_all))
-        if len(self.forward_bus) != 0:
-            # print('there is a forward bus')
-            forward_record = [record[1] for record in
-                              self.forward_bus[0].trajectory_dict[self.next_station.station_name] if
-                              record[-1] == self.trip_id - 2]
-            # 当前车到达过当前站点，此时用当前时间减去前车到达当前站点的时间，再加上本车在当前站点的停车时间，减去前车在当前站点的停车时间，即为前车车头时距
-            if len(forward_record) != 0:
-                self.forward_headway = current_time + self.holding_time - min(forward_record)
-            # 当前车没有到达当前站点，此时用当前车的绝对距离减去前车的绝对距离，再除以前车的速度，即为前车车头时距
-            else:
-                if not self.forward_bus[0].on_route:
-                    forward_travel_distance = len(self.stations_list) // 2 * 500 + self.forward_bus[
-                        0].travel_distance
-                else:
-                    forward_travel_distance = self.forward_bus[0].travel_distance
-                # absolute_distance should be 10000 if direction is 0 else 0
-                self.forward_headway = -(self.travel_distance - forward_travel_distance) / (
-                        self.travel_distance / (current_time + self.holding_time - self.launch_time))
-        else:
-            # If there is no bus in the forward
-            self.forward_headway = 360
+        station_name = self.next_station.station_name
+        # time when passenger exchange finishes (matches SUMO service_completion_time)
+        service_completion_time = current_time + self.holding_time
 
-        self.backward_bus = list(filter(lambda x: self.trip_id + 2 in x.trip_id_list, bus_all))
-        self.backward_headway = self.backward_bus[0].forward_headway if len(self.backward_bus) != 0 else 360
-        # self.backward_headway = 360
-        # when the bus arrives at a station, drive() will switch the state to HOLDING so this logic only executes once
+        # ── SUMO-style neighbor detection ─────────────────────────────────────
+        forward_bus, backward_bus = self._find_neighbors(bus_all)
+        self.forward_bus  = [forward_bus]  if forward_bus  else []
+        self.backward_bus = [backward_bus] if backward_bus else []
+        self.forward_bus_present  = forward_bus  is not None
+        self.backward_bus_present = backward_bus is not None
+
+        # ── Dynamic target headways from schedule  ─────────────────────────────
+        # SUMO: target = abs(my_start_time - neighbor_start_time)
+        self.target_forward_headway = 360.0
+        if forward_bus is not None:
+            gap = abs(self.launch_time - forward_bus.launch_time)
+            self.target_forward_headway = gap if gap >= 10.0 else 360.0
+
+        self.target_backward_headway = 360.0
+        if backward_bus is not None:
+            gap = abs(backward_bus.launch_time - self.launch_time)
+            self.target_backward_headway = gap if gap >= 10.0 else 360.0
+
+        cap_fwd = self.target_forward_headway  * 2.0
+        cap_bwd = self.target_backward_headway * 2.0
+
+        # ── Forward headway (SUMO _compute_robust_headway) ────────────────────
+        if forward_bus is not None:
+            fwd_records = forward_bus.trajectory_dict.get(station_name, [])
+            if fwd_records:
+                # trajectory_dict entry: [name, departure_time, dist, dir, trip_id]
+                front_depart_time = fwd_records[-1][1]  # most recent depart time at this stop
+                hw = service_completion_time - front_depart_time
+                self.forward_headway = max(0.0, min(hw, cap_fwd))
+            else:
+                # Distance-based fallback (SUMO: -dist_diff / avg_speed)
+                dist_diff = self.travel_distance - forward_bus.travel_distance
+                duration  = current_time - self.launch_time
+                if duration > 1.0:
+                    avg_speed = self.travel_distance / max(duration, 1.0)
+                    if avg_speed > 0.1 and dist_diff < 0:
+                        self.forward_headway = min(-dist_diff / avg_speed, cap_fwd)
+                    else:
+                        self.forward_headway = self.target_forward_headway
+                else:
+                    self.forward_headway = self.target_forward_headway
+        else:
+            self.forward_headway = self.target_forward_headway
+
+        # Cache for the bus behind to read as its backward_headway
+        self.last_forward_headway = self.forward_headway
+
+        # ── Backward headway (SUMO: backward_bus.last_forward_headway) ────────
+        if backward_bus is not None and backward_bus.last_forward_headway is not None:
+            self.backward_headway = min(backward_bus.last_forward_headway, cap_bwd)
+        else:
+            self.backward_headway = self.target_backward_headway
+
+
+        # ── Update position ────────────────────────────────────────────────────
         self.absolute_distance += self.next_station_dis * self.direction_int
-        # station_type == 0, means the next_station is terminal, then put this bus to terminal_bus rather than on_route
-        # then change the direction of the bus.
+
         if self.next_station.station_type == 0 and self.on_route:
+            # Terminal: retire this bus
             self.on_route = False
             self.back_to_terminal_time = current_time
             self.last_station = self.effective_station[-1]
-            self.direction = int(not self.direction)
-            self.effective_station = self.stations_list[:round(len(self.stations_list) / 2)] if self.direction else self.stations_list[round(len(self.stations_list) / 2) - 1:]
-            self.next_station = self.next_station_func()
+            if self.one_directional:
+                # One-directional (SUMO): bus retires permanently, no turnaround
+                pass
+            else:
+                # Bi-directional: flip direction for return trip
+                self.direction = int(not self.direction)
+                self.effective_station = self._compute_effective_station()
+                self.next_station = self.next_station_func()
         else:
-            # if next_station is normal station, update last_station to its next_station, reset the relative distance of bus
-            # if len(self.forward_bus) != 0:
-            #     print('original_reward_place:', self.reward)
             station_id = self.last_station.station_id + 1 if self.direction else self.last_station.station_id - 1
             self.headway_dif.append([self.forward_headway - self.backward_headway, station_id])
             self.bus_update()
@@ -413,14 +517,22 @@ class Bus(object):
         self.last_station = self.effective_station[0]
         self.next_station = self.effective_station[1]  # sync after turnaround
 
-        self.forward_headway = 360
-        self.backward_headway = 360
+        self.forward_headway  = 360.0
+        self.backward_headway = 360.0
+        self.last_forward_headway    = None   # reset cache
+        self.forward_bus_present     = False
+        self.backward_bus_present    = False
+        self.target_forward_headway  = 360.0
+        self.target_backward_headway = 360.0
 
         self.last_station_dis = 0.
         self.next_station_dis = self.current_route.distance
-        self.absolute_distance = 0. if self.direction else len(self.stations_list) // 2 * 500
+        if self.one_directional:
+            self.absolute_distance = 0.
+        else:
+            self.absolute_distance = 0. if self.direction else len(self.stations_list) // 2 * 500
 
-        self.passengers = np.array([])
+        self.passengers = []
         self.current_speed = 0.
         self.holding_time = 0.
         self.back_to_terminal_time = None
@@ -435,5 +547,10 @@ class Bus(object):
         self.state = BusState.TRAVEL
         self.on_route = True
         self.trip_turn = len(self.trip_id_list)
-        self.is_unhealthy = False # False if the bus is healthy, True if the bus is unhealthy, then terminate env early
+        self.is_unhealthy = False
+
+        # Reinit trajectory_dict for the new trip's effective stations
+        self.trajectory_dict.clear()
+        for station in self.effective_station:
+            self.trajectory_dict[station.station_name] = []
 
