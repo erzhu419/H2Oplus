@@ -613,3 +613,55 @@ class BusSamplerPolicy(object):
 
 #     def _log_normalizer(self, x, y):
 #         return -0.25 * x.pow(2) / y + 0.5 * torch.log(-math.pi / y)
+
+
+# ══════════════════════════════════════════════════════════════════
+# Ensemble Q-network (RE-SAC / RORL style)
+# ══════════════════════════════════════════════════════════════════
+
+import math as _math
+
+class VectorizedLinear(nn.Module):
+    """Batched linear layer for ensemble Q-networks."""
+    def __init__(self, in_f, out_f, E):
+        super().__init__()
+        self.w = nn.Parameter(torch.empty(E, in_f, out_f))
+        self.b = nn.Parameter(torch.empty(E, 1, out_f))
+        for i in range(E):
+            nn.init.kaiming_uniform_(self.w[i], a=_math.sqrt(5))
+        fan, _ = nn.init._calculate_fan_in_and_fan_out(self.w[0])
+        bd = 1 / _math.sqrt(fan) if fan > 0 else 0
+        nn.init.uniform_(self.b, -bd, bd)
+
+    def forward(self, x):
+        return x @ self.w + self.b
+
+
+class BusEnsembleCritic(nn.Module):
+    """Vectorized ensemble of E Q-networks with embedding layer.
+
+    Input: (obs[17], action[2]) → EmbeddingLayer → concat → E parallel MLPs → (E, B) Q-values.
+    """
+    def __init__(self, state_dim, action_dim, hidden, E, embedding_layer):
+        super().__init__()
+        self.emb = embedding_layer
+        self.E = E
+        self.num_cat = len(embedding_layer.cat_cols)
+        self.net = nn.Sequential(
+            VectorizedLinear(state_dim + action_dim, hidden, E),
+            nn.LayerNorm(hidden),
+            nn.ReLU(),
+            VectorizedLinear(hidden, hidden, E),
+            nn.ReLU(),
+            VectorizedLinear(hidden, hidden, E),
+            nn.ReLU(),
+            VectorizedLinear(hidden, 1, E),
+        )
+
+    def forward(self, state, action):
+        cat = state[:, :self.num_cat]
+        cont = state[:, self.num_cat:]
+        emb = self.emb(cat)
+        x = torch.cat([emb, cont, action], dim=1)
+        x = x.unsqueeze(0).repeat_interleave(self.E, dim=0)  # (E, B, dim)
+        return self.net(x).squeeze(-1)  # (E, B)

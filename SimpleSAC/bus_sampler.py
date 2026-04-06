@@ -229,7 +229,7 @@ class BusStepSampler:
                 snapshot_now = self.env.capture_full_system_snapshot()
                 z_now = extract_structured_context(snapshot_now)
 
-                action_dict = {k: None for k in range(self.env.max_agent_num)}
+                action_dict = {}
 
                 for bus_id, obs_vec in active_buses:
                     total_events += 1
@@ -377,7 +377,7 @@ class BusStepSampler:
 
     def _init_env_state(self):
         """Step env until at least one bus produces observations."""
-        action_dict = {k: 0.0 for k in range(self.env.max_agent_num)}
+        action_dict = {}
         for _ in range(10000):  # safety limit
             state, reward, done = self.env.step_fast(action_dict)
             if done:
@@ -429,11 +429,11 @@ class BusEvalSampler:
 
                 if not active_buses:
                     # No decision events yet — step forward
-                    action_dict = {k: None for k in range(self.env.max_agent_num)}
+                    action_dict = {}
                     state, reward, done = self.env.step_to_event(action_dict)
                     continue
 
-                action_dict = {k: None for k in range(self.env.max_agent_num)}
+                action_dict = {}
                 for bus_id, obs_vec in active_buses:
                     station_idx = int(obs_vec[2]) if len(obs_vec) > 2 else -1
                     reward_val = self.env.reward.get(bus_id, 0.0)
@@ -471,7 +471,7 @@ class BusEvalSampler:
         return trajs
 
     def _init_env_state(self):
-        action_dict = {k: 0.0 for k in range(self.env.max_agent_num)}
+        action_dict = {}
         for _ in range(10000):
             state, reward, done = self.env.step_fast(action_dict)
             if done:

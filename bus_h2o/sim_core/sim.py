@@ -388,9 +388,11 @@ class env_bus(object):
             bus.obs = []
             if bus.in_station and hasattr(bus, 'trajectory'):
                 bus.trajectory.append([bus.last_station.station_name, self.current_time, bus.absolute_distance, bus.direction, bus.trip_id])
-                traj_list = bus.trajectory_dict.get(bus.last_station.station_name)
-                if traj_list is not None:
-                    traj_list.append([bus.last_station.station_name, self.current_time + bus.holding_time, bus.absolute_distance, bus.direction, bus.trip_id])
+                # trajectory_dict is written ONCE at arrival (bus.py drive() line 253-259)
+                # with boarding-completion time. Do NOT append here — that would leak
+                # the RL hold time into the departure record, making holding "visible"
+                # to subsequent buses' headway calculation. In SUMO, hold time is NOT
+                # reflected in trajectory_dict, so holding should be headway-neutral.
             if bus.on_route:
                 # NOTE: in-route trajectory.append removed (was O(n_buses * n_steps), only for drawing)
                 bus.drive(self.current_time, action.get(bus.bus_id, 0.0), self.bus_all, debug=debug, co_line_buses=co_line_buses)

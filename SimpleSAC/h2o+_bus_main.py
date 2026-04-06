@@ -125,6 +125,9 @@ FLAGS_DEF = define_flags_with_default(
     checkpoint_period=50,            # save model every N epochs
 
     # ── H2O+ ──────────────────────────────────────────────────────
+    use_ensemble_q=False,   # Use ensemble Q (RE-SAC style) instead of twin-Q + V
+    ensemble_size=5,        # Number of Q-networks in ensemble
+    ensemble_ckpt="",       # Path to ensemble offline RL checkpoint for initialization
     h2o=H2OPlusBus.get_default_config(),
     logging=WandBLogger.get_default_config(),
 
@@ -384,51 +387,80 @@ def main(argv):
         action_range=FLAGS.action_range,
     )
 
-    qf1 = BusEmbeddingQFunction(
-        num_inputs=state_dim,
-        num_actions=FLAGS.action_dim,
-        hidden_size=FLAGS.hidden_size,
-        embedding_layer=embedding_template.clone(),
-    )
-    target_qf1 = deepcopy(qf1)
-
-    qf2 = BusEmbeddingQFunction(
-        num_inputs=state_dim,
-        num_actions=FLAGS.action_dim,
-        hidden_size=FLAGS.hidden_size,
-        embedding_layer=embedding_template.clone(),
-    )
-    target_qf2 = deepcopy(qf2)
-
-    vf = BusEmbeddingVFunction(
-        num_inputs=state_dim,
-        hidden_size=FLAGS.hidden_size,
-        embedding_layer=embedding_template.clone(),
-    )
-
     discriminator = TransitionDiscriminator(
         obs_dim=FLAGS.obs_dim,
         action_dim=FLAGS.action_dim,
         context_dim=30,
-        z_effective_dim=20,  # drop dead waiting channel (dims 20:30)
+        z_effective_dim=20,
         use_spectral_norm=getattr(FLAGS.h2o, 'disc_spectral_norm', False),
     )
 
     if FLAGS.h2o.target_entropy >= 0.0:
         FLAGS.h2o.target_entropy = -float(FLAGS.action_dim)
 
-    # ── Create H2O+ agent ─────────────────────────────────────────
-    h2o = H2OPlusBus(
-        FLAGS.h2o,
-        policy,
-        qf1,
-        qf2,
-        target_qf1,
-        target_qf2,
-        vf,
-        replay_buffer,
-        discriminator=discriminator,
-    )
+    if FLAGS.use_ensemble_q:
+        # ── Ensemble Q (RE-SAC style) ────────────────────────────
+        from model import BusEnsembleCritic
+        from h2oplus_ensemble import H2OPlusEnsemble
+
+        E = FLAGS.ensemble_size
+        qf = BusEnsembleCritic(
+            state_dim, FLAGS.action_dim, FLAGS.hidden_size, E,
+            embedding_template.clone(),
+        )
+        target_qf = deepcopy(qf)
+        for p in target_qf.parameters():
+            p.requires_grad_(False)
+
+        # Optionally load from ensemble offline RL checkpoint
+        if FLAGS.ensemble_ckpt and os.path.exists(FLAGS.ensemble_ckpt):
+            ens_ckpt = torch.load(FLAGS.ensemble_ckpt, map_location=FLAGS.device, weights_only=True)
+            if 'policy' in ens_ckpt:
+                # train_offline_ensemble.py checkpoint format
+                log.info(f"Loading ensemble offline checkpoint: {FLAGS.ensemble_ckpt}")
+                # Policy architecture might differ — try loading, skip on mismatch
+                try:
+                    policy.load_state_dict(ens_ckpt['policy'], strict=False)
+                    log.info("  Policy loaded from ensemble checkpoint (partial match OK)")
+                except Exception as e:
+                    log.warning(f"  Policy load failed: {e}")
+                if 'qf' in ens_ckpt:
+                    try:
+                        qf.load_state_dict(ens_ckpt['qf'])
+                        target_qf.load_state_dict(ens_ckpt['qf'])
+                        log.info("  Q-function loaded from ensemble checkpoint")
+                    except Exception as e:
+                        log.warning(f"  Q-function load failed: {e}")
+
+        h2o_config = dict(FLAGS.h2o)
+        h2o_config['ensemble_size'] = E
+        h2o = H2OPlusEnsemble(
+            h2o_config, policy, qf, target_qf, replay_buffer,
+            discriminator=discriminator,
+        )
+        log.info(f"Using H2OPlusEnsemble: E={E}, β={FLAGS.h2o.get('beta', -2.0)}")
+    else:
+        # ── Original twin-Q + V ──────────────────────────────────
+        qf1 = BusEmbeddingQFunction(
+            num_inputs=state_dim, num_actions=FLAGS.action_dim,
+            hidden_size=FLAGS.hidden_size, embedding_layer=embedding_template.clone(),
+        )
+        target_qf1 = deepcopy(qf1)
+        qf2 = BusEmbeddingQFunction(
+            num_inputs=state_dim, num_actions=FLAGS.action_dim,
+            hidden_size=FLAGS.hidden_size, embedding_layer=embedding_template.clone(),
+        )
+        target_qf2 = deepcopy(qf2)
+        vf = BusEmbeddingVFunction(
+            num_inputs=state_dim, hidden_size=FLAGS.hidden_size,
+            embedding_layer=embedding_template.clone(),
+        )
+        h2o = H2OPlusBus(
+            FLAGS.h2o, policy, qf1, qf2, target_qf1, target_qf2, vf,
+            replay_buffer, discriminator=discriminator,
+        )
+        log.info("Using H2OPlusBus (twin-Q + V)")
+
     h2o.torch_to_device(FLAGS.device)
 
     sampler_policy = BusSamplerPolicy(policy, FLAGS.device)
@@ -676,19 +708,22 @@ def main(argv):
         # ── Periodic checkpoint ───────────────────────────────────
         if (epoch + 1) % FLAGS.checkpoint_period == 0:
             ckpt_path = os.path.join(log_dir, f"checkpoint_epoch{epoch+1}.pt")
-            torch.save(
-                {
-                    "epoch": epoch,
-                    "policy_state_dict": policy.state_dict(),
-                    "qf1_state_dict": qf1.state_dict(),
-                    "qf2_state_dict": qf2.state_dict(),
-                    "target_qf1_state_dict": target_qf1.state_dict(),
-                    "target_qf2_state_dict": target_qf2.state_dict(),
-                    "vf_state_dict": vf.state_dict(),
-                    "discriminator_state_dict": discriminator.state_dict(),
-                    "log_alpha": h2o.log_alpha.state_dict() if h2o.log_alpha else None,
-                    "variant": variant,
-                },
+            if hasattr(h2o, 'save_checkpoint'):
+                h2o.save_checkpoint(ckpt_path, epoch, variant)
+            else:
+                torch.save(
+                    {
+                        "epoch": epoch,
+                        "policy_state_dict": policy.state_dict(),
+                        "qf1_state_dict": qf1.state_dict(),
+                        "qf2_state_dict": qf2.state_dict(),
+                        "target_qf1_state_dict": target_qf1.state_dict(),
+                        "target_qf2_state_dict": target_qf2.state_dict(),
+                        "vf_state_dict": vf.state_dict(),
+                        "discriminator_state_dict": discriminator.state_dict(),
+                        "log_alpha": h2o.log_alpha.state_dict() if h2o.log_alpha else None,
+                        "variant": variant,
+                    },
                 ckpt_path,
             )
             log.info(f"Checkpoint saved: {ckpt_path}")
@@ -705,18 +740,21 @@ def main(argv):
     # ==================================================================
     if FLAGS.save_model:
         final_path = os.path.join(log_dir, f"model_final.pt")
-        torch.save(
-            {
-                "epoch": FLAGS.n_epochs - 1,
-                "policy_state_dict": policy.state_dict(),
-                "qf1_state_dict": qf1.state_dict(),
-                "qf2_state_dict": qf2.state_dict(),
-                "target_qf1_state_dict": target_qf1.state_dict(),
-                "target_qf2_state_dict": target_qf2.state_dict(),
-                "vf_state_dict": vf.state_dict(),
-                "discriminator_state_dict": discriminator.state_dict(),
-                "log_alpha": h2o.log_alpha.state_dict() if h2o.log_alpha else None,
-                "variant": variant,
+        if hasattr(h2o, 'save_checkpoint'):
+            h2o.save_checkpoint(final_path, FLAGS.n_epochs - 1, variant)
+        else:
+            torch.save(
+                {
+                    "epoch": FLAGS.n_epochs - 1,
+                    "policy_state_dict": policy.state_dict(),
+                    "qf1_state_dict": qf1.state_dict(),
+                    "qf2_state_dict": qf2.state_dict(),
+                    "target_qf1_state_dict": target_qf1.state_dict(),
+                    "target_qf2_state_dict": target_qf2.state_dict(),
+                    "vf_state_dict": vf.state_dict(),
+                    "discriminator_state_dict": discriminator.state_dict(),
+                    "log_alpha": h2o.log_alpha.state_dict() if h2o.log_alpha else None,
+                    "variant": variant,
             },
             final_path,
         )

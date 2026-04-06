@@ -55,6 +55,15 @@ parser.add_argument('--soft_tau', type=float, default=1e-2)
 parser.add_argument('--critic_actor_ratio', type=int, default=3, help='Critic updates per actor update')
 parser.add_argument('--max_alpha', type=float, default=0.6)
 parser.add_argument('--reward_scale', type=float, default=10.0)
+# ── CQL (Conservative Q-Learning) ──
+parser.add_argument('--use_cql', action='store_true', help='Add CQL penalty to Q-loss')
+parser.add_argument('--cql_alpha', type=float, default=5.0, help='CQL penalty weight')
+parser.add_argument('--cql_n_actions', type=int, default=10, help='CQL random actions for logsumexp')
+# ── Reward Shaping ──
+parser.add_argument('--use_reward_shaping', action='store_true', help='Learn and apply reward correction phi(s,a)')
+parser.add_argument('--rs_hidden', type=int, default=64, help='Reward shaping network hidden dim')
+parser.add_argument('--rs_lr', type=float, default=1e-3, help='Reward shaping learning rate')
+parser.add_argument('--rs_pretrain_steps', type=int, default=5000, help='Pretrain reward shaping before RL')
 args = parser.parse_args()
 
 torch.manual_seed(args.seed)
@@ -62,7 +71,12 @@ np.random.seed(args.seed)
 device = torch.device(args.device)
 
 # ── Output ──
-out_dir = os.path.join(_H2O_ROOT, "experiment_output", "offline_ensemble")
+_method_suffix = "offline_ensemble"
+if args.use_cql:
+    _method_suffix += "_cql"
+if args.use_reward_shaping:
+    _method_suffix += "_rs"
+out_dir = os.path.join(_H2O_ROOT, "experiment_output", _method_suffix)
 os.makedirs(out_dir, exist_ok=True)
 
 # ── Load data ──
@@ -218,6 +232,59 @@ opt_pi = optim.Adam(pi.parameters(), lr=args.lr)
 opt_al = optim.Adam([log_alpha], lr=args.lr)
 
 # ══════════════════════════════════════════════════════════════════
+# Reward Shaping network (optional)
+# ══════════════════════════════════════════════════════════════════
+
+rs_net = None
+opt_rs = None
+if args.use_reward_shaping:
+    class RewardShapingNet(nn.Module):
+        """Learn phi(s,a) = E[r_target] - E[r_source] from offline data.
+        For now, since we only have offline SUMO data, phi predicts the
+        reward directly. When SIM data is available, phi = r_sumo - r_sim."""
+        def __init__(self, state_dim, action_dim, hidden):
+            super().__init__()
+            self.emb = copy.deepcopy(emb_template)
+            inp = self.emb.output_dim + (obs_dim - N_CAT) + action_dim
+            self.net = nn.Sequential(
+                nn.Linear(inp, hidden), nn.ReLU(),
+                nn.Linear(hidden, hidden), nn.ReLU(),
+                nn.Linear(hidden, 1),
+            )
+        def forward(self, state, action):
+            cat = state[:, :N_CAT]
+            cont = state[:, N_CAT:]
+            emb = self.emb(cat)
+            return self.net(torch.cat([emb, cont, action], dim=1)).squeeze(-1)
+
+    rs_net = RewardShapingNet(state_dim, action_dim, args.rs_hidden).to(device)
+    opt_rs = optim.Adam(rs_net.parameters(), lr=args.rs_lr)
+
+    # Pretrain reward shaping: learn to predict offline rewards from (s, a)
+    print(f"Pretraining reward shaping network for {args.rs_pretrain_steps} steps...")
+    for rs_step in range(args.rs_pretrain_steps):
+        batch_rs = buf.sample(args.batch_size, scope="real")
+        r_pred = rs_net(batch_rs["observations"], batch_rs["actions"])
+        r_true = batch_rs["rewards"].squeeze()
+        rs_loss = F.mse_loss(r_pred, r_true)
+        opt_rs.zero_grad()
+        rs_loss.backward()
+        opt_rs.step()
+        if (rs_step + 1) % 1000 == 0:
+            print(f"  RS pretrain step {rs_step+1}: loss={rs_loss.item():.2f}")
+    print(f"Reward shaping pretrained. Final loss={rs_loss.item():.2f}")
+
+if args.use_cql:
+    print(f"CQL enabled: alpha={args.cql_alpha}, n_actions={args.cql_n_actions}")
+
+method_name = "ensemble"
+if args.use_cql:
+    method_name += "+cql"
+if args.use_reward_shaping:
+    method_name += "+rs"
+print(f"Method: {method_name}")
+
+# ══════════════════════════════════════════════════════════════════
 # Training loop
 # ══════════════════════════════════════════════════════════════════
 
@@ -241,6 +308,16 @@ for step in range(1, args.n_steps + 1):
     # Reward normalization (global z-score, matches h2oplus_bus.py)
     R = args.reward_scale * (R - r_mean) / (r_std + 1e-6)
 
+    # ── Reward shaping correction (optional) ────────────────────
+    if rs_net is not None:
+        with torch.no_grad():
+            # phi(s,a) predicts what the reward "should" be based on offline data
+            # Use it as a bonus: R_corrected = R + lambda * (phi - R)
+            # This pulls sim rewards toward the learned offline reward surface
+            phi = rs_net(S, A)
+            phi_norm = args.reward_scale * (phi - r_mean) / (r_std + 1e-6)
+            R = R + 0.3 * (phi_norm - R)  # blend: 70% original + 30% shaped
+
     # ── Critic update (every step) ──────────────────────────────
     with torch.no_grad():
         a2, lp2 = pi.evaluate(S2)
@@ -257,6 +334,26 @@ for step in range(1, args.n_steps + 1):
     # OOD penalty: penalize Q-disagreement
     ood_loss = q_pred.std(0).mean()
     total_q_loss = qf_loss + args.beta_ood * ood_loss
+
+    # ── CQL penalty (optional): push down Q for OOD actions ────
+    cql_loss = torch.tensor(0.0, device=device)
+    if args.use_cql:
+        B = S.shape[0]
+        # Random actions for logsumexp
+        random_actions = torch.FloatTensor(B * args.cql_n_actions, action_dim).uniform_(-1, 1).to(device)
+        S_rep = S.unsqueeze(1).repeat(1, args.cql_n_actions, 1).view(B * args.cql_n_actions, -1)
+        q_random = qf(S_rep, random_actions)  # (E, B*n)
+
+        # Policy actions
+        with torch.no_grad():
+            a_pi, _ = pi.evaluate(S)
+        q_pi = qf(S, a_pi)  # (E, B)
+
+        # CQL: logsumexp(Q_random) - Q_data
+        q_random_reshape = q_random.view(E, B, args.cql_n_actions)
+        logsumexp_q = torch.logsumexp(q_random_reshape, dim=2)  # (E, B)
+        cql_loss = (logsumexp_q - q_pred).mean()
+        total_q_loss = total_q_loss + args.cql_alpha * cql_loss
 
     opt_q.zero_grad()
     total_q_loss.backward()
@@ -306,9 +403,10 @@ for step in range(1, args.n_steps + 1):
         csv_file.flush()
 
     if step % 1000 == 0:
+        cql_str = f", cql={cql_loss.item():.2f}" if args.use_cql else ""
         print(f"  Step {step:6d}/{args.n_steps}: "
               f"pi={pi_loss_val:.2f}, qf={qf_loss.item():.1f}, "
-              f"ood={ood_loss.item():.3f}, bc={bc_loss_val:.4f}, "
+              f"ood={ood_loss.item():.3f}, bc={bc_loss_val:.4f}{cql_str}, "
               f"α={alpha:.3f}, Q={q_pred.mean().item():.1f}, "
               f"wall={time.time()-t0:.0f}s")
 
