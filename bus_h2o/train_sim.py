@@ -11,7 +11,7 @@ Architecture mirrors sac_ensemble_SUMO_linear_penalty.py:
 
 Obs layout (15-dim, sim_core/bus.py _prepare_for_action):
   [0]  line_idx        (cat)
-  [1]  fleet_id        (cat, physical bus; FIFO-stable across trips)
+  [1]  bus_id          (cat, trip index; auto-incremented per departure)
   [2]  station_id      (cat)
   [3]  time_period     (cat, hour of day)
   [4]  direction       (cat, 0/1)
@@ -86,34 +86,36 @@ for d in (PIC_DIR, LOG_DIR, MODEL_DIR):
     os.makedirs(d, exist_ok=True)
 
 # ────────────────────── Env ─────────────────────────────────────────
-from envs.bus_sim_env import MultiLineSimEnv
-env = MultiLineSimEnv(args.env_config)
+# Use BusSimEnv (single 7X line + VirtualCoLineScheduler) for speed.
+# ~3-5s/ep vs ~186s/ep with MultiLineSimEnv (12 lines).
+from envs.bus_sim_env import BusSimEnv
+from sim_core.sim import env_bus
+env_bus._DATA_CACHE.clear()   # ensure fresh data load
+env = BusSimEnv(path=SCRIPT_DIR)
 
 # ────────────────────── Feature Spec (mirrors SUMO version) ─────────
 # 15-dim obs: indices 0-4 are categorical, 5-14 are continuous
-CAT_COLS     = ['line_id', 'fleet_id', 'station_id', 'time_period', 'direction']
+CAT_COLS     = ['line_id', 'bus_id', 'station_id', 'time_period', 'direction']
 N_CAT        = len(CAT_COLS)       # 5
 N_CONT       = 15 - N_CAT          # 10
 ACTION_DIM   = 1
 
 # Cardinalities (generous upper bounds, clamped in forward)
-# line_id maps to index 0..N_lines-1
-N_LINES      = len(env.line_map)
-MAX_BUSES    = max(le.max_agent_num for le in env.line_map.values())
-MAX_STATIONS = max(len(le.stations) for le in env.line_map.values())
+# 7X is line_idx 11 (alphabetically last among 12 SUMO lines)
+N_LINES      = 12        # keep embedding table compatible with SUMO model
+MAX_BUSES    = env.max_agent_num   # 25 for 7X
+MAX_STATIONS = len(env.stations)   # 25 for 7X
 MAX_HOUR     = 24
+LINE_IDX_7X  = 11   # fixed: 7X is always index 11 in SUMO
 
 CAT_CODE_DICT = {
     'line_id':     {i: i for i in range(N_LINES + 2)},
-    'fleet_id':    {i: i for i in range(MAX_BUSES + 2)},  # physical bus idx
+    'bus_id':      {i: i for i in range(MAX_BUSES + 2)},
     'station_id':  {i: i for i in range(MAX_STATIONS + 2)},
     'time_period': {i: i for i in range(MAX_HOUR + 2)},
     'direction':   {0: 0, 1: 1},
 }
-# Map line_id string → int index
-LINE_ID_MAP = {lid: i for i, lid in enumerate(sorted(env.line_map.keys()))}
-print(f"Lines: {LINE_ID_MAP}")
-print(f"N_LINES={N_LINES}, MAX_BUSES={MAX_BUSES}, MAX_STATIONS={MAX_STATIONS}")
+print(f"BusSimEnv (7X only): MAX_BUSES={MAX_BUSES}, MAX_STATIONS={MAX_STATIONS}")
 
 # action mapping: tanh[-1,1] -> holt[0,60]
 ACTION_SCALE = 30.0
@@ -391,19 +393,17 @@ class SACTrainer:
 
 
 # ────────────────────── Obs processing ──────────────────────────────
-def obs_to_vec(obs_list, line_id_int):
-    """Convert raw 15-dim obs list + line_id_int → numpy array."""
-    v = list(obs_list)
-    # obs[0] is already line_idx from sim; overwrite with our canonical int
-    v[0] = float(line_id_int)
-    return np.array(v, dtype=np.float32)
+def obs_to_vec(obs_list):
+    """Convert raw 15-dim obs list → numpy array.
+    obs[0] is already line_idx (=11 for 7X) set by BusSimEnv."""
+    return np.array(obs_list, dtype=np.float32)
 
 
 # ────────────────────── Training loop ───────────────────────────────
 def main():
     buf     = ReplayBuffer()
     trainer = SACTrainer(buf, args.hidden_dim, args.ensemble_size)
-    reward_scalers = {lid: RewardScaler(args.gamma) for lid in env.line_map}
+    reward_scaler = RewardScaler(args.gamma)
 
     # Logging
     ep_rewards = []
@@ -421,96 +421,74 @@ def main():
     for eps in range(args.max_episodes):
         t_ep_start = time.time()
 
-        # ── Reset env and get initial state ─────────────────────────
-        # reset() clears bus_all=[] and reinitialises everything.
-        # initialize_state() advances sim until at least one bus fires obs.
-        # The returned state_dict is the current per-bus accumulated obs list.
+        # ── Reset env ─────────────────────────────────────────────
         env.reset()
-        state_dict, reward_dict_init, _ = env.initialize_state()
+        state_dict, _, _ = env.initialize_state()
 
-        # Build action_dict from the state structure
-        action_dict = {lid: {k: None for k in range(le.max_agent_num)}
-                       for lid, le in env.line_map.items()}
+        # Build flat action dict: {bus_id: float | None}
+        action_dict = {k: None for k in range(env.max_agent_num)}
 
         done  = False
         ep_reward = 0.0
         ep_decisions = 0
         ep_q_this   = []
 
-        # pending: (line_id, bus_id) -> (state_vec, action_arr)
+        # pending: bus_id -> (state_vec, action_arr)
         pending = {}
 
         # ── Seed actions from initial state ──────────────────────────
-        for lid, buses in state_dict.items():
-            lid_int = LINE_ID_MAP.get(lid, 0)
-            for bus_id, obs_list in buses.items():
-                if not obs_list:
-                    continue
-                obs_raw = obs_list[-1]
-                sv      = obs_to_vec(obs_raw, lid_int)
-                a_np    = trainer.pi.get_action(sv)
-                a_val   = float(a_np[0]) if hasattr(a_np, '__len__') else float(a_np)
-                action_dict[lid][bus_id] = a_val
-                pending[(lid, bus_id)] = (sv, np.array([a_val], dtype=np.float32))
+        for bus_id, obs_list in state_dict.items():
+            if not obs_list:
+                continue
+            sv      = obs_to_vec(obs_list[-1])
+            a_np    = trainer.pi.get_action(sv)
+            a_val   = float(a_np[0]) if hasattr(a_np, '__len__') else float(a_np)
+            action_dict[bus_id] = a_val
+            pending[bus_id] = (sv, np.array([a_val], dtype=np.float32))
 
         while not done:
             # ── step env (event-driven: skip idle ticks) ─────────────
             cur_state, reward_dict, done = env.step_to_event(action_dict)
             step_total += 1
 
-            # ── reset actions to None; rebuild from new obs ────────────
-            for lid in action_dict:
-                for k in action_dict[lid]:
-                    action_dict[lid][k] = None
+            # ── reset actions to None ────────────────────────────────
+            for k in action_dict:
+                action_dict[k] = None
 
-            # ── process each line / bus ────────────────────────────────
-            for lid, buses in cur_state.items():
-                lid_int = LINE_ID_MAP.get(lid, 0)
-                for bus_id, obs_list in buses.items():
-                    if not obs_list:
-                        continue
-                    obs_raw = obs_list[-1]
-                    sv_new  = obs_to_vec(obs_raw, lid_int)
-                    r_raw   = float(reward_dict.get(lid, {}).get(bus_id, 0.0))
+            # ── process each bus ───────────────────────────────────────
+            for bus_id, obs_list in cur_state.items():
+                if not obs_list:
+                    continue
+                sv_new = obs_to_vec(obs_list[-1])
+                r_raw  = float(reward_dict.get(bus_id, 0.0))
 
-                    key = (lid, bus_id)
+                # ── settle pending transition ──────────────────────
+                if bus_id in pending:
+                    sv_old, a_old = pending[bus_id]
+                    if int(sv_old[2]) != int(sv_new[2]):
+                        # Real transition: station changed
+                        pending.pop(bus_id)
+                        r = (reward_scaler.scale(r_raw)
+                             if args.use_reward_scaling else r_raw)
+                        buf.push(sv_old, a_old, r, sv_new, 0.0)
+                        ep_reward    += r_raw
+                        ep_decisions += 1
 
-                    # ── settle pending transition ──────────────────────
-                    if key in pending:
-                        sv_old, a_old = pending[key]
-                        # station_id (obs[2]) must differ → valid transition
-                        if int(sv_old[2]) != int(sv_new[2]):
-                            # Real transition: s changed station
-                            pending.pop(key)
-                            r = (reward_scalers[lid].scale(r_raw)
-                                 if args.use_reward_scaling else r_raw)
-                            buf.push(sv_old, a_old, r, sv_new, 0.0)
-                            ep_reward    += r_raw
-                            ep_decisions += 1
-
-                            # ── select new action for the NEW state ───
-                            a_np = trainer.pi.get_action(sv_new)
-                            a_val = float(a_np[0]) if hasattr(a_np, '__len__') else float(a_np)
-                            action_dict[lid][bus_id] = a_val
-                            pending[key] = (sv_new, np.array([a_val], dtype=np.float32))
-                        # else: same station re-fire (WAITING_ACTION tick) →
-                        #   do NOT overwrite pending, do NOT select new action.
-                        #   The action from the decision tick is already in
-                        #   action_dict and will be consumed by the sim.
-                    else:
-                        # First time seeing this bus → select action
                         a_np = trainer.pi.get_action(sv_new)
                         a_val = float(a_np[0]) if hasattr(a_np, '__len__') else float(a_np)
-                        action_dict[lid][bus_id] = a_val
-                        pending[key] = (sv_new, np.array([a_val], dtype=np.float32))
+                        action_dict[bus_id] = a_val
+                        pending[bus_id] = (sv_new, np.array([a_val], dtype=np.float32))
+                else:
+                    a_np = trainer.pi.get_action(sv_new)
+                    a_val = float(a_np[0]) if hasattr(a_np, '__len__') else float(a_np)
+                    action_dict[bus_id] = a_val
+                    pending[bus_id] = (sv_new, np.array([a_val], dtype=np.float32))
 
             # ── training update ────────────────────────────────────────
-            # Train based on DECISION count (not env ticks) to match SUMO SAC.
-            # warmup: wait until buffer has at least batch_size samples.
             if (ep_decisions > 0
                     and ep_decisions % args.training_freq == 0
                     and len(buf) >= args.batch_size
-                    and step_total >= 2000):           # warmup: ~half first episode
+                    and step_total >= 500):            # warmup: ~half first ep
                 q_mean, ood = trainer.update(train_step)
                 ep_q_this.append(q_mean)
                 train_step += 1

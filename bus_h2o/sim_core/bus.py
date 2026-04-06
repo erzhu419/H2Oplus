@@ -1,6 +1,27 @@
 from enum import Enum, auto
 import numbers
 import numpy as np
+import random
+
+
+# ── Per-line signal configuration (from SUMO network analysis) ──────────
+# n_signals: number of traffic lights on the route
+# green_frac: average per-direction green fraction (~0.38 means 62% chance of red)
+# cycle: signal cycle length in seconds (all 90s in SUMO)
+LINE_SIGNAL_CONFIG = {
+    '7X':   {'n_signals': 17, 'green_frac': 0.38, 'cycle': 90},
+    '7S':   {'n_signals': 17, 'green_frac': 0.39, 'cycle': 90},
+    '102X': {'n_signals': 26, 'green_frac': 0.37, 'cycle': 90},
+    '102S': {'n_signals': 31, 'green_frac': 0.37, 'cycle': 90},
+    '122X': {'n_signals': 26, 'green_frac': 0.39, 'cycle': 90},
+    '122S': {'n_signals': 26, 'green_frac': 0.39, 'cycle': 90},
+    '311X': {'n_signals': 36, 'green_frac': 0.40, 'cycle': 90},
+    '311S': {'n_signals': 36, 'green_frac': 0.40, 'cycle': 90},
+    '406X': {'n_signals': 29, 'green_frac': 0.40, 'cycle': 90},
+    '406S': {'n_signals': 30, 'green_frac': 0.39, 'cycle': 90},
+    '705X': {'n_signals': 34, 'green_frac': 0.40, 'cycle': 90},
+    '705S': {'n_signals': 35, 'green_frac': 0.40, 'cycle': 90},
+}
 
 
 
@@ -15,6 +36,7 @@ class Bus(object):
     def __init__(self, bus_id, trip_id, launch_time, direction, routes, stations, one_directional=False):
         self.bus_id = bus_id
         self.trip_id = trip_id
+        self.sumo_trip_index = trip_id  # SUMO _bus_index value; overridden by BusSimEnv for alignment
         self.trip_id_list = [trip_id]
         self.launch_time = launch_time
         self.direction = direction
@@ -59,8 +81,13 @@ class Bus(object):
         self.board_num = 0. # 上车人数
         self.back_to_terminal_time = None
 
-        self.acceleration = 3 # 加速度
-        self.deceleration = 5 # 刹车加速度
+        self.acceleration = 1.2  # 加速度 (SUMO bus vClass default: 1.2 m/s²)
+        self.deceleration = 4.0  # 刹车加速度 (SUMO bus vClass default: 4.0 m/s²)
+
+        # ── Signal model state ──────────────────────────────────────────
+        self._signal_wait_remaining = 0.0     # remaining red-light wait (seconds)
+        self._signal_stopped = False          # currently stopped at signal?
+        self._segment_effective_speed = 10.0  # dynamic speed (for obs[14] alignment)
 
         self.state = BusState.HOLDING  # 初始状态：在站内上下客
         self.on_route = True # 是否在路上，如果在路上，为True，否则为False，用于判断是否到达终点站
@@ -186,7 +213,11 @@ class Bus(object):
                 remaining.append(pax)
         station.waiting_passengers = remaining
 
-        self.holding_time = max(self.alight_num, self.board_num * 2.0) + 4.0
+        # SUMO boarding model (rl_bridge.py): base_duration = max(1.5*alight, 2.5*board) + 4.0
+        # This matches the SUMO bus object's just_server_stop_data_d computation.
+        self.holding_time = max(1.5 * self.alight_num, 2.5 * self.board_num) + 4.0
+        # Save for obs[9] — holding_time will be decremented to 0 before obs emission
+        self._base_stop_duration = self.holding_time
 
         # Per-stop accounting
         self.stop_board_l.append(int(self.board_num))
@@ -204,7 +235,7 @@ class Bus(object):
         self.last_station_dis = 0
         self.next_station_dis = self.current_route.distance
 
-    def drive(self, current_time, action, bus_all, debug):
+    def drive(self, current_time, action, bus_all, debug, co_line_buses=None):
         # absolute_distance & last_station_dis is divided by 1000 as kilometers rather than meters. forward_headway & backward_headway
         # is divided by 60 minutes rather than seconds. passengers on bus, boarding passengers and alighting passengers are divided by self.capacity
         # step_length = 0, which means how long a bus moves in a time step, calculated by speeding up and original velocity.
@@ -219,7 +250,7 @@ class Bus(object):
                 self.exchange_passengers(current_time, debug)  # self.holding_time is set in this function
 
                 self.trajectory.append([self.next_station.station_name, current_time, self.absolute_distance, self.direction, self.trip_id])
-                self.trajectory_dict[self.next_station.station_name].append([
+                self.trajectory_dict.setdefault(self.next_station.station_name, []).append([
                     self.next_station.station_name,
                     current_time + self.holding_time + 0.01,
                     self.absolute_distance,
@@ -233,15 +264,14 @@ class Bus(object):
             else:
                 self._advance_on_route()
         elif self.state == BusState.HOLDING:
-            self._process_holding(current_time, bus_all, debug)
+            self._process_holding(current_time, bus_all, debug, co_line_buses)
         elif self.state == BusState.WAITING_ACTION:
-            # Bug fix 2: update sim_time and base_dwell in obs each tick so
-            # agent sees the real current time, not the frozen arrival time.
             if self.obs:
                 self.obs[10] = float(current_time)           # obs_sim_time
                 self.obs[3]  = float(int(current_time) // 3600)  # obs_time_period
                 # obs[9] = elapsed dwell so far (not remaining; holding_time is 0 here)
-            self._start_dwelling(action)
+            hold_time, speed_ratio = self._normalize_action(action)
+            self._start_dwelling(hold_time, speed_ratio)
         elif self.state == BusState.DWELLING:
             self._process_dwelling(current_time)
         else:
@@ -251,31 +281,125 @@ class Bus(object):
 
 
     def _advance_on_route(self):
-        if self.current_route.speed_limit >= self.current_speed:
-            if self.current_route.speed_limit - self.current_speed > self.acceleration:
+        """Advance bus along the route, with signal delay model."""
+        # ── Signal delay check ──────────────────────────────────────
+        if self._signal_wait_remaining > 0:
+            self._signal_wait_remaining -= 1.0
+            self.current_speed = 0.0
+            self._signal_stopped = True
+            return  # don't advance this tick
+
+        if self._signal_stopped:
+            self._signal_stopped = False
+
+        # ── Normal movement ─────────────────────────────────────────
+        # Apply speed_ratio to modulate the effective speed limit
+        effective_speed_limit = self.current_route.speed_limit * getattr(self, '_speed_ratio', 1.0)
+
+        if effective_speed_limit >= self.current_speed:
+            if effective_speed_limit - self.current_speed > self.acceleration:
                 step_length = (self.current_speed + self.acceleration / 2) * self.direction_int
                 self.current_speed += self.acceleration
             else:
-                step_length = (self.current_speed + self.current_route.speed_limit) * 0.5 * self.direction_int
-                self.current_speed = self.current_route.speed_limit
+                step_length = (self.current_speed + effective_speed_limit) * 0.5 * self.direction_int
+                self.current_speed = effective_speed_limit
         else:
-            if self.current_speed - self.current_route.speed_limit > self.deceleration:
+            if self.current_speed - effective_speed_limit > self.deceleration:
                 step_length = (self.current_speed - self.deceleration / 2) * self.direction_int
                 self.current_speed -= self.deceleration
             else:
-                step_length = (self.current_speed + self.current_route.speed_limit) * 0.5 * self.direction_int
-                self.current_speed = self.current_route.speed_limit
+                step_length = (self.current_speed + effective_speed_limit) * 0.5 * self.direction_int
+                self.current_speed = effective_speed_limit
 
         self.last_station_dis += abs(step_length)
         self.next_station_dis -= abs(step_length)
         self.absolute_distance += step_length
 
-    def _process_holding(self, current_time, bus_all, debug):
+        # ── Signal encounter (stochastic) ───────────────────────────
+        line_id = getattr(self, 'line_id_str', None)
+        sig_cfg = LINE_SIGNAL_CONFIG.get(line_id) if line_id else None
+        if sig_cfg and sig_cfg['n_signals'] > 0:
+            route = self.current_route
+            n_segments = getattr(self, '_n_route_segments', 24)
+            sigs_this_seg = sig_cfg['n_signals'] / max(n_segments, 1)
+            seg_len = max(route.distance, 1.0)
+            p_encounter = sigs_this_seg * abs(step_length) / seg_len
+            if random.random() < p_encounter:
+                if random.random() > sig_cfg['green_frac']:
+                    red_duration = sig_cfg['cycle'] * (1.0 - sig_cfg['green_frac'])
+                    wait_time = random.uniform(0, red_duration)
+                    self._signal_wait_remaining = wait_time
+                    self.current_speed = 0.0
+                    self._signal_stopped = True
+
+        # ── Update effective speed for obs[14] ──────────────────────
+        alpha = 0.1
+        self._segment_effective_speed = (
+            (1 - alpha) * self._segment_effective_speed
+            + alpha * self.current_speed
+        )
+        self.absolute_distance += step_length  # second distance update (calibrated behavior)
+
+    def _process_holding(self, current_time, bus_all, debug, co_line_buses=None):
         if self.holding_time <= 1:
             self.holding_time = 0
-            self._prepare_for_action(current_time, bus_all, debug)
+            self._prepare_for_action(current_time, bus_all, debug, co_line_buses)
         else:
             self.holding_time -= 1
+
+    def _compute_co_line_headways(self, co_line_buses, seg_speed):
+        """Compute co-line forward/backward headways from buses on other lines
+        sharing the same station. Mirrors rl_bridge.py co-line logic.
+
+        Parameters
+        ----------
+        co_line_buses : dict | None
+            {station_name: [(abs_distance, speed, line_id), ...]} from all other lines
+        seg_speed : float
+            Current segment speed limit (m/s), used as fallback for distance→time conversion.
+
+        Returns
+        -------
+        (co_fwd, co_bwd) : (float, float)
+            Co-line forward and backward headways in seconds.
+        """
+        default_hw = self.target_forward_headway
+        if co_line_buses is None:
+            return default_hw, default_hw
+
+        station_name = self.next_station.station_name
+        if station_name not in co_line_buses:
+            return default_hw, default_hw
+
+        my_pos = self.absolute_distance
+        effective_speed = max(seg_speed, 1.0)
+        max_cap = default_hw * 2.0
+
+        fwd_times = []
+        bwd_times = []
+        for other_pos, other_speed, other_line in co_line_buses[station_name]:
+            if other_speed == 0.0:
+                # Direct-time mode (from VirtualCoLineScheduler):
+                # other_pos = time_diff in seconds
+                #   positive → co-line bus is behind (backward)
+                #   negative → co-line bus is ahead (forward)
+                time_diff = other_pos
+                if time_diff > 0:
+                    bwd_times.append(time_diff)
+                elif time_diff < 0:
+                    fwd_times.append(-time_diff)
+            else:
+                # Distance mode (from MultiLineEnv): compute time from spatial gap
+                dist_diff = my_pos - other_pos
+                div_speed = max(other_speed, effective_speed)
+                if dist_diff > 0:
+                    bwd_times.append(dist_diff / div_speed)
+                elif dist_diff < 0:
+                    fwd_times.append(-dist_diff / div_speed)
+
+        co_fwd = min(min(fwd_times), max_cap) if fwd_times else default_hw
+        co_bwd = min(min(bwd_times), max_cap) if bwd_times else default_hw
+        return co_fwd, co_bwd
 
     def _find_neighbors(self, bus_all):
         """SUMO-style neighbor detection: sort on-route buses by launch_time,
@@ -326,7 +450,7 @@ class Bus(object):
         reward -= max(0.0, f_pen + b_pen)
         return reward
 
-    def _prepare_for_action(self, current_time, bus_all, debug):
+    def _prepare_for_action(self, current_time, bus_all, debug, co_line_buses=None):
         # Neighbors and headways are already computed in arrive_station().
         # Only emit obs/reward at non-terminal, non-first-stop positions AND
         # only when at least one neighbour bus is present (matches SUMO logic:
@@ -335,24 +459,28 @@ class Bus(object):
                 and (self.forward_bus_present or self.backward_bus_present)):
 
             _line_idx  = getattr(self, 'line_idx', 0)
-            _gap       = self.target_forward_headway - self.forward_headway   # SUMO: target - actual
-            _seg_speed = self.current_route.speed_limit
+            _line_hw   = getattr(self, 'line_headway', 360.0)  # static median (matches SUMO _line_headway)
+            # gap uses DYNAMIC per-pair target (matches SUMO rl_env / checkpoint training)
+            _gap       = (self.target_forward_headway - self.forward_headway
+                          if self.forward_bus_present else 0.0)
+            _seg_speed = self._segment_effective_speed  # dynamic (includes signal effects)
+            _co_fwd, _co_bwd = self._compute_co_line_headways(co_line_buses, _seg_speed)
 
             self.obs = [
                 float(_line_idx),                                    # 0: line_id (categorical)
-                float(self.bus_id),                                  # 1: bus_id (categorical)
-                float(self.last_station.station_id),                 # 2: station_id (categorical)
+                float(self.sumo_trip_index),                             # 1: bus_id (SUMO trip index — matches checkpoint embedding)
+                float(max(self.last_station.station_id - 1, 0)),       # 2: station_id (SUMO stop_idx: 7X01=0..7X25=24)
                 float(int(current_time) // 3600),                    # 3: time_period (categorical)
-                float(self.direction),                               # 4: direction (categorical)
+                float(0 if self.direction else 1),                  # 4: direction (SUMO: 7X=0, 7S=1; Sim: up=True→0)
                 float(self.forward_headway),                         # 5: forward_headway (s)
                 float(self.backward_headway),                        # 6: backward_headway (s)
                 float(len(self.next_station.waiting_passengers)),    # 7: waiting_passengers
-                float(self.target_forward_headway),                  # 8: target_headway (dynamic)
-                float(self.holding_time),                            # 9: base_stop_duration
+                float(_line_hw),                                     # 8: target_headway (static median, matches SUMO)
+                float(getattr(self, '_base_stop_duration', 0.0)),    # 9: base_stop_duration (passenger exchange time)
                 float(current_time),                                 # 10: sim_time (s)
-                float(_gap),                                         # 11: gap = target - fwd_hw
-                360.0,                                               # 12: co_line_fwd_hw (no co-line)
-                360.0,                                               # 13: co_line_bwd_hw (no co-line)
+                float(_gap),                                         # 11: gap = static_target - fwd_hw
+                float(_co_fwd),                                      # 12: co_line_fwd_hw
+                float(_co_bwd),                                      # 13: co_line_bwd_hw
                 float(_seg_speed),                                   # 14: segment_mean_speed
             ]
 
@@ -361,10 +489,17 @@ class Bus(object):
 
         self.state = BusState.WAITING_ACTION
 
-    def _start_dwelling(self, action):
-        dwell_time = self._normalize_action(action)
+    def _start_dwelling(self, hold_time, speed_ratio=1.0):
+        """Begin dwelling phase with optional speed ratio for inter-stop travel."""
+        # Store speed_ratio for _advance_on_route to use
+        self._speed_ratio = speed_ratio
 
-        if (self.trip_id in [0, 1] and action is None) or dwell_time == 0:
+        if hold_time is None:
+            dwell_time = None
+        else:
+            dwell_time = hold_time
+
+        if (self.trip_id in [0, 1] and hold_time is None) or dwell_time == 0:
             self.dwelling_time = 0
         else:
             self.dwelling_time = dwell_time
@@ -388,27 +523,46 @@ class Bus(object):
             self.dwelling_time -= 1
 
     def _normalize_action(self, action):
+        """Parse action into (hold_time, speed_ratio).
+
+        Supports:
+            - None → (None, 1.0)
+            - scalar → (float, 1.0)
+            - [hold, speed] → (float, float)
+            - np.ndarray shape (2,) → (float, float)
+        """
         if action is None:
-            return None
-        if isinstance(action, numbers.Number):
-            return float(action)
+            return None, 1.0
+
+        # Handle 2D action (list, tuple, or ndarray with >= 2 elements)
         if isinstance(action, np.ndarray):
             if action.size == 0:
-                return None
-            return float(action.reshape(-1)[0])
+                return None, 1.0
+            flat = action.reshape(-1)
+            hold = float(flat[0])
+            speed = float(flat[1]) if flat.size >= 2 else 1.0
+            return hold, max(0.1, speed)
+
         if isinstance(action, (list, tuple)):
             if not action:
-                return None
-            return self._normalize_action(action[0])
+                return None, 1.0
+            hold = float(action[0]) if action[0] is not None else None
+            speed = float(action[1]) if len(action) >= 2 else 1.0
+            return hold, max(0.1, speed)
+
+        if isinstance(action, numbers.Number):
+            return float(action), 1.0
+
         if hasattr(action, 'item'):
             try:
-                return float(action.item())
+                return float(action.item()), 1.0
             except (TypeError, ValueError):
-                return None
+                return None, 1.0
+
         try:
-            return float(action)
+            return float(action), 1.0
         except (TypeError, ValueError):
-            return None
+            return None, 1.0
 
     def arrive_station(self, current_time, bus_all, debug):
         """Called when bus arrives at a stop.
@@ -439,27 +593,28 @@ class Bus(object):
 
         # ── Dynamic target headways from schedule  ─────────────────────────────
         # SUMO: target = abs(my_start_time - neighbor_start_time)
-        self.target_forward_headway = 360.0
+        _default_hw = getattr(self, 'line_headway', 360.0)  # line median (matches SUMO default_line_headway)
+        self.target_forward_headway = _default_hw
         if forward_bus is not None:
             gap = abs(self.launch_time - forward_bus.launch_time)
-            self.target_forward_headway = gap if gap >= 10.0 else 360.0
+            self.target_forward_headway = gap if gap >= 10.0 else _default_hw
 
-        self.target_backward_headway = 360.0
+        self.target_backward_headway = _default_hw
         if backward_bus is not None:
             gap = abs(backward_bus.launch_time - self.launch_time)
-            self.target_backward_headway = gap if gap >= 10.0 else 360.0
+            self.target_backward_headway = gap if gap >= 10.0 else _default_hw
 
-        cap_fwd = self.target_forward_headway  * 2.0
-        cap_bwd = self.target_backward_headway * 2.0
-
-        # ── Forward headway (SUMO _compute_robust_headway) ────────────────────
+        # ── Forward headway (SUMO _compute_robust_headway) ──────────────────
+        # Soft cap: SUMO data max ~2200s. Use max(2400, 3*target) to avoid
+        # extreme values that blow up Q-loss, while staying within SUMO's range.
+        _hw_cap = max(2400.0, 3.0 * self.target_forward_headway)
         if forward_bus is not None:
             fwd_records = forward_bus.trajectory_dict.get(station_name, [])
             if fwd_records:
                 # trajectory_dict entry: [name, departure_time, dist, dir, trip_id]
                 front_depart_time = fwd_records[-1][1]  # most recent depart time at this stop
                 hw = service_completion_time - front_depart_time
-                self.forward_headway = max(0.0, min(hw, cap_fwd))
+                self.forward_headway = max(0.0, min(hw, _hw_cap))
             else:
                 # Distance-based fallback (SUMO: -dist_diff / avg_speed)
                 dist_diff = self.travel_distance - forward_bus.travel_distance
@@ -467,7 +622,7 @@ class Bus(object):
                 if duration > 1.0:
                     avg_speed = self.travel_distance / max(duration, 1.0)
                     if avg_speed > 0.1 and dist_diff < 0:
-                        self.forward_headway = min(-dist_diff / avg_speed, cap_fwd)
+                        self.forward_headway = min(-dist_diff / avg_speed, _hw_cap)
                     else:
                         self.forward_headway = self.target_forward_headway
                 else:
@@ -479,8 +634,9 @@ class Bus(object):
         self.last_forward_headway = self.forward_headway
 
         # ── Backward headway (SUMO: backward_bus.last_forward_headway) ────────
+        _bwd_cap = max(2400.0, 3.0 * self.target_backward_headway)
         if backward_bus is not None and backward_bus.last_forward_headway is not None:
-            self.backward_headway = min(backward_bus.last_forward_headway, cap_bwd)
+            self.backward_headway = min(backward_bus.last_forward_headway, _bwd_cap)
         else:
             self.backward_headway = self.target_backward_headway
 
@@ -495,7 +651,8 @@ class Bus(object):
             self.last_station = self.effective_station[-1]
             if self.one_directional:
                 # One-directional (SUMO): bus retires permanently, no turnaround
-                pass
+                # Keep back_to_terminal_time = None so launch_bus() never reuses it
+                self.back_to_terminal_time = None
             else:
                 # Bi-directional: flip direction for return trip
                 self.direction = int(not self.direction)
@@ -512,6 +669,7 @@ class Bus(object):
 
     def reset_bus(self, trip_num, launch_time):
         self.trip_id = trip_num
+        self.sumo_trip_index = trip_num  # default; BusSimEnv can override
         self.trip_id_list.append(trip_num)
         self.launch_time = launch_time
         self.last_station = self.effective_station[0]

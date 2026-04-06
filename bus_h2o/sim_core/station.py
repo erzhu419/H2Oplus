@@ -57,6 +57,9 @@ class Station(object):
             once per hour period — eliminates O(N) next() search every call.
           - Single np.random.poisson(rates_array) call per station per update.
           - waiting_passengers is a plain Python list (O(1) extend).
+        
+        OD data: passenger_OD_sumo.xlsx extracted directly from SUMO rou.xml,
+        so demand values are exact per-hour passenger counts (no scaling needed).
         """
         if self.od is None:
             return

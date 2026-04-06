@@ -740,6 +740,362 @@ python test_snapshot_reset.py --T_events 80 --K_events 100 --plot  # 运行约 2
 ```
 
 ---
+
+## Phase 5: JTT-Enhanced Targeted Snapshot Reset (JTT-增强定向快照重置)
+
+> **依赖**: Phase 3 (H2O+ 训练循环) 已完成, 离线数据 (datasets_v2) 已就绪。
+> **参考**: `reference/jtt/` (JTT 原始代码), `reference/jtt_targeted_reset_design.md` (设计路线书), *Just Train Twice: Improving Group Robustness without Training Group Information* (Liu et al., ICML 2021)。
+
+### 5.0 核心洞察: JTT → H2O+ 的跨范式迁移
+
+**JTT (监督学习)** 的核心是两阶段协议:
+1. **Phase 1 (Identify)**: 以 ERM 训练 $T$ 个 epoch → 标记**错误集 E** (被误分类的样本)
+2. **Phase 2 (Upweight)**: 从头训练, 对 E 中的样本加权 $\lambda$ 倍
+
+> [!IMPORTANT]
+> **H2O+ Bus (Sim2Real RL) 的关键创新**:
+> 在监督学习中 (JTT), 你只能**加权**已有样本。
+> 在 RL 中, 通过快照重置, 我们可以**生成全新的反事实轨迹** — 将仿真器重置到精确的脆弱状态, 用更新后的策略展开全新 rollout。这是 JTT 加权的严格增强 (Active Learning × JTT)。
+
+| JTT 概念 | H2O+ 类比 | 实现方式 |
+|-----------|-----------|----------|
+| ERM 模型 (Phase 1) | Warmup 策略 | 前 K 个 epoch, 均匀随机重置 |
+| 错误集 E | 脆弱转移集 F | `priority_score > threshold` |
+| 加权 λ | 重置概率提升 | `P(reset to i) ∝ priority(i)` |
+| 从头训练 (Phase 2) | 继续训练 | 同一网络, 定向重置 |
+| Group Robustness | Sim-Robustness | 策略在脆弱区域精准改善 |
+
+### 5.1 脆弱性信号定义 (Fragility Signals)
+
+在 JTT 中, 错误集是二值的 `y_pred ≠ y_true`。在 RL 中没有标签, 我们需要代理信号来衡量**策略最脆弱的位置**。
+
+#### 优先级评分: `p(i) = α·TD_err(i) + β·Q_disagree(i) + γ·disc_drift(i)`
+
+| 信号 | 公式 | 直觉 |
+|------|------|------|
+| **TD Error** | `\|r + γQ(s',a') - Q(s,a)\|` | 价值函数最不准确之处 — "意外" |
+| **Q Disagreement** | `\|Q1(s,a) - Q2(s,a)\|` | 双 Q 网络分歧 — 认知不确定性 |
+| **Disc. Drift** | `1 - w(z_t, z_{t+1})` | 仿真动力学偏离真实之处 — 动力学间隙 |
+
+> [!NOTE]
+> 三个信号在 H2O+ 训练中**已经全部被计算**:
+> - TD error: 在 `h2oplus_bus.py::train()` 中计算 Q-loss 时产出
+> - Q disagreement: `qf1(s,a) - qf2(s,a)` 来自双 Q 网络
+> - 判别器权重 w: 由 `ZOnlyDiscriminator` 在每个训练步计算
+>
+> 这意味着引入 JTT 的**边际计算开销几乎为零** — 仅需额外维护 `PriorityIndex` 数组。
+
+### 5.2 PriorityIndex 组件设计
+
+```python
+# 新增文件: SimpleSAC/priority_index.py
+
+class PriorityIndex:
+    """维护离线数据每条转移的优先级评分。
+    
+    设计原则:
+    - 仅追踪离线 (real) 数据, 因为只有离线数据有对应的快照可供重置
+    - 使用 EMA 平滑以抵消单 batch 估计的噪声
+    - 支持温度控制的概率采样, 从均匀 → 贪心的渐进聚焦
+    """
+    
+    def __init__(self, n_offline: int, alpha=0.5, beta=0.3, gamma=0.2):
+        self.n = n_offline
+        self.alpha = alpha   # TD error 权重
+        self.beta = beta     # Q 分歧权重
+        self.gamma = gamma   # 判别器漂移权重
+        
+        # EMA 平滑的优先级信号 (per-transition)
+        self.td_error = np.zeros(n_offline, dtype=np.float32)
+        self.q_disagree = np.zeros(n_offline, dtype=np.float32)
+        self.disc_drift = np.zeros(n_offline, dtype=np.float32)
+        self.update_count = np.zeros(n_offline, dtype=np.int32)
+        
+    def update(self, indices: np.ndarray, td_err, q_dis, d_drift, ema=0.1):
+        """更新采样到的离线转移的优先级评分。
+        
+        在每个训练 batch 后调用 — 评分通过 EMA 平滑以
+        避免单 batch 估计的噪声锯齿。
+        """
+        for arr, new_val in [(self.td_error, td_err), 
+                              (self.q_disagree, q_dis),
+                              (self.disc_drift, d_drift)]:
+            old = arr[indices]
+            arr[indices] = (1 - ema) * old + ema * new_val
+        self.update_count[indices] += 1
+        
+    def sample_reset_idx(self, temperature=1.0) -> int:
+        """按优先级的概率采样一个离线索引用于快照重置。
+        
+        temperature=1.0: 标准优先级采样
+        temperature→∞:   均匀随机 (退化为标准 H2O+)
+        temperature→0:   始终选最高优先级 (贪心)
+        """
+        valid = self.update_count > 0
+        if not valid.any():
+            return np.random.randint(self.n)
+            
+        p = (self.alpha * self.td_error + 
+             self.beta * self.q_disagree + 
+             self.gamma * self.disc_drift)
+        p = np.clip(p, 0, None)
+        p[~valid] = 0
+        
+        # 温度缩放
+        p = p ** (1.0 / max(temperature, 1e-4))
+        p = p / (p.sum() + 1e-8)
+        
+        return np.random.choice(self.n, p=p)
+    
+    @property
+    def priority_scores(self):
+        """返回当前加权优先级评分向量 (用于日志和分析)。"""
+        return (self.alpha * self.td_error + 
+                self.beta * self.q_disagree + 
+                self.gamma * self.disc_drift)
+```
+
+### 5.3 训练协议: 两阶段 (Two-Phase Protocol)
+
+```
+Phase 1: Warmup (Epoch 0..K):
+  ├── 均匀随机快照重置 (与原 H2O+ 行为完全一致)
+  ├── 累积每条离线转移的优先级评分 (TD error / Q-disagreement / disc drift)
+  ├── 不触发 JTT 定向重置 (冷启动保护)
+  └── 日志: mean_priority, priority_std, error_set_size
+
+Phase 2: Targeted Reset (Epoch K..N):
+  ├── 优先级加权的快照重置 (聚焦脆弱状态)
+  ├── 持续更新优先级评分 (它们是演化的！)
+  ├── 逐步退火温度: T = T_max * max(T_min/T_max, (1 - (epoch-K)/(N-K))^2)
+  │   (起始时宽探索, 逐步聚焦)
+  ├── 监控: 平均优先级是否下降? (策略在学习!)
+  └── 日志: reset_target_distribution, priority_decay_rate
+
+温度计划 (Temperature Schedule):
+  T_max = 2.0  (Phase 2 初期, 宽泛探索)
+  T_min = 0.3  (训练末期, 紧密聚焦)
+  退火: T = T_max * max(T_min/T_max, (1 - (epoch-K)/(N-K))^2)
+```
+
+### 5.4 代码改造清单 (Modification Points)
+
+#### A. `SimpleSAC/h2oplus_bus.py` — 提取脆弱性信号
+
+在 `H2OPlusBus.train()` 的 **Main H2O+ phase** 分支中 (Line ~239), 计算 Q-loss 之后、反向传播之前, 新增优先级信号的收集:
+
+```python
+# h2oplus_bus.py::train(), 在 "Main H2O+ phase" 内
+# ... 在计算完 real_q1_pred, real_q2_pred, real_td_target 之后 ...
+
+# ── JTT: 提取脆弱性信号 (per-sample, 仅 real batch) ──────────
+if self.priority_index is not None:
+    with torch.no_grad():
+        # 1. TD Error (绝对 Bellman 残差)
+        td_err_1 = torch.abs(real_q1_pred.squeeze() - real_td_target).cpu().numpy()
+        td_err_2 = torch.abs(real_q2_pred.squeeze() - real_td_target).cpu().numpy()
+        td_error = 0.5 * (td_err_1 + td_err_2)
+        
+        # 2. Q Disagreement (认知不确定性)
+        q_disagree = torch.abs(
+            real_q1_pred.squeeze() - real_q2_pred.squeeze()
+        ).cpu().numpy()
+        
+        # 3. Discriminator Drift (仿真偏离度)
+        # real 数据的 w 应接近 1; 偏离越大说明该区域真实-仿真差距越大
+        w_real = compute_z_importance_weight(
+            self.discriminator, real_z_t, real_z_t1
+        ).squeeze()
+        disc_drift = (1.0 - w_real.clamp(0, 10) / 10.0).cpu().numpy()
+        
+    # 更新优先级索引 (batch_indices 需从 buffer.sample 返回)
+    self.priority_index.update(
+        real_batch["_indices"],  # 离线数据中的原始索引
+        td_error, q_disagree, disc_drift
+    )
+```
+
+> [!IMPORTANT]
+> **`real_batch["_indices"]` 依赖**: `BusMixedReplayBuffer.sample()` 需要新增返回采样索引的功能。在 `scope="real"` 时, 将 `ind` 数组作为 `"_indices"` 字段附加到返回字典中。这是最小侵入式的改动 — 仅在 `sample()` 函数末尾添加一行 `batch["_indices"] = torch.LongTensor(ind).to(self.device)`。
+
+#### B. `SimpleSAC/bus_sampler.py` — 定向重置
+
+在 `BusStepSampler.sample()` 的 episode 起始部分, 修改 buffer reset 逻辑:
+
+```python
+# bus_sampler.py::sample(), episode start 部分
+if use_buffer_reset:
+    if (self._episode_count > self.warmup_episodes 
+        and self.priority_index is not None):
+        # ── JTT Phase 2: 定向重置到脆弱状态 ──
+        idx = self.priority_index.sample_reset_idx(
+            temperature=self.current_temperature
+        )
+        snapshot, _, _ = self.replay_buffer.sample_snapshot_by_idx(idx)
+    else:
+        # ── Phase 1: 均匀随机重置 (标准 H2O+) ──
+        snapshot, _, _ = self.replay_buffer.sample_snapshot()
+    
+    self.env.reset(snapshot=snapshot)
+    max_events = self.h_rollout
+```
+
+> [!CAUTION]
+> **`sample_snapshot_by_idx(idx)` 依赖**: `BusMixedReplayBuffer` 需要新增一个方法, 根据指定的离线索引加载快照。当前的 `sample_snapshot()` 是均匀随机的; 新方法接受 `idx` 参数, 直接从 `self._snapshot_bytes[idx]` 加载。如果该索引没有有效快照 (None), 回退到最近邻有快照的索引。
+
+#### C. `SimpleSAC/h2o+_bus_main.py` — 编排两阶段协议
+
+```python
+# h2o+_bus_main.py, FLAGS_DEF 新增:
+jtt_warmup_epochs=50,         # Phase 1 → Phase 2 切换点 (K)
+jtt_alpha=0.5,                # TD error 权重
+jtt_beta=0.3,                 # Q disagreement 权重
+jtt_gamma=0.2,                # discriminator drift 权重
+jtt_temperature_max=2.0,      # 重置采样宽度 (起始)
+jtt_temperature_min=0.3,      # 重置采样紧密度 (终止)
+jtt_ema_decay=0.1,            # 优先级评分 EMA 平滑系数
+
+# main() 中:
+from priority_index import PriorityIndex
+
+priority_index = PriorityIndex(
+    n_offline=replay_buffer.fixed_dataset_size,
+    alpha=FLAGS.jtt_alpha,
+    beta=FLAGS.jtt_beta,
+    gamma=FLAGS.jtt_gamma,
+)
+
+# 注入到 H2OPlusBus
+h2o.priority_index = priority_index
+
+# 注入到 BusStepSampler
+train_sampler.priority_index = priority_index
+
+# 训练循环中, 每 epoch 更新温度:
+for epoch in trange(FLAGS.n_epochs):
+    # 温度退火
+    if epoch >= FLAGS.jtt_warmup_epochs:
+        progress = (epoch - FLAGS.jtt_warmup_epochs) / max(
+            FLAGS.n_epochs - FLAGS.jtt_warmup_epochs, 1
+        )
+        temp = FLAGS.jtt_temperature_max * max(
+            FLAGS.jtt_temperature_min / FLAGS.jtt_temperature_max,
+            (1.0 - progress) ** 2
+        )
+    else:
+        temp = float('inf')  # 均匀随机 (Phase 1)
+    train_sampler.current_temperature = temp
+    
+    # ... 原有的 rollout + train + eval 循环 ...
+    
+    # JTT 日志
+    if epoch >= FLAGS.jtt_warmup_epochs:
+        scores = priority_index.priority_scores
+        valid_scores = scores[priority_index.update_count > 0]
+        if len(valid_scores) > 0:
+            threshold = np.percentile(valid_scores, 80)
+            metrics["jtt/mean_priority"] = valid_scores.mean()
+            metrics["jtt/priority_std"] = valid_scores.std()
+            metrics["jtt/error_set_size"] = int((valid_scores > threshold).sum())
+            metrics["jtt/temperature"] = temp
+```
+
+#### D. `SimpleSAC/bus_replay_buffer.py` — 最小扩展
+
+需要两个改动:
+
+```python
+# 1. sample() 返回采样索引
+def sample(self, batch_size, scope=None, type=None):
+    # ... 原有逻辑 ...
+    batch["_indices"] = torch.LongTensor(ind).to(self.device)  # 新增
+    return batch
+
+# 2. 新增 sample_snapshot_by_idx()
+def sample_snapshot_by_idx(self, idx: int):
+    """根据指定的离线索引加载快照 (JTT 定向重置用)。
+    
+    如果该索引没有有效快照, 回退到最近的有快照的索引。
+    """
+    if idx < len(self._snapshot_bytes) and self._snapshot_bytes[idx] is not None:
+        snap_bytes = self._snapshot_bytes[idx]
+    elif self._valid_snap_indices:
+        # 回退: 找最近的有效快照索引
+        distances = np.abs(np.array(self._valid_snap_indices) - idx)
+        nearest = self._valid_snap_indices[np.argmin(distances)]
+        snap_bytes = self._snapshot_bytes[nearest]
+        idx = nearest
+    else:
+        raise RuntimeError("No valid snapshots in offline data")
+    
+    snapshot_dict = pickle.loads(snap_bytes)
+    obs = self.state[idx].copy()
+    z_t = self.z_t[idx].copy()
+    return snapshot_dict, obs, z_t
+```
+
+### 5.5 关键超参数
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `jtt_warmup_epochs` (K) | 50 | Phase 1 均匀重置的 epoch 数 |
+| `alpha` | 0.5 | TD error 在优先级评分中的权重 |
+| `beta` | 0.3 | Q disagreement 的权重 |
+| `gamma` | 0.2 | 判别器漂移的权重 |
+| `temperature_max` | 2.0 | Phase 2 起始采样温度 (宽) |
+| `temperature_min` | 0.3 | 训练末期采样温度 (窄) |
+| `ema_decay` | 0.1 | 优先级 EMA 平滑系数 |
+
+### 5.6 与 JTT 原始代码的对应关系
+
+```
+JTT 代码 (reference/jtt/)              →  H2O+ Bus 对应
+─────────────────────────────────────      ──────────────────────────────────────
+process_training.py:                       PriorityIndex.update():
+  train_df["wrong_1_times"]                  td_error[], q_disagree[], disc_drift[]
+  (二值: 对/错)                              (连续: EMA 平滑的三信号组合)
+
+generate_downstream.py:                    h2o+_bus_main.py:
+  up_weights = [20, 50, 100]                 温度退火: T_max=2.0 → T_min=0.3
+  Subset(train_data, aug_indices * λ)        priority_index.sample_reset_idx(T)
+
+run_expt.py:                               h2oplus_bus.py::train():
+  Phase 2 ERM 从头训练                        Phase 2 继续训练 + 定向重置
+  ConcatDataset + upsampled_points           不复制数据, 直接调整 P(reset)
+
+loss.py: LossComputer:                     h2oplus_bus.py:
+  compute_group_avg(losses, group_idx)       priority_index 按转移追踪 (非 group)
+  adv_probs 在 group 间再平衡                 温度控制在转移间再平衡
+```
+
+### 5.7 验证计划 (Verification)
+
+1. **优先级覆盖率**: 训练 K 个 epoch 后, 检查 `priority_index.update_count` — 应有 >80% 的离线转移被至少采样过一次。若覆盖不足, 增大 `real_batch_size` 或延长 warmup。
+
+2. **优先级下降曲线**: Phase 2 开始后, `mean_priority` 应逐 epoch 下降 — 策略正在学习解决脆弱区域。如果 `mean_priority` 不降反升, 说明定向重置产生的新数据反而增加了该区域的 TD error, 需调低温度退火速率。
+
+3. **重置分布可视化**: 记录每个 epoch 重置的离线索引, 绘制直方图。Phase 1 应为均匀分布, Phase 2 应逐步向少数高优先级索引集中。
+
+4. **消融实验**:
+   - **JTT vs Uniform**: 比较 JTT 定向重置 vs 原始均匀随机重置 (温度 = ∞) 的训练曲线与最终性能。
+   - **信号消融**: 分别设 α=1,β=γ=0 (TD only) / β=1,α=γ=0 (Q-disagree only) / γ=1,α=β=0 (disc only), 对比哪个信号贡献最大。
+   - **温度敏感性**: 固定 K, 对比不同 T_min (0.1, 0.3, 0.5, 1.0) 的效果。
+
+### 5.8 Open Questions
+
+> [!IMPORTANT]
+> 1. **优先级评分范围**: 应对所有离线数据计算优先级, 还是仅限有有效快照的转移?
+>    - 推荐: 对所有离线数据计算 (因为 TD error 和 Q-disagreement 不依赖快照), 但 `sample_reset_idx` 仅在有快照的子集中采样。
+>
+> 2. **两阶段 vs 连续退火**: Phase 1/2 的硬切换 vs 从第 0 个 epoch 就开始退火 (从 T=∞ 缓降)?
+>    - 硬切换更安全 (冷启动时优先级信号噪声大), 但连续退火更平滑。首版用硬切换。
+>
+> 3. **快照可用性**: 当前 merged_all_v2.h5 不含 snapshot_T1 字段 (仅 z_t/z_t1)。定向重置需要:
+>    - 方案 A: 重新采集含 snapshot 的 HDF5 数据 (推荐, 最稳健)
+>    - 方案 B: 用 z_t 反向构造近似快照 (不精确, 损失重置保真度)
+>    - 方案 C: 仅对有 snapshot 的 legacy 数据集启用 JTT, merged 数据集走 uniform reset
+
+---
 ## Appendix A: 上下文感知判别器 (Context-Aware Discriminator)
 
 **定位**: 替代 Phase 3.3 中简单的 MLP 判别器。

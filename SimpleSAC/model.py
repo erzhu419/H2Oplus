@@ -1,3 +1,4 @@
+import copy
 import numpy as np
 import torch
 import torch.nn as nn
@@ -244,6 +245,286 @@ class Scalar(nn.Module):
 
     def forward(self):
         return self.constant
+
+
+# =============================================================================
+# Legacy-aligned architecture (port from sac_v2_bus_SUMO_linear_penalty.py)
+# =============================================================================
+
+class EmbeddingLayer(nn.Module):
+    """Categorical feature embedding layer, matching the legacy SAC architecture.
+
+    For the SUMO bus env, cat_cols = ['line_id', 'bus_id', 'station_id',
+    'time_period', 'direction'] — the first 5 columns of the 15-dim obs vector.
+    """
+
+    def __init__(self, cat_code_dict, cat_cols, embedding_dims=None,
+                 layer_norm=False, dropout=0.0):
+        super().__init__()
+        self.cat_code_dict = cat_code_dict
+        self.cat_cols = list(cat_cols)
+
+        self.embedding_dims = {}
+        self.cardinalities = {}
+        modules = {}
+        for col in self.cat_cols:
+            codes = list(cat_code_dict[col].values())
+            if len(codes) == 0:
+                raise ValueError(f"Categorical column '{col}' has no encoding values.")
+            cardinality = max(codes) + 1
+            self.cardinalities[col] = cardinality
+            dim = (embedding_dims[col]
+                   if embedding_dims and col in embedding_dims
+                   else self._suggest_dim(cardinality))
+            self.embedding_dims[col] = dim
+            modules[col] = nn.Embedding(cardinality, dim)
+
+        self.embeddings = nn.ModuleDict(modules)
+        self.output_dim = sum(self.embedding_dims.values())
+        self.layer_norm = (
+            nn.LayerNorm(self.output_dim)
+            if layer_norm and self.output_dim > 0 else None
+        )
+        self.dropout = nn.Dropout(dropout) if dropout > 0 else None
+
+    @staticmethod
+    def _suggest_dim(cardinality: int) -> int:
+        if cardinality <= 1:
+            return 1
+        return min(32, max(2, int(round(cardinality ** 0.5)) + 1))
+
+    @classmethod
+    def compute_output_dim(cls, cat_code_dict, cat_cols, embedding_dims=None):
+        total = 0
+        for col in cat_cols:
+            codes = list(cat_code_dict[col].values())
+            if len(codes) == 0:
+                continue
+            cardinality = max(codes) + 1
+            if embedding_dims and col in embedding_dims:
+                total += embedding_dims[col]
+            else:
+                total += cls._suggest_dim(cardinality)
+        return total
+
+    def forward(self, cat_tensor):
+        if cat_tensor.dim() == 1:
+            cat_tensor = cat_tensor.unsqueeze(0)
+        parts = []
+        for idx, col in enumerate(self.cat_cols):
+            indices = cat_tensor[:, idx].long()
+            max_index = self.cardinalities[col] - 1
+            indices = torch.clamp(indices, 0, max_index)
+            parts.append(self.embeddings[col](indices))
+        if parts:
+            embed = torch.cat(parts, dim=1)
+            if self.layer_norm is not None:
+                embed = self.layer_norm(embed)
+            if self.dropout is not None:
+                embed = self.dropout(embed)
+        else:
+            embed = torch.empty(cat_tensor.size(0), 0, device=cat_tensor.device)
+        return embed
+
+    def clone(self):
+        return copy.deepcopy(self)
+
+
+class BusEmbeddingPolicy(nn.Module):
+    """Policy network matching the legacy SAC PolicyNetwork architecture.
+
+    Architecture:
+        obs(15) + last_action(2) = 17 raw dims
+        → EmbeddingLayer (5 cat cols → ~29 embed dims)
+        → [embed(29) | cont(10) | last_action(2)] = 41 internal dims
+        → 4 × Linear(48) + ReLU
+        → mean(2), log_std(2)  (TanhGaussian output)
+
+    Output: raw tanh ∈ [-1, 1] × action_dim.
+    External mapping converts to env actions: hold = 30*tanh + 30 → [0, 60]s.
+    """
+
+    def __init__(self, num_inputs, num_actions, hidden_size,
+                 embedding_layer, action_range=1.0,
+                 log_std_min=-20, log_std_max=2, init_w=3e-3):
+        super().__init__()
+        self.embedding_layer = embedding_layer
+        self.num_cat_cols = len(embedding_layer.cat_cols)
+        self.log_std_min = log_std_min
+        self.log_std_max = log_std_max
+        self.action_range = action_range
+        self.num_actions = num_actions
+
+        self.linear1 = nn.Linear(num_inputs, hidden_size)
+        self.linear2 = nn.Linear(hidden_size, hidden_size)
+        self.linear3 = nn.Linear(hidden_size, hidden_size)
+        self.linear4 = nn.Linear(hidden_size, hidden_size)
+
+        self.mean_linear = nn.Linear(hidden_size, num_actions)
+        self.mean_linear.weight.data.uniform_(-init_w, init_w)
+        self.mean_linear.bias.data.uniform_(-init_w, init_w)
+
+        self.log_std_linear = nn.Linear(hidden_size, num_actions)
+        self.log_std_linear.weight.data.uniform_(-init_w, init_w)
+        self.log_std_linear.bias.data.uniform_(-init_w, init_w)
+
+    def _embed(self, state):
+        """Split state into categorical + continuous, return embedded."""
+        cat_tensor = state[:, :self.num_cat_cols]
+        num_tensor = state[:, self.num_cat_cols:]
+        embedding = self.embedding_layer(cat_tensor.long())
+        return torch.cat([embedding, num_tensor], dim=1)
+
+    def forward(self, state, deterministic=False, repeat=None):
+        if repeat is not None:
+            state = extend_and_repeat(state, 1, repeat)
+        x = self._embed(state)
+        x = F.relu(self.linear1(x))
+        x = F.relu(self.linear2(x))
+        x = F.relu(self.linear3(x))
+        x = F.relu(self.linear4(x))
+
+        mean = self.mean_linear(x)
+        log_std = self.log_std_linear(x)
+        log_std = torch.clamp(log_std, self.log_std_min, self.log_std_max)
+        std = log_std.exp()
+
+        normal = Normal(0, 1)
+        z = normal.sample(mean.shape).to(state.device)
+
+        if deterministic:
+            action_0 = torch.tanh(mean)
+        else:
+            action_0 = torch.tanh(mean + std * z)  # reparameterization
+
+        # Raw tanh output ∈ [-1, 1] (matches ensemble checkpoint)
+        # External mapping converts to env: hold = 30*tanh + 30 → [0, 60]s
+        action = action_0
+
+        # Log prob (TanhNormal, no action_range scaling)
+        log_prob = (
+            Normal(mean, std).log_prob(mean + std * z)
+            - torch.log(1.0 - action_0.pow(2) + 1e-6)
+        )
+        log_prob = log_prob.sum(dim=1, keepdim=True)
+
+        return action, log_prob
+
+    def log_prob(self, observations, actions):
+        """Compute log probability of given actions under current policy."""
+        x = self._embed(observations)
+        x = F.relu(self.linear1(x))
+        x = F.relu(self.linear2(x))
+        x = F.relu(self.linear3(x))
+        x = F.relu(self.linear4(x))
+
+        mean = self.mean_linear(x)
+        log_std = self.log_std_linear(x)
+        log_std = torch.clamp(log_std, self.log_std_min, self.log_std_max)
+        std = log_std.exp()
+
+        # Actions are already in [-1, 1] (raw tanh space)
+        action_0 = torch.clamp(actions, -1 + 1e-6, 1 - 1e-6)
+        pre_tanh = atanh(action_0)
+
+        log_prob = (
+            Normal(mean, std).log_prob(pre_tanh)
+            - torch.log(1.0 - action_0.pow(2) + 1e-6)
+        )
+        return log_prob.sum(dim=-1)
+
+
+class BusEmbeddingQFunction(nn.Module):
+    """Q-function matching the legacy SAC SoftQNetwork architecture.
+
+    Architecture:
+        [embed(obs) | cont(obs) | action(2)] → 4 × Linear(48) + ReLU → scalar
+    """
+
+    def __init__(self, num_inputs, num_actions, hidden_size,
+                 embedding_layer, init_w=3e-3):
+        super().__init__()
+        self.embedding_layer = embedding_layer
+        self.num_cat_cols = len(embedding_layer.cat_cols)
+
+        self.linear1 = nn.Linear(num_inputs + num_actions, hidden_size)
+        self.linear2 = nn.Linear(hidden_size, hidden_size)
+        self.linear3 = nn.Linear(hidden_size, hidden_size)
+        self.linear4 = nn.Linear(hidden_size, 1)
+        self.linear4.weight.data.uniform_(-init_w, init_w)
+        self.linear4.bias.data.uniform_(-init_w, init_w)
+
+    def _embed(self, state):
+        cat_tensor = state[:, :self.num_cat_cols]
+        num_tensor = state[:, self.num_cat_cols:]
+        embedding = self.embedding_layer(cat_tensor.long())
+        return torch.cat([embedding, num_tensor], dim=1)
+
+    @multiple_action_q_function
+    def forward(self, observations, actions):
+        x = self._embed(observations)
+        x = torch.cat([x, actions], dim=1)
+        x = F.relu(self.linear1(x))
+        x = F.relu(self.linear2(x))
+        x = F.relu(self.linear3(x))
+        x = self.linear4(x)
+        return torch.squeeze(x, dim=-1)
+
+
+class BusEmbeddingVFunction(nn.Module):
+    """V-function with categorical embedding, matching the rest of the architecture.
+
+    Architecture:
+        [embed(obs) | cont(obs)] → 4 × Linear(48) + ReLU → scalar
+    """
+
+    def __init__(self, num_inputs, hidden_size,
+                 embedding_layer, init_w=3e-3):
+        super().__init__()
+        self.embedding_layer = embedding_layer
+        self.num_cat_cols = len(embedding_layer.cat_cols)
+
+        self.linear1 = nn.Linear(num_inputs, hidden_size)
+        self.linear2 = nn.Linear(hidden_size, hidden_size)
+        self.linear3 = nn.Linear(hidden_size, hidden_size)
+        self.linear4 = nn.Linear(hidden_size, 1)
+        self.linear4.weight.data.uniform_(-init_w, init_w)
+        self.linear4.bias.data.uniform_(-init_w, init_w)
+
+    def _embed(self, state):
+        cat_tensor = state[:, :self.num_cat_cols]
+        num_tensor = state[:, self.num_cat_cols:]
+        embedding = self.embedding_layer(cat_tensor.long())
+        return torch.cat([embedding, num_tensor], dim=1)
+
+    def forward(self, observations):
+        x = self._embed(observations)
+        x = F.relu(self.linear1(x))
+        x = F.relu(self.linear2(x))
+        x = F.relu(self.linear3(x))
+        x = self.linear4(x)
+        return x
+
+
+class BusSamplerPolicy(object):
+    """Sampler wrapper for BusEmbeddingPolicy.
+
+    Returns raw tanh actions ∈ [-1, 1] × action_dim.
+    External mapping converts to env actions: hold = 30*tanh + 30 → [0, 60]s.
+    """
+
+    def __init__(self, policy, device):
+        self.policy = policy
+        self.device = device
+
+    def __call__(self, observations, deterministic=False):
+        with torch.no_grad():
+            observations = torch.tensor(
+                observations, dtype=torch.float32, device=self.device
+            )
+            actions, _ = self.policy(observations, deterministic)
+            actions = actions.cpu().numpy()
+        return actions
 
 # class Normal(ExponentialFamily):
 #     r"""

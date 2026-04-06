@@ -38,7 +38,13 @@ import numpy as np
 # calling bridge_to_snapshot with a live bridge object)
 # ---------------------------------------------------------------------------
 
-def bridge_to_snapshot(bridge, edge_map: Dict[str, float]) -> dict:
+def bridge_to_snapshot(
+    bridge,
+    edge_map: Optional[Dict[str, float]] = None,
+    *,
+    all_edge_maps: Optional[Dict[str, Dict[str, float]]] = None,
+    line_route_lengths: Optional[Dict[str, float]] = None,
+) -> dict:
     """
     Convert the current state of a SumoRLBridge into an extract_structured_context-
     compatible SnapshotDict.
@@ -49,21 +55,43 @@ def bridge_to_snapshot(bridge, edge_map: Dict[str, float]) -> dict:
         A fully initialised and stepped bridge. Must have
         ``active_bus_ids``, ``bus_obj_dic``, ``stop_obj_dic``, and
         ``line_stop_distances`` populated.
-    edge_map : dict[str, float]
-        {edge_id → cumulative start distance (m)} from build_edge_linear_map().
-        Used to convert traci road_id + lane_pos into linear absolute position.
+    edge_map : dict[str, float] (DEPRECATED — kept for backward compat)
+        Single-line {edge_id → cumulative start distance (m)}.
+        If ``all_edge_maps`` is provided, this parameter is ignored.
+    all_edge_maps : dict[str, dict[str, float]]
+        {line_id → {edge_id → cumulative start distance (m)}}.
+        Each bus is mapped using its own line's edge_map.
+    line_route_lengths : dict[str, float]
+        {line_id → total route length (m)} for each line.
+        Stored per-bus so extract_structured_context can normalise by
+        route completion fraction.
 
     Returns
     -------
     dict
         SnapshotDict matching BusSimEnv.capture_full_system_snapshot() schema.
     """
+    if all_edge_maps is None and edge_map is not None:
+        # Legacy single-line fallback
+        all_edge_maps = {"_default": edge_map}
+    elif all_edge_maps is None:
+        all_edge_maps = {}
+
+    if line_route_lengths is None:
+        line_route_lengths = {}
+
     # ── buses ────────────────────────────────────────────────────────────────
     all_buses = []
     for bus_id in bridge.active_bus_ids:
         bus_obj = bridge.bus_obj_dic.get(bus_id)
         if bus_obj is None:
             continue
+
+        line_id = getattr(bus_obj, "belong_line_id_s", None) or "_default"
+
+        # Select edge_map for this bus's line
+        bus_edge_map = all_edge_maps.get(line_id, all_edge_maps.get("_default", {}))
+        route_len = line_route_lengths.get(line_id, 0.0)
 
         # Linear position via edge_map + lane offset
         try:
@@ -76,12 +104,11 @@ def bridge_to_snapshot(bridge, edge_map: Dict[str, float]) -> dict:
             lane_pos = 0.0
             speed = 0.0
 
-        if road_id in edge_map:
-            pos = edge_map[road_id] + lane_pos
+        if road_id in bus_edge_map:
+            pos = bus_edge_map[road_id] + lane_pos
         else:
-            # Fallback: use known stop distance if bus just arrived
-            line_id  = getattr(bus_obj, "belong_line_id_s", None)
-            stop_id  = getattr(bus_obj, "current_stop_id", None)
+            # Fallback: use known stop distance along this bus's own line
+            stop_id = getattr(bus_obj, "current_stop_id", None)
             if line_id and stop_id and stop_id in bridge.line_stop_distances.get(line_id, {}):
                 pos = bridge.line_stop_distances[line_id][stop_id]
             else:
@@ -89,19 +116,23 @@ def bridge_to_snapshot(bridge, edge_map: Dict[str, float]) -> dict:
 
         direction = getattr(bus_obj, "direction_n", 1)
 
-        # Passenger load: count passengers currently on bus (approximated)
+        # Passenger load
         load = getattr(bus_obj, "current_load_n", 0)
         if load == 0:
-            # Fallback: use boarding count from stop data
             jsd = getattr(bus_obj, "just_server_stop_data_d", {})
             load = int(sum(v[2] if len(v) > 2 else 0 for v in jsd.values()))
 
         all_buses.append({
-            "bus_id"   : bus_id,
-            "pos"      : float(pos),
-            "speed"    : float(speed),
-            "load"     : int(load),
-            "direction": int(direction),
+            "bus_id"      : bus_id,
+            "line_id"     : line_id,
+            "pos"         : float(pos),
+            "route_length": float(route_len) if route_len > 0 else None,
+            "speed"       : float(speed),
+            "load"        : int(load),
+            "direction"   : int(direction),
+            # Raw traci info for full-fidelity storage
+            "road_id"     : road_id,
+            "lane_pos"    : float(lane_pos),
         })
 
     # ── stations ─────────────────────────────────────────────────────────────
@@ -109,21 +140,27 @@ def bridge_to_snapshot(bridge, edge_map: Dict[str, float]) -> dict:
     for stop_id, stop_obj in bridge.stop_obj_dic.items():
         # Best-effort position: use first line that serves this stop
         pos = 0.0
-        for line_id, stop_dists in bridge.line_stop_distances.items():
+        stop_line_id = None
+        for lid, stop_dists in bridge.line_stop_distances.items():
             if stop_id in stop_dists:
                 pos = stop_dists[stop_id]
+                stop_line_id = lid
                 break
 
-        # Waiting passengers — stop_obj should have this after update_stop_state()
-        waiting = getattr(stop_obj, "wait_passenger_num_n", None)
-        if waiting is None:
-            # older attribute name
-            waiting = getattr(stop_obj, "waiting_passenger_num", 0)
+        route_len = line_route_lengths.get(stop_line_id, 0.0) if stop_line_id else 0.0
+
+        # Waiting passengers — original SUMO stop.py uses `passenger_num_n`
+        # (set by traci.busstop.getPersonIDs in update_stop_state())
+        waiting = getattr(stop_obj, "passenger_num_n",
+                  getattr(stop_obj, "wait_passenger_num_n",
+                  getattr(stop_obj, "waiting_passenger_num", 0)))
 
         all_stations.append({
             "station_id"   : stop_id,
-            "station_name" : stop_id,     # SUMO stop_id doubles as name
+            "station_name" : stop_id,
+            "line_id"      : stop_line_id,
             "pos"          : float(pos),
+            "route_length" : float(route_len) if route_len > 0 else None,
             "waiting_count": int(waiting),
         })
 
@@ -142,6 +179,7 @@ def bridge_to_full_snapshot(
     bridge,
     edge_map: Dict[str, float],
     sim_env=None,
+    bus_index: Optional[Dict[str, int]] = None,
 ) -> Dict[str, dict]:
     """
     Build per-line SnapshotDicts from a live SumoRLBridge, compatible with
@@ -154,6 +192,10 @@ def bridge_to_full_snapshot(
     sim_env  : MultiLineSimEnv (optional)
         Used to resolve station_id integers and timetable slot indices
         from the corresponding line env.
+    bus_index : dict (optional)
+        {sumo_trip_id_str → int}  -- stable index matching
+        rl_env._bus_index, used to embed `sumo_trip_index` in snapshot
+        for Phase 3 God-mode reset.
 
     Returns
     -------
@@ -269,6 +311,7 @@ def bridge_to_full_snapshot(
                 "bus_id":            fleet_idx,
                 "trip_id":           trip_id,
                 "trip_id_list":      trip_ids_served if trip_ids_served else [trip_id],
+                "sumo_trip_index":   bus_index.get(bus_id, -1) if bus_index else -1,
                 "direction":         direction,
                 "absolute_distance": float(pos),
                 "current_speed":     float(speed),
@@ -292,8 +335,9 @@ def bridge_to_full_snapshot(
             stop_obj = bridge.stop_obj_dic.get(stop_id)
             waiting = 0
             if stop_obj:
-                waiting = getattr(stop_obj, "wait_passenger_num_n",
-                                  getattr(stop_obj, "waiting_passenger_num", 0))
+                waiting = getattr(stop_obj, "passenger_num_n",
+                          getattr(stop_obj, "wait_passenger_num_n",
+                          getattr(stop_obj, "waiting_passenger_num", 0)))
             all_stations_data.append({
                 "station_id":    i,
                 "station_name":  stop_id,

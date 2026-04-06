@@ -125,6 +125,15 @@ class SumoRLBridge:
         self._fleet_counter: Dict[str, int] = {}  # line_id → next fleet index
     # region SUMO lifecycle
     def reset(self) -> None:
+        # Pre-cleanup: break references in old bus/fleet objects to help GC
+        # reclaim memory between episodes (trajectory_dict etc. accumulate)
+        if self.bus_obj_dic:
+            for _bo in self.bus_obj_dic.values():
+                if hasattr(_bo, 'trajectory_dict'):
+                    _bo.trajectory_dict.clear()
+                if hasattr(_bo, 'just_server_stop_data_d'):
+                    _bo.just_server_stop_data_d.clear()
+
         # Optimization: Load network once and reuse state
         if self.first_run:
             if self.initialized:

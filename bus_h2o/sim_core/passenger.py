@@ -1,4 +1,8 @@
 class Passenger(object):
+    __slots__ = ('appear_time', 'boarding_time', 'arrive_time',
+                 'appear_station', 'destination_station',
+                 'travel_bus', 'boarded', 'arrived')
+
     def __init__(self, t, boarding_station, destination_station):
         self.appear_time = t
         self.boarding_time = None

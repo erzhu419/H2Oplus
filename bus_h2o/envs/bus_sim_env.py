@@ -81,6 +81,7 @@ if _BUS_H2O_DIR not in sys.path:
 
 from sim_core.sim import env_bus        # noqa: E402
 from sim_core.bus import BusState       # noqa: E402
+from sim_core.co_line_scheduler import VirtualCoLineScheduler  # noqa: E402
 
 
 class BusSimEnv(env_bus):
@@ -107,6 +108,19 @@ class BusSimEnv(env_bus):
         # Pre-compute station linear positions once (used for snapshot `pos` field)
         self._station_linear_pos: dict[str, float] = self._compute_station_positions()
 
+        # SUMO alignment: inject line-level constants into the env so
+        # launch_bus() propagates them to each Bus instance.
+        # 7X is alphabetically last among 12 SUMO lines → index 11.
+        # Median headway for 7X = 360.0s (from save_obj_bus.add.xml schedule).
+        self.line_idx = 11       # _SUMO_LINE_INDEX['7X']
+        self.line_headway = 360.0  # matches rl_env._line_headway['7X']
+
+        # Virtual co-line scheduler: analytically tracks 102X/705X bus positions
+        # so co-line headways (obs[12-13]) match SUMO rl_bridge logic.
+        self._co_scheduler = VirtualCoLineScheduler(
+            x7_station_positions=self._station_linear_pos
+        )
+
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
@@ -126,8 +140,10 @@ class BusSimEnv(env_bus):
         if snapshot is None:
             # Standard reset — delegate to parent
             super().reset()
-            state, _, _ = self.initialize_state()
-            return state
+            # Do NOT call initialize_state() here — it runs the sim
+            # with None actions to completion. Let the sampler loop
+            # step forward to the first decision event.
+            return self.state
         else:
             # God-mode buffer reset
             super().reset()                      # reinitialise objects
@@ -136,12 +152,14 @@ class BusSimEnv(env_bus):
             return self.state
 
     def initialize_state(self, render: bool = False):
-        """Override to handle the 4-tuple returned by BusSimEnv.step()."""
+        """Override to handle the 3-tuple returned by BusSimEnv.step_fast()."""
         def count_non_empty(lst):
             return sum(1 for v in lst if v)
 
         while count_non_empty(list(self.state.values())) == 0:
-            state, reward, done, _ = self.step(self.action_dict, render=render)
+            state, reward, done = self.step_fast(self.action_dict, render=render)
+            if done:
+                break
 
         return self.state, self.reward, self.done
 
@@ -153,18 +171,64 @@ class BusSimEnv(env_bus):
             obs     : dict[bus_id → state_vector]
             rewards : dict[bus_id → float]
             done    : bool
-            info    : {"snapshot": SnapshotDict, "t": float}
+            info    : {
+                "snapshot_T1": SnapshotDict,  # global state BEFORE this step (decision time)
+                "snapshot_T2": SnapshotDict,  # global state AFTER this step  (arrival time)
+                "snapshot":    SnapshotDict,  # alias for snapshot_T2 (backward compat)
+                "t":           float,
+            }
+
+        snapshot_T1 / snapshot_T2 semantics (H2O+.md §3.2):
+            T1 = the moment Ego Bus departs from station k (action is being issued).
+            T2 = the moment Ego Bus arrives at station k+1 (next decision event).
+            Discriminator input: D(obs_t, a_t, obs_{t+1}, z_t, z_{t+1})
+            where z_t = extract_structured_context(snapshot_T1)
+                  z_t1= extract_structured_context(snapshot_T2)
 
         Note: **kwargs passes through `render=`, `debug=` etc. from parent
               initialize_state() so this override stays backward-compatible.
         """
-        state, reward, done = super().step(action_dict, **kwargs)
-        snapshot = self.capture_full_system_snapshot()
+        # Capture T1: global network state at the moment the action is applied
+        snapshot_T1 = self.capture_full_system_snapshot()
+
+        # Build co-line bus positions from virtual 102X/705X scheduler
+        # Mirrors MultiLineEnv.step() which populates co_line_buses from all other active lines.
+        # Use current segment speed as conversion factor (mean across active buses, fallback 8 m/s)
+        active_speeds = [b.current_speed for b in self.bus_all if b.on_route and b.current_speed > 0]
+        seg_speed = float(np.mean(active_speeds)) if active_speeds else 8.0
+        co_line_buses = self._co_scheduler.get_co_line_buses(
+            self.current_time, seg_speed=seg_speed, target_headway=self.line_headway
+        )
+
+        state, reward, done = super().step(action_dict, co_line_buses=co_line_buses, **kwargs)
+
+        # Capture T2: global network state after the simulation step
+        snapshot_T2 = self.capture_full_system_snapshot()
+
         info = {
-            "snapshot": snapshot,
-            "t": self.current_time,
+            "snapshot_T1": snapshot_T1,
+            "snapshot_T2": snapshot_T2,
+            "snapshot":    snapshot_T2,   # backward-compat alias
+            "t":           self.current_time,
         }
         return state, reward, done, info
+
+    def step_fast(self, action_dict: dict, **kwargs) -> tuple[dict, dict, bool]:
+        """Lightweight step for training — skips snapshot capture."""
+        co_line_buses = self._co_scheduler.get_co_line_buses(
+            self.current_time, target_headway=self.line_headway
+        )
+        state, reward, done = super().step(action_dict, co_line_buses=co_line_buses, **kwargs)
+        return state, reward, done
+
+    def step_to_event(self, action_dict: dict, **kwargs) -> tuple[dict, dict, bool]:
+        """Fast-forward through idle ticks until a bus emits obs, or done."""
+        while True:
+            state, reward, done = self.step_fast(action_dict, **kwargs)
+            if done:
+                return state, reward, done
+            if any(v for v in state.values()):
+                return state, reward, done
 
     # ------------------------------------------------------------------
     # Snapshot I/O
@@ -180,11 +244,15 @@ class BusSimEnv(env_bus):
         Returns:
             SnapshotDict (see module docstring for schema).
         """
+        route_length = sum(r.distance for r in self.routes)
         buses_data = []
         for bus in self.bus_all:
+            if not bus.on_route:
+                continue  # Skip retired buses — matches SUMO's active-only snapshot
             entry = {
                 "bus_id":            bus.bus_id,
                 "trip_id":           bus.trip_id,
+                "sumo_trip_index":   getattr(bus, 'sumo_trip_index', bus.trip_id),
                 "direction":         int(bus.direction),
                 "absolute_distance": float(bus.absolute_distance),
                 "current_speed":     float(bus.current_speed),
@@ -203,6 +271,7 @@ class BusSimEnv(env_bus):
             # Add as `pos` for extract_structured_context compatibility
             entry["pos"] = float(bus.absolute_distance)
             entry["speed"] = float(bus.current_speed)
+            entry["route_length"] = float(route_length)
             buses_data.append(entry)
 
         stations_data = []
@@ -214,6 +283,7 @@ class BusSimEnv(env_bus):
                 "direction":     bool(st.direction),
                 "waiting_count": int(len(st.waiting_passengers)),
                 "pos":           float(self._station_linear_pos.get(sname, 0.0)),
+                "route_length":  float(route_length),
             }
             stations_data.append(entry)
 
@@ -232,20 +302,31 @@ class BusSimEnv(env_bus):
         with the given SnapshotDict.  Must be called after super().reset() so
         that objects are properly initialised before being overwritten.
 
-        This implements the "buffer reset" strategy described in H2O+.md §2.2:
-        sample a real-world transition from the offline buffer and seed the
-        simulator at the corresponding state T1, so the agent continues from a
-        realistic distribution.
+        Accepts both:
+          - Full-fidelity format (from bridge_to_full_snapshot / capture_full_system_snapshot)
+          - Lightweight format  (from bridge_to_snapshot / raw_snapshot)
 
         Args:
-            snapshot: SnapshotDict as produced by capture_full_system_snapshot().
+            snapshot: SnapshotDict in either format.
         """
-        self.current_time = float(snapshot["current_time"])
+        # Accept both 'current_time' and 'sim_time' keys
+        self.current_time = float(
+            snapshot.get("current_time", snapshot.get("sim_time", 0.0))
+        )
 
         # --- Mark timetable entries as launched and pre-launch buses ---
         # super().reset() empties bus_all=[]; buses only appear via launch_bus().
         # We must pre-launch buses for all timetable slots marked launched in snap.
-        launched_set = set(snapshot.get("launched_trips", []))
+        if "launched_trips" in snapshot:
+            launched_set = set(snapshot["launched_trips"])
+        else:
+            # Lightweight snapshot: infer launched trips from current_time
+            # Launch all timetable entries whose start_time <= current_time
+            launched_set = set()
+            for i, t in enumerate(self.timetables):
+                start_t = getattr(t, "start_time", getattr(t, "time", float("inf")))
+                if start_t <= self.current_time:
+                    launched_set.add(i)
         for i, t in enumerate(self.timetables):
             t.launched = (i in launched_set)
             if i in launched_set:
@@ -273,25 +354,27 @@ class BusSimEnv(env_bus):
                 else:
                     continue
 
-            # Core kinematics
-            bus.trip_id            = bd["trip_id"]
-            bus.trip_id_list       = list(bd.get("trip_id_list", [bd["trip_id"]]))
-            bus.direction          = bool(bd["direction"])
-            bus.absolute_distance  = float(bd["absolute_distance"])
-            bus.current_speed      = float(bd["current_speed"])
-            bus.holding_time       = float(bd["holding_time"])
-            bus.forward_headway    = float(bd["forward_headway"])
-            bus.backward_headway   = float(bd["backward_headway"])
-            bus.next_station_dis   = float(bd["next_station_dis"])
-            bus.last_station_dis   = float(bd["last_station_dis"])
-            bus.on_route           = bool(bd["on_route"])
+            # Core kinematics (accept both full-fidelity and lightweight field names)
+            bus.trip_id            = bd.get("trip_id", 0)
+            bus.trip_id_list       = list(bd.get("trip_id_list", [bus.trip_id]))
+            # Inject SUMO trip index for embedding alignment (Phase 3 H2O+)
+            bus.sumo_trip_index    = bd.get("sumo_trip_index", bus.trip_id)
+            bus.direction          = bool(bd.get("direction", 0))
+            bus.absolute_distance  = float(bd.get("absolute_distance", bd.get("pos", 0.0)))
+            bus.current_speed      = float(bd.get("current_speed", bd.get("speed", 0.0)))
+            bus.holding_time       = float(bd.get("holding_time", 0.0))
+            bus.forward_headway    = float(bd.get("forward_headway", 360.0))
+            bus.backward_headway   = float(bd.get("backward_headway", 360.0))
+            bus.next_station_dis   = float(bd.get("next_station_dis", 0.0))
+            bus.last_station_dis   = float(bd.get("last_station_dis", 0.0))
+            bus.on_route           = bool(bd.get("on_route", True))
 
-            # Station pointers
-            lst_id  = bd["last_station_id"]
-            nxt_id  = bd["next_station_id"]
-            if lst_id in station_by_id:
+            # Station pointers (may be absent in lightweight snapshots)
+            lst_id  = bd.get("last_station_id")
+            nxt_id  = bd.get("next_station_id")
+            if lst_id is not None and lst_id in station_by_id:
                 bus.last_station = station_by_id[lst_id]
-            if nxt_id in station_by_id:
+            if nxt_id is not None and nxt_id in station_by_id:
                 bus.next_station = station_by_id[nxt_id]
 
             # Restore BusState enum
@@ -382,31 +465,191 @@ from sim_core.sim import MultiLineEnv as _MultiLineEnv  # noqa: E402
 
 class MultiLineSimEnv(_MultiLineEnv):
     """
-    Thin gym-compatible adapter around MultiLineEnv.
+    Gym-compatible adapter around MultiLineEnv.
 
-    Provides the same interface as BusSimEnv but operates over all 10 SUMO
-    lines simultaneously.  State/reward/action dicts are nested:
-        state:   {line_id: {bus_id: [obs_list]}}
-        reward:  {line_id: {bus_id: float}}
-        actions: {line_id: {bus_id: float}}
+    Operates over all 12 SUMO lines simultaneously for z-feature computation,
+    while exposing a BusSimEnv-compatible interface for the 7X policy rollout.
 
-    Usage:
-        env = MultiLineSimEnv('calibrated_env')
-        obs, reward, done = env.reset()
-        for t in range(N):
-            actions = {lid: {bid: 0.0 for bid in range(le.max_agent_num)}
-                       for lid, le in env.line_map.items()}
-            obs, reward, done = env.step(actions)
+    For H2O+ training:
+        - capture_full_system_snapshot() → all-lines snapshot for z
+        - state/reward/step_to_event/reset → proxied to 7X line
+        - Other lines step in the background with zero-hold actions
     """
+
+    TARGET_LINE = "7X"
 
     def __init__(self, path: str, debug: bool = False, render: bool = False):
         super().__init__(path, debug=debug, render=render)
+        if self.TARGET_LINE not in self.line_map:
+            raise RuntimeError(
+                f"Target line {self.TARGET_LINE} not found. "
+                f"Available: {list(self.line_map.keys())}"
+            )
+        self._x7 = self.line_map[self.TARGET_LINE]
+        # Override parent's aggregate values with 7X-only values
+        self.max_agent_num = self._x7.max_agent_num
+        self.action_space = self._x7.action_space
 
-    # All functionality inherited from MultiLineEnv.
-    # Add helper for flat obs extraction compatible with data_utils:
+    # ------------------------------------------------------------------
+    # BusSimEnv-compatible properties (proxy to 7X)
+    # ------------------------------------------------------------------
+
+    @property
+    def state(self):
+        return self._x7.state
+
+    @state.setter
+    def state(self, val):
+        self._x7.state = val
+
+    @property
+    def reward(self):
+        return self._x7.reward
+
+    @property
+    def stations(self):
+        return self._x7.stations
+
+    # ------------------------------------------------------------------
+    # Reset: reset all lines, optionally inject snapshot into 7X
+    # ------------------------------------------------------------------
+
+    def reset(self, snapshot=None):
+        """Reset all lines. If snapshot given, inject into 7X (buffer reset)."""
+        super().reset()
+        if snapshot is not None:
+            # If this is an all-lines snapshot (from raw_snapshot), filter
+            # to only buses/stations relevant to 7X before injecting.
+            if any(b.get("line_id") for b in snapshot.get("all_buses", [])):
+                x7_lines = {self.TARGET_LINE, self.TARGET_LINE.replace("X", "S")}
+                filtered = dict(snapshot)
+                filtered["all_buses"] = [
+                    b for b in snapshot["all_buses"]
+                    if b.get("line_id") in x7_lines or b.get("line_id") is None
+                ]
+                filtered["all_stations"] = [
+                    s for s in snapshot.get("all_stations", [])
+                    if s.get("line_id") in x7_lines or s.get("line_id") is None
+                ]
+                self._x7.restore_full_system_snapshot(filtered)
+            else:
+                self._x7.restore_full_system_snapshot(snapshot)
+            return self._x7.state
+        # Standard reset: step all lines until 7X has obs
+        self._init_all_lines()
+        return self._x7.state
+
+    def _init_all_lines(self):
+        """Step until 7X has at least one bus with obs."""
+        actions = self._zero_actions()
+        for _ in range(5000):
+            state, reward, done = super().step(actions)
+            if done:
+                break
+            x7_state = state.get(self.TARGET_LINE, {})
+            if any(v for v in x7_state.values()):
+                break
+
+    # ------------------------------------------------------------------
+    # Step: advance all lines, return only 7X state/reward
+    # ------------------------------------------------------------------
+
+    def step_to_event(self, action_dict, **kwargs):
+        """
+        Step all lines until 7X produces a decision event.
+
+        action_dict: {bus_id: hold_time} for 7X only.
+        Other lines get zero-hold.
+        """
+        full_actions = self._zero_actions()
+        full_actions[self.TARGET_LINE] = action_dict
+        while True:
+            state, reward, done = super().step(full_actions, **kwargs)
+            if done:
+                return self._x7.state, self._x7.reward, True
+            x7_state = state.get(self.TARGET_LINE, {})
+            if any(v for v in x7_state.values()):
+                return self._x7.state, self._x7.reward, False
+            # Reset 7X actions to None while waiting
+            full_actions[self.TARGET_LINE] = {
+                k: None for k in range(self._x7.max_agent_num)
+            }
+
+    def step_fast(self, action_dict, **kwargs):
+        """Single-tick step. action_dict is for 7X only."""
+        full_actions = self._zero_actions()
+        full_actions[self.TARGET_LINE] = action_dict
+        state, reward, done = super().step(full_actions, **kwargs)
+        return self._x7.state, self._x7.reward, done
+
+    # ------------------------------------------------------------------
+    # Snapshot: aggregate all lines for z-feature computation
+    # ------------------------------------------------------------------
+
+    def capture_full_system_snapshot(self) -> dict:
+        """
+        Build an all-lines snapshot for extract_structured_context().
+
+        All buses from all 12 lines are included (matching SUMO's
+        bridge_to_snapshot which iterates bridge.active_bus_ids across
+        all lines). Each bus carries its line's route_length so
+        extract_structured_context can normalise by fractional position.
+
+        Stations from ALL lines are included with their own route_length.
+        """
+        all_buses = []
+        for lid, le in self.line_map.items():
+            # Compute this line's total route length
+            route_len = sum(r.distance for r in le.routes)
+            for bus in le.bus_all:
+                if not bus.on_route:
+                    continue
+                all_buses.append({
+                    "bus_id":       int(bus.bus_id),
+                    "line_id":      lid,
+                    "pos":          float(bus.absolute_distance),
+                    "route_length": float(route_len),
+                    "speed":        float(bus.current_speed),
+                    "load":         int(len(bus.passengers)),
+                    "direction":    int(0 if bus.direction else 1),
+                })
+
+        all_stations = []
+        for lid, le in self.line_map.items():
+            route_len = sum(r.distance for r in le.routes)
+            # Compute cumulative station positions from routes
+            n_routes = len(le.routes)
+            n_stations = len(le.stations)
+            # stations[0] is at distance 0, station[i] is at sum(routes[0..i-1].distance)
+            cum_pos = 0.0
+            for i, st in enumerate(le.stations):
+                all_stations.append({
+                    "station_id":    int(st.station_id),
+                    "station_name":  st.station_name,
+                    "line_id":       lid,
+                    "pos":           float(cum_pos),
+                    "route_length":  float(route_len),
+                    "waiting_count": int(len(st.waiting_passengers)),
+                })
+                # Advance cumulative position
+                if i < n_routes:
+                    cum_pos += le.routes[i].distance
+
+        return {
+            "sim_time":     float(self.current_time),
+            "current_time": float(self.current_time),
+            "all_buses":    all_buses,
+            "all_stations": all_stations,
+        }
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+
     def iter_bus_obs(self, state: dict):
         """Yield (line_id, bus_id, obs) for every bus with a non-empty state."""
         for lid, bd in state.items():
             for bid, v in bd.items():
                 if v:
                     yield lid, bid, v[-1]
+

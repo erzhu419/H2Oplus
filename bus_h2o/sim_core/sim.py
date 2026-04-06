@@ -39,13 +39,16 @@ class env_bus(object):
             with open(config_path, 'r') as f:
                 args = json.load(f)
 
-            od           = pd.read_excel(os.path.join(path, "data/passenger_OD.xlsx"), index_col=[1, 0])
+            _od_sumo = os.path.join(path, "data/passenger_OD_sumo.xlsx")
+            _od_orig = os.path.join(path, "data/passenger_OD.xlsx")
+            _od_file = _od_sumo if os.path.exists(_od_sumo) else _od_orig
+            od           = pd.read_excel(_od_file, index_col=[1, 0])
             station_set  = pd.read_excel(os.path.join(path, "data/stop_news.xlsx"))
             routes_set   = pd.read_excel(os.path.join(path, "data/route_news.xlsx"))
             timetable_set = pd.read_excel(os.path.join(path, "data/time_table.xlsx"))
             timetable_set = timetable_set.sort_values(
                 by=['launch_time', 'direction']
-            )[:264].reset_index(drop=True)
+            ).reset_index(drop=True)
             timetable_set['launch_turn'] = range(timetable_set.shape[0])
 
             eff_station = sorted(set(od.index[i][0] for i in range(od.shape[0])))
@@ -71,15 +74,21 @@ class env_bus(object):
         self.effective_station_name = cached['effective_station_name']
         self.effective_period       = cached['effective_period']
 
-        self.effective_trip_num = 264
+        self.effective_trip_num = len(self.timetable_set)
         self.time_step = self.args["time_step"]
         self.passenger_update_freq = self.args["passenger_state_update_freq"]
-        self.max_agent_num = 25
+        # Max simulation time — matches SUMO bridge max_steps (default 18000s = 5h)
+        self.max_time = self.args.get("max_time", 18000)
+        # max_agent_num: concurrent buses on route (conservative upper bound)
+        self.max_agent_num = min(self.effective_trip_num, 25)
 
         self.visualizer = visualize(self)
         self.enable_plot = True
 
-        self.action_space = Box(0, 60, shape=(1,))
+        self.action_space = Box(
+            low=np.array([0.0, 0.1], dtype=np.float32),
+            high=np.array([60.0, 10.0], dtype=np.float32),
+        )
 
         if debug:
             self.summary_data = pd.DataFrame(columns=['bus_id', 'station_id', 'trip_id', 'abs_dis', 'forward_headway',
@@ -169,7 +178,70 @@ class env_bus(object):
         self.reward = {key: 0 for key in range(self.max_agent_num)}
         self.done = False
 
+        # Compute static median headway from timetable (matches SUMO rl_env._line_headway)
+        launch_times = sorted(t.launch_time for t in self.timetables)
+        if len(launch_times) >= 2:
+            diffs = [b - a for a, b in zip(launch_times[:-1], launch_times[1:]) if b > a]
+            self.line_headway = float(np.median(diffs)) if diffs else 360.0
+        else:
+            self.line_headway = 360.0
+        # Passenger arrival pre-computation cache
+        self._pax_cache_hour = -1
+        self._pax_flat_rates = np.array([], dtype=np.float64)
+        self._pax_flat_map = []  # [(station_obj, dest_obj), ...]
+
         self.action_dict = {key: None for key in list(range(self.max_agent_num))}
+
+    def _rebuild_pax_cache(self, effective_hour):
+        """Rebuild flat rate array for batched Poisson across all stations."""
+        rates = []
+        mapping = []
+        for station in self.stations:
+            if station.od is None:
+                continue
+            col_key = f"{effective_hour:02d}:00:00"
+            if col_key not in station.od:
+                continue
+            period_od = station.od[col_key]
+            for dest_name, demand in period_od.items():
+                if demand <= 0:
+                    continue
+                dest = next(
+                    (x for x in self.stations
+                     if x.station_name == dest_name and x.direction == station.direction),
+                    None,
+                )
+                if dest is None:
+                    continue
+                rates.append(demand / 3600.0)
+                mapping.append((station, dest))
+        self._pax_cache_hour = effective_hour
+        self._pax_flat_rates = np.array(rates, dtype=np.float64) if rates else np.array([], dtype=np.float64)
+        self._pax_flat_map = mapping
+
+    def _batch_passenger_arrival(self, current_time, update_interval):
+        """ONE Poisson call for all stations × destinations."""
+        from sim_core.passenger import Passenger
+
+        hour_offset = int(current_time) // 3600
+        effective_hour = max(6, min(6 + hour_offset, 19))
+
+        if self._pax_cache_hour != effective_hour:
+            self._rebuild_pax_cache(effective_hour)
+
+        if len(self._pax_flat_rates) == 0:
+            return
+
+        # Single batched Poisson call — replaces N separate calls
+        # Single batched Poisson call — replaces N separate calls
+        arrivals = np.random.poisson(self._pax_flat_rates * update_interval)
+
+        for n_arrive, (station, dest) in zip(arrivals, self._pax_flat_map):
+            if n_arrive == 0:
+                continue
+            new_pax = [Passenger(current_time, station, dest) for _ in range(int(n_arrive))]
+            station.waiting_passengers.extend(new_pax)
+            station.total_passenger.extend(new_pax)
 
     def initialize_state(self, render=False):
         def count_non_empty_sublist(lst):
@@ -199,6 +271,14 @@ class env_bus(object):
             bus = sorted(candidates, key=lambda b: b.back_to_terminal_time)[0]
             bus.reset_bus(trip.launch_turn, trip.launch_time)
             bus.on_route = True
+        # Inject static line headway (matches SUMO rl_env._line_headway)
+        bus.line_headway = getattr(self, 'line_headway', 360.0)
+        # Inject SUMO line index (matches rl_env._line_index; 7X=11)
+        bus.line_idx = getattr(self, 'line_idx', 0)
+        # Inject line_id string for signal model lookup
+        bus.line_id_str = getattr(self, 'line_id_str', None)
+        # Inject number of route segments for signal density calculation
+        bus._n_route_segments = len(self.routes)
 
 
     def restore_full_system_snapshot(self, snapshot: dict) -> None:
@@ -233,6 +313,8 @@ class env_bus(object):
 
             bus.trip_id            = bd["trip_id"]
             bus.trip_id_list       = list(bd.get("trip_id_list", [bd["trip_id"]]))
+            # Inject SUMO trip index for embedding alignment (Phase 3 H2O+)
+            bus.sumo_trip_index    = bd.get("sumo_trip_index", bd["trip_id"])
             bus.direction          = bool(bd["direction"])
             bus.absolute_distance  = float(bd["absolute_distance"])
             bus.current_speed      = float(bd["current_speed"])
@@ -275,7 +357,7 @@ class env_bus(object):
                 if len(st.waiting_passengers) != count:
                     st.waiting_passengers = [None] * count
 
-    def step(self, action, debug=False, render=False, episode = 0):
+    def step(self, action, debug=False, render=False, episode=0, co_line_buses=None):
         # Reset per-step state so only THIS tick's obs are visible (not accumulated history).
         for k in self.state:
             self.state[k] = []
@@ -293,12 +375,10 @@ class env_bus(object):
                 route.route_update(self.current_time, self.effective_period)
                 route_state.append(route.speed_limit)
             self.route_state = route_state
-        # update waiting passengers of every station every second
+        # update waiting passengers of every station
         # station_state = []
         if self.current_time % self.passenger_update_freq == 0:
-            for station in self.stations:
-                station.station_update(self.current_time, self.stations, self.passenger_update_freq)
-            # station_state.append(len(station.waiting_passengers))
+            self._batch_passenger_arrival(self.current_time, self.passenger_update_freq)
         # update bus state
         for bus in self.bus_all:
             # if bus.bus_id == 0:
@@ -313,7 +393,7 @@ class env_bus(object):
                     traj_list.append([bus.last_station.station_name, self.current_time + bus.holding_time, bus.absolute_distance, bus.direction, bus.trip_id])
             if bus.on_route:
                 # NOTE: in-route trajectory.append removed (was O(n_buses * n_steps), only for drawing)
-                bus.drive(self.current_time, action.get(bus.bus_id, 0.0), self.bus_all, debug=debug)
+                bus.drive(self.current_time, action.get(bus.bus_id, 0.0), self.bus_all, debug=debug, co_line_buses=co_line_buses)
 
         self.state_bus_list = state_bus_list = list(filter(lambda x: len(x.obs) != 0, self.bus_all))
         self.reward_list = reward_list = list(filter(lambda x: x.reward is not None, self.bus_all))
@@ -359,7 +439,10 @@ class env_bus(object):
 
         self.current_time += self.time_step
         unhealthy_all = [bus.is_unhealthy for bus in self.bus_all]
-        if sum([trip.launched for trip in self.timetables]) == len(self.timetables) and sum([bus.on_route for bus in self.bus_all]) == 0:
+        all_retired = (sum([trip.launched for trip in self.timetables]) == len(self.timetables)
+                       and sum([bus.on_route for bus in self.bus_all]) == 0)
+        time_exceeded = (self.current_time >= self.max_time)
+        if all_retired or time_exceeded:
             self.done = True
             if not debug:
                 for bus in self.bus_all:
@@ -482,6 +565,7 @@ class MultiLineEnv:
                 le = env_bus(line_path, debug=debug, render=render)
                 le.line_id  = name
                 le.line_idx = len(self.line_map)
+                le.line_id_str = name  # for signal model lookup in bus.py
                 # Patch line_idx into every bus launched
                 self.line_map[name] = le
                 print(f"  Loaded line {name}: {le.state_dim}-dim obs, "
@@ -497,8 +581,11 @@ class MultiLineEnv:
 
         self.state_dim   = 15
         self.max_agent_num = sum(le.max_agent_num for le in self.line_map.values())
-        # action_space: same as single-line (0-60 hold time)
-        self.action_space = Box(0, 60, shape=(1,))
+        # action_space: 2D [hold_time, speed_ratio]
+        self.action_space = Box(
+            low=np.array([0.0, 0.1], dtype=np.float32),
+            high=np.array([60.0, 10.0], dtype=np.float32),
+        )
 
     def _make_line_path(self, base_path: str, line_id: str) -> str:
         """
@@ -564,6 +651,20 @@ class MultiLineEnv:
         done_flags = []
 
         for line_id, le in self.line_map.items():
+            # Build co_line_buses: for this line, collect buses from all OTHER lines.
+            # Each bus is only registered at its current next_station (O(n_buses) per tick).
+            co_line_buses = {}  # {station_name: [(abs_distance, speed, line_id)]}
+            for other_lid, other_le in self.line_map.items():
+                if other_lid == line_id:
+                    continue
+                for bus in other_le.bus_all:
+                    if not bus.on_route or bus.next_station is None:
+                        continue
+                    sname = bus.next_station.station_name
+                    co_line_buses.setdefault(sname, []).append(
+                        (bus.absolute_distance, bus.current_speed, other_lid)
+                    )
+
             # Extract per-line actions
             if line_id in action_dict and isinstance(action_dict[line_id], dict):
                 flat_act = action_dict[line_id]
@@ -572,7 +673,7 @@ class MultiLineEnv:
             else:
                 flat_act = {i: 0.0 for i in range(le.max_agent_num)}
 
-            s, r, d = le.step(flat_act, debug=debug, render=render, episode=episode)
+            s, r, d = le.step(flat_act, debug=debug, render=render, episode=episode, co_line_buses=co_line_buses)
             # Inject line_idx into any new obs vector (pos 0)
             for bus_id, obs_list in s.items():
                 for obs in obs_list:
