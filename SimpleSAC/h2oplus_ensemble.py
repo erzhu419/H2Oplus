@@ -268,6 +268,30 @@ class H2OPlusEnsemble:
             nn.utils.clip_grad_norm_(self.qf.parameters(), self.config.gradient_clip_max_norm)
         self.qf_optimizer.step()
 
+        # ── JTT: Extract fragility signals from real batch ─────────
+        jtt_updated = False
+        if self.priority_index is not None and "_indices" in real_batch:
+            with torch.no_grad():
+                # 1. TD Error (mean across ensemble)
+                td_err = (q_pred_real - td_target_real).abs().mean(0).cpu().numpy()
+                # 2. Q Disagreement (ensemble std)
+                q_disagree = q_pred_real.std(0).cpu().numpy()
+                # 3. Discriminator drift (if available)
+                if self.discriminator is not None and not self.config.disable_is_weighting:
+                    w_real = compute_z_importance_weight(
+                        self.discriminator, real_z_t, real_z_t1,
+                        obs=S, action=A, next_obs=S2,
+                    ).squeeze()
+                    disc_drift = (1.0 - w_real.clamp(0, 10) / 10.0).cpu().numpy()
+                else:
+                    disc_drift = np.zeros(len(td_err))
+
+            self.priority_index.update(
+                real_batch["_indices"].cpu().numpy(),
+                td_err, q_disagree, disc_drift,
+            )
+            jtt_updated = True
+
         # ── Policy update (every critic_actor_ratio steps) ─────────
         pi_loss_val = 0.0
         bc_loss_val = 0.0
@@ -347,6 +371,7 @@ class H2OPlusEnsemble:
             q_mean=q_pred_real.mean().item(),
             q_std=q_pred_real.std(0).mean().item(),
             cql_loss=cql_loss.item() if self.config.use_cql else 0,
+            jtt_updated=jtt_updated,
         )
         return metrics
 
