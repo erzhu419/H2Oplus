@@ -538,6 +538,24 @@ def main(argv):
         )
 
     # ==================================================================
+    #  DynamicsDiscriminator pretrain: learn SUMO dynamics P(s'|s,a)
+    # ==================================================================
+    if FLAGS.use_dynamics_disc and hasattr(discriminator, 'train_step'):
+        n_disc_pretrain = 5000
+        log.info(f"Pretraining DynamicsDiscriminator for {n_disc_pretrain} steps...")
+        disc_opt = torch.optim.Adam(discriminator.parameters(), lr=1e-3)
+        t0 = time.time()
+        for ds_step in range(n_disc_pretrain):
+            batch = replay_buffer.sample(FLAGS.batch_size, scope="real")
+            dl = discriminator.train_step(
+                batch["observations"], batch["actions"],
+                batch["next_observations"], disc_opt,
+            )
+            if (ds_step + 1) % 1000 == 0:
+                log.info(f"  DynDisc pretrain step {ds_step+1}: loss={dl:.4f}")
+        log.info(f"DynDisc pretrain done in {time.time()-t0:.1f}s, final loss={dl:.4f}")
+
+    # ==================================================================
     #  Main training loop
     # ==================================================================
     log.info(f"Starting training for {FLAGS.n_epochs} epochs")
@@ -598,14 +616,18 @@ def main(argv):
         else:
             train_steps_this_epoch = FLAGS.n_train_step_per_epoch
 
-        # batch_sim_ratio warmup: ramp from 0.1 to 0.5 over warmup_episodes
-        if epoch < FLAGS.warmup_episodes and FLAGS.warmup_episodes > 0:
+        # batch_sim_ratio: adaptive (by buffer size) or fixed warmup ramp
+        if FLAGS.adaptive_sim_ratio:
+            # Let h2o.train() compute sim_ratio from actual buffer sizes
+            sim_ratio = -1  # sentinel: adaptive handles it internally
+        elif epoch < FLAGS.warmup_episodes and FLAGS.warmup_episodes > 0:
             warmup_progress = epoch / FLAGS.warmup_episodes
             sim_ratio = 0.1 + 0.4 * warmup_progress  # 0.1 -> 0.5
         else:
             sim_ratio = 0.5
-        h2o.config.batch_sim_ratio = sim_ratio
-        metrics["batch_sim_ratio"] = sim_ratio
+        if sim_ratio >= 0:
+            h2o.config.batch_sim_ratio = sim_ratio
+        metrics["batch_sim_ratio"] = sim_ratio if sim_ratio >= 0 else -1
 
         epoch_train_metrics = []  # accumulate for epoch summary
 

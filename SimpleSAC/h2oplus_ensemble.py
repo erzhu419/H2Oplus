@@ -385,18 +385,32 @@ class H2OPlusEnsemble:
 
     def discriminator_evaluate(self):
         real_batch = self.replay_buffer.sample(self.config.batch_size, scope="real")
+        if not self.replay_buffer.has_online_data():
+            return 0.0, 0.0
         sim_batch = self.replay_buffer.sample(self.config.batch_size, scope="sim")
+
         with torch.no_grad():
-            if isinstance(self.discriminator, TransitionDiscriminator):
+            if isinstance(self.discriminator, DynamicsDiscriminator):
+                # For dynamics disc: compute weight for real vs sim
+                w_real = self.discriminator.compute_weight(
+                    real_batch["observations"], real_batch["actions"], real_batch["next_observations"])
+                w_sim = self.discriminator.compute_weight(
+                    sim_batch["observations"], sim_batch["actions"], sim_batch["next_observations"])
+                # "accuracy" = fraction where real weight > 0.5 / sim weight < 0.5
+                real_acc = (w_real > 0.5).float().mean().item()
+                sim_acc = (w_sim < 0.5).float().mean().item()
+            elif isinstance(self.discriminator, TransitionDiscriminator):
                 real_l = self.discriminator(real_batch["observations"], real_batch["actions"],
                                             real_batch["next_observations"], real_batch["z_t"], real_batch["z_t1"])
                 sim_l = self.discriminator(sim_batch["observations"], sim_batch["actions"],
                                            sim_batch["next_observations"], sim_batch["z_t"], sim_batch["z_t1"])
+                real_acc = (torch.sigmoid(real_l) > 0.5).float().mean().item()
+                sim_acc = (torch.sigmoid(sim_l) < 0.5).float().mean().item()
             else:
                 real_l = self.discriminator(real_batch["z_t"], real_batch["z_t1"])
                 sim_l = self.discriminator(sim_batch["z_t"], sim_batch["z_t1"])
-            real_acc = (torch.sigmoid(real_l) > 0.5).float().mean().item()
-            sim_acc = (torch.sigmoid(sim_l) < 0.5).float().mean().item()
+                real_acc = (torch.sigmoid(real_l) > 0.5).float().mean().item()
+                sim_acc = (torch.sigmoid(sim_l) < 0.5).float().mean().item()
         return real_acc, sim_acc
 
     def update_anchor_if_improved(self, eval_return):

@@ -29,7 +29,7 @@ _BUS_H2O = os.path.join(os.path.dirname(_HERE), "bus_h2o")
 if _BUS_H2O not in sys.path:
     sys.path.insert(0, _BUS_H2O)
 
-from common.data_utils import extract_structured_context, TransitionDiscriminator  # noqa: E402
+from common.data_utils import extract_structured_context, TransitionDiscriminator, DynamicsDiscriminator  # noqa: E402
 
 
 # ── Original action mapping (matches ensemble checkpoint training) ─────────
@@ -296,15 +296,20 @@ class BusStepSampler:
                         dev = self.replay_buffer.device
                         z_t_tensor = torch.FloatTensor(last_z_t).unsqueeze(0).to(dev)
                         z_t1_tensor = torch.FloatTensor(z_now).unsqueeze(0).to(dev)
-                        if isinstance(discriminator, TransitionDiscriminator):
-                            obs_t = torch.FloatTensor(last_settled_obs).unsqueeze(0).to(dev)
-                            act_t = torch.FloatTensor(last_settled_action).unsqueeze(0).to(dev)
-                            nobs_t = torch.FloatTensor(obs_aug).unsqueeze(0).to(dev)
+                        obs_t = torch.FloatTensor(last_settled_obs).unsqueeze(0).to(dev)
+                        act_t = torch.FloatTensor(last_settled_action).unsqueeze(0).to(dev)
+                        nobs_t = torch.FloatTensor(obs_aug).unsqueeze(0).to(dev)
+
+                        if isinstance(discriminator, DynamicsDiscriminator):
+                            w = discriminator.compute_weight(obs_t, act_t, nobs_t).item()
+                        elif isinstance(discriminator, TransitionDiscriminator):
                             logit = discriminator(obs_t, act_t, nobs_t, z_t_tensor, z_t1_tensor)
+                            prob_real = torch.sigmoid(logit).item()
+                            w = prob_real / (1.0 - prob_real + 1e-8)
                         else:
                             logit = discriminator(z_t_tensor, z_t1_tensor)
-                        prob_real = torch.sigmoid(logit).item()
-                        w = prob_real / (1.0 - prob_real + 1e-8)
+                            prob_real = torch.sigmoid(logit).item()
+                            w = prob_real / (1.0 - prob_real + 1e-8)
                         w_values.append(w)
 
                         if w < self.w_threshold:

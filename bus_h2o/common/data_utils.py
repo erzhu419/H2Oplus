@@ -417,7 +417,10 @@ def compute_z_importance_weight(
     Returns detached (B, 1) tensor.
     """
     with torch.no_grad():
-        if isinstance(discriminator, DynamicsDiscriminator):
+        if isinstance(discriminator, FactoredDynamicsDiscriminator):
+            w = discriminator.compute_weight(obs, action, next_obs)
+            return w.unsqueeze(-1)
+        elif isinstance(discriminator, DynamicsDiscriminator):
             w = discriminator.compute_weight(obs, action, next_obs)
             return w.unsqueeze(-1)
         elif isinstance(discriminator, TransitionDiscriminator):
@@ -492,22 +495,37 @@ class TransitionDiscriminator(nn.Module):
 class DynamicsDiscriminator(nn.Module):
     """Dynamics-aware importance weighting for H2O+.
 
-    Instead of classifying "is this transition from real or sim?" (which
-    confuses policy distribution with dynamics), this module learns the
-    SUMO dynamics model P_real(s'|s,a) from offline data, then scores
-    online transitions by how well they match the learned dynamics.
+    Learns SUMO dynamics on dynamics-sensitive features only, then scores
+    online transitions by how well they match.
 
-    Architecture:
-        1. Forward model f(s,a) → ŝ' trained on offline SUMO data (MSE)
-        2. For any transition (s,a,s'), compute dynamics_error = ||s' - f(s,a)||
-        3. IS weight w = exp(-dynamics_error / temperature) — soft weighting
-           - Small error → w ≈ 1 (transition consistent with SUMO dynamics)
-           - Large error → w ≈ 0 (transition from different dynamics)
+    Key design: only predicts and compares **dynamics-sensitive** features
+    (fwd_hw, bwd_hw, gap) — not co-line headways, sim_time, or other
+    features that are noisy/unpredictable regardless of dynamics fidelity.
 
-    This correctly identifies dynamics gaps without being confused by
-    policy distribution differences. In zero-gap (online=SUMO), all
-    transitions get w ≈ 1 regardless of which policy generated them.
+    Obs layout (17-dim, indices 0-16):
+      [0-4]  categorical (line_id, bus_id, station_id, time_period, direction)
+      [5]    fwd_headway  ← DYNAMICS-SENSITIVE
+      [6]    bwd_headway  ← DYNAMICS-SENSITIVE
+      [7]    waiting_pax
+      [8]    target_hw
+      [9]    base_stop_duration
+      [10]   sim_time
+      [11]   gap           ← DYNAMICS-SENSITIVE
+      [12]   co_fwd_hw     (noisy, skip)
+      [13]   co_bwd_hw     (noisy, skip)
+      [14]   seg_speed
+      [15]   last_action_0
+      [16]   last_action_1
+
+    Weight: w = sigmoid(margin) where margin = (baseline_err - actual_err) / scale
+    - actual_err ≈ baseline_err → w ≈ 0.5 (uncertain)
+    - actual_err << baseline_err → w → 1.0 (consistent with SUMO)
+    - actual_err >> baseline_err → w → 0.0 (inconsistent)
     """
+
+    # Indices of dynamics-sensitive features in the continuous part (after n_cat)
+    # fwd_hw=5, bwd_hw=6, gap=11 → after removing 5 cat → indices 0, 1, 6
+    DYNAMICS_INDICES = [0, 1, 6]  # fwd_hw, bwd_hw, gap (relative to n_cat offset)
 
     def __init__(
         self,
@@ -516,7 +534,7 @@ class DynamicsDiscriminator(nn.Module):
         hidden_dim: int = 128,
         n_hidden: int = 2,
         temperature: float = 1.0,
-        n_cat: int = 5,  # number of categorical features to skip in prediction
+        n_cat: int = 5,
     ) -> None:
         super().__init__()
         self.obs_dim = obs_dim
@@ -524,85 +542,217 @@ class DynamicsDiscriminator(nn.Module):
         self.n_cat = n_cat
         self.temperature = temperature
 
-        # Predict continuous part of next_obs only (skip categorical features)
-        cont_dim = obs_dim - n_cat
+        # Only predict dynamics-sensitive features
+        n_dyn = len(self.DYNAMICS_INDICES)
         input_dim = obs_dim + action_dim
 
         layers: list[nn.Module] = [nn.Linear(input_dim, hidden_dim), nn.ReLU()]
         for _ in range(n_hidden - 1):
             layers += [nn.Linear(hidden_dim, hidden_dim), nn.ReLU()]
-        layers.append(nn.Linear(hidden_dim, cont_dim))
+        layers.append(nn.Linear(hidden_dim, n_dyn))
         self.forward_model = nn.Sequential(*layers)
 
-        # Running stats for normalizing prediction error
-        self.register_buffer('error_ema_mean', torch.tensor(0.0))
-        self.register_buffer('error_ema_var', torch.tensor(1.0))
+        # Per-feature running stats for normalized error
+        self.register_buffer('feat_mean', torch.zeros(n_dyn))
+        self.register_buffer('feat_var', torch.ones(n_dyn))
+        self.register_buffer('baseline_err', torch.tensor(1.0))  # EMA of training error
         self._ema_count = 0
 
+    def _extract_dyn_features(self, next_obs: torch.Tensor) -> torch.Tensor:
+        """Extract dynamics-sensitive features from next_obs."""
+        cont = next_obs[:, self.n_cat:]  # skip categorical
+        return cont[:, self.DYNAMICS_INDICES]  # (B, n_dyn)
+
+    def forward(self, obs: torch.Tensor, action: torch.Tensor,
+                next_obs: torch.Tensor = None, *args, **kwargs) -> torch.Tensor:
+        """Forward pass: returns dynamics error (lower = more real-like)."""
+        pred = self.forward_model(torch.cat([obs, action], dim=-1))
+        if next_obs is not None:
+            target = self._extract_dyn_features(next_obs)
+            # Normalized per-feature error
+            norm_err = ((pred - target) / (self.feat_var.sqrt() + 1e-6)).pow(2).mean(dim=-1, keepdim=True)
+            return norm_err  # (B, 1)
+        return pred
+
     def predict_next_obs(self, obs: torch.Tensor, action: torch.Tensor) -> torch.Tensor:
-        """Predict continuous features of next_obs given (obs, action)."""
         return self.forward_model(torch.cat([obs, action], dim=-1))
 
-    def dynamics_error(
-        self,
-        obs: torch.Tensor,
-        action: torch.Tensor,
-        next_obs: torch.Tensor,
-    ) -> torch.Tensor:
-        """Per-sample dynamics prediction error (MSE on continuous features)."""
+    def dynamics_error(self, obs, action, next_obs) -> torch.Tensor:
+        """Per-sample normalized dynamics error on dynamics-sensitive features."""
         pred = self.predict_next_obs(obs, action)
-        # Only compare continuous features (skip categorical)
-        target = next_obs[:, self.n_cat:]
-        return (pred - target).pow(2).mean(dim=-1)  # (B,)
+        target = self._extract_dyn_features(next_obs)
+        # Normalize each feature by its variance, then average
+        norm_err = ((pred - target) / (self.feat_var.sqrt() + 1e-6)).pow(2).mean(dim=-1)
+        return norm_err  # (B,)
 
-    def compute_weight(
-        self,
-        obs: torch.Tensor,
-        action: torch.Tensor,
-        next_obs: torch.Tensor,
-    ) -> torch.Tensor:
-        """Compute importance weight based on dynamics consistency.
+    def compute_weight(self, obs, action, next_obs) -> torch.Tensor:
+        """Compute IS weight based on dynamics consistency.
 
-        Returns (B,) tensor of weights in [0, ~1].
+        Uses sigmoid on (baseline - actual) margin for smooth, calibrated weights.
         """
         with torch.no_grad():
             error = self.dynamics_error(obs, action, next_obs)  # (B,)
 
-            # Normalize error by running stats
-            if self._ema_count > 100:
-                error_norm = (error - self.error_ema_mean) / (self.error_ema_var.sqrt() + 1e-6)
-            else:
-                error_norm = error
+            # Margin-based weight: how much better/worse than baseline
+            # baseline_err = expected error on SUMO data (from training)
+            # error < baseline → positive margin → w > 0.5 (good)
+            # error > baseline → negative margin → w < 0.5 (bad)
+            margin = (self.baseline_err - error) / max(self.temperature, 0.1)
+            w = torch.sigmoid(margin)
+            return w.clamp(0.01, 1.0)
 
-            # Soft weighting: w = exp(-error / temperature)
-            # Clamp to prevent extreme weights
-            w = torch.exp(-error_norm.clamp(min=0) / max(self.temperature, 1e-4))
-            return w.clamp(0.01, 1.0)  # floor at 0.01
-
-    def train_step(
-        self,
-        obs: torch.Tensor,
-        action: torch.Tensor,
-        next_obs: torch.Tensor,
-        optimizer: torch.optim.Optimizer,
-    ) -> float:
-        """One gradient step of forward model training on SUMO data."""
+    def train_step(self, obs, action, next_obs, optimizer) -> float:
+        """One gradient step on SUMO data. Updates running stats."""
         pred = self.predict_next_obs(obs, action)
-        target = next_obs[:, self.n_cat:]
+        target = self._extract_dyn_features(next_obs)
+
+        # Per-feature normalized loss
         loss = F.mse_loss(pred, target)
 
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 
-        # Update running error stats
+        # Update running feature stats + baseline error
         with torch.no_grad():
-            error = (pred.detach() - target).pow(2).mean(dim=-1)
-            batch_mean = error.mean()
-            batch_var = error.var()
-            ema = 0.01
             self._ema_count += 1
-            self.error_ema_mean = (1 - ema) * self.error_ema_mean + ema * batch_mean
-            self.error_ema_var = (1 - ema) * self.error_ema_var + ema * batch_var
+            ema = min(0.01, 1.0 / self._ema_count)
+
+            # Feature-level mean/var for normalization
+            feat_vals = target.detach()
+            self.feat_mean = (1 - ema) * self.feat_mean + ema * feat_vals.mean(dim=0)
+            self.feat_var = (1 - ema) * self.feat_var + ema * feat_vals.var(dim=0).clamp(min=1.0)
+
+            # Baseline error (what the model achieves on SUMO data)
+            norm_err = ((pred.detach() - target) / (self.feat_var.sqrt() + 1e-6)).pow(2).mean(dim=-1)
+            self.baseline_err = (1 - ema) * self.baseline_err + ema * norm_err.mean()
 
         return loss.item()
+
+
+# ---------------------------------------------------------------------------
+# Factored dynamics discriminator: D_sas - D_sa isolates dynamics from policy
+# ---------------------------------------------------------------------------
+
+class FactoredDynamicsDiscriminator(nn.Module):
+    """DARC-style factored discriminator that isolates dynamics from policy.
+
+    Uses two classifiers:
+      D_sa(s, a) → P(real | s, a)      — absorbs policy distribution differences
+      D_sas(s, a, s'_dyn) → logits     — captures dynamics + policy differences
+
+    The dynamics ratio is:
+      log P_real(s'|s,a) / P_sim(s'|s,a) = D_sas - D_sa  (Bayes rule identity)
+
+    By subtracting D_sa from D_sas, policy distribution differences cancel out,
+    leaving only the dynamics signal.
+
+    Key design: D_sas uses only dynamics-sensitive features of s'
+    (fwd_hw[5], bwd_hw[6], gap[11]) to prevent the classifier from using
+    "easy" non-dynamics features to discriminate.
+
+    Obs layout (17-dim):
+      [0-4]  categorical → D_sa input
+      [5]    fwd_headway → D_sas dynamics feature
+      [6]    bwd_headway → D_sas dynamics feature
+      [11]   gap         → D_sas dynamics feature
+    """
+
+    # Absolute indices of dynamics-sensitive features in obs
+    DYN_FEATURE_INDICES = [5, 6, 11]  # fwd_hw, bwd_hw, gap
+
+    def __init__(
+        self,
+        obs_dim: int = 17,
+        action_dim: int = 2,
+        hidden_dim: int = 256,
+        n_hidden: int = 2,
+    ) -> None:
+        super().__init__()
+        self.obs_dim = obs_dim
+        self.action_dim = action_dim
+        n_dyn = len(self.DYN_FEATURE_INDICES)
+
+        # D_sa: classifies (s, a) → 2 logits [real, sim]
+        sa_layers = [nn.Linear(obs_dim + action_dim, hidden_dim), nn.ReLU()]
+        for _ in range(n_hidden - 1):
+            sa_layers += [nn.Linear(hidden_dim, hidden_dim), nn.ReLU()]
+        sa_layers.append(nn.Linear(hidden_dim, 2))
+        self.d_sa = nn.Sequential(*sa_layers)
+
+        # D_sas: advantage logits on (s, a, s'_dyn) → 2 logits
+        # Input: obs + action + dynamics features of next_obs
+        sas_layers = [nn.Linear(obs_dim + action_dim + n_dyn, hidden_dim), nn.ReLU()]
+        for _ in range(n_hidden - 1):
+            sas_layers += [nn.Linear(hidden_dim, hidden_dim), nn.ReLU()]
+        sas_layers.append(nn.Linear(hidden_dim, 2))
+        self.d_sas = nn.Sequential(*sas_layers)
+
+    def forward(self, obs, action, next_obs=None, *args, **kwargs):
+        """Returns log dynamics ratio (higher = more real-like)."""
+        if next_obs is not None:
+            return self.log_dynamics_ratio(obs, action, next_obs).unsqueeze(-1)
+        return self.d_sa(torch.cat([obs, action], dim=-1))
+
+    def _extract_dyn(self, next_obs):
+        """Extract dynamics-sensitive features from next_obs."""
+        return next_obs[:, self.DYN_FEATURE_INDICES]
+
+    def log_dynamics_ratio(self, obs, action, next_obs):
+        """log P_real(s'|s,a) / P_sim(s'|s,a) via factored discriminators."""
+        sa_input = torch.cat([obs, action], dim=-1)
+        sa_logits = self.d_sa(sa_input)
+        sa_prob = F.softmax(sa_logits, dim=1)
+
+        dyn_feats = self._extract_dyn(next_obs)
+        sas_input = torch.cat([obs, action, dyn_feats], dim=-1)
+        adv_logits = self.d_sas(sas_input)
+        sas_prob = F.softmax(adv_logits + sa_logits, dim=1)
+
+        # log P_real(s'|s,a) / P_sim(s'|s,a) = log(sas_real/sas_sim) - log(sa_real/sa_sim)
+        log_ratio = (torch.log(sas_prob[:, 0] + 1e-8) - torch.log(sas_prob[:, 1] + 1e-8)
+                      - torch.log(sa_prob[:, 0] + 1e-8) + torch.log(sa_prob[:, 1] + 1e-8))
+        return torch.clamp(log_ratio, -10, 10)
+
+    def compute_weight(self, obs, action, next_obs):
+        """IS weight w ∈ [0, 1] based on dynamics ratio."""
+        with torch.no_grad():
+            log_r = self.log_dynamics_ratio(obs, action, next_obs)
+            return torch.sigmoid(log_r).clamp(0.01, 1.0)
+
+    def train_step(self, real_obs, real_action, real_next_obs,
+                    sim_obs, sim_action, sim_next_obs,
+                    optimizer, label_smooth=0.1):
+        """One gradient step training both D_sa and D_sas."""
+        # ── D_sa loss ──
+        real_sa = torch.cat([real_obs, real_action], dim=-1)
+        sim_sa = torch.cat([sim_obs, sim_action], dim=-1)
+        real_sa_logits = self.d_sa(real_sa)
+        sim_sa_logits = self.d_sa(sim_sa)
+
+        real_sa_prob = F.softmax(real_sa_logits, dim=1)
+        sim_sa_prob = F.softmax(sim_sa_logits, dim=1)
+        dsa_loss = (-torch.log(real_sa_prob[:, 0] + 1e-8).mean()
+                    - torch.log(sim_sa_prob[:, 1] + 1e-8).mean())
+
+        # ── D_sas loss ──
+        real_dyn = self._extract_dyn(real_next_obs)
+        sim_dyn = self._extract_dyn(sim_next_obs)
+
+        real_sas_input = torch.cat([real_obs, real_action, real_dyn], dim=-1)
+        sim_sas_input = torch.cat([sim_obs, sim_action, sim_dyn], dim=-1)
+
+        real_adv_logits = self.d_sas(real_sas_input)
+        real_sas_prob = F.softmax(real_adv_logits + real_sa_logits.detach(), dim=1)
+        sim_adv_logits = self.d_sas(sim_sas_input)
+        sim_sas_prob = F.softmax(sim_adv_logits + sim_sa_logits.detach(), dim=1)
+
+        dsas_loss = (-torch.log(real_sas_prob[:, 0] + 1e-8).mean()
+                     - torch.log(sim_sas_prob[:, 1] + 1e-8).mean())
+
+        total_loss = dsa_loss + dsas_loss
+        optimizer.zero_grad()
+        total_loss.backward()
+        optimizer.step()
+
+        return total_loss.item(), dsa_loss.item(), dsas_loss.item()
