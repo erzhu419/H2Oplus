@@ -151,9 +151,21 @@ class SumoGymEnv:
         self._ensure_bridge()
 
         if isinstance(snapshot, str) and os.path.exists(snapshot):
-            # Restore from saved SUMO state file
+            # Restore from saved SUMO state file, then rebuild bridge objects
             import traci
             traci.simulation.loadState(snapshot)
+            # Rebuild bridge's Python objects to match the restored SUMO state
+            self._bridge._load_objects()
+            self._bridge.done = False
+            self._bridge.current_time = traci.simulation.getTime()
+            self._bridge.steps = 0
+            self._bridge.decision_queue.clear()
+            self._bridge.pending_events.clear()
+            self._bridge.active_events.clear()
+            self._bridge.arrival_history.clear()
+            self._bridge.depart_history.clear()
+            self._bridge.active_bus_ids = set()
+            self._bridge.just_departed_buses = []
             self._line_headway.update(self._bridge.line_headways)
         else:
             # Standard reset
