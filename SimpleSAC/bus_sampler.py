@@ -175,31 +175,39 @@ class BusStepSampler:
 
         while total_events < n_steps:
             # ── Episode start ──────────────────────────────────────────
+            # Check snapshot availability: SUMO pool or offline buffer
+            has_sumo_snaps = (hasattr(self.env, 'get_random_snapshot')
+                              and self.env.get_random_snapshot() is not None)
+            has_buffer_snaps = bool(self.replay_buffer._valid_snap_indices)
+
             use_buffer_reset = (
                 np.random.random() < self.p_reset
-                and self.replay_buffer._valid_snap_indices
+                and (has_sumo_snaps or has_buffer_snaps)
             )
 
             if use_buffer_reset:
-                # ── JTT: targeted vs uniform snapshot reset ────────────
-                if (
-                    self.priority_index is not None
-                    and self._episode_count > self.warmup_episodes
-                    and self.replay_buffer._valid_snap_indices
-                ):
-                    # Phase 2: priority-weighted reset to fragile states
-                    idx = self.priority_index.sample_reset_idx(
-                        temperature=self.current_temperature,
-                        valid_indices=self.replay_buffer._valid_snap_indices,
-                    )
-                    snapshot, _, _ = self.replay_buffer.sample_snapshot_by_idx(idx)
-                    jtt_resets += 1
-                    jtt_reset_indices.append(int(idx))
-                else:
-                    # Phase 1: uniform random reset (standard H2O+)
-                    snapshot, _, _ = self.replay_buffer.sample_snapshot()
+                if has_sumo_snaps:
+                    # ── SUMO snapshot pool reset ───────────────────────
+                    snap_path = self.env.get_random_snapshot()
+                    self.env.reset(snapshot=snap_path)
                     uniform_resets += 1
-                self.env.reset(snapshot=snapshot)
+                elif has_buffer_snaps:
+                    # ── Offline buffer snapshot reset ──────────────────
+                    if (
+                        self.priority_index is not None
+                        and self._episode_count > self.warmup_episodes
+                    ):
+                        idx = self.priority_index.sample_reset_idx(
+                            temperature=self.current_temperature,
+                            valid_indices=self.replay_buffer._valid_snap_indices,
+                        )
+                        snapshot, _, _ = self.replay_buffer.sample_snapshot_by_idx(idx)
+                        jtt_resets += 1
+                        jtt_reset_indices.append(int(idx))
+                    else:
+                        snapshot, _, _ = self.replay_buffer.sample_snapshot()
+                        uniform_resets += 1
+                    self.env.reset(snapshot=snapshot)
                 max_events = self.h_rollout
             else:
                 self.env.reset()

@@ -86,6 +86,13 @@ class SumoGymEnv:
         self._current_events = []
         self._event_edge_maps = {}
 
+        # Snapshot pool for buffer reset
+        self._snapshot_pool = []       # list of file paths
+        self._snapshot_pool_max = 50   # max saved states
+        self._snapshot_save_interval = 200  # save every N events
+        self._event_counter = 0
+        self._last_saved_state = None
+
     def _build_sumo_indices(self):
         tree = ET.parse(self._schedule_xml)
         root = tree.getroot()
@@ -119,11 +126,40 @@ class SumoGymEnv:
                 root_dir=self._sumo_dir, gui=self._gui, max_steps=self._max_steps
             )
 
+    def save_sumo_state(self, path=None):
+        """Save SUMO simulation state for later restore.
+
+        Returns the path to the saved state file.
+        Uses traci.simulation.saveState() for full fidelity.
+        """
+        if path is None:
+            import tempfile
+            path = os.path.join(tempfile.gettempdir(), "sumo_snapshot.xml")
+        import traci
+        traci.simulation.saveState(path)
+        self._last_saved_state = path
+        return path
+
     def reset(self, snapshot=None):
-        """Reset SUMO. snapshot argument is accepted but ignored (no snapshot reset for SUMO)."""
+        """Reset SUMO.
+
+        Args:
+            snapshot: If string path → load SUMO state from file (traci.simulation.loadState)
+                      If dict → ignored (custom SnapshotDict not supported for SUMO)
+                      If None → standard reset from t=0
+        """
         self._ensure_bridge()
-        self._bridge.reset()
-        self._line_headway.update(self._bridge.line_headways)
+
+        if isinstance(snapshot, str) and os.path.exists(snapshot):
+            # Restore from saved SUMO state file
+            import traci
+            traci.simulation.loadState(snapshot)
+            self._line_headway.update(self._bridge.line_headways)
+        else:
+            # Standard reset
+            self._bridge.reset()
+            self._line_headway.update(self._bridge.line_headways)
+
         self._station_index.clear()
         self._time_period_index.clear()
         self.state = {}
@@ -239,6 +275,22 @@ class SumoGymEnv:
                 self.state[bid] = [[obs.tolist()]]
                 self.reward[bid] = rew
 
+            # Auto-save SUMO state for snapshot pool
+            self._event_counter += len(events)
+            if (self._event_counter % self._snapshot_save_interval == 0
+                    and len(self._snapshot_pool) < self._snapshot_pool_max):
+                import tempfile
+                snap_path = os.path.join(
+                    tempfile.gettempdir(),
+                    f"sumo_snap_{len(self._snapshot_pool)}.xml"
+                )
+                try:
+                    import traci
+                    traci.simulation.saveState(snap_path)
+                    self._snapshot_pool.append(snap_path)
+                except Exception:
+                    pass
+
             return self.state, self.reward, False
 
         self.done = True
@@ -269,10 +321,24 @@ class SumoGymEnv:
         except Exception:
             return {"all_buses": [], "all_stations": []}
 
+    def get_random_snapshot(self):
+        """Return a random snapshot path from the pool, or None if empty."""
+        if self._snapshot_pool:
+            import random
+            return random.choice(self._snapshot_pool)
+        return None
+
     def close(self):
         if self._bridge is not None:
             self._bridge.close()
             self._bridge = None
+        # Clean up snapshot files
+        for p in self._snapshot_pool:
+            try:
+                os.remove(p)
+            except OSError:
+                pass
+        self._snapshot_pool.clear()
 
     # ── Properties for compatibility ──
     @property
