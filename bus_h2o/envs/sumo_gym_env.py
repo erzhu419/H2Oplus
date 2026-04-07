@@ -88,6 +88,7 @@ class SumoGymEnv:
 
         # Snapshot pool for buffer reset
         self._snapshot_pool = []       # list of file paths
+        self._snapshot_priorities = []  # priority scores (for JTT)
         self._snapshot_pool_max = 50   # max saved states
         self._snapshot_save_interval = 100  # save every N events
         self._event_counter = 0
@@ -302,6 +303,7 @@ class SumoGymEnv:
                     import traci
                     traci.simulation.saveState(snap_path)
                     self._snapshot_pool.append(snap_path)
+                    self._snapshot_priorities.append(1.0)  # initial uniform priority
                 except Exception:
                     pass
 
@@ -341,6 +343,30 @@ class SumoGymEnv:
             import random
             return random.choice(self._snapshot_pool)
         return None
+
+    def get_prioritized_snapshot(self, temperature=1.0):
+        """Return a snapshot weighted by priority (for JTT). Falls back to random."""
+        if not self._snapshot_pool:
+            return None
+        if not self._snapshot_priorities or len(self._snapshot_priorities) != len(self._snapshot_pool):
+            return self.get_random_snapshot()
+        import random
+        p = np.array(self._snapshot_priorities, dtype=np.float64)
+        p = np.clip(p, 0, None)
+        if p.sum() < 1e-12 or temperature > 50.0:
+            return random.choice(self._snapshot_pool)
+        p = p ** (1.0 / max(temperature, 1e-4))
+        p = p / (p.sum() + 1e-8)
+        idx = np.random.choice(len(self._snapshot_pool), p=p)
+        return self._snapshot_pool[idx]
+
+    def update_snapshot_priority(self, snap_path, priority):
+        """Update priority score for a specific snapshot (called by JTT)."""
+        if snap_path in self._snapshot_pool:
+            idx = self._snapshot_pool.index(snap_path)
+            if idx < len(self._snapshot_priorities):
+                ema = 0.1
+                self._snapshot_priorities[idx] = (1 - ema) * self._snapshot_priorities[idx] + ema * priority
 
     def close(self):
         if self._bridge is not None:

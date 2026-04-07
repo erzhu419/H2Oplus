@@ -603,7 +603,9 @@ def main(argv):
             f"trans={rollout_stats.get('n_transitions', 0)}, "
             f"trunc={rollout_stats.get('n_truncated', 0)}, "
             f"mean_w={rollout_stats.get('mean_w', 0):.4f}, "
-            f"disc={disc_active}"
+            f"disc={disc_active}, "
+            f"resets(jtt/uni/fresh)={rollout_stats.get('jtt_resets',0)}/"
+            f"{rollout_stats.get('uniform_resets',0)}/{rollout_stats.get('fresh_resets',0)}"
         )
 
         # ── B. H2O+ training updates ─────────────────────────────

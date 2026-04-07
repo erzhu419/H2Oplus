@@ -188,9 +188,18 @@ class BusStepSampler:
             if use_buffer_reset:
                 if has_sumo_snaps:
                     # ── SUMO snapshot pool reset ───────────────────────
-                    snap_path = self.env.get_random_snapshot()
+                    if (self.priority_index is not None
+                            and self._episode_count > self.warmup_episodes
+                            and hasattr(self.env, 'get_prioritized_snapshot')):
+                        # JTT: use priority-weighted snapshot selection
+                        snap_path = self.env.get_prioritized_snapshot(
+                            temperature=getattr(self, 'current_temperature', 1.0))
+                        jtt_resets += 1
+                    else:
+                        snap_path = self.env.get_random_snapshot()
+                        uniform_resets += 1
+                    self._last_reset_snapshot = snap_path  # track for priority update
                     self.env.reset(snapshot=snap_path)
-                    uniform_resets += 1
                 elif has_buffer_snaps:
                     # ── Offline buffer snapshot reset ──────────────────
                     if (
@@ -361,6 +370,17 @@ class BusStepSampler:
                         total_transitions += 1
                     self._pending.clear()
                     break
+
+            # ── Update SUMO snapshot priority after episode ────────
+            # Higher reward magnitude = harder state = higher priority for JTT
+            if (hasattr(self, '_last_reset_snapshot')
+                    and self._last_reset_snapshot is not None
+                    and hasattr(self.env, 'update_snapshot_priority')
+                    and total_transitions > 0):
+                # Use mean absolute reward as priority (harder episodes = more negative = higher priority)
+                episode_priority = abs(total_events) * 0.01  # simple heuristic
+                self.env.update_snapshot_priority(self._last_reset_snapshot, episode_priority)
+                self._last_reset_snapshot = None
 
         # Snapshot store cache stats (if available)
         snap_cache_stats = {}
