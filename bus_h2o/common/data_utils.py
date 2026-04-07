@@ -417,9 +417,13 @@ def compute_z_importance_weight(
     Returns detached (B, 1) tensor.
     """
     with torch.no_grad():
-        if isinstance(discriminator, FactoredDynamicsDiscriminator):
+        if isinstance(discriminator, (ContrastiveDynamicsDiscriminator,
+                                       DomainAdaptiveDiscriminator,
+                                       FactoredDynamicsDiscriminator,
+                                       TransitionVAE,
+                                       VAEDomainDiscriminator)):
             w = discriminator.compute_weight(obs, action, next_obs)
-            return w.unsqueeze(-1)
+            return w.unsqueeze(-1) if w.dim() == 1 else w
         elif isinstance(discriminator, DynamicsDiscriminator):
             w = discriminator.compute_weight(obs, action, next_obs)
             return w.unsqueeze(-1)
@@ -756,3 +760,407 @@ class FactoredDynamicsDiscriminator(nn.Module):
         optimizer.step()
 
         return total_loss.item(), dsa_loss.item(), dsas_loss.item()
+
+
+# ---------------------------------------------------------------------------
+# Approach A: Contrastive Dynamics Embedding (InfoNCE)
+# ---------------------------------------------------------------------------
+
+class ContrastiveDynamicsDiscriminator(nn.Module):
+    """Learn a transition embedding where same-dynamics transitions cluster.
+
+    Architecture:
+        encoder: (s, a, s') → z ∈ R^d  (shared across domains)
+        Training: InfoNCE contrastive loss
+          - Anchor: SUMO transition → z_anchor
+          - Positive: another SUMO transition → z_pos (same dynamics)
+          - Negatives: SIM transitions → z_neg (different dynamics)
+          - Loss: -log(exp(sim(z_a, z_p)) / Σ exp(sim(z_a, z_n)))
+
+    IS weight: Given a test transition (s,a,s'):
+        z = encoder(s, a, s')
+        w = mean cosine similarity to SUMO prototype embeddings
+    """
+
+    def __init__(self, obs_dim=17, action_dim=2, embed_dim=16, hidden_dim=128, n_hidden=2):
+        super().__init__()
+        input_dim = obs_dim + action_dim + obs_dim
+        layers = [nn.Linear(input_dim, hidden_dim), nn.ReLU()]
+        for _ in range(n_hidden - 1):
+            layers += [nn.Linear(hidden_dim, hidden_dim), nn.ReLU()]
+        layers.append(nn.Linear(hidden_dim, embed_dim))
+        self.encoder = nn.Sequential(*layers)
+        self.embed_dim = embed_dim
+        # Prototype: running mean of SUMO embeddings
+        self.register_buffer('sumo_prototype', torch.zeros(embed_dim))
+        self._proto_count = 0
+
+    def encode(self, obs, action, next_obs):
+        x = torch.cat([obs, action, next_obs], dim=-1)
+        z = self.encoder(x)
+        return F.normalize(z, dim=-1)  # L2 normalize
+
+    def forward(self, obs, action, next_obs=None, *args, **kwargs):
+        if next_obs is not None:
+            return self.encode(obs, action, next_obs)
+        return self.encoder(torch.cat([obs, action], dim=-1))
+
+    def compute_weight(self, obs, action, next_obs):
+        """Weight = cosine similarity to SUMO prototype."""
+        with torch.no_grad():
+            z = self.encode(obs, action, next_obs)
+            # Cosine similarity to prototype, mapped to [0, 1]
+            cos_sim = F.cosine_similarity(z, self.sumo_prototype.unsqueeze(0), dim=-1)
+            w = (cos_sim + 1) / 2  # [-1,1] → [0,1]
+            return w.clamp(0.01, 1.0)
+
+    def train_step(self, real_obs, real_action, real_next_obs,
+                    sim_obs, sim_action, sim_next_obs,
+                    optimizer, temperature=0.1):
+        """InfoNCE contrastive loss."""
+        B = real_obs.shape[0]
+        # Split real into anchor + positive (two halves)
+        mid = B // 2
+        z_anchor = self.encode(real_obs[:mid], real_action[:mid], real_next_obs[:mid])
+        z_pos = self.encode(real_obs[mid:2*mid], real_action[mid:2*mid], real_next_obs[mid:2*mid])
+
+        # Negatives from SIM
+        n_neg = min(sim_obs.shape[0], mid)
+        z_neg = self.encode(sim_obs[:n_neg], sim_action[:n_neg], sim_next_obs[:n_neg])
+
+        # InfoNCE: anchor vs (positive + negatives)
+        # sim(anchor, positive) should be high, sim(anchor, negatives) should be low
+        pos_sim = (z_anchor * z_pos).sum(dim=-1) / temperature  # (mid,)
+        neg_sim = torch.mm(z_anchor, z_neg.T) / temperature     # (mid, n_neg)
+
+        # Concatenate: first column = positive, rest = negatives
+        logits = torch.cat([pos_sim.unsqueeze(1), neg_sim], dim=1)  # (mid, 1+n_neg)
+        labels = torch.zeros(mid, dtype=torch.long, device=logits.device)  # positive at index 0
+        loss = F.cross_entropy(logits, labels)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        # Update SUMO prototype (EMA of all real embeddings)
+        with torch.no_grad():
+            z_all_real = self.encode(real_obs, real_action, real_next_obs)
+            ema = min(0.05, 1.0 / (self._proto_count + 1))
+            self._proto_count += 1
+            self.sumo_prototype = (1 - ema) * self.sumo_prototype + ema * z_all_real.mean(dim=0)
+            self.sumo_prototype = F.normalize(self.sumo_prototype, dim=0)
+
+        return loss.item()
+
+
+# ---------------------------------------------------------------------------
+# Approach B: Domain Adaptation Encoder
+# ---------------------------------------------------------------------------
+
+class DomainAdaptiveDiscriminator(nn.Module):
+    """Encoder + domain classifier in learned latent space.
+
+    Architecture:
+        encoder: (s, a, s') → z ∈ R^d  (compressed representation)
+        classifier: z → P(real)         (domain classification)
+
+    Unlike TransitionDiscriminator which classifies raw 76-dim input,
+    this forces a bottleneck: the encoder must extract a compact latent
+    that captures dynamics-relevant features. The 8-dim bottleneck acts
+    as an information filter, discarding noise and policy-specific patterns.
+
+    IS weight = classifier P(real | z) where z = encoder(s, a, s')
+    """
+
+    def __init__(self, obs_dim=17, action_dim=2, latent_dim=8,
+                 enc_hidden=128, cls_hidden=64, n_enc_hidden=2):
+        super().__init__()
+        input_dim = obs_dim + action_dim + obs_dim  # s + a + s'
+        self.latent_dim = latent_dim
+
+        # Encoder: (s,a,s') → z
+        enc_layers = [nn.Linear(input_dim, enc_hidden), nn.ReLU()]
+        for _ in range(n_enc_hidden - 1):
+            enc_layers += [nn.Linear(enc_hidden, enc_hidden), nn.ReLU()]
+        enc_layers.append(nn.Linear(enc_hidden, latent_dim))
+        self.encoder = nn.Sequential(*enc_layers)
+
+        # Domain classifier: z → P(real)
+        self.classifier = nn.Sequential(
+            nn.Linear(latent_dim, cls_hidden), nn.ReLU(),
+            nn.Linear(cls_hidden, 1),  # logit for P(real)
+        )
+
+    def encode(self, obs, action, next_obs):
+        return self.encoder(torch.cat([obs, action, next_obs], dim=-1))
+
+    def classify(self, obs, action, next_obs):
+        z = self.encode(obs, action, next_obs)
+        return self.classifier(z)  # (B, 1)
+
+    def forward(self, obs, action, next_obs=None, *args, **kwargs):
+        if next_obs is not None:
+            return self.classify(obs, action, next_obs)
+        return self.encoder(torch.cat([obs, action], dim=-1))
+
+    def compute_weight(self, obs, action, next_obs):
+        with torch.no_grad():
+            logit = self.classify(obs, action, next_obs).squeeze(-1)
+            return torch.sigmoid(logit).clamp(0.01, 1.0)
+
+    def train_step(self, real_obs, real_action, real_next_obs,
+                    sim_obs, sim_action, sim_next_obs,
+                    optimizer, label_smooth=0.1):
+        """Train encoder + classifier jointly."""
+        real_logits = self.classify(real_obs, real_action, real_next_obs)
+        sim_logits = self.classify(sim_obs, sim_action, sim_next_obs)
+
+        real_labels = torch.full_like(real_logits, 1.0 - label_smooth)
+        sim_labels = torch.full_like(sim_logits, label_smooth)
+
+        loss = (F.binary_cross_entropy_with_logits(real_logits, real_labels)
+                + F.binary_cross_entropy_with_logits(sim_logits, sim_labels))
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        with torch.no_grad():
+            real_acc = (torch.sigmoid(real_logits) > 0.5).float().mean().item()
+            sim_acc = (torch.sigmoid(sim_logits) < 0.5).float().mean().item()
+
+        return loss.item(), real_acc, sim_acc
+
+
+# ---------------------------------------------------------------------------
+# Approach C: Transition VAE — anomaly-based dynamics discrimination
+# ---------------------------------------------------------------------------
+
+class TransitionVAE(nn.Module):
+    """VAE trained on SUMO transitions. SIM transitions have high reconstruction
+    error / low ELBO, providing a natural dynamics anomaly score.
+
+    Architecture:
+        encoder: (s, a, s'_dyn_norm) → μ, log_σ
+        decoder: (z, s, a) → ŝ'_dyn_norm
+
+    All dynamics features are internally normalized (running mean/std)
+    to prevent gradient explosion from large raw values (fwd_hw ~400-600).
+
+    IS weight = sigmoid((baseline_nll - sample_nll) / temperature)
+
+    Trained ONLY on SUMO data — no SIM data needed.
+    """
+
+    DYN_INDICES = [5, 6, 11]  # fwd_hw, bwd_hw, gap (absolute indices in obs)
+
+    def __init__(self, obs_dim=17, action_dim=2, latent_dim=8,
+                 hidden_dim=128, temperature=1.0):
+        super().__init__()
+        n_dyn = len(self.DYN_INDICES)
+        input_dim = obs_dim + action_dim
+
+        # Encoder: (s, a, s'_dyn_norm) → μ, log_σ
+        self.encoder = nn.Sequential(
+            nn.Linear(input_dim + n_dyn, hidden_dim), nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim), nn.ReLU(),
+        )
+        self.mu_head = nn.Linear(hidden_dim, latent_dim)
+        self.logvar_head = nn.Linear(hidden_dim, latent_dim)
+
+        # Decoder: (z, s, a) → ŝ'_dyn_norm
+        self.decoder = nn.Sequential(
+            nn.Linear(latent_dim + input_dim, hidden_dim), nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim), nn.ReLU(),
+            nn.Linear(hidden_dim, n_dyn),
+        )
+
+        self.temperature = temperature
+        self.latent_dim = latent_dim
+        self.register_buffer('baseline_nll', torch.tensor(0.0))
+        self._baseline_count = 0
+
+        # Running normalization for dynamics features
+        self.register_buffer('dyn_mean', torch.zeros(n_dyn))
+        self.register_buffer('dyn_std', torch.ones(n_dyn))
+        self._norm_count = 0
+
+    def _extract_dyn(self, next_obs):
+        return next_obs[:, self.DYN_INDICES]
+
+    def _normalize_dyn(self, dyn):
+        return (dyn - self.dyn_mean) / (self.dyn_std + 1e-6)
+
+    def _update_norm(self, dyn):
+        """Update running mean/std from a batch of dynamics features."""
+        self._norm_count += 1
+        ema = min(0.01, 1.0 / self._norm_count)
+        with torch.no_grad():
+            batch_mean = dyn.mean(dim=0)
+            batch_std = dyn.std(dim=0).clamp(min=1.0)
+            self.dyn_mean = (1 - ema) * self.dyn_mean + ema * batch_mean
+            self.dyn_std = (1 - ema) * self.dyn_std + ema * batch_std
+
+    def encode(self, obs, action, dyn_norm):
+        sa = torch.cat([obs, action], dim=-1)
+        h = self.encoder(torch.cat([sa, dyn_norm], dim=-1))
+        return self.mu_head(h), self.logvar_head(h).clamp(-10, 2)
+
+    def reparameterize(self, mu, logvar):
+        std = (0.5 * logvar).exp()
+        return mu + torch.randn_like(std) * std
+
+    def decode(self, z, obs, action):
+        sa = torch.cat([obs, action], dim=-1)
+        return self.decoder(torch.cat([z, sa], dim=-1))
+
+    def forward(self, obs, action, next_obs=None, *args, **kwargs):
+        if next_obs is None:
+            return torch.zeros(obs.shape[0], 1, device=obs.device)
+        dyn = self._normalize_dyn(self._extract_dyn(next_obs))
+        mu, logvar = self.encode(obs, action, dyn)
+        z = self.reparameterize(mu, logvar)
+        recon = self.decode(z, obs, action)
+        recon_loss = (recon - dyn).pow(2).sum(dim=-1)
+        kl = -0.5 * (1 + logvar - mu.pow(2) - logvar.exp()).sum(dim=-1)
+        return (recon_loss + kl).unsqueeze(-1)
+
+    def compute_nll(self, obs, action, next_obs, n_samples=5):
+        dyn = self._normalize_dyn(self._extract_dyn(next_obs))
+        mu, logvar = self.encode(obs, action, dyn)
+        total_nll = torch.zeros(obs.shape[0], device=obs.device)
+        for _ in range(n_samples):
+            z = self.reparameterize(mu, logvar)
+            recon = self.decode(z, obs, action)
+            recon_loss = (recon - dyn).pow(2).sum(dim=-1)
+            kl = -0.5 * (1 + logvar - mu.pow(2) - logvar.exp()).sum(dim=-1)
+            total_nll += recon_loss + kl
+        return total_nll / n_samples
+
+    def compute_weight(self, obs, action, next_obs):
+        with torch.no_grad():
+            nll = self.compute_nll(obs, action, next_obs)
+            margin = (self.baseline_nll - nll) / max(self.temperature, 0.1)
+            return torch.sigmoid(margin).clamp(0.01, 1.0)
+
+    def train_step(self, obs, action, next_obs, optimizer, beta=1.0):
+        dyn_raw = self._extract_dyn(next_obs)
+        self._update_norm(dyn_raw)
+        dyn = self._normalize_dyn(dyn_raw)
+
+        mu, logvar = self.encode(obs, action, dyn)
+        z = self.reparameterize(mu, logvar)
+        recon = self.decode(z, obs, action)
+
+        recon_loss = F.mse_loss(recon, dyn, reduction='mean')
+        kl = -0.5 * (1 + logvar - mu.pow(2) - logvar.exp()).sum(dim=-1).mean()
+        loss = recon_loss + beta * kl
+
+        optimizer.zero_grad()
+        torch.nn.utils.clip_grad_norm_(self.parameters(), 5.0)
+        loss.backward()
+        optimizer.step()
+
+        with torch.no_grad():
+            per_sample_nll = (recon.detach() - dyn).pow(2).sum(dim=-1) + kl
+            batch_nll = per_sample_nll.mean()
+            ema = min(0.01, 1.0 / (self._baseline_count + 1))
+            self._baseline_count += 1
+            self.baseline_nll = (1 - ema) * self.baseline_nll + ema * batch_nll
+
+        return loss.item(), recon_loss.item(), kl.item()
+
+
+# ---------------------------------------------------------------------------
+# Approach D: VAE + Domain Adaptive (combined)
+# ---------------------------------------------------------------------------
+
+class VAEDomainDiscriminator(nn.Module):
+    """Combines TransitionVAE anomaly score with DomainAdaptiveDiscriminator.
+
+    VAE provides unsupervised dynamics anomaly (trained on SUMO only).
+    Domain classifier provides supervised discrimination (trained on both).
+    Combined weight uses both signals for robustness.
+
+    w = α * w_vae + (1-α) * w_domain
+    """
+
+    def __init__(self, obs_dim=17, action_dim=2, latent_dim=8,
+                 hidden_dim=128, alpha=0.5, temperature=1.0):
+        super().__init__()
+        self.alpha = alpha
+
+        # VAE component
+        self.vae = TransitionVAE(
+            obs_dim=obs_dim, action_dim=action_dim, latent_dim=latent_dim,
+            hidden_dim=hidden_dim, temperature=temperature,
+        )
+
+        # Domain classifier on VAE latent + raw dynamics features
+        n_dyn = len(TransitionVAE.DYN_INDICES)
+        # Classifier input: VAE latent (μ) + dynamics features
+        cls_input = latent_dim + n_dyn
+        self.domain_classifier = nn.Sequential(
+            nn.Linear(cls_input, 64), nn.ReLU(),
+            nn.Linear(64, 32), nn.ReLU(),
+            nn.Linear(32, 1),  # logit for P(real)
+        )
+
+    def forward(self, obs, action, next_obs=None, *args, **kwargs):
+        if next_obs is None:
+            return torch.zeros(obs.shape[0], 1, device=obs.device)
+        return self.vae(obs, action, next_obs)
+
+    def _get_classifier_input(self, obs, action, next_obs):
+        """Get VAE latent μ + dynamics features for domain classifier."""
+        dyn = next_obs[:, TransitionVAE.DYN_INDICES]
+        mu, _ = self.vae.encode(obs, action, dyn)
+        return torch.cat([mu.detach(), dyn], dim=-1)  # detach: don't backprop to VAE
+
+    def compute_weight(self, obs, action, next_obs):
+        with torch.no_grad():
+            w_vae = self.vae.compute_weight(obs, action, next_obs)
+            cls_input = self._get_classifier_input(obs, action, next_obs)
+            w_domain = torch.sigmoid(self.domain_classifier(cls_input)).squeeze(-1)
+            w = self.alpha * w_vae + (1 - self.alpha) * w_domain
+            return w.clamp(0.01, 1.0)
+
+    def train_step_vae(self, obs, action, next_obs, optimizer, beta=1.0):
+        """Train VAE on SUMO data only."""
+        return self.vae.train_step(obs, action, next_obs, optimizer, beta)
+
+    def train_step_classifier(self, real_obs, real_action, real_next_obs,
+                               sim_obs, sim_action, sim_next_obs,
+                               optimizer, label_smooth=0.1):
+        """Train domain classifier on both SUMO and SIM."""
+        real_input = self._get_classifier_input(real_obs, real_action, real_next_obs)
+        sim_input = self._get_classifier_input(sim_obs, sim_action, sim_next_obs)
+
+        real_logits = self.domain_classifier(real_input)
+        sim_logits = self.domain_classifier(sim_input)
+
+        real_labels = torch.full_like(real_logits, 1.0 - label_smooth)
+        sim_labels = torch.full_like(sim_logits, label_smooth)
+
+        loss = (F.binary_cross_entropy_with_logits(real_logits, real_labels)
+                + F.binary_cross_entropy_with_logits(sim_logits, sim_labels))
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        with torch.no_grad():
+            real_acc = (torch.sigmoid(real_logits) > 0.5).float().mean().item()
+            sim_acc = (torch.sigmoid(sim_logits) < 0.5).float().mean().item()
+        return loss.item(), real_acc, sim_acc
+
+    def train_step(self, real_obs, real_action, real_next_obs,
+                    sim_obs, sim_action, sim_next_obs,
+                    optimizer, **kwargs):
+        """Combined training: VAE on real + classifier on both."""
+        vae_loss, recon, kl = self.train_step_vae(
+            real_obs, real_action, real_next_obs, optimizer)
+        cls_loss, racc, sacc = self.train_step_classifier(
+            real_obs, real_action, real_next_obs,
+            sim_obs, sim_action, sim_next_obs, optimizer)
+        return vae_loss + cls_loss, racc, sacc
