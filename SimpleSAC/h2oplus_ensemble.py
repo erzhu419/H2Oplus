@@ -434,7 +434,7 @@ class H2OPlusEnsemble:
         sim_batch = self.replay_buffer.sample(self.config.batch_size, scope="sim")
 
         with torch.no_grad():
-            if isinstance(self.discriminator, DynamicsDiscriminator):
+            if isinstance(self.discriminator, (DynamicsDiscriminator, ContrastiveDynamicsDiscriminator)):
                 # For dynamics disc: compute weight for real vs sim
                 w_real = self.discriminator.compute_weight(
                     real_batch["observations"], real_batch["actions"], real_batch["next_observations"])
