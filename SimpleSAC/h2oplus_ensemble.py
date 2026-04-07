@@ -84,6 +84,8 @@ class H2OPlusEnsemble:
         config.use_cql = False
         config.cql_alpha = 5.0
         config.cql_n_actions = 10
+        # Cal-QL: prevent sim Q-targets from dropping below offline baseline
+        config.use_cal_ql = False
         # RE-SAC v4-v6 improvements
         config.independent_ratio = 0.8   # blend: 80% independent targets + 20% min-Q
         config.q_std_clip = 0.5          # clip Q-std to 0.5 * max(|Q_mean|, 1) — prevents explosion
@@ -248,6 +250,18 @@ class H2OPlusEnsemble:
                 sim_q_next = self.target_qf(sim_S2, sim_a2)
                 sim_lp2_e = sim_lp2.squeeze(-1).unsqueeze(0).expand(self.E, -1)
                 td_target_sim = sim_R.unsqueeze(0) + (1 - sim_D.unsqueeze(0)) * self.config.discount * (sim_q_next - alpha * sim_lp2_e)
+
+                # Cal-QL: prevent sim Q-targets from dropping below offline Q baseline
+                # Without this, dynamics gap causes sim targets to be much lower than
+                # offline targets, making the critic "forget" offline knowledge.
+                # max(sim_target, offline_baseline) keeps the floor at offline level.
+                if self.config.use_cal_ql:
+                    # Offline Q baseline: what the current Q predicts for the same (s,a)
+                    # on offline-like next states
+                    offline_q_baseline = q_pred_real.mean(0).detach()  # (B_real,)
+                    # Use mean offline Q as floor for sim targets
+                    q_floor = offline_q_baseline.mean()  # scalar
+                    td_target_sim = torch.max(td_target_sim, q_floor)
 
             sim_q_pred = self.qf(sim_S, sim_A)
             # IS-weighted sim loss

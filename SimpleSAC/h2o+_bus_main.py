@@ -130,6 +130,7 @@ FLAGS_DEF = define_flags_with_default(
     ensemble_ckpt="",       # Path to ensemble offline RL checkpoint for initialization
     adaptive_sim_ratio=False, # Auto-scale sim_ratio by buffer sizes (prevents oversampling)
     disable_is_weighting=False, # Disable discriminator IS weighting (for zero-gap debugging)
+    use_cal_ql=False,          # Cal-QL: prevent sim Q-targets from dropping below offline baseline
     use_dynamics_disc=False,  # Use DynamicsDiscriminator instead of TransitionDiscriminator
     dynamics_disc_temp=1.0,   # Temperature for dynamics-based IS weights
     use_contrastive_disc=False,  # Use ContrastiveDynamicsDiscriminator (best for SUMO/SIM)
@@ -461,6 +462,7 @@ def main(argv):
         h2o_config['ensemble_size'] = E
         h2o_config['adaptive_sim_ratio'] = FLAGS.adaptive_sim_ratio
         h2o_config['disable_is_weighting'] = FLAGS.disable_is_weighting
+        h2o_config['use_cal_ql'] = FLAGS.use_cal_ql
         h2o_config['beta_bc'] = 0.0 if FLAGS.disable_is_weighting else h2o_config.get('beta_bc', 0.005)
         h2o = H2OPlusEnsemble(
             h2o_config, policy, qf, target_qf, replay_buffer,
