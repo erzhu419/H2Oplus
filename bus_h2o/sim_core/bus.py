@@ -481,7 +481,7 @@ class Bus(object):
                 float(_gap),                                         # 11: gap = static_target - fwd_hw
                 float(_co_fwd),                                      # 12: co_line_fwd_hw
                 float(_co_bwd),                                      # 13: co_line_bwd_hw
-                float(_seg_speed),                                   # 14: segment_mean_speed
+                float(_seg_speed * 2.5),                              # 14: segment_mean_speed (x2.5 to match SUMO 7X mean ~14 m/s; SIM base ~5.5 m/s)
             ]
 
             reward = self._compute_reward_linear()

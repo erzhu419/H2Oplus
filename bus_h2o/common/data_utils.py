@@ -769,36 +769,65 @@ class FactoredDynamicsDiscriminator(nn.Module):
 class ContrastiveDynamicsDiscriminator(nn.Module):
     """Learn a transition embedding where same-dynamics transitions cluster.
 
-    Architecture:
-        encoder: (s, a, s') → z ∈ R^d  (shared across domains)
-        Training: InfoNCE contrastive loss
-          - Anchor: SUMO transition → z_anchor
-          - Positive: another SUMO transition → z_pos (same dynamics)
-          - Negatives: SIM transitions → z_neg (different dynamics)
-          - Loss: -log(exp(sim(z_a, z_p)) / Σ exp(sim(z_a, z_n)))
+    Uses TRANSITION DELTAS on dynamics-sensitive features only:
+        input = (action, Δfwd_hw, Δbwd_hw, Δgap, fwd_hw, bwd_hw, gap)
+    This avoids encoding differences (line_id, bus_id, direction, etc.)
+    that differ between SUMO and SIM but are not dynamics-related.
 
-    IS weight: Given a test transition (s,a,s'):
-        z = encoder(s, a, s')
-        w = mean cosine similarity to SUMO prototype embeddings
+    Training: InfoNCE contrastive loss.
+    IS weight: cosine similarity to SUMO prototype embedding.
     """
+
+    DYN_INDICES = [5, 6, 11]  # fwd_hw, bwd_hw, gap (absolute in 17-dim obs)
 
     def __init__(self, obs_dim=17, action_dim=2, embed_dim=16, hidden_dim=128, n_hidden=2):
         super().__init__()
-        input_dim = obs_dim + action_dim + obs_dim
+        # Input: dyn(3) + delta(3) + relative_delta(3) + cross_terms(3) = 12
+        # NO action — dynamics discrimination should be action-invariant
+        n_dyn = len(self.DYN_INDICES)
+        input_dim = n_dyn * 4  # current + delta + relative_delta + cross_terms
         layers = [nn.Linear(input_dim, hidden_dim), nn.ReLU()]
         for _ in range(n_hidden - 1):
             layers += [nn.Linear(hidden_dim, hidden_dim), nn.ReLU()]
         layers.append(nn.Linear(hidden_dim, embed_dim))
         self.encoder = nn.Sequential(*layers)
         self.embed_dim = embed_dim
-        # Prototype: running mean of SUMO embeddings
         self.register_buffer('sumo_prototype', torch.zeros(embed_dim))
         self._proto_count = 0
 
+    def _build_input(self, obs, action, next_obs):
+        """Extract dynamics-only features. NO action input.
+
+        Features (12-dim):
+          [0:3]  dyn values: fwd_hw, bwd_hw, gap (normalized by /500)
+          [3:6]  delta: Δfwd_hw, Δbwd_hw, Δgap (normalized by /100)
+          [6:9]  relative delta: Δ/val (captures % change)
+          [9:12] cross terms: Δfwd*Δbwd, Δfwd*Δgap, Δbwd*Δgap (captures correlation)
+        """
+        dyn = obs[:, self.DYN_INDICES]
+        dyn_next = next_obs[:, self.DYN_INDICES]
+        delta = dyn_next - dyn
+
+        # Normalize to prevent scale issues
+        dyn_norm = dyn / 500.0
+        delta_norm = delta / 100.0
+
+        # Relative change (how much did headway change proportionally)
+        rel_delta = delta / (dyn.abs() + 10.0)  # +10 avoids div by near-zero
+
+        # Cross terms (interaction between headway changes)
+        cross = torch.stack([
+            delta_norm[:, 0] * delta_norm[:, 1],  # Δfwd * Δbwd
+            delta_norm[:, 0] * delta_norm[:, 2],  # Δfwd * Δgap
+            delta_norm[:, 1] * delta_norm[:, 2],  # Δbwd * Δgap
+        ], dim=-1)
+
+        return torch.cat([dyn_norm, delta_norm, rel_delta, cross], dim=-1)
+
     def encode(self, obs, action, next_obs):
-        x = torch.cat([obs, action, next_obs], dim=-1)
+        x = self._build_input(obs, action, next_obs)
         z = self.encoder(x)
-        return F.normalize(z, dim=-1)  # L2 normalize
+        return F.normalize(z, dim=-1)
 
     def forward(self, obs, action, next_obs=None, *args, **kwargs):
         if next_obs is not None:
