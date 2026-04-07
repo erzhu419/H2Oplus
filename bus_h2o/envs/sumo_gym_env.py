@@ -89,7 +89,7 @@ class SumoGymEnv:
         # Snapshot pool for buffer reset
         self._snapshot_pool = []       # list of file paths
         self._snapshot_pool_max = 50   # max saved states
-        self._snapshot_save_interval = 200  # save every N events
+        self._snapshot_save_interval = 100  # save every N events
         self._event_counter = 0
         self._last_saved_state = None
 
@@ -178,6 +178,7 @@ class SumoGymEnv:
         self.reward = {}
         self.done = False
         self._current_events = []
+        self._event_counter = 0
 
     def _event_to_obs(self, ev, headway_fallback=360.0):
         """Convert SUMO event to 15-dim obs vector (same format as SIM)."""
@@ -289,8 +290,9 @@ class SumoGymEnv:
 
             # Auto-save SUMO state for snapshot pool
             self._event_counter += len(events)
-            if (self._event_counter % self._snapshot_save_interval == 0
+            if (self._event_counter >= self._snapshot_save_interval
                     and len(self._snapshot_pool) < self._snapshot_pool_max):
+                self._event_counter = 0  # reset counter after each save
                 import tempfile
                 snap_path = os.path.join(
                     tempfile.gettempdir(),
