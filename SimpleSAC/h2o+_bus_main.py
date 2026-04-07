@@ -101,7 +101,7 @@ FLAGS_DEF = define_flags_with_default(
     action_range=1.0,  # policy outputs raw tanh [-1,1]; env mapping done externally
 
     # ── Buffer ────────────────────────────────────────────────────
-    buffer_ratio=5.0,
+    buffer_ratio=2.0,   # reduced from 5.0 to prevent OOM with ensemble+SUMO
     reward_scale=1.0,
     reward_bias=0.0,
 
@@ -128,6 +128,10 @@ FLAGS_DEF = define_flags_with_default(
     use_ensemble_q=False,   # Use ensemble Q (RE-SAC style) instead of twin-Q + V
     ensemble_size=5,        # Number of Q-networks in ensemble
     ensemble_ckpt="",       # Path to ensemble offline RL checkpoint for initialization
+    adaptive_sim_ratio=False, # Auto-scale sim_ratio by buffer sizes (prevents oversampling)
+    disable_is_weighting=False, # Disable discriminator IS weighting (for zero-gap debugging)
+    use_dynamics_disc=False,  # Use DynamicsDiscriminator instead of TransitionDiscriminator
+    dynamics_disc_temp=1.0,   # Temperature for dynamics-based IS weights
     h2o=H2OPlusBus.get_default_config(),
     logging=WandBLogger.get_default_config(),
 
@@ -387,13 +391,24 @@ def main(argv):
         action_range=FLAGS.action_range,
     )
 
-    discriminator = TransitionDiscriminator(
-        obs_dim=FLAGS.obs_dim,
-        action_dim=FLAGS.action_dim,
-        context_dim=30,
-        z_effective_dim=20,
-        use_spectral_norm=getattr(FLAGS.h2o, 'disc_spectral_norm', False),
-    )
+    if FLAGS.use_dynamics_disc:
+        from common.data_utils import DynamicsDiscriminator
+        discriminator = DynamicsDiscriminator(
+            obs_dim=FLAGS.obs_dim,
+            action_dim=FLAGS.action_dim,
+            hidden_dim=128,
+            temperature=FLAGS.dynamics_disc_temp,
+            n_cat=len(cat_cols),
+        )
+        log.info(f"Using DynamicsDiscriminator (temp={FLAGS.dynamics_disc_temp})")
+    else:
+        discriminator = TransitionDiscriminator(
+            obs_dim=FLAGS.obs_dim,
+            action_dim=FLAGS.action_dim,
+            context_dim=30,
+            z_effective_dim=20,
+            use_spectral_norm=getattr(FLAGS.h2o, 'disc_spectral_norm', False),
+        )
 
     if FLAGS.h2o.target_entropy >= 0.0:
         FLAGS.h2o.target_entropy = -float(FLAGS.action_dim)
@@ -434,6 +449,9 @@ def main(argv):
 
         h2o_config = dict(FLAGS.h2o)
         h2o_config['ensemble_size'] = E
+        h2o_config['adaptive_sim_ratio'] = FLAGS.adaptive_sim_ratio
+        h2o_config['disable_is_weighting'] = FLAGS.disable_is_weighting
+        h2o_config['beta_bc'] = 0.0 if FLAGS.disable_is_weighting else h2o_config.get('beta_bc', 0.005)
         h2o = H2OPlusEnsemble(
             h2o_config, policy, qf, target_qf, replay_buffer,
             discriminator=discriminator,
@@ -648,6 +666,10 @@ def main(argv):
                 ) if any(t["rewards"] for t in trajs) else 0.0
                 metrics["average_return"] = avg_return
                 metrics["average_traj_length"] = avg_length
+
+                # RE-SAC v4: update policy anchor on improvement
+                if hasattr(h2o, 'update_anchor_if_improved'):
+                    h2o.update_anchor_if_improved(avg_return)
 
                 # Discriminator evaluation
                 disc_real_acc = 0.0

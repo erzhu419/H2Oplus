@@ -31,7 +31,7 @@ import os, sys
 _BUS_H2O = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "bus_h2o")
 if _BUS_H2O not in sys.path:
     sys.path.insert(0, _BUS_H2O)
-from common.data_utils import TransitionDiscriminator, compute_z_importance_weight
+from common.data_utils import TransitionDiscriminator, DynamicsDiscriminator, compute_z_importance_weight
 
 from model import Scalar, soft_target_update
 
@@ -51,6 +51,8 @@ class H2OPlusEnsemble:
         config.beta = -2.0              # pessimism: mean + β*std (negative = pessimistic)
         config.beta_ood = 0.01          # OOD Q-std penalty in critic loss
         config.beta_bc = 0.005          # behavior cloning regularization
+        config.adaptive_sim_ratio = False  # auto-scale sim_ratio by buffer sizes
+        config.disable_is_weighting = False # disable discriminator IS weighting (for zero-gap)
         config.alpha_multiplier = 1.0
         config.use_automatic_entropy_tuning = True
         config.target_entropy = -0.21
@@ -81,6 +83,13 @@ class H2OPlusEnsemble:
         config.use_cql = False
         config.cql_alpha = 5.0
         config.cql_n_actions = 10
+        # RE-SAC v4-v6 improvements
+        config.independent_ratio = 0.8   # blend: 80% independent targets + 20% min-Q
+        config.q_std_clip = 0.5          # clip Q-std to 0.5 * max(|Q_mean|, 1) — prevents explosion
+        config.lcb_normalize = True      # normalized LCB: β * std / scale * |mean|
+        config.ema_tau = 0.005           # EMA policy for stable eval
+        config.anchor_lambda = 0.1       # policy anchoring strength (L2 to best policy)
+        config.use_anchor = True         # enable policy anchoring
 
         if updates is not None:
             config.update(updates)
@@ -118,6 +127,11 @@ class H2OPlusEnsemble:
         self.update_target_network(1.0)
         self._total_steps = 0
 
+        # RE-SAC v4-v6: EMA policy + policy anchoring
+        self.ema_policy = copy.deepcopy(policy)
+        self._anchor_params = {k: v.clone() for k, v in policy.state_dict().items()}
+        self._best_eval_return = -float('inf')
+
     @property
     def total_steps(self):
         return self._total_steps
@@ -130,8 +144,17 @@ class H2OPlusEnsemble:
             real_batch_size = batch_size
             sim_batch_size = 0
         else:
-            real_batch_size = int(batch_size * (1 - self.config.batch_sim_ratio))
-            sim_batch_size = int(batch_size * self.config.batch_sim_ratio)
+            # Adaptive sim_ratio: scale by actual buffer sizes to prevent oversampling
+            if self.config.adaptive_sim_ratio and self.replay_buffer.has_online_data():
+                online_n = self.replay_buffer.online_size
+                offline_n = self.replay_buffer.fixed_dataset_size
+                natural_ratio = online_n / (online_n + offline_n + 1e-8)
+                # Boost slightly (2x) to give online data more weight, but cap at 0.5
+                sim_ratio = min(0.5, natural_ratio * 2.0)
+            else:
+                sim_ratio = self.config.batch_sim_ratio
+            real_batch_size = int(batch_size * (1 - sim_ratio))
+            sim_batch_size = int(batch_size * sim_ratio)
 
         real_batch = self.replay_buffer.sample(real_batch_size, scope="real")
         sim_batch = None
@@ -164,30 +187,45 @@ class H2OPlusEnsemble:
 
             # Train discriminator
             if self._total_steps % self.config.disc_train_interval == 0 and self.discriminator is not None:
-                disc_loss = self._train_discriminator(
-                    real_z_t, real_z_t1, sim_z_t, sim_z_t1,
-                    S, A, S2, sim_S, sim_A, sim_S2,
-                )
+                if isinstance(self.discriminator, DynamicsDiscriminator):
+                    # Dynamics discriminator: train forward model on OFFLINE data only
+                    disc_loss = self.discriminator.train_step(
+                        S, A, S2, self.disc_optimizer)
+                else:
+                    disc_loss = self._train_discriminator(
+                        real_z_t, real_z_t1, sim_z_t, sim_z_t1,
+                        S, A, S2, sim_S, sim_A, sim_S2,
+                    )
                 self._last_disc_loss = disc_loss
             disc_loss_val = getattr(self, '_last_disc_loss', 0.0)
 
             # IS weights for sim data
-            if self.config.use_td_target_ratio and self._total_steps > self.config.disc_warmup_steps and self.discriminator is not None:
+            # disable_is_weighting: for zero-gap, disc distinguishes policy distributions
+            # not dynamics, so IS weights suppress beneficial exploration
+            if (self.config.use_td_target_ratio
+                    and not self.config.disable_is_weighting
+                    and self._total_steps > self.config.disc_warmup_steps
+                    and self.discriminator is not None):
                 raw_w = compute_z_importance_weight(
                     self.discriminator, sim_z_t, sim_z_t1,
                     obs=sim_S, action=sim_A, next_obs=sim_S2,
                 ).squeeze()
-                sqrt_w = torch.clamp(raw_w, self.config.clip_dynamics_ratio_min, self.config.clip_dynamics_ratio_max).sqrt()
+                sqrt_w = torch.clamp(raw_w, self.config.clip_dynamics_ratio_min, self.config.clip_dynamics_ratio_max).sqrt().to(sim_S.device)
             else:
-                sqrt_w = torch.ones(sim_S.shape[0], device=self.config.device)
+                sqrt_w = torch.ones(sim_S.shape[0], device=sim_S.device)
         else:
             disc_loss_val = 0.0
 
         # ── Critic update ──────────────────────────────────────────
         with torch.no_grad():
             a2, lp2 = self.policy(S2, deterministic=False)
-            q_next = self.target_qf(S2, a2)  # (E, B)
+            q_next_all = self.target_qf(S2, a2)  # (E, B)
             lp2_e = lp2.squeeze(-1).unsqueeze(0).expand(self.E, -1)
+
+            # RE-SAC v4: blend independent + min targets
+            q_next_min = q_next_all.min(dim=0)[0]  # (B,)
+            ind_r = self.config.independent_ratio
+            q_next = ind_r * q_next_all + (1 - ind_r) * q_next_min.unsqueeze(0)
             td_target_real = R.unsqueeze(0) + (1 - D.unsqueeze(0)) * self.config.discount * (q_next - alpha * lp2_e)
 
         q_pred_real = self.qf(S, A)  # (E, B)
@@ -198,7 +236,7 @@ class H2OPlusEnsemble:
         total_q_loss = qf_loss + self.config.beta_ood * ood_loss
 
         # Sim Q-loss (if available)
-        sim_qf_loss = torch.tensor(0.0)
+        sim_qf_loss = torch.tensor(0.0, device=S.device)
         if sim_batch is not None:
             with torch.no_grad():
                 sim_a2, sim_lp2 = self.policy(sim_S2, deterministic=False)
@@ -213,11 +251,11 @@ class H2OPlusEnsemble:
             total_q_loss = total_q_loss + sim_qf_loss
 
         # CQL penalty (optional)
-        cql_loss = torch.tensor(0.0)
+        cql_loss = torch.tensor(0.0, device=S.device)
         if self.config.use_cql:
             B = S.shape[0]
             n_act = self.config.cql_n_actions
-            rand_a = torch.FloatTensor(B * n_act, A.shape[1]).uniform_(-1, 1).to(self.config.device)
+            rand_a = torch.FloatTensor(B * n_act, A.shape[1]).uniform_(-1, 1).to(S.device)
             S_rep = S.unsqueeze(1).repeat(1, n_act, 1).view(B * n_act, -1)
             q_rand = self.qf(S_rep, rand_a).view(self.E, B, n_act)
             logsumexp_q = torch.logsumexp(q_rand, dim=2)
@@ -240,17 +278,46 @@ class H2OPlusEnsemble:
             a_new, lp_new = self.policy(all_S, deterministic=False)
             lp_new = lp_new.squeeze(-1)
             q_ens = self.qf(all_S, a_new)  # (E, B)
-            q_pessimistic = q_ens.mean(0) + self.config.beta * q_ens.std(0)
+            q_mean = q_ens.mean(0)
+            q_std = q_ens.std(0)
+
+            # RE-SAC v5: Q-std clipping (prevents std explosion)
+            if self.config.q_std_clip > 0:
+                q_scale = torch.clamp(q_mean.abs(), min=1.0)
+                q_std = torch.min(q_std, self.config.q_std_clip * q_scale)
+
+            # RE-SAC v5: Normalized LCB
+            if self.config.lcb_normalize:
+                q_scale = torch.clamp(q_mean.abs(), min=1.0)
+                q_pessimistic = q_mean + self.config.beta * q_std / q_scale * q_mean.abs()
+            else:
+                q_pessimistic = q_mean + self.config.beta * q_std
+
             pi_loss = (alpha * lp_new - q_pessimistic).mean()
 
-            bc_loss = F.mse_loss(a_new, all_A.detach())
+            # BC regularization
+            bc_loss = F.mse_loss(a_new, all_A.detach()) if self.config.beta_bc > 0 else torch.tensor(0.0)
             total_pi_loss = pi_loss + self.config.beta_bc * bc_loss
+
+            # RE-SAC v4: Policy anchoring (L2 to best policy)
+            if self.config.use_anchor and self._anchor_params:
+                anchor_dist = sum(
+                    (p - self._anchor_params[k].to(p.device)).pow(2).sum()
+                    for k, p in self.policy.named_parameters()
+                    if k in self._anchor_params
+                )
+                total_pi_loss = total_pi_loss + self.config.anchor_lambda * anchor_dist
 
             self.policy_optimizer.zero_grad()
             total_pi_loss.backward()
             self.policy_optimizer.step()
             pi_loss_val = pi_loss.item()
-            bc_loss_val = bc_loss.item()
+            bc_loss_val = bc_loss.item() if isinstance(bc_loss, torch.Tensor) and bc_loss.requires_grad else 0.0
+
+            # EMA policy update
+            with torch.no_grad():
+                for ep, p in zip(self.ema_policy.parameters(), self.policy.parameters()):
+                    ep.data.mul_(1 - self.config.ema_tau).add_(p.data * self.config.ema_tau)
 
         # ── Alpha update ───────────────────────────────────────────
         if self.config.use_automatic_entropy_tuning:
@@ -331,6 +398,13 @@ class H2OPlusEnsemble:
             real_acc = (torch.sigmoid(real_l) > 0.5).float().mean().item()
             sim_acc = (torch.sigmoid(sim_l) < 0.5).float().mean().item()
         return real_acc, sim_acc
+
+    def update_anchor_if_improved(self, eval_return):
+        """Update policy anchor when eval return improves (RE-SAC v4)."""
+        if eval_return > self._best_eval_return:
+            self._best_eval_return = eval_return
+            self._anchor_params = {k: v.clone().detach()
+                                    for k, v in self.policy.state_dict().items()}
 
     def update_target_network(self, tau):
         soft_target_update(self.qf, self.target_qf, tau)

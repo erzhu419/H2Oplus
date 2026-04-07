@@ -32,6 +32,7 @@ from typing import Optional
 import numpy as np
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 # ---------------------------------------------------------------------------
 # 0.0  Edge -> Linear Distance Mapper
@@ -406,12 +407,20 @@ def compute_z_importance_weight(
     next_obs: torch.Tensor = None,
 ) -> torch.Tensor:
     """
-    Importance weight: w = sigmoid(D(...)) / (1 - sigmoid(D(...))).
-    Supports both ZOnlyDiscriminator and TransitionDiscriminator.
+    Importance weight from discriminator.
+
+    Supports three discriminator types:
+    - DynamicsDiscriminator: w = exp(-dynamics_error / temp) — dynamics-based
+    - TransitionDiscriminator: w = sigmoid(D) / (1-sigmoid(D)) — classification-based
+    - ZOnlyDiscriminator: w = sigmoid(D) / (1-sigmoid(D)) — z-only
+
     Returns detached (B, 1) tensor.
     """
     with torch.no_grad():
-        if isinstance(discriminator, TransitionDiscriminator):
+        if isinstance(discriminator, DynamicsDiscriminator):
+            w = discriminator.compute_weight(obs, action, next_obs)
+            return w.unsqueeze(-1)
+        elif isinstance(discriminator, TransitionDiscriminator):
             logit = discriminator(obs, action, next_obs, z_t, z_t1)
         else:
             logit = discriminator(z_t, z_t1)
@@ -474,3 +483,126 @@ class TransitionDiscriminator(nn.Module):
         z_t_eff = z_t[:, :self.z_effective_dim]
         z_t1_eff = z_t1[:, :self.z_effective_dim]
         return self.net(torch.cat([obs, action, next_obs, z_t_eff, z_t1_eff], dim=-1))
+
+
+# ---------------------------------------------------------------------------
+# Dynamics-based discriminator: judges environment similarity, not data source
+# ---------------------------------------------------------------------------
+
+class DynamicsDiscriminator(nn.Module):
+    """Dynamics-aware importance weighting for H2O+.
+
+    Instead of classifying "is this transition from real or sim?" (which
+    confuses policy distribution with dynamics), this module learns the
+    SUMO dynamics model P_real(s'|s,a) from offline data, then scores
+    online transitions by how well they match the learned dynamics.
+
+    Architecture:
+        1. Forward model f(s,a) → ŝ' trained on offline SUMO data (MSE)
+        2. For any transition (s,a,s'), compute dynamics_error = ||s' - f(s,a)||
+        3. IS weight w = exp(-dynamics_error / temperature) — soft weighting
+           - Small error → w ≈ 1 (transition consistent with SUMO dynamics)
+           - Large error → w ≈ 0 (transition from different dynamics)
+
+    This correctly identifies dynamics gaps without being confused by
+    policy distribution differences. In zero-gap (online=SUMO), all
+    transitions get w ≈ 1 regardless of which policy generated them.
+    """
+
+    def __init__(
+        self,
+        obs_dim: int = 17,
+        action_dim: int = 2,
+        hidden_dim: int = 128,
+        n_hidden: int = 2,
+        temperature: float = 1.0,
+        n_cat: int = 5,  # number of categorical features to skip in prediction
+    ) -> None:
+        super().__init__()
+        self.obs_dim = obs_dim
+        self.action_dim = action_dim
+        self.n_cat = n_cat
+        self.temperature = temperature
+
+        # Predict continuous part of next_obs only (skip categorical features)
+        cont_dim = obs_dim - n_cat
+        input_dim = obs_dim + action_dim
+
+        layers: list[nn.Module] = [nn.Linear(input_dim, hidden_dim), nn.ReLU()]
+        for _ in range(n_hidden - 1):
+            layers += [nn.Linear(hidden_dim, hidden_dim), nn.ReLU()]
+        layers.append(nn.Linear(hidden_dim, cont_dim))
+        self.forward_model = nn.Sequential(*layers)
+
+        # Running stats for normalizing prediction error
+        self.register_buffer('error_ema_mean', torch.tensor(0.0))
+        self.register_buffer('error_ema_var', torch.tensor(1.0))
+        self._ema_count = 0
+
+    def predict_next_obs(self, obs: torch.Tensor, action: torch.Tensor) -> torch.Tensor:
+        """Predict continuous features of next_obs given (obs, action)."""
+        return self.forward_model(torch.cat([obs, action], dim=-1))
+
+    def dynamics_error(
+        self,
+        obs: torch.Tensor,
+        action: torch.Tensor,
+        next_obs: torch.Tensor,
+    ) -> torch.Tensor:
+        """Per-sample dynamics prediction error (MSE on continuous features)."""
+        pred = self.predict_next_obs(obs, action)
+        # Only compare continuous features (skip categorical)
+        target = next_obs[:, self.n_cat:]
+        return (pred - target).pow(2).mean(dim=-1)  # (B,)
+
+    def compute_weight(
+        self,
+        obs: torch.Tensor,
+        action: torch.Tensor,
+        next_obs: torch.Tensor,
+    ) -> torch.Tensor:
+        """Compute importance weight based on dynamics consistency.
+
+        Returns (B,) tensor of weights in [0, ~1].
+        """
+        with torch.no_grad():
+            error = self.dynamics_error(obs, action, next_obs)  # (B,)
+
+            # Normalize error by running stats
+            if self._ema_count > 100:
+                error_norm = (error - self.error_ema_mean) / (self.error_ema_var.sqrt() + 1e-6)
+            else:
+                error_norm = error
+
+            # Soft weighting: w = exp(-error / temperature)
+            # Clamp to prevent extreme weights
+            w = torch.exp(-error_norm.clamp(min=0) / max(self.temperature, 1e-4))
+            return w.clamp(0.01, 1.0)  # floor at 0.01
+
+    def train_step(
+        self,
+        obs: torch.Tensor,
+        action: torch.Tensor,
+        next_obs: torch.Tensor,
+        optimizer: torch.optim.Optimizer,
+    ) -> float:
+        """One gradient step of forward model training on SUMO data."""
+        pred = self.predict_next_obs(obs, action)
+        target = next_obs[:, self.n_cat:]
+        loss = F.mse_loss(pred, target)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        # Update running error stats
+        with torch.no_grad():
+            error = (pred.detach() - target).pow(2).mean(dim=-1)
+            batch_mean = error.mean()
+            batch_var = error.var()
+            ema = 0.01
+            self._ema_count += 1
+            self.error_ema_mean = (1 - ema) * self.error_ema_mean + ema * batch_mean
+            self.error_ema_var = (1 - ema) * self.error_ema_var + ema * batch_var
+
+        return loss.item()
