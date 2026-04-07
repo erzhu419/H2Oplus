@@ -749,7 +749,24 @@ def main(argv):
             logger.record_dict(viskit_metrics)
             logger.dump_tabular(with_prefix=False, with_timestamp=False)
 
-        # ── Periodic checkpoint ───────────────────────────────────
+        # ── Checkpoint: save best + periodic ─────────────────────
+        save_best = False
+        if "average_return" in metrics:
+            if not hasattr(main, '_best_eval_return'):
+                main._best_eval_return = float('-inf')
+            if metrics["average_return"] > main._best_eval_return:
+                main._best_eval_return = metrics["average_return"]
+                save_best = True
+
+        if save_best:
+            best_path = os.path.join(log_dir, "checkpoint_best.pt")
+            if hasattr(h2o, 'save_checkpoint'):
+                h2o.save_checkpoint(best_path, epoch, variant)
+            else:
+                torch.save({"epoch": epoch, "policy_state_dict": policy.state_dict(),
+                             "variant": variant}, best_path)
+            log.info(f"New best checkpoint (ep{epoch+1}, return={metrics['average_return']:.1f}): {best_path}")
+
         if (epoch + 1) % FLAGS.checkpoint_period == 0:
             ckpt_path = os.path.join(log_dir, f"checkpoint_epoch{epoch+1}.pt")
             if hasattr(h2o, 'save_checkpoint'):
