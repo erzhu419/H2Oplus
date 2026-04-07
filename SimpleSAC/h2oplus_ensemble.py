@@ -31,7 +31,8 @@ import os, sys
 _BUS_H2O = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "bus_h2o")
 if _BUS_H2O not in sys.path:
     sys.path.insert(0, _BUS_H2O)
-from common.data_utils import TransitionDiscriminator, DynamicsDiscriminator, compute_z_importance_weight
+from common.data_utils import (TransitionDiscriminator, DynamicsDiscriminator,
+                                ContrastiveDynamicsDiscriminator, compute_z_importance_weight)
 
 from model import Scalar, soft_target_update
 
@@ -187,8 +188,12 @@ class H2OPlusEnsemble:
 
             # Train discriminator
             if self._total_steps % self.config.disc_train_interval == 0 and self.discriminator is not None:
-                if isinstance(self.discriminator, DynamicsDiscriminator):
-                    # Dynamics discriminator: train forward model on OFFLINE data only
+                if isinstance(self.discriminator, ContrastiveDynamicsDiscriminator):
+                    # Contrastive: needs both real (anchor/positive) and sim (negative)
+                    disc_loss = self.discriminator.train_step(
+                        S, A, S2, sim_S, sim_A, sim_S2,
+                        self.disc_optimizer, temperature=0.07)
+                elif isinstance(self.discriminator, DynamicsDiscriminator):
                     disc_loss = self.discriminator.train_step(
                         S, A, S2, self.disc_optimizer)
                 else:

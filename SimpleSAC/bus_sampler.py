@@ -29,7 +29,8 @@ _BUS_H2O = os.path.join(os.path.dirname(_HERE), "bus_h2o")
 if _BUS_H2O not in sys.path:
     sys.path.insert(0, _BUS_H2O)
 
-from common.data_utils import extract_structured_context, TransitionDiscriminator, DynamicsDiscriminator  # noqa: E402
+from common.data_utils import (extract_structured_context, TransitionDiscriminator,
+                                DynamicsDiscriminator, ContrastiveDynamicsDiscriminator)  # noqa: E402
 
 
 # ── Original action mapping (matches ensemble checkpoint training) ─────────
@@ -317,7 +318,7 @@ class BusStepSampler:
                         act_t = torch.FloatTensor(last_settled_action).unsqueeze(0).to(dev)
                         nobs_t = torch.FloatTensor(obs_aug).unsqueeze(0).to(dev)
 
-                        if isinstance(discriminator, DynamicsDiscriminator):
+                        if isinstance(discriminator, (DynamicsDiscriminator, ContrastiveDynamicsDiscriminator)):
                             w = discriminator.compute_weight(obs_t, act_t, nobs_t).item()
                         elif isinstance(discriminator, TransitionDiscriminator):
                             logit = discriminator(obs_t, act_t, nobs_t, z_t_tensor, z_t1_tensor)

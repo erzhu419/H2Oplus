@@ -132,6 +132,7 @@ FLAGS_DEF = define_flags_with_default(
     disable_is_weighting=False, # Disable discriminator IS weighting (for zero-gap debugging)
     use_dynamics_disc=False,  # Use DynamicsDiscriminator instead of TransitionDiscriminator
     dynamics_disc_temp=1.0,   # Temperature for dynamics-based IS weights
+    use_contrastive_disc=False,  # Use ContrastiveDynamicsDiscriminator (best for SUMO/SIM)
     h2o=H2OPlusBus.get_default_config(),
     logging=WandBLogger.get_default_config(),
 
@@ -391,7 +392,16 @@ def main(argv):
         action_range=FLAGS.action_range,
     )
 
-    if FLAGS.use_dynamics_disc:
+    if FLAGS.use_contrastive_disc:
+        from common.data_utils import ContrastiveDynamicsDiscriminator
+        discriminator = ContrastiveDynamicsDiscriminator(
+            obs_dim=FLAGS.obs_dim,
+            action_dim=FLAGS.action_dim,
+            embed_dim=16,
+            hidden_dim=128,
+        )
+        log.info("Using ContrastiveDynamicsDiscriminator (delta-based, action-invariant)")
+    elif FLAGS.use_dynamics_disc:
         from common.data_utils import DynamicsDiscriminator
         discriminator = DynamicsDiscriminator(
             obs_dim=FLAGS.obs_dim,
