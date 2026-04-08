@@ -414,8 +414,7 @@ class H2OPlusBus:
             # Warmup: don't apply IS weighting until discriminator has enough
             # data to be meaningful (disc_warmup_steps gradient steps).
             disc_warmup = getattr(self.config, 'disc_warmup_steps', 5000)
-            _disc_scale = getattr(self, 'disc_scale', 1.0)
-            if self.config.use_td_target_ratio and self._total_steps > disc_warmup and _disc_scale > 0:
+            if self.config.use_td_target_ratio and self._total_steps > disc_warmup:
                 raw_w = compute_z_importance_weight(
                     self.discriminator, sim_z_t, sim_z_t1,
                     obs=sim_observations, action=sim_actions,
@@ -426,15 +425,8 @@ class H2OPlusBus:
                     self.config.clip_dynamics_ratio_min,
                     self.config.clip_dynamics_ratio_max,
                 ).sqrt()
-                # Attenuate discriminator influence: blend toward 1.0
-                # disc_scale=1.0 → full IS; disc_scale=0.0 → uniform weight
-                if _disc_scale < 1.0:
-                    sqrt_real_sim_ratio = (
-                        _disc_scale * sqrt_real_sim_ratio
-                        + (1.0 - _disc_scale) * torch.ones_like(sqrt_real_sim_ratio)
-                    )
             else:
-                # During warmup or disc_scale=0: equal weight for all sim transitions
+                # During warmup: equal weight for all sim transitions
                 sqrt_real_sim_ratio = torch.ones(
                     sim_observations.shape[0],
                     device=self.config.device,
@@ -512,7 +504,6 @@ class H2OPlusBus:
                 alpha=alpha.item(),
                 disc_loss=disc_loss,
                 kl_loss=kl_loss.item() if hasattr(kl_loss, 'item') else kl_loss,
-                disc_scale=getattr(self, 'disc_scale', 1.0),
                 total_steps=self.total_steps,
                 # ── JTT diagnostics ──
                 jtt_updated=jtt_updated,

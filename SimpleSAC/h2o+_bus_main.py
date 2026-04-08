@@ -137,13 +137,9 @@ FLAGS_DEF = define_flags_with_default(
     h2o=H2OPlusBus.get_default_config(),
     logging=WandBLogger.get_default_config(),
 
-    # ── WSRL-inspired improvements (Superior Regime) ────────────
+    # ── Superior Regime improvements ─────────────────────────────
     warmup_collect_epochs=0,      # Collect N epochs of online data WITHOUT training after pretrain
     kl_coeff=0.0,                 # KL(π, π₀) penalty coefficient (0=off)
-    disc_scale=1.0,               # Scale discriminator IS weights (0=off, 1=full)
-    offline_ratio_start=0.5,      # Initial offline data ratio (1 - batch_sim_ratio)
-    offline_ratio_end=0.5,        # Final offline data ratio (set <start for annealing)
-    offline_ratio_anneal_epochs=200,  # Epochs over which to anneal
 
     # ── JTT: Targeted Snapshot Reset ──────────────────────────────
     jtt_warmup_epochs=50,         # Phase 1 → Phase 2 switch point (K)
@@ -610,11 +606,6 @@ def main(argv):
         h2o.pi0_policy = None
         h2o.kl_coeff = 0.0
 
-    # Disc scale
-    h2o.disc_scale = FLAGS.disc_scale
-    if FLAGS.disc_scale < 1.0:
-        log.info(f"Discriminator IS weight scale: {FLAGS.disc_scale}")
-
     # ==================================================================
     #  Main training loop
     # ==================================================================
@@ -678,24 +669,15 @@ def main(argv):
         else:
             train_steps_this_epoch = FLAGS.n_train_step_per_epoch
 
-        # batch_sim_ratio: adaptive, warmup ramp, or annealing
-        # offline_ratio = 1 - sim_ratio (fraction of batch from offline data)
+        # batch_sim_ratio: adaptive (by buffer size) or fixed warmup ramp
         if FLAGS.adaptive_sim_ratio:
+            # Let h2o.train() compute sim_ratio from actual buffer sizes
             sim_ratio = -1  # sentinel: adaptive handles it internally
         elif epoch < FLAGS.warmup_episodes and FLAGS.warmup_episodes > 0:
             warmup_progress = epoch / FLAGS.warmup_episodes
             sim_ratio = 0.1 + 0.4 * warmup_progress  # 0.1 -> 0.5
-        elif FLAGS.offline_ratio_start != FLAGS.offline_ratio_end:
-            # ── Offline ratio annealing (WSRL insight: reduce offline
-            #    data mixing as π diverges from dataset distribution) ──
-            anneal_progress = min(1.0, epoch / max(FLAGS.offline_ratio_anneal_epochs, 1))
-            offline_ratio = (
-                FLAGS.offline_ratio_start
-                + (FLAGS.offline_ratio_end - FLAGS.offline_ratio_start) * anneal_progress
-            )
-            sim_ratio = 1.0 - offline_ratio
         else:
-            sim_ratio = 1.0 - FLAGS.offline_ratio_start
+            sim_ratio = 0.5
         if sim_ratio >= 0:
             h2o.config.batch_sim_ratio = sim_ratio
         metrics["batch_sim_ratio"] = sim_ratio if sim_ratio >= 0 else -1
