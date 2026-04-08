@@ -546,11 +546,13 @@ def main(argv):
             pt_metrics = h2o.train(FLAGS.batch_size, pretrain_steps=FLAGS.pretrain_steps)
             step_csv.log_step("pretrain", -1, pt_step, pt_metrics)
         step_csv.flush()
+        def _fmt(v):
+            return f"{v:.4f}" if isinstance(v, (int, float)) else str(v)
         log.info(
             f"Pretrain done in {time.time() - t0:.1f}s: "
-            f"policy_loss={pt_metrics.get('policy_loss', 'N/A'):.4f}, "
-            f"qf1_loss={pt_metrics.get('real_qf1_loss', 'N/A'):.4f}, "
-            f"qf2_loss={pt_metrics.get('real_qf2_loss', 'N/A'):.4f}"
+            f"policy_loss={_fmt(pt_metrics.get('policy_loss', 'N/A'))}, "
+            f"qf1_loss={_fmt(pt_metrics.get('real_qf1_loss', pt_metrics.get('qf_loss', 'N/A')))}, "
+            f"qf2_loss={_fmt(pt_metrics.get('real_qf2_loss', 'N/A'))}"
         )
 
     # ==================================================================

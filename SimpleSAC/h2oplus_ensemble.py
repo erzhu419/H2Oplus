@@ -468,12 +468,13 @@ class H2OPlusEnsemble:
         soft_target_update(self.qf, self.target_qf, tau)
 
     def torch_to_device(self, device):
-        for m in [self.policy, self.qf, self.target_qf]:
+        for m in [self.policy, self.ema_policy, self.qf, self.target_qf]:
             m.to(device)
         if self.discriminator is not None:
             self.discriminator.to(device)
         if self.log_alpha is not None:
             self.log_alpha.to(device)
+        self.config.device = device  # keep config in sync
 
     def save_checkpoint(self, path, epoch, variant=None):
         torch.save({

@@ -683,6 +683,7 @@ class H2OPlusBus:
     def torch_to_device(self, device):
         for module in self.modules:
             module.to(device)
+        self.config.device = device  # keep config in sync
 
     @property
     def modules(self):
