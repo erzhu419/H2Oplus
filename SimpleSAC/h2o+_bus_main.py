@@ -137,6 +137,14 @@ FLAGS_DEF = define_flags_with_default(
     h2o=H2OPlusBus.get_default_config(),
     logging=WandBLogger.get_default_config(),
 
+    # ── WSRL-inspired improvements (Superior Regime) ────────────
+    warmup_collect_epochs=0,      # Collect N epochs of online data WITHOUT training after pretrain
+    kl_coeff=0.0,                 # KL(π, π₀) penalty coefficient (0=off)
+    disc_scale=1.0,               # Scale discriminator IS weights (0=off, 1=full)
+    offline_ratio_start=0.5,      # Initial offline data ratio (1 - batch_sim_ratio)
+    offline_ratio_end=0.5,        # Final offline data ratio (set <start for annealing)
+    offline_ratio_anneal_epochs=200,  # Epochs over which to anneal
+
     # ── JTT: Targeted Snapshot Reset ──────────────────────────────
     jtt_warmup_epochs=50,         # Phase 1 → Phase 2 switch point (K)
     jtt_alpha=0.5,                # TD error weight in priority score
@@ -568,6 +576,46 @@ def main(argv):
         log.info(f"DynDisc pretrain done in {time.time()-t0:.1f}s, final loss={dl:.4f}")
 
     # ==================================================================
+    #  Warmup collect: run online rollouts WITHOUT gradient updates
+    #  (WSRL insight: in Superior Regime, let buffer fill before
+    #   online updates to prevent early corruption of π₀)
+    # ==================================================================
+    if FLAGS.warmup_collect_epochs > 0:
+        log.info(f"Warmup collect: {FLAGS.warmup_collect_epochs} epochs of "
+                 f"online rollout WITHOUT training...")
+        for wc_ep in trange(FLAGS.warmup_collect_epochs, desc="Warmup Collect"):
+            wc_stats = train_sampler.sample(
+                sampler_policy, FLAGS.n_rollout_events_per_epoch,
+                deterministic=False, discriminator=None,
+            )
+            log.debug(
+                f"[Warmup {wc_ep}] events={wc_stats.get('n_events',0)}, "
+                f"trans={wc_stats.get('n_transitions',0)}"
+            )
+        log.info(f"Warmup collect done. Online buffer: "
+                 f"{replay_buffer.online_size} transitions")
+
+    # ==================================================================
+    #  Save frozen π₀ for KL regularization
+    # ==================================================================
+    pi0_policy = None
+    if FLAGS.kl_coeff > 0:
+        pi0_policy = deepcopy(h2o.policy)
+        for p in pi0_policy.parameters():
+            p.requires_grad_(False)
+        h2o.pi0_policy = pi0_policy
+        h2o.kl_coeff = FLAGS.kl_coeff
+        log.info(f"KL(π, π₀) regularization enabled: coeff={FLAGS.kl_coeff}")
+    else:
+        h2o.pi0_policy = None
+        h2o.kl_coeff = 0.0
+
+    # Disc scale
+    h2o.disc_scale = FLAGS.disc_scale
+    if FLAGS.disc_scale < 1.0:
+        log.info(f"Discriminator IS weight scale: {FLAGS.disc_scale}")
+
+    # ==================================================================
     #  Main training loop
     # ==================================================================
     log.info(f"Starting training for {FLAGS.n_epochs} epochs")
@@ -630,15 +678,24 @@ def main(argv):
         else:
             train_steps_this_epoch = FLAGS.n_train_step_per_epoch
 
-        # batch_sim_ratio: adaptive (by buffer size) or fixed warmup ramp
+        # batch_sim_ratio: adaptive, warmup ramp, or annealing
+        # offline_ratio = 1 - sim_ratio (fraction of batch from offline data)
         if FLAGS.adaptive_sim_ratio:
-            # Let h2o.train() compute sim_ratio from actual buffer sizes
             sim_ratio = -1  # sentinel: adaptive handles it internally
         elif epoch < FLAGS.warmup_episodes and FLAGS.warmup_episodes > 0:
             warmup_progress = epoch / FLAGS.warmup_episodes
             sim_ratio = 0.1 + 0.4 * warmup_progress  # 0.1 -> 0.5
+        elif FLAGS.offline_ratio_start != FLAGS.offline_ratio_end:
+            # ── Offline ratio annealing (WSRL insight: reduce offline
+            #    data mixing as π diverges from dataset distribution) ──
+            anneal_progress = min(1.0, epoch / max(FLAGS.offline_ratio_anneal_epochs, 1))
+            offline_ratio = (
+                FLAGS.offline_ratio_start
+                + (FLAGS.offline_ratio_end - FLAGS.offline_ratio_start) * anneal_progress
+            )
+            sim_ratio = 1.0 - offline_ratio
         else:
-            sim_ratio = 0.5
+            sim_ratio = 1.0 - FLAGS.offline_ratio_start
         if sim_ratio >= 0:
             h2o.config.batch_sim_ratio = sim_ratio
         metrics["batch_sim_ratio"] = sim_ratio if sim_ratio >= 0 else -1

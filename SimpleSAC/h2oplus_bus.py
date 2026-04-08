@@ -327,6 +327,14 @@ class H2OPlusBus:
             )
             policy_loss = (alpha * df_log_pi - q_new_actions).mean()
 
+            # ── KL(π, π₀) regularization (Superior Regime stability) ─
+            kl_loss = torch.tensor(0.0, device=policy_loss.device)
+            if getattr(self, 'pi0_policy', None) is not None and getattr(self, 'kl_coeff', 0) > 0:
+                with torch.no_grad():
+                    pi0_log_prob = self.pi0_policy.log_prob(df_observations, df_new_actions)
+                kl_loss = (df_log_pi - pi0_log_prob).mean()  # KL(π||π₀)
+                policy_loss = policy_loss + self.kl_coeff * kl_loss
+
             # ── Q function loss ───────────────────────────────────────
             real_q1_pred = self.qf1(real_observations, real_actions)
             real_q2_pred = self.qf2(real_observations, real_actions)
@@ -406,7 +414,8 @@ class H2OPlusBus:
             # Warmup: don't apply IS weighting until discriminator has enough
             # data to be meaningful (disc_warmup_steps gradient steps).
             disc_warmup = getattr(self.config, 'disc_warmup_steps', 5000)
-            if self.config.use_td_target_ratio and self._total_steps > disc_warmup:
+            _disc_scale = getattr(self, 'disc_scale', 1.0)
+            if self.config.use_td_target_ratio and self._total_steps > disc_warmup and _disc_scale > 0:
                 raw_w = compute_z_importance_weight(
                     self.discriminator, sim_z_t, sim_z_t1,
                     obs=sim_observations, action=sim_actions,
@@ -417,8 +426,15 @@ class H2OPlusBus:
                     self.config.clip_dynamics_ratio_min,
                     self.config.clip_dynamics_ratio_max,
                 ).sqrt()
+                # Attenuate discriminator influence: blend toward 1.0
+                # disc_scale=1.0 → full IS; disc_scale=0.0 → uniform weight
+                if _disc_scale < 1.0:
+                    sqrt_real_sim_ratio = (
+                        _disc_scale * sqrt_real_sim_ratio
+                        + (1.0 - _disc_scale) * torch.ones_like(sqrt_real_sim_ratio)
+                    )
             else:
-                # During warmup: equal weight for all sim transitions
+                # During warmup or disc_scale=0: equal weight for all sim transitions
                 sqrt_real_sim_ratio = torch.ones(
                     sim_observations.shape[0],
                     device=self.config.device,
@@ -495,6 +511,8 @@ class H2OPlusBus:
                 alpha_loss=alpha_loss.item(),
                 alpha=alpha.item(),
                 disc_loss=disc_loss,
+                kl_loss=kl_loss.item() if hasattr(kl_loss, 'item') else kl_loss,
+                disc_scale=getattr(self, 'disc_scale', 1.0),
                 total_steps=self.total_steps,
                 # ── JTT diagnostics ──
                 jtt_updated=jtt_updated,
