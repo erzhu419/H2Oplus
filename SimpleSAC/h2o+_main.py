@@ -12,7 +12,7 @@ import absl.app
 import absl.flags
 import d4rl
 import gym
-import robel
+# import robel
 import numpy as np
 import torch
 import wandb
@@ -28,7 +28,7 @@ from utils import (Timer, WandBLogger, define_flags_with_default,
                 get_user_flags, prefix_metrics, print_flags,
                 set_random_seed)
 
-sys.path.append("..")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from Network.Dynamics_net import Dynamics
 from Network.Weight_net import ConcatDiscriminator, ConcatRatioEstimator

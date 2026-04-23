@@ -8,6 +8,7 @@ import re
 from copy import copy
 from socket import gethostname
 import pickle
+import shutil
 
 import numpy as np
 
@@ -20,6 +21,14 @@ from ml_collections.config_dict import config_dict
 import wandb
 
 import torch
+
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+XML_PATH = os.path.join(PROJECT_ROOT, 'xml_path')
+REAL_XML_DIR = os.path.join(XML_PATH, 'real_file')
+SIM_XML_DIR = os.path.join(XML_PATH, 'sim_file')
+os.makedirs(REAL_XML_DIR, exist_ok=True)
+os.makedirs(SIM_XML_DIR, exist_ok=True)
 
 
 class Timer(object):
@@ -196,6 +205,29 @@ def generate_xml_path():
 gym_xml_path = generate_xml_path()
 
 
+def ensure_real_xml(xml_name):
+    """Ensure we have a local copy of the real MuJoCo asset."""
+    real_xml_path = os.path.join(REAL_XML_DIR, xml_name)
+    if not os.path.exists(real_xml_path):
+        src_path = os.path.join(gym_xml_path, xml_name)
+        if not os.path.exists(src_path):
+            raise FileNotFoundError(
+                "Could not locate MuJoCo asset '{}'".format(src_path)
+            )
+        shutil.copy(src_path, real_xml_path)
+    return real_xml_path
+
+
+def get_sim_xml_path(xml_name):
+    return os.path.join(SIM_XML_DIR, xml_name)
+
+
+def copy_sim_to_gym(sim_xml_name, dest_xml_name=None):
+    src_path = get_sim_xml_path(sim_xml_name)
+    dest_path = os.path.join(gym_xml_path, dest_xml_name or sim_xml_name)
+    shutil.copy(src_path, dest_path)
+
+
 def record_data(file, content):
     with open(file, 'a+') as f:
         f.write('{}\n'.format(content))
@@ -213,8 +245,9 @@ def check_path(path):
 
 def update_xml(index, env_name):
     xml_name = parse_xml_name(env_name)
-    os.system('cp ./xml_path/{0}/{1} {2}/{1}}'.format(index, xml_name, gym_xml_path))
-
+    src_path = os.path.join(XML_PATH, str(index), xml_name)
+    dest_path = os.path.join(gym_xml_path, xml_name)
+    shutil.copy(src_path, dest_path)
     time.sleep(0.2)
 
 
@@ -239,10 +272,9 @@ def parse_xml_name(env_name):
 
 def update_source_env(env_name):
     xml_name = parse_xml_name(env_name)
-
-    os.system(
-        'cp ./xml_path/real_file/{0} {1}/{0}'.format(xml_name, gym_xml_path))
-
+    src_path = ensure_real_xml(xml_name)
+    dest_path = os.path.join(gym_xml_path, xml_name)
+    shutil.copy(src_path, dest_path)
     time.sleep(0.2)
 
 #TODO: gravity
@@ -251,9 +283,9 @@ def update_target_env_gravity(variety_degree, env_name):
     # create new xml 
     xml_name = "{}_gravityx{}.xml".format(old_xml_name.split(".")[0], variety_degree)
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if "gravity" in line:
                 pattern = re.compile(r"gravity=\"(.*?)\"")
@@ -271,12 +303,7 @@ def update_target_env_gravity(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 #TODO: density
@@ -285,9 +312,9 @@ def update_target_env_density(variety_degree, env_name):
     # create new xml 
     xml_name = "{}_densityx{}.xml".format(old_xml_name.split(".")[0], variety_degree)
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w") as new_f:
         for line in f.readlines():
             if "density" in line:
                 pattern = re.compile(r'(?<=density=")\d+\.?\d*')
@@ -300,12 +327,7 @@ def update_target_env_density(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 #TODO: friction
@@ -314,9 +336,9 @@ def update_target_env_friction(variety_degree, env_name):
     # create new xml 
     xml_name = "{}_frictionx{}.xml".format(old_xml_name.split(".")[0], variety_degree)
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w") as new_f:
         for line in f.readlines():
             if "friction" in line:
                 pattern = re.compile(r"friction=\"(.*?)\"")
@@ -334,12 +356,7 @@ def update_target_env_friction(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 
@@ -349,9 +366,9 @@ def update_target_env_thigh_range(variety_degree, env_name):
     # create new xml
     xml_name = "{}_thigh_range{}.xml".format(old_xml_name.split(".")[0], variety_degree)
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if "range" in line and "thigh" in line:
                 pattern = re.compile(r"range=\"(.*?)\"")
@@ -369,12 +386,7 @@ def update_target_env_thigh_range(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 #TODO: foot shape
@@ -383,20 +395,15 @@ def update_target_env_foot_shape(env_name):
     # create new xml
     xml_name = "{}_foot_shape.xml".format(old_xml_name.split(".")[0])
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if "foot" in line and "capsule" in line:
                 line = line.replace("capsule", "ellipsoid")
             new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 #TODO: foot stiffness
@@ -405,9 +412,9 @@ def update_target_env_soft_foot(variety_degree, env_name):
     # create new xml
     xml_name = "{}_foot_stiffnessx{}.xml".format(old_xml_name.split(".")[0], variety_degree)
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if "stiffness" in line and "foot" in line:
                 pattern = re.compile(r"stiffness=\"(.*?)\"")
@@ -425,12 +432,7 @@ def update_target_env_soft_foot(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
     
 #TODO: stiffness on both body and limbs
@@ -439,9 +441,9 @@ def update_target_env_soft_limb(variety_degree, env_name):
     # create new xml
     xml_name = "{}_stiffnessx{}.xml".format(old_xml_name.split(".")[0], variety_degree)
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if "stiffness" in line:
                 pattern = re.compile(r"stiffness=\"(.*?)\"")
@@ -459,12 +461,7 @@ def update_target_env_soft_limb(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
     
 #TODO: tendon elasticity
@@ -473,9 +470,9 @@ def update_target_env_tendon_elasticity(variety_degree, env_name):
     # create new xml
     xml_name = "{}_tendom_elasticityx{}.xml".format(old_xml_name.split(".")[0], variety_degree)
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if "coef" in line:
                 pattern = re.compile(r"coef=\"(.*?)\"")
@@ -493,12 +490,7 @@ def update_target_env_tendon_elasticity(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 #TODO: short thigh
@@ -507,9 +499,9 @@ def update_target_env_short_thigh(variety_degree, env_name):
     # create new xml
     xml_name = "{}_thigh_sizex{}.xml".format(old_xml_name.split(".")[0], variety_degree)
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if "size" in line and "thigh" in line:
                 pattern = re.compile(r"size=\"(.*?)\"")
@@ -527,12 +519,7 @@ def update_target_env_short_thigh(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 #TODO: limb shape
@@ -541,20 +528,15 @@ def update_target_env_ellipsoid_limb(env_name):
     # create new xml
     xml_name = "{}_ellipsoid_limb.xml".format(old_xml_name.split(".")[0])
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if ("foot" in line or "shin" in line) and "capsule" in line:
                 line = line.replace("capsule", "ellipsoid")
             new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 #TODO: limb shape
@@ -563,20 +545,15 @@ def update_target_env_box_limb(env_name):
     # create new xml
     xml_name = "{}_box_limb.xml".format(old_xml_name.split(".")[0])
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if ("foot" in line or "shin" in line) and "capsule" in line:
                 line = line.replace("capsule", "box")
             new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 #TODO: head size
@@ -585,9 +562,9 @@ def update_target_env_head_size(variety_degree, env_name):
     # create new xml
     xml_name = "{}_head_sizex{}.xml".format(old_xml_name.split(".")[0], variety_degree)
 
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if "size" in line and "head" in line:
                 pattern = re.compile(r"size=\"(.*?)\"")
@@ -605,12 +582,7 @@ def update_target_env_head_size(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 #TODO: torso length
@@ -618,10 +590,9 @@ def update_target_env_torso_length(variety_degree, env_name):
     old_xml_name = parse_xml_name(env_name)
     # create new xml
     xml_name = "{}_torso_lengthx{}.xml".format(old_xml_name.split(".")[0], variety_degree)
-
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if "fromto" in line and "torso" in line:
                 pattern = re.compile(r"fromto=\"(.*?)\"")
@@ -639,12 +610,7 @@ def update_target_env_torso_length(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
     
 #TODO: foot length
@@ -652,10 +618,9 @@ def update_target_env_foot_length(variety_degree, env_name):
     old_xml_name = parse_xml_name(env_name)
     # create new xml
     xml_name = "{}_torso_lengthx{}.xml".format(old_xml_name.split(".")[0], variety_degree)
-
-    with open('../xml_path/real_file/{}'.format(old_xml_name), "r+") as f:
-
-        new_f = open('../xml_path/sim_file/{}'.format(xml_name), "w+")
+    real_xml_path = ensure_real_xml(old_xml_name)
+    sim_xml_path = get_sim_xml_path(xml_name)
+    with open(real_xml_path, "r") as f, open(sim_xml_path, "w+") as new_f:
         for line in f.readlines():
             if "fromto" in line and "foot" in line:
                 pattern = re.compile(r"fromto=\"(.*?)\"")
@@ -673,12 +638,7 @@ def update_target_env_foot_length(variety_degree, env_name):
             else:
                 new_f.write(line)
 
-        new_f.close()
-
-    # replace the default gym env with newly-revised env
-    os.system(
-        'cp ../xml_path/sim_file/{0} {1}/{2}'.format(xml_name, gym_xml_path, old_xml_name))
-
+    copy_sim_to_gym(xml_name, old_xml_name)
     time.sleep(0.2)
 
 
