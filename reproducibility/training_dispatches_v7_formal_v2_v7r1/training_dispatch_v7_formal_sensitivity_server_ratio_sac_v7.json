@@ -1,0 +1,100 @@
+{
+  "capacity_audit_lanes": [],
+  "created_utc": "2026-08-11T06:42:47.506170+00:00",
+  "hosts": [
+    {
+      "gpus": [
+        {
+          "physical_gpu": "0",
+          "stages": [
+            {
+              "name": "ratio-sac-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "ratio-sac_seed5101",
+                    "ratio-sac_seed5105"
+                  ],
+                  "name": "jtl110gpu-gpu0-ratio-sac"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "physical_gpu": "1",
+          "stages": [
+            {
+              "name": "ratio-sac-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "ratio-sac_seed5102"
+                  ],
+                  "name": "jtl110gpu-gpu1-ratio-sac"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "hostname": "jtl110gpu",
+      "hostname_aliases": [
+        "huiwei-Super-Server"
+      ]
+    },
+    {
+      "gpus": [
+        {
+          "physical_gpu": "0",
+          "stages": [
+            {
+              "name": "ratio-sac-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "ratio-sac_seed5103"
+                  ],
+                  "name": "jtl110gpu2-gpu0-ratio-sac"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "physical_gpu": "1",
+          "stages": [
+            {
+              "name": "ratio-sac-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "ratio-sac_seed5104"
+                  ],
+                  "name": "jtl110gpu2-gpu1-ratio-sac"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "hostname": "jtl110gpu2",
+      "hostname_aliases": [
+        "erzhu419-Super-Server"
+      ]
+    }
+  ],
+  "job_set_sha256": "3e07fe776112636a882d9d1356145ce56e0f7c56763aa93ff779172314c92123",
+  "plan": {
+    "path": "../training_plans_v7_formal_v2_v7r1/training_plan_v7_formal_sensitivity_server_ratio_sac_v7.json",
+    "sha256": "fb4040569a3a5fec8360075b5f61966d8b3b2c911d6cf613e427a862cafc0c30"
+  },
+  "plan_id": "v7-formal-sensitivity-server-ratio-sac-v7",
+  "policy": {
+    "capacity_admission": "no method in this plan shares a physical GPU",
+    "ratio_sac": "five seeds are distributed over all four server GPUs; the fifth seed follows the first lane serially",
+    "runtime_comparison": "wall-clock timings are resource observations and are not used for cross-method efficiency claims"
+  },
+  "schema_version": "transit-training-dispatch-v1",
+  "status": "frozen-before-formal-outcomes"
+}

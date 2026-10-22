@@ -1,0 +1,72 @@
+{
+  "deployment_manifest": {
+    "bytes": 6028,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/workspace/deployment_manifest_v11.json",
+    "sha256": "9239fa4526866efab89dd03519d646773caacdd54c59cf9e5cd34f4c0da73ae2"
+  },
+  "design_rationale": {
+    "bytes": 4673,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_rationale_v1.json",
+    "sha256": "456ddcb73c5d78a8f0bf90f3e8ddfbbfda81c8c45c76d505f4d309eead35605b"
+  },
+  "formal_held_out_outcomes_read": false,
+  "local_verification": {
+    "bytes": 965,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_deployment_verification_local_v1.json",
+    "sha256": "8596e8aa7b3f5e4dccd2b176b682b52f43ac67c16edc0e1fc75518b3ea289145"
+  },
+  "purpose": "deployment-hash-and-loader-preflight-only",
+  "remote_training_or_sumo_executed": false,
+  "remote_workspace_bootstrap": [
+    {
+      "command": "test -d /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v4/workspace && test ! -e /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/workspace && mkdir -p /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1 && cp -al /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v4/workspace /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/workspace",
+      "node": "jtl110gpu",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": "test -d /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v4/workspace && test ! -e /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/workspace && mkdir -p /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1 && cp -al /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v4/workspace /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/workspace",
+      "node": "jtl110gpu2",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "required_environment": {
+    "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+    "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+    "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4",
+    "PATH": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin:/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/workspace",
+    "TMPDIR": "/home/erzhu419/.cache/h2oplus-v7/tmp"
+  },
+  "scheduler_managed_environment": {
+    "CUDA_VISIBLE_DEVICES": "empty for the CPU-only task; injected by scheduleurm"
+  },
+  "schema_version": "transit-h2oplus-v11-actor-hold-preflight-submission-v1",
+  "status": "submitted",
+  "study_stage": "development",
+  "submitted_utc": "2026-08-20T12:34:37.102750+00:00",
+  "tasks": [
+    {
+      "node": "jtl110gpu",
+      "result_root": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/preflight_results_v1/jtl110gpu",
+      "returncode": 0,
+      "scheduler_output": "submitted t82894  cpu=1 ram=8192MB vram=0MB  prio=high  (vram=explicit,ram=explicit,cpu=explicit)  H2O+ v11 actor-hold deployment no-SUMO preflight o\n  run `dispatch` to launch (resource-aware: respects 1/3 VRAM rule, CPU/RAM headroom).",
+      "signature": "H2Oplus/v11/development/actor-hold-v1/preflight-v1/jtl110gpu/9239fa4526866efa",
+      "task_id": "t82894",
+      "verification_output": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/preflight_results_v1/jtl110gpu/verification.json"
+    },
+    {
+      "node": "jtl110gpu2",
+      "result_root": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/preflight_results_v1/jtl110gpu2",
+      "returncode": 0,
+      "scheduler_output": "submitted t82895  cpu=1 ram=8192MB vram=0MB  prio=high  (vram=explicit,ram=explicit,cpu=explicit)  H2O+ v11 actor-hold deployment no-SUMO preflight o\n  run `dispatch` to launch (resource-aware: respects 1/3 VRAM rule, CPU/RAM headroom).",
+      "signature": "H2Oplus/v11/development/actor-hold-v1/preflight-v1/jtl110gpu2/9239fa4526866efa",
+      "task_id": "t82895",
+      "verification_output": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/preflight_results_v1/jtl110gpu2/verification.json"
+    }
+  ]
+}

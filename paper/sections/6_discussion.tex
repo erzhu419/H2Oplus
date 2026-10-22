@@ -1,0 +1,124 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{What the formal result establishes}
+
+The formal comparison isolates one mechanism. Candidate and parent share the
+same five actor tensors, checkpoints, state, and inherited action transform;
+only the 60-s completion reserve differs. On ten fresh environment blocks, the
+reserve reduced generalized passenger time and improved completion in every
+block. The direction also held at every demand level and training seed. This is
+strong evidence that the fixed reserve improves this simulator-to-simulator
+endpoint relative to its direct parent under the registered scenario family.
+
+The demand pattern is operationally coherent. The benefit is smallest at
+demand 0.75 and largest at demand 1.25, where leaving a tail without a follower
+has greater passenger consequences. The reserve can add local in-vehicle time,
+but it may also prevent a low-load tail bus from advancing in a way that leaves
+later demand unserved before the horizon. The formal decrease in unfinished
+passengers is consistent with the latter mechanism in these scenarios.
+This interpretation is mechanistic rather than causal at the level of
+individual passengers because the experiment did not randomize guard
+activations within a trajectory.
+
+The result does not establish an active density-ratio benefit. Classifier
+validation was near chance, and final training used unit simulator weights.
+The learned component should therefore be described as an IQL-initialized,
+simulator-continued H2O+ actor with mixed replay, not as a successfully
+ratio-corrected policy. The confirmed contribution is the composition of this
+fixed actor with the explicit completion-safety reserve.
+
+\subsection{Why development evidence alone was insufficient}
+
+The development history was adaptive. Successive rounds diagnosed actor drift,
+hold scale, headway reserve, tail service, and completion, and several rounds
+reused the same nine development cells. A favorable result at one stage could
+therefore reflect both a real mechanism and accumulated adaptation to those
+cells. Earlier variants also used different service margins in some analyses;
+passing a looser completion boundary does not imply passing the final 0.003
+margin. For these reasons, development improvements were not treated as a
+formal effect.
+
+The ten-block confirmation was designed to break that feedback loop. Candidate,
+parent, environment cells, endpoints, margin, and tests were frozen before
+outcome access. Formal cells were disjoint from training and all development
+rounds, and candidate replacement was forbidden. This design, rather than the
+number of development iterations, is what supports the bounded confirmed
+claim.
+
+\subsection{Limitations}
+\label{sec:discussion:limitations}
+
+\paragraph{Data and state representation.}
+
+The offline dataset is large in rows but modest in independent exogenous
+variation. Simultaneous decisions and long trajectories create millions of
+correlated SMDP tokens from only 30 environment cells. The five training seeds
+represent optimizer variation conditional on that fixed data, not five new
+datasets. Future data collection should prioritize more independent days,
+demand realizations, and disruption patterns instead of denser serialization of
+the same cells. The centralized observation also compresses passenger
+histories and future service availability. Its Markov sufficiency is a
+modeling assumption, not a proved property of the 229-feature encoding.
+\Cref{prop:ledger,prop:hurdle} establish exact accounting and action
+normalization, not convergence or a completion guarantee.
+
+Positive-action support is also sparse. Exact zero hold dominates replay, and
+long holds are uncommon in the final guard states. The completion reserve is
+therefore intentionally a transparent physical rule rather than a claim that
+the offline actor learned reliable values for 60-s actions in these states. A
+future learned completion controller would need explicit tail-state/action
+coverage and a constrained or terminal-shortfall objective. Training also uses
+total accrued cost, whereas evaluation normalizes each episode by departed
+passengers. Their within-cell ordering agrees by \Cref{prop:ledger}, but
+cross-demand weighting can differ.
+
+\paragraph{Simulator and runtime scope.}
+Training data were collected with SUMO 1.27.1, whereas development and formal
+evaluation were locked to SUMO/libsumo 1.25.0. Because formal performance is
+measured entirely in 1.25.0, the reported comparison itself is internally
+paired. The shift nevertheless complicates attribution between algorithm,
+simulator mismatch, and version-specific behavior. A version-sensitivity matrix
+with the same fixed policies in both runtimes is needed before claiming
+runtime-invariant transfer.
+
+The reduced-order online simulator passed zero-policy and intervention-response
+audits, but those tests do not cover every state distribution induced by a
+learned policy. It also approximates transfer-service choice through calibrated
+frequencies rather than a dynamic first-arrival model. Both environments share
+the same timetable, demand source, capacities, and passenger contract, so the
+study does not test changes in traveler preferences, fares, dispatch rules, or
+fleet composition.
+
+\paragraph{Statistical and comparison scope.}
+
+The exact sign test does not assume normally distributed effect sizes; it
+uses independent blocks and a null directional win probability no greater
+than one half. It reports directional
+consistency, not a confidence interval for a population-average effect. Ten
+blocks also provide limited resolution: the smallest attainable one-sided
+value is $2^{-10}$. More independent blocks would support effect-size
+uncertainty and interaction analyses without relying on episode-level
+pseudoreplication.
+
+The lineage-control table is useful context but not a set of confirmatory
+pairwise claims. Only the direct parent removes the final reserve while holding
+the underlying actor and prior transform fixed. The study is also endpoint-only;
+it cannot support a statement about learning speed, AULC, or compute efficiency.
+Likewise, the formal result does not retroactively validate unsuccessful
+development candidates or the ratio diagnostic.
+
+\paragraph{Operational scope.}
+
+The reserve is interpretable and bounded, but it is not a complete deployment
+safety system. The 60-s cap does not encode terminal layovers, driver rules,
+accessibility obligations, connection protection, dispatch authority, or
+incident response. Before a field trial, the fixed policy should be calibrated
+and evaluated on temporally held-out Automatic Vehicle Location, Automatic
+Passenger Counting, and fare-collection records, followed by shadow-mode
+testing with dispatcher review.
+
+The current evidence ends at a provenance-locked simulator-to-simulator
+confirmation. It supports writing and reporting the bounded result, but not a
+claim of live passenger benefit. A field study would require separate
+authorization, operational stopping rules, and independent evaluation days.

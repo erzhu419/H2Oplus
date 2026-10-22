@@ -1,0 +1,3488 @@
+{
+  "archive": {
+    "all_sampled_rows_are_mappings": true,
+    "blockers": [
+      {
+        "evidence": {
+          "missing_file_count": 5,
+          "missing_snapshot_T1_files": [
+            "sumo_sac_seed1024.h5",
+            "sumo_sac_seed123.h5",
+            "sumo_sac_seed42.h5",
+            "sumo_sac_seed456.h5",
+            "sumo_sac_seed789.h5"
+          ]
+        },
+        "id": "manifest-sources-do-not-all-contain-reset-snapshots"
+      },
+      {
+        "evidence": {
+          "legacy_action_dim": 2,
+          "legacy_observation_dim": 17,
+          "v7_action_dim": 1,
+          "v7_observation_dim": 229
+        },
+        "id": "contract-dimension-mismatch"
+      },
+      {
+        "evidence": {
+          "second_action_component_nonconstant_in_sample": true,
+          "v7_speed_ratio": 1.0
+        },
+        "id": "legacy-speed-control-present"
+      },
+      {
+        "evidence": {
+          "all_sampled_snapshots_missing": true
+        },
+        "id": "passenger-identities-and-itineraries-missing"
+      },
+      {
+        "evidence": {
+          "all_sampled_snapshots_missing": true
+        },
+        "id": "passenger-time-ledger-missing"
+      },
+      {
+        "evidence": {
+          "all_sampled_snapshots_missing_realization": true,
+          "all_sampled_snapshots_missing_rng": true
+        },
+        "id": "stochastic-state-and-demand-realization-missing"
+      },
+      {
+        "evidence": {
+          "canonical_v7_rejects_snapshot_reset": true,
+          "legacy_multiline_reset_targets_only_7x": true,
+          "legacy_restore_pads_unknown_passengers": true
+        },
+        "id": "legacy-restore-fabricates-count-only-passengers"
+      },
+      {
+        "evidence": {
+          "canonical_v7_rejects_snapshot_reset": true,
+          "legacy_multiline_reset_targets_only_7x": true,
+          "legacy_restore_pads_unknown_passengers": true
+        },
+        "id": "legacy-multiline-restore-is-7x-only"
+      },
+      {
+        "evidence": {
+          "required_semantics": [
+            "all directional services are restored",
+            "active passenger identities and destinations are restored",
+            "transfer stages and remaining itinerary legs are restored",
+            "waiting and onboard memberships reconcile with passenger identities",
+            "the passenger-time ledger and its clock are restored",
+            "timetable launch state and vehicle-trip identity are restored",
+            "the demand realization and all stochastic generator states are restored",
+            "the first post-reset v7 observation and reward are reproducible"
+          ]
+        },
+        "id": "no-v7-reset-replay-equivalence-audit"
+      }
+    ],
+    "decision": "legacy snapshots are retained as historical artifacts but are ineligible for v7 training, reset initialization, evaluation, or manuscript evidence",
+    "implementation_checks": {
+      "canonical_v7_rejects_snapshot_reset": true,
+      "legacy_multiline_reset_targets_only_7x": true,
+      "legacy_restore_pads_unknown_passengers": true
+    },
+    "implementation_sources": {
+      "canonical_all_lines_reset": {
+        "bytes": 11543,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/all_lines_sim_env.py",
+        "sha256": "137a00fd3a806b2772765ce650ec14a5bf2545ea1f003b00521de50e6facb36c"
+      },
+      "env_bus_restore": {
+        "bytes": 59171,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sim_core/sim.py",
+        "sha256": "a85ee63132056c0099963ac70b0d858994a12a022c4bffbad8dd1450807511ab"
+      },
+      "legacy_multiline_reset": {
+        "bytes": 28751,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/bus_sim_env.py",
+        "sha256": "a17dba07a32140e4b4e681d6f64b285b9db5593735cb9ed362d56c25e39b9b6d"
+      }
+    },
+    "manifest": {
+      "bytes": 1307,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/file_manifest.json",
+      "sha256": "cca4cc7914cd664518288a2d0b59c37700a4cdf354a44d210cc953623e8b29c2"
+    },
+    "merged_contract": {
+      "actions": [
+        3374285,
+        2
+      ],
+      "attrs": {
+        "action_dim": 2,
+        "has_lazy_snapshot_index": true,
+        "n_files": 25,
+        "n_resettable_transitions": 2699620,
+        "n_transitions": 3374285,
+        "obs_dim": 17,
+        "policy_names": "{\"heuristic_best\": 0, \"heuristic_weak\": 1, \"random\": 2, \"sac\": 3, \"zero\": 4}",
+        "snapshot_key": "snapshot_T1",
+        "z_dim": 30
+      },
+      "observations": [
+        3374285,
+        17
+      ]
+    },
+    "merged_replay": {
+      "bytes": 295059019,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5",
+      "sha256": "19147be9f2400671f5baf6797142bddedb2a6e044861675db431adb682c44956"
+    },
+    "missing_reset_snapshot_files": [
+      "sumo_sac_seed1024.h5",
+      "sumo_sac_seed123.h5",
+      "sumo_sac_seed42.h5",
+      "sumo_sac_seed456.h5",
+      "sumo_sac_seed789.h5"
+    ],
+    "passed": false,
+    "sampled_snapshot_count": 60,
+    "sampled_snapshots": [
+      {
+        "file": "sumo_heuristic_best_seed1024.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed1024.h5",
+        "row": 67520,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed1024.h5",
+        "row": 135041,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed123.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed123.h5",
+        "row": 67520,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed123.h5",
+        "row": 135041,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed42.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed42.h5",
+        "row": 67520,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed42.h5",
+        "row": 135041,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed456.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed456.h5",
+        "row": 67520,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed456.h5",
+        "row": 135041,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed789.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed789.h5",
+        "row": 67520,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_best_seed789.h5",
+        "row": 135041,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed1024.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed1024.h5",
+        "row": 67570,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed1024.h5",
+        "row": 135140,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed123.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed123.h5",
+        "row": 67464,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed123.h5",
+        "row": 134929,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed42.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed42.h5",
+        "row": 67586,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 43,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed42.h5",
+        "row": 135173,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed456.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed456.h5",
+        "row": 67502,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed456.h5",
+        "row": 135004,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed789.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed789.h5",
+        "row": 67550,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 39,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_heuristic_weak_seed789.h5",
+        "row": 135100,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed1024.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed1024.h5",
+        "row": 67588,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed1024.h5",
+        "row": 135177,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed123.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed123.h5",
+        "row": 67622,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed123.h5",
+        "row": 135245,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed42.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed42.h5",
+        "row": 67575,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed42.h5",
+        "row": 135151,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed456.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed456.h5",
+        "row": 67659,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed456.h5",
+        "row": 135318,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed789.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed789.h5",
+        "row": 67596,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 39,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_random_seed789.h5",
+        "row": 135193,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 43,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed1024.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed1024.h5",
+        "row": 67296,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed1024.h5",
+        "row": 134593,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed123.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed123.h5",
+        "row": 67296,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed123.h5",
+        "row": 134593,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed42.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed42.h5",
+        "row": 67296,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 39,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed42.h5",
+        "row": 134593,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed456.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed456.h5",
+        "row": 67296,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed456.h5",
+        "row": 134593,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed789.h5",
+        "row": 0,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 25,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed789.h5",
+        "row": 67296,
+        "snapshot": {
+          "active_bus_records": 2,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 48,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      },
+      {
+        "file": "sumo_zero_seed789.h5",
+        "row": 134593,
+        "snapshot": {
+          "active_bus_records": 1,
+          "bus_keys": [
+            "absolute_distance",
+            "backward_headway",
+            "bus_id",
+            "current_speed",
+            "direction",
+            "forward_headway",
+            "holding_time",
+            "last_station_dis",
+            "last_station_id",
+            "load",
+            "next_station_dis",
+            "next_station_id",
+            "on_route",
+            "pos",
+            "speed",
+            "state",
+            "sumo_trip_index",
+            "trip_id",
+            "trip_id_list"
+          ],
+          "has_demand_realization": false,
+          "has_passenger_identity_records": false,
+          "has_passenger_time_ledger": false,
+          "has_rng_state": false,
+          "mapping": true,
+          "station_keys": [
+            "direction",
+            "pos",
+            "station_id",
+            "station_name",
+            "waiting_count"
+          ],
+          "station_records": 42,
+          "top_level_keys": [
+            "all_buses",
+            "all_stations",
+            "current_time",
+            "launched_trips",
+            "sim_time"
+          ]
+        }
+      }
+    ],
+    "source_bytes": 107033803424,
+    "source_file_count": 25,
+    "source_files": [
+      {
+        "bytes": 4279280889,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135042,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_heuristic_best_seed1024.h5"
+      },
+      {
+        "bytes": 4279184833,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135042,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_heuristic_best_seed123.h5"
+      },
+      {
+        "bytes": 4279176737,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135042,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_heuristic_best_seed42.h5"
+      },
+      {
+        "bytes": 4279722769,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135042,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_heuristic_best_seed456.h5"
+      },
+      {
+        "bytes": 4279176713,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135042,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_heuristic_best_seed789.h5"
+      },
+      {
+        "bytes": 4315288627,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135141,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_heuristic_weak_seed1024.h5"
+      },
+      {
+        "bytes": 4309214055,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134930,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_heuristic_weak_seed123.h5"
+      },
+      {
+        "bytes": 4318362295,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135174,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_heuristic_weak_seed42.h5"
+      },
+      {
+        "bytes": 4311108819,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135005,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_heuristic_weak_seed456.h5"
+      },
+      {
+        "bytes": 4313410982,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135101,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_heuristic_weak_seed789.h5"
+      },
+      {
+        "bytes": 4533755730,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135178,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_random_seed1024.h5"
+      },
+      {
+        "bytes": 4537377436,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135246,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_random_seed123.h5"
+      },
+      {
+        "bytes": 4532875955,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135152,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_random_seed42.h5"
+      },
+      {
+        "bytes": 4539849832,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135319,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_random_seed456.h5"
+      },
+      {
+        "bytes": 4534212956,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 135194,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_random_seed789.h5"
+      },
+      {
+        "bytes": 4191251121,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134933,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_sac_seed1024.h5"
+      },
+      {
+        "bytes": 4191251113,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134933,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_sac_seed123.h5"
+      },
+      {
+        "bytes": 4191251113,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134933,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_sac_seed42.h5"
+      },
+      {
+        "bytes": 4191251113,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134933,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_sac_seed456.h5"
+      },
+      {
+        "bytes": 4191251129,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134933,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_sac_seed789.h5"
+      },
+      {
+        "bytes": 4086986107,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134594,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_zero_seed1024.h5"
+      },
+      {
+        "bytes": 4087618651,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134594,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_zero_seed123.h5"
+      },
+      {
+        "bytes": 4086878395,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134594,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_zero_seed42.h5"
+      },
+      {
+        "bytes": 4087307539,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134594,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_zero_seed456.h5"
+      },
+      {
+        "bytes": 4086758515,
+        "datasets": [
+          "actions",
+          "next_observations",
+          "observations",
+          "raw_snapshot",
+          "rewards",
+          "sim_time",
+          "snapshot_T1",
+          "terminals",
+          "timeouts",
+          "z_t",
+          "z_t1"
+        ],
+        "expected_rows": 134594,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/sumo_zero_seed789.h5"
+      }
+    ]
+  },
+  "auditor": {
+    "bytes": 12145,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/audit_legacy_snapshot_eligibility_v7.py",
+    "sha256": "bacce028c80615cb5df56898040a22c6fa931b459536fd07a27c48a94c84ccc8"
+  },
+  "created_utc": "2026-08-08T20:34:26.267376+00:00",
+  "schema_version": "transit-legacy-snapshot-eligibility-audit-v1",
+  "study_stage": "formal-eligibility-gate"
+}

@@ -1,0 +1,104 @@
+{
+  "claim_boundary": {
+    "all_v10_outcomes_preserved": true,
+    "formal_confirmation_stage_authorized_or_submitted": false,
+    "supports_formal_held_out_effect_claim": false
+  },
+  "created_utc": "2026-08-20T12:28:17.810026+00:00",
+  "diagnosis": {
+    "common_v10_mean_at_10000": 2593.071494436721,
+    "common_v10_mean_at_5000": 2437.909788934886,
+    "early_5k_to_10k_actor_updates_degraded_mean": true,
+    "excluded_factors": [
+      "offline replay ramp",
+      "critic-before-actor update order",
+      "combined v10 intervention"
+    ],
+    "only_positive_registered_single_factor": "online-only actor states"
+  },
+  "formal_held_out_outcomes_read": false,
+  "generator": {
+    "bytes": 41822,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/prepare_h2oplus_v11_actor_hold.py",
+    "sha256": "302e848860ae5c9c9ba0525fdd31b0c2de9855cb31cbcd0364f8bccabed634e7"
+  },
+  "local_training_or_sumo_executed": false,
+  "observed_v10_development_evidence": {
+    "combined_candidate_screening_passed": false,
+    "delayed_actor_relative_improvement_over_unit_control": 0.0025124435511527025,
+    "delayed_actor_seed_wins_over_unit_control": 3,
+    "mean_aulc": {
+      "h2oplus": 2546.7543397748477,
+      "h2oplus-v10-delayed-actor": 2502.5313077748096,
+      "h2oplus-v10-delayed-combined": 2528.864053385743,
+      "h2oplus-v10-delayed-order": 2528.198083605848,
+      "h2oplus-v10-delayed-replay": 2513.3206576040984,
+      "h2oplus-v10-unit-control": 2508.8346131194503,
+      "sac-online": 2523.0267568393942
+    },
+    "mean_passenger_seconds_per_person_at_10000": {
+      "h2oplus": 2559.2033804661955,
+      "h2oplus-v10-delayed-actor": 2593.071494436721,
+      "h2oplus-v10-delayed-combined": 2593.071494436721,
+      "h2oplus-v10-delayed-order": 2593.071494436721,
+      "h2oplus-v10-delayed-replay": 2593.071494436721,
+      "h2oplus-v10-unit-control": 2593.071494436721,
+      "sac-online": 2587.4416846794297
+    },
+    "mean_passenger_seconds_per_person_at_25000": {
+      "h2oplus": 2639.000036692203,
+      "h2oplus-v10-delayed-actor": 2446.432444731376,
+      "h2oplus-v10-delayed-combined": 2534.2082634344874,
+      "h2oplus-v10-delayed-order": 2531.9883641681727,
+      "h2oplus-v10-delayed-replay": 2482.3969441623385,
+      "h2oplus-v10-unit-control": 2467.443462546846,
+      "sac-online": 2511.6380718460523
+    },
+    "replay_factor_positive": false,
+    "update_order_factor_positive": false
+  },
+  "schema_version": "transit-h2oplus-v11-actor-hold-rationale-v1",
+  "sealed_inputs": {
+    "v10_analysis": {
+      "bytes": 12865,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_results/delayed_analysis_v1.json",
+      "sha256": "1670ede04401d22fd76c47acc4b7d6f5e058c62fe94f987a9e205266a1fca0ce"
+    },
+    "v10_branch_closeout": {
+      "bytes": 1184,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_results/branch_closeout_v4.json",
+      "sha256": "9204b4196f40a7fa4ce0bab1277d8c7bbbe930aafa644760b7251d463fbc6498"
+    },
+    "v10_branch_verification": {
+      "bytes": 1248,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_results/branch_closeout_verification_v4.json",
+      "sha256": "101cadbfc03bde2719f0a786a961006ed2d1d86a27080376afd59842ff4bcb17"
+    },
+    "v10_evaluation_closeout": {
+      "bytes": 6512,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_results/evaluation_closeout_v1.json",
+      "sha256": "2fabaafca1cd0ba5aaa02f8571f28cb3544d44792359ce745a1bee24be47a5af"
+    },
+    "v10_evaluation_verification": {
+      "bytes": 1156,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_results/evaluation_closeout_verification_v1.json",
+      "sha256": "b6126fcf1aef60048518fef71a50c288b3f1b6dd2191e2e45467348d0c527550"
+    }
+  },
+  "selected_v11_single_factor": {
+    "actor_and_temperature_held_through_online_events": 10000,
+    "actor_state_source_strictly_after_10000": "online-only",
+    "checkpoint_selection_by_behavior": false,
+    "collection_warmup_events": 5000,
+    "critic_value_and_ratio_updates_continue_after_warmup": true,
+    "name": "actor-hold-online-only",
+    "offline_replay_share": 0.5,
+    "online_update_order": "v7-actor-before-critic",
+    "unit_ratio_weights": true
+  },
+  "status": "frozen-before-v11-training-or-new-development-outcomes",
+  "study_stage": "development",
+  "v10_artifact_integrity_passed": true,
+  "v10_scientific_stability_passed": false,
+  "v10_stability_failure_preserved": "delayed-order seed6205 transient hold_probability crossing"
+}

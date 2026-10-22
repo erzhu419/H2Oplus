@@ -1,0 +1,91 @@
+{
+  "captured_utc": "2026-08-13T09:37:30.924311+00:00",
+  "schema_version": "transit-scheduler-evidence-v7-v1",
+  "source": {
+    "bytes": 42915359,
+    "path": "/home/erzhu419/.claude/scheduler/queue.json",
+    "sha256": "a36fe9357d0d3f4f9972dc031357982acdca54962a324779e58b1f73ed0d2f25"
+  },
+  "task_ids": [
+    "t82053",
+    "t82054"
+  ],
+  "tasks": [
+    {
+      "backend_finished_at": null,
+      "cmd": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/python -u reproducibility/run_training_dispatch_v7.py --dispatch reproducibility/training_dispatches_v7_formal_v2_v7r1/training_dispatch_v7_formal_ablation_server_h2oplus_v7.json --host jtl110gpu --execution-root experiment_output_smdp_v7/formal_v7/dispatch_execution/formal_ablation_h2oplus/jtl110gpu",
+      "completion_evidence": {
+        "backend_exit": {
+          "bytes": 57,
+          "exit_code": 0,
+          "finished_at": 1786611047.0,
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/incoming/jtl110gpu/ablation_dispatch_execution/backend_exit.status",
+          "sha256": "ff559ac501993dbaf91e9ac48ba587155a1672f7373307cd77ec1b0211796206",
+          "token": "1786599590517298611:4185966:125747657482240"
+        },
+        "command_class_matches": true,
+        "host_execution": {
+          "bytes": 5646,
+          "completed": true,
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/incoming/jtl110gpu/ablation_dispatch_execution/host_execution.json",
+          "sha256": "528892b316c3ab59984ea7e9e17d3f775eea3141fab101ecfc3c8ddbfa7b1d10",
+          "status": "completed"
+        },
+        "status": "verified",
+        "token_matches_queue": true,
+        "verified": true
+      },
+      "exit_code": null,
+      "exit_status_path": "/tmp/scheduleurm_exit_t82053_196261c52e20b30362a2140f.status",
+      "exit_status_token": "1786599590517298611:4185966:125747657482240",
+      "finished_at": null,
+      "id": "t82053",
+      "node": "jtl110gpu",
+      "signature": "H2Oplus/v7/formal-v2/training-v7r1/formal-ablation-h2oplus/jtl110gpu/0f82663f8248",
+      "started_at": 1786599594.0842364,
+      "status": "running",
+      "submitted_at": 1786461224.1120195,
+      "wait_for_files": [
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/dependency_gates/baselines_verified_jtl110gpu.ready"
+      ]
+    },
+    {
+      "backend_finished_at": 1786609829.0,
+      "cmd": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/python -u reproducibility/run_training_dispatch_v7.py --dispatch reproducibility/training_dispatches_v7_formal_v2_v7r1/training_dispatch_v7_formal_ablation_server_h2oplus_v7.json --host jtl110gpu2 --execution-root experiment_output_smdp_v7/formal_v7/dispatch_execution/formal_ablation_h2oplus/jtl110gpu2",
+      "completion_evidence": {
+        "backend_exit": {
+          "bytes": 57,
+          "exit_code": 0,
+          "finished_at": 1786609829.0,
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/incoming/jtl110gpu2/ablation_dispatch_execution/backend_exit.status",
+          "sha256": "ddc08a39f9febd7ff0e0f5fc82d7e7b0cfdf9613eb33e4b81f33cb9d2d449e3d",
+          "token": "1786599590555613611:4185966:125747657482240"
+        },
+        "command_class_matches": true,
+        "host_execution": {
+          "bytes": 5417,
+          "completed": true,
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/incoming/jtl110gpu2/ablation_dispatch_execution/host_execution.json",
+          "sha256": "32f69c40b3477608f713db1b26f8c970ea04311666b94d910478a55fbbca2c7f",
+          "status": "completed"
+        },
+        "status": "verified",
+        "token_matches_queue": true,
+        "verified": true
+      },
+      "exit_code": 0,
+      "exit_status_path": "/tmp/scheduleurm_exit_t82054_fd29a218975e69e4d6e56824.status",
+      "exit_status_token": "1786599590555613611:4185966:125747657482240",
+      "finished_at": 1786610110.9280171,
+      "id": "t82054",
+      "node": "jtl110gpu2",
+      "signature": "H2Oplus/v7/formal-v2/training-v7r1/formal-ablation-h2oplus/jtl110gpu2/0f82663f8248",
+      "started_at": 1786599593.8277159,
+      "status": "done",
+      "submitted_at": 1786461244.5561185,
+      "wait_for_files": [
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/dependency_gates/baselines_verified_jtl110gpu2.ready"
+      ]
+    }
+  ]
+}

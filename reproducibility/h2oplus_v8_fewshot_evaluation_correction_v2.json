@@ -1,0 +1,91 @@
+{
+  "cancelled_retry_tasks": [
+    {
+      "id": "t82418",
+      "reason": "prevent repetition of the known corrected-v2 source-contract defect for shard 0",
+      "started": false,
+      "status": "cancelled"
+    },
+    {
+      "id": "t82447",
+      "reason": "prevent repetition of the known corrected-v2 source-contract defect for shard 1",
+      "started": false,
+      "status": "cancelled"
+    }
+  ],
+  "created_utc": "2026-08-14T21:48:30Z",
+  "failed_deployment_aggregate_sha256": "f657bded0c964b2258d47a8863f278a7a6b1b122554cec434df3ac57a0c21b75",
+  "failed_deployment_manifest_sha256": "084f76722ede341cfb3f21ec53c8062afd7a8941399f1e6d61abef6b4c9b0717",
+  "formal_held_out_outcomes_read": false,
+  "frozen_protocol_sha256": "26d4f5c4ca9f337c11886855658127ef93a35954ca58eb43710aa70350610294",
+  "invalid_output_policy": "incident-evidence-only; never merge, analyze, select, or reuse",
+  "invalid_tasks": [
+    {
+      "archived_partition_aggregate_sha256": "5aefb3c86809642476855067b8638a3e09418ee2273967390d52e33f85a6cb1f",
+      "archived_partition_file_count": 216,
+      "archived_partition_total_file_bytes": 20454852,
+      "backend_exit_file_sha256": "feba0627da85d7d41eedfc0fa1b9faa75b7c740a60d5f653ef17d68ee82c0805",
+      "backend_exit_token": "1786727573374093209:1119091:139379910180864",
+      "block_log_sha256": "a56628fe63d5ba60018ebe67e1d14d614ca58ec058c41270014eef7776d7b7aa",
+      "exit_code": 1,
+      "host_execution_sha256": "8ce4500abd1ee63db0377ee29defd3cd12e9d06c29a8db53ce69b32cf76d5fc2",
+      "id": "t82400",
+      "matrix_manifest_sha256": "7640199aaaa2055dd55268fb098edcc3f0d316556f2eb5529a7e52bd2451a3ab",
+      "matrix_source_file_count": 41,
+      "result_json_files": 105,
+      "result_log_files": 105,
+      "result_source_file_count": 39,
+      "scheduler_log_sha256": "baa38ef5fe2eb9ca5a37bbe5c2cba1a12c8073dbe148ab01cf659172cdbe4ba5",
+      "signature": "H2Oplus/v8/development/fewshot-eval/084f76722ede/corrected-v2/shard0/jtl110gpu/glibc227",
+      "status": "failed"
+    },
+    {
+      "archived_partition_aggregate_sha256": "405b684ef420e8aa037777428d7a12feebf16cb1954964c0f3b9b53eef409748",
+      "archived_partition_file_count": 216,
+      "archived_partition_total_file_bytes": 20449192,
+      "backend_exit_file_sha256": "1d781283d60a5fb821b989ad0e530f4e86f3c3eb0ea73181e278272f893c5ee0",
+      "backend_exit_token": "1786735683368986095:1119091:139379910180864",
+      "block_log_sha256": "a1ecc36ea365b31352732517f953540d7b32c64bcb777bf95dc02e82f142434c",
+      "exit_code": 1,
+      "host_execution_sha256": "b562397978773251375c59603e54b0ab55cf0a29f1c26da3dadb3f6c636073cc",
+      "id": "t82401",
+      "matrix_manifest_sha256": "328a4390d9ecbcd1f246afeea8087a33ea0a64174c3db9fbd37f66063e104d36",
+      "matrix_source_file_count": 41,
+      "result_json_files": 105,
+      "result_log_files": 105,
+      "result_source_file_count": 39,
+      "scheduler_log_sha256": "baa38ef5fe2eb9ca5a37bbe5c2cba1a12c8073dbe148ab01cf659172cdbe4ba5",
+      "signature": "H2Oplus/v8/development/fewshot-eval/084f76722ede/corrected-v2/shard1/jtl110gpu/glibc227",
+      "status": "failed"
+    }
+  ],
+  "root_cause": "the v8 evaluator delegated source discovery to the v7 base function, so every result omitted both v8 wrappers while the matrix manifest included them",
+  "schema_version": "transit-h2oplus-v8-fewshot-evaluation-correction-v2",
+  "scope": "evaluation-provenance-propagation-only",
+  "source_contract": {
+    "all_completed_results_affected": true,
+    "matrix_source_file_count": 41,
+    "missing_result_sources": [
+      "SimpleSAC/evaluate_transit_v8_fewshot.py",
+      "reproducibility/run_evaluation_matrix_v8_fewshot.py"
+    ],
+    "result_source_file_count": 39
+  },
+  "source_replacements": [
+    {
+      "corrected_sha256": "ac895cfec83cb1812d11e62e4348e1c6b9487d3eca85b3a512baff0a1aa5500c",
+      "path": "reproducibility/run_evaluation_matrix_v8_fewshot.py",
+      "reason": "propagate the already-verified frozen protocol hash to evaluator child processes",
+      "registered_sha256": "dbf769a7d483cba179f31557273f19dd24f1429b9a0b82296e67df084bddc914"
+    },
+    {
+      "corrected_sha256": "e78d5bf337baf25c7d9d2bd366dd2305dbca8b540caff1638ee3463c8d9e73ea",
+      "path": "SimpleSAC/evaluate_transit_v8_fewshot.py",
+      "reason": "include both v8 wrapper sources in every evaluator result source map so it matches the matrix source contract",
+      "registered_sha256": "848f2697f1691b5f0ef7674a63657ebaa037f4947852e0162c7b875ef624c0f7"
+    }
+  ],
+  "study_stage": "development",
+  "supersedes_correction_sha256": "1068625af0bd49e87a1c34813be88187d1c3c5af31c77f81be966c2ad141e8c3",
+  "training_or_policy_artifacts_changed": false
+}

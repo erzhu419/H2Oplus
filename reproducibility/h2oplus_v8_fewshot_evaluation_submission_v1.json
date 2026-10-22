@@ -1,0 +1,114 @@
+{
+  "deployment_manifest": {
+    "aggregate_sha256": "664405184895be26befc3e74d7b5ae59bc12f1c67a62cdf960a4dab15dc069f5",
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/deployment_manifest.json",
+    "sha256": "d5ca1ef143f44dfe7f4c1d01c7279dd05348ddf444999a725f8840987edf8c66"
+  },
+  "deployment_verification": {
+    "passed": true,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/evidence/evaluation_deployment_verification.json",
+    "sha256": "68839a7983f09c7512a568570ffe307dee08e03d2f9225a72b27e3b4e93d6e99"
+  },
+  "formal_confirmation_stage_authorized_or_submitted": false,
+  "formal_held_out_outcomes_read": false,
+  "local_training_or_sumo_run": false,
+  "methods_manifest_sha256": "8dbca88cd754d3fe711f2408b3328cf3947efcad478c221f5d8be8bba017e7f7",
+  "next_stage": "after both token-bound backend exits are 0, synchronize exact partitions, merge, independently verify, and run the preregistered development analysis; no formal confirmation submission",
+  "runtime_compatibility": {
+    "nonselected_host": "jtl110gpu2",
+    "nonselected_reason": "frozen portable runtime signature mismatch (glibc 2.39 versus registered glibc 2.27)",
+    "probes": {
+      "jtl110gpu": {
+        "passed": true,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/evidence/remote_runtime_probe_jtl110gpu.json",
+        "sha256": "e95cc68d9e863e1dabdbf7722fbed797b7d2f92679e76858798ea61cca298f76"
+      },
+      "jtl110gpu2": {
+        "passed": false,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/evidence/remote_runtime_probe_jtl110gpu2.json",
+        "sha256": "6bd846efe1530606c4b638b3361b7fda31269165f407c62d8cb7066ef5b68684"
+      }
+    },
+    "selected_host": "jtl110gpu",
+    "selected_runtime_signature": "264d3c412b8e6c42320995208d2e009eb809b85626047206c4de752c2dae06e7"
+  },
+  "scheduler_contract": {
+    "jobs_per_shard": 315,
+    "natural_serial_execution_on_one_12_core_host": true,
+    "shard_count": 2,
+    "total_remote_sumo_episodes": 630,
+    "workers_per_shard": 12
+  },
+  "schema_version": "transit-h2oplus-v8-fewshot-evaluation-submission-v1",
+  "status": "submitted",
+  "study_stage": "development",
+  "submitted_utc": "2026-08-14T16:51:42.733989+00:00",
+  "tasks": [
+    {
+      "allow_cpu_training": false,
+      "allow_duplicate": false,
+      "allow_no_resume": false,
+      "command": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/python /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/run_h2oplus_v8_fewshot_dispatch.py --registration /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_registration_v1.json --authorization /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_authorization_v1.json --freeze /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_freeze_v1.json --environment-design /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_environment_v1.json --protocol /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_protocol_v1.json --training-closeout /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/training_closeout.json --training-verification /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/training_file_manifest_verification.json --methods-manifest /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/evaluation_methods_v8_fewshot.json --dataset /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5 --sumo-runtime-lock /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_stage_a_sumo_runtime_lock_py38.json --deployment-manifest /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/deployment_manifest.json --sumo-dir /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/SUMO_ruiguang/online_control --edge-xml /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml --expected-registration-sha256 fb632f92998d82cfb87b2cd1a534058925d4e410be17ecea9070b7a50db7c115 --expected-authorization-sha256 0bc8b342cf7618c3a0d0b6f0beff15ee021ca26dbaf78cca8005eaeffdcc5e3c --expected-freeze-sha256 2fb2b581591bb382cabe045eaebb5c1236825e818a26443339d33b1b9342b204 --expected-design-sha256 4ca7ac74ea9a4f327b03f88a1f7d8a32591852905fdf01142454737fa2dc71cd --expected-protocol-sha256 26d4f5c4ca9f337c11886855658127ef93a35954ca58eb43710aa70350610294 --expected-training-closeout-sha256 8a12385844f7949d3f7c2cbc16d8e021787c9de04fb14b7e64b46779d2373822 --expected-training-verification-sha256 c6f124d80952577ddb6d6c6597c0fbf67704c4af92deb35fc0b5f5a0e99809aa --expected-methods-sha256 8dbca88cd754d3fe711f2408b3328cf3947efcad478c221f5d8be8bba017e7f7 --expected-dataset-sha256 6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899 --expected-runtime-lock-sha256 ac60ae58e0e6db6bb1386ffdfe0d164b96f81e49e4983b8b062ceddb65da51a4 --expected-deployment-manifest-sha256 d5ca1ef143f44dfe7f4c1d01c7279dd05348ddf444999a725f8840987edf8c66 --output-root /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/remote_results/shard0_jtl110gpu --execution-json /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/remote_results/shard0_jtl110gpu/host_execution.json --workers 12 --shard-count 2 --shard-index 0",
+      "command_sha256": "8c26fad4012e1325f4d29cf373b4cf9d3651fdc6026967ffa00a53943c239cc0",
+      "cpu_cores": 12,
+      "env_spec": "none",
+      "est_vram_mb": 0,
+      "extra_env": {
+        "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+        "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+        "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PATH": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin:/usr/bin:/bin",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus",
+        "TMPDIR": "/home/erzhu419/.cache/h2oplus-v7/tmp"
+      },
+      "local_result_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/evaluation_partitions/shard0_jtl110gpu",
+      "ram_mb": 32768,
+      "remote_result_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/remote_results/shard0_jtl110gpu",
+      "require_node": "jtl110gpu",
+      "selected_jobs": 315,
+      "shard_index": 0,
+      "signature": "H2Oplus/v8/development/fewshot-eval/d5ca1ef143f4/shard0/jtl110gpu/glibc227",
+      "skip_launch_staging": true,
+      "task_id": "t82395"
+    },
+    {
+      "allow_cpu_training": false,
+      "allow_duplicate": false,
+      "allow_no_resume": false,
+      "command": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/python /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/run_h2oplus_v8_fewshot_dispatch.py --registration /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_registration_v1.json --authorization /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_authorization_v1.json --freeze /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_freeze_v1.json --environment-design /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_environment_v1.json --protocol /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_protocol_v1.json --training-closeout /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/training_closeout.json --training-verification /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/training_file_manifest_verification.json --methods-manifest /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/evaluation_methods_v8_fewshot.json --dataset /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5 --sumo-runtime-lock /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/reproducibility/h2oplus_v8_stage_a_sumo_runtime_lock_py38.json --deployment-manifest /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/deployment_manifest.json --sumo-dir /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/SUMO_ruiguang/online_control --edge-xml /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml --expected-registration-sha256 fb632f92998d82cfb87b2cd1a534058925d4e410be17ecea9070b7a50db7c115 --expected-authorization-sha256 0bc8b342cf7618c3a0d0b6f0beff15ee021ca26dbaf78cca8005eaeffdcc5e3c --expected-freeze-sha256 2fb2b581591bb382cabe045eaebb5c1236825e818a26443339d33b1b9342b204 --expected-design-sha256 4ca7ac74ea9a4f327b03f88a1f7d8a32591852905fdf01142454737fa2dc71cd --expected-protocol-sha256 26d4f5c4ca9f337c11886855658127ef93a35954ca58eb43710aa70350610294 --expected-training-closeout-sha256 8a12385844f7949d3f7c2cbc16d8e021787c9de04fb14b7e64b46779d2373822 --expected-training-verification-sha256 c6f124d80952577ddb6d6c6597c0fbf67704c4af92deb35fc0b5f5a0e99809aa --expected-methods-sha256 8dbca88cd754d3fe711f2408b3328cf3947efcad478c221f5d8be8bba017e7f7 --expected-dataset-sha256 6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899 --expected-runtime-lock-sha256 ac60ae58e0e6db6bb1386ffdfe0d164b96f81e49e4983b8b062ceddb65da51a4 --expected-deployment-manifest-sha256 d5ca1ef143f44dfe7f4c1d01c7279dd05348ddf444999a725f8840987edf8c66 --output-root /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/remote_results/shard1_jtl110gpu --execution-json /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/remote_results/shard1_jtl110gpu/host_execution.json --workers 12 --shard-count 2 --shard-index 1",
+      "command_sha256": "d4d9f74ccd62a4e8887f183915e6bbd7add92eee94d2b88798662ed1f2a946f5",
+      "cpu_cores": 12,
+      "env_spec": "none",
+      "est_vram_mb": 0,
+      "extra_env": {
+        "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+        "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+        "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PATH": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin:/usr/bin:/bin",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/workspace/H2Oplus",
+        "TMPDIR": "/home/erzhu419/.cache/h2oplus-v7/tmp"
+      },
+      "local_result_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/evaluation_partitions/shard1_jtl110gpu",
+      "ram_mb": 32768,
+      "remote_result_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_fewshot_evaluation_v1/remote_results/shard1_jtl110gpu",
+      "require_node": "jtl110gpu",
+      "selected_jobs": 315,
+      "shard_index": 1,
+      "signature": "H2Oplus/v8/development/fewshot-eval/d5ca1ef143f4/shard1/jtl110gpu/glibc227",
+      "skip_launch_staging": true,
+      "task_id": "t82396"
+    }
+  ],
+  "training_closeout_sha256": "8a12385844f7949d3f7c2cbc16d8e021787c9de04fb14b7e64b46779d2373822",
+  "training_verification_sha256": "c6f124d80952577ddb6d6c6597c0fbf67704c4af92deb35fc0b5f5a0e99809aa"
+}

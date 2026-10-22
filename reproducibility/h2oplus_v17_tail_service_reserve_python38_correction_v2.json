@@ -1,0 +1,55 @@
+{
+  "changed_source_paths": [
+    "reproducibility/run_h2oplus_v17_tail_service_reserve_evaluation_dispatch_v2.py"
+  ],
+  "compatibility_rewrite": {
+    "after": "variant = v17_algorithm_variant(algorithm)",
+    "after_sha256": "0405eb5a0a9ebe809c4c468b6aef826b2d1084f6f321c8ee3f6a1221d0442e16",
+    "before": "variant = algorithm.removeprefix(\"h2oplus-v17-tail-service-reserve-\")",
+    "before_sha256": "e69525c9ebf79f5fe5a8e8826110ab465ae6bb3cf609fae251112f573e926867"
+  },
+  "created_utc": "2026-08-25T00:53:28.530615+00:00",
+  "data_environment_audit": {
+    "bytes": 17446,
+    "path": "reproducibility/h2oplus_v17_data_environment_convergence_audit_v1.json",
+    "sha256": "ff5210e82913c456314ba1e47a1f3400e0e5bdb58fce2f14d8e9bc1cdd0c95e9"
+  },
+  "data_environment_verification": {
+    "bytes": 955,
+    "path": "reproducibility/h2oplus_v17_data_environment_convergence_verification_v1.json",
+    "sha256": "925fa9ace1af907bd50042718ba9d7492a892a8e8a2a863b567091540af62390"
+  },
+  "formal_held_out_outcomes_read": false,
+  "incident_closeout": {
+    "bytes": 2847,
+    "path": "reproducibility/h2oplus_v17_tail_service_reserve_results/evaluation_incidents/v1_python38_removeprefix/incident_closeout_v1.json",
+    "sha256": "0d189243e83ee014c414fd154f26ebc52107c934dee51131a5aecaf9cd3e19ed"
+  },
+  "incident_verification": {
+    "bytes": 647,
+    "path": "reproducibility/h2oplus_v17_tail_service_reserve_results/evaluation_incidents/v1_python38_removeprefix/incident_verification_v1.json",
+    "sha256": "922b514bbab7228da049eed036cb01e1f85b93c1e3de24bc79ad2a97b23150e0"
+  },
+  "methods_protocol_or_aliases_changed": false,
+  "new_dispatch": {
+    "bytes": 29383,
+    "path": "reproducibility/run_h2oplus_v17_tail_service_reserve_evaluation_dispatch_v2.py",
+    "sha256": "0405eb5a0a9ebe809c4c468b6aef826b2d1084f6f321c8ee3f6a1221d0442e16"
+  },
+  "old_dispatch": {
+    "bytes": 25954,
+    "path": "reproducibility/run_h2oplus_v17_tail_service_reserve_evaluation_dispatch.py",
+    "sha256": "e69525c9ebf79f5fe5a8e8826110ab465ae6bb3cf609fae251112f573e926867"
+  },
+  "reason": "The frozen remote runtime is Python 3.8.20, where str.removeprefix is unavailable. Prefix validation plus slicing is semantically equivalent.",
+  "runtime_changed": false,
+  "schema_version": "transit-h2oplus-v17-tail-service-reserve-python38-correction-v2",
+  "scientific_behavior_changed": false,
+  "scientific_source_paths_changed": [],
+  "scope": "Python 3.8 compatibility and fresh evidence identity only",
+  "status": "corrected-before-any-v17-v2-development-outcome",
+  "study_stage": "development",
+  "training_or_policy_artifacts_changed": false,
+  "v1_incident_numeric_outcomes_inspected": false,
+  "v1_incident_results_reused": false
+}

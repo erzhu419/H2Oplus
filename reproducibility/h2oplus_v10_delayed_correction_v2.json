@@ -1,0 +1,93 @@
+{
+  "correction": {
+    "corrected_source_sha256": {
+      "SimpleSAC/train_transit_v10_delayed.py": "408ea7bc0537a2e0a8b516b1a62c3e397bd2053609c78d48ca2424adc52aab6b",
+      "SimpleSAC/transit_v10/__init__.py": "a40d5cf193fc8d78f269ff3cec3b3ff691d3999ac4fce41c8e97b83a316cdbc1",
+      "SimpleSAC/transit_v10/provenance.py": "4f5afabae851b6d673288cc979e47e1876742cb45471bd0c6977a8fa4a36f8bb",
+      "SimpleSAC/transit_v10/trainer.py": "0ab1c8dbbe9d37301104f02e5cb48af5bd40f0357d9ad5173c911574a7b1ca0a"
+    },
+    "focused_test_command": "TMPDIR=/tmp PYTHONDONTWRITEBYTECODE=1 pytest -q reproducibility/test_h2oplus_v10_delayed.py",
+    "focused_test_result": "12 passed",
+    "invalid_source_sha256": {
+      "SimpleSAC/train_transit_v10_delayed.py": "408ea7bc0537a2e0a8b516b1a62c3e397bd2053609c78d48ca2424adc52aab6b",
+      "SimpleSAC/transit_v10/__init__.py": "a40d5cf193fc8d78f269ff3cec3b3ff691d3999ac4fce41c8e97b83a316cdbc1",
+      "SimpleSAC/transit_v10/provenance.py": "4f5afabae851b6d673288cc979e47e1876742cb45471bd0c6977a8fa4a36f8bb",
+      "SimpleSAC/transit_v10/trainer.py": "ccf85831ff83dcf8cc7889ba8e770eec50034795d6d7de04b411201047b59587"
+    },
+    "new_call": "TransitH2OTrainer._actor_states(offline_batch, online_batch)",
+    "new_deployment_plan_signatures_result_roots_and_task_ids_required": true,
+    "old_call": "TransitH2OTrainer._actor_states(self, offline_batch, online_batch)",
+    "scope": "v10 overlay only; frozen v7/v8/v9 source and evidence unchanged"
+  },
+  "created_utc": "2026-08-17T15:29:17.224670+00:00",
+  "defect": {
+    "cause": "TransitH2OTrainer._actor_states is a static method, but the v10 fallback passed self as a third positional argument",
+    "class": "v10 mixed-replay actor-state dispatch signature",
+    "message": "TypeError: _actor_states() takes 2 positional arguments but 3 were given",
+    "trigger": "first online actor update after the restored 5k warmup"
+  },
+  "formal_held_out_outcomes_read": false,
+  "generator": {
+    "bytes": 10595,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/build_h2oplus_v10_delayed_correction_v2.py",
+    "sha256": "0b7e0fec8f8bc9c8915e0db657928f3a7120e52366a5ab83bf8e656ad50cd6c1"
+  },
+  "invalid_v1_lineage": {
+    "cancelled_before_launch_task_ids": [
+      "t82621",
+      "t82623",
+      "t82624",
+      "t82625",
+      "t82626"
+    ],
+    "deployment_manifest": {
+      "bytes": 10367,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/deployment_manifest_v10.json",
+      "sha256": "b51b72af56f5029dc8688c384512fef86ef2d10c10379e2653b332d584d3e70d"
+    },
+    "eligible_as_scientific_evidence": false,
+    "failed_task_ids": [
+      "t82617",
+      "t82618",
+      "t82619",
+      "t82620"
+    ],
+    "partial_results_preserved": true,
+    "prefix_submission": {
+      "bytes": 7934,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_prefix_submission_v1.json",
+      "sha256": "6d4efdfe62135f44d196e53352a8dd30b8b211959ada9bcc7612eecb43370cad"
+    },
+    "queue_snapshot": {
+      "bytes": 17649,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_incidents/prefix_v1_actor_states/queue_snapshot.json",
+      "sha256": "8a25fa4ef8ce21c0e762a09d603d89d8aeb94a8c8378e7a361ff1dbf0dcd644f"
+    },
+    "requeue_allowed": false,
+    "scientific_training_results_produced": false
+  },
+  "local_training_or_sumo_executed": false,
+  "remote_process_audit": [
+    {
+      "checked_utc": "2026-08-17T15:29:18.063944+00:00",
+      "command": "pgrep -af '[t]rain_transit_v10_delayed.py' || true",
+      "no_v10_training_process": true,
+      "node": "jtl110gpu",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "checked_utc": "2026-08-17T15:29:18.737951+00:00",
+      "command": "pgrep -af '[t]rain_transit_v10_delayed.py' || true",
+      "no_v10_training_process": true,
+      "node": "jtl110gpu2",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "schema_version": "transit-h2oplus-v10-delayed-correction-v2",
+  "status": "prefix-v1-invalid-sealed-v2-correction-authorized",
+  "study_stage": "development"
+}

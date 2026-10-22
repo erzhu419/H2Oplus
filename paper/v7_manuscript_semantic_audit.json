@@ -1,0 +1,107 @@
+{
+  "executable_contract": {
+    "canonical_prefix_width": 5,
+    "canonical_slot_width": 14,
+    "canonical_state_dim": 229,
+    "horizon_seconds": 24000.0,
+    "local_event_state_dim": 13,
+    "max_hold_seconds": 60.0,
+    "max_simultaneous_decisions": 16,
+    "raw_event_state_dim": 16,
+    "raw_state_dim": 245,
+    "reward_unit_passenger_seconds": 1.0
+  },
+  "finding_count": 6,
+  "findings": [
+    {
+      "check": "old-entropy-target",
+      "line": 262,
+      "message": "the admitted hybrid-policy entropy target is 0",
+      "path": "paper/sections/4_method.tex"
+    },
+    {
+      "check": "old-critic-loss",
+      "line": 244,
+      "message": "the admitted critic regression is Huber with delta 1",
+      "path": "paper/sections/4_method.tex"
+    },
+    {
+      "check": "missing-training-reward-scale",
+      "line": null,
+      "message": "state the admitted 1e-4 training reward scale",
+      "path": null
+    },
+    {
+      "check": "missing-huber-loss",
+      "line": null,
+      "message": "state the admitted Huber critic loss",
+      "path": null
+    },
+    {
+      "check": "missing-huber-delta",
+      "line": null,
+      "message": "state Huber delta 1",
+      "path": null
+    },
+    {
+      "check": "missing-hybrid-entropy-target",
+      "line": null,
+      "message": "state the admitted hybrid-policy target entropy of 0",
+      "path": null
+    }
+  ],
+  "intervention_fidelity": {
+    "artifact": "bus_h2o/calibrated_env/intervention_fidelity_audit_v7_formal_v2.json",
+    "matrix_jobs": 240,
+    "metrics": {
+      "completion_rate": {
+        "largest_absolute_interval_endpoint": 0.005741448700533424,
+        "largest_absolute_point": 0.004675300317502195,
+        "threshold": 0.03
+      },
+      "control_decisions": {
+        "largest_absolute_interval_endpoint": 0.000555320112817665,
+        "largest_absolute_point": 0.00022648401826484018,
+        "threshold": 0.05
+      },
+      "exact_zero_rate": {
+        "largest_absolute_interval_endpoint": 0.013405621368771329,
+        "largest_absolute_point": 0.009714360535671762,
+        "threshold": 0.1
+      },
+      "generalized_seconds_per_person": {
+        "largest_absolute_interval_endpoint": 0.03899656681010971,
+        "largest_absolute_point": 0.031134082877391438,
+        "threshold": 0.1
+      },
+      "in_vehicle_seconds_per_person": {
+        "largest_absolute_interval_endpoint": 0.020010491362818253,
+        "largest_absolute_point": 0.0165807041281524,
+        "threshold": 0.1
+      },
+      "mean_hold_seconds": {
+        "largest_absolute_interval_endpoint": 0.2078175979402165,
+        "largest_absolute_point": 0.13965444148004416,
+        "threshold": 0.35
+      },
+      "trip_duration_seconds": {
+        "largest_absolute_interval_endpoint": 0.011673337837558443,
+        "largest_absolute_point": 0.009038654455413023,
+        "threshold": 0.05
+      },
+      "wait_seconds_per_person": {
+        "largest_absolute_interval_endpoint": 0.049774112107910794,
+        "largest_absolute_point": 0.03803047902455947,
+        "threshold": 0.1
+      }
+    },
+    "simulator_episodes": 240,
+    "strata_per_metric": 21,
+    "sumo_rows": 240
+  },
+  "ledger": {
+    "canonical_symbol_rows": 121
+  },
+  "schema_version": "manuscript-semantic-audit-v7",
+  "status": "FAIL"
+}

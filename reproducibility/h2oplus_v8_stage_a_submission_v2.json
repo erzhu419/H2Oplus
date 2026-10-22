@@ -1,0 +1,74 @@
+{
+  "authorization": {
+    "path": "h2oplus_v8_development_stage_a_execution_authorization_v1.json",
+    "sha256": "cebc1083ad6d94b6643f6343e862e022794e69c272d42d1e8be2cf0f911c5cf5"
+  },
+  "correction": {
+    "path": "h2oplus_v8_stage_a_pre_execution_correction_v1.json",
+    "reason": "supersedes the zero-job v1 dispatcher deployment after a JSON evidence serialization failure",
+    "sha256": "1a3614c70beffce041b66cadbf6adb42757b08176c361822adbbd6decb0d8b3f"
+  },
+  "created_utc": "2026-08-13T23:09:09Z",
+  "deployment": {
+    "aggregate_sha256": "ab56483dbe329043a3fd659f83f2d6b32562e49a262c8db7af63d0d8fb89fe8a",
+    "entry_count": 410,
+    "manifest_sha256": "60f9e4212673eb6cf3491e1a1d21321a7f68d9bf4071cffbb2702e2ad0288826",
+    "runtime_verified_on_execution_host": true,
+    "total_file_bytes": 808229382
+  },
+  "environment_contract": {
+    "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+    "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+    "CUDA_VISIBLE_DEVICES": "0,1",
+    "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4",
+    "cpu_threads_per_library": 1,
+    "python": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/python"
+  },
+  "formal_held_out_outcomes_read": false,
+  "freeze": {
+    "path": "h2oplus_v8_stage_a_freeze_v1.json",
+    "sha256": "0291c8f78ecb76a4ea36f25e1a70a1ea3b8237d02811adc28181c1fbd12615c0"
+  },
+  "registration": {
+    "execution_authorized_field_remains_immutable": false,
+    "path": "h2oplus_v8_development_pilot_registration_v1.json",
+    "sha256": "d76dbde2d54b53c18b12770523f02a85221d0622839b3619c882362a2cc6a820"
+  },
+  "runtime_host_decision": {
+    "decision": "run both deterministic shards sequentially on jtl110gpu under one portable runtime identity",
+    "glibc": "2.27",
+    "portable_runtime_signature": "264d3c412b8e6c42320995208d2e009eb809b85626047206c4de752c2dae06e7"
+  },
+  "scheduler_cpu_claim_fix": {
+    "focused_tests_passed": 12,
+    "reason": "sub-core load noise must not make a full-capacity 12-core batch permanently unclaimable",
+    "remote_script_sha256": "16f1e2907217fb7c1200900b496e326263712624b8dd55b6b85570c80cf280c2",
+    "test_sha256": "526a58a063acaee2e318314e6307d2bb2fddab579eebb0d85790af61ba6f4e19"
+  },
+  "scheduler_tasks": [
+    {
+      "cpu_cores": 12,
+      "est_vram_mb": 0,
+      "id": "t82278",
+      "ram_mb": 32768,
+      "require_node": "jtl110gpu",
+      "shard_count": 2,
+      "shard_index": 0,
+      "signature": "H2Oplus/v8/development/stage-a/60f9e4212673/shard0/jtl110gpu/glibc227"
+    },
+    {
+      "cpu_cores": 12,
+      "est_vram_mb": 0,
+      "id": "t82281",
+      "ram_mb": 32768,
+      "require_node": "jtl110gpu",
+      "shard_count": 2,
+      "shard_index": 1,
+      "signature": "H2Oplus/v8/development/stage-a/60f9e4212673/shard1/jtl110gpu/glibc227"
+    }
+  ],
+  "schema_version": "transit-h2oplus-v8-stage-a-submission-v2",
+  "stage_b_submitted": false,
+  "status": "stage-A-shard0-running-shard1-queued",
+  "training": false
+}

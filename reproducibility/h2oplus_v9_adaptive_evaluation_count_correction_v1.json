@@ -1,0 +1,118 @@
+{
+  "alias_reuse_rule": "one deterministic SUMO result is reused only for aliases whose compact actor tensor SHA256 is exactly equal within the same training seed",
+  "bindings": {
+    "protocol": {
+      "bytes": 99508,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_protocol_v2.json",
+      "sha256": "e0652db511c5ca46e0e14801895bdfdc57761223842a4e30673075b9163d3c7d"
+    },
+    "registration": {
+      "bytes": 6080,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_registration_v2.json",
+      "sha256": "f4f6922324ef518acde9b5489328bf13c7154012dfd6f4cc2b61797adb90785e"
+    },
+    "training_closeout": {
+      "bytes": 1273,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/training_closeout.json",
+      "sha256": "fc263b3d51ac5a532bd13dc3fdaecf43153e1336d9d57a4ce6b87e6eac18bafd"
+    },
+    "training_verification": {
+      "bytes": 966,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/training_file_manifest_verification.json",
+      "sha256": "9926dea64d692619808c2a2e03382e7620fd71358223119ac066d217ceff080e"
+    },
+    "v8_methods": {
+      "bytes": 48900,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/evaluation_methods_v8_fewshot.json",
+      "sha256": "8dbca88cd754d3fe711f2408b3328cf3947efcad478c221f5d8be8bba017e7f7"
+    },
+    "v8_training_closeout": {
+      "bytes": 1096,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/training_closeout.json",
+      "sha256": "8a12385844f7949d3f7c2cbc16d8e021787c9de04fb14b7e64b46779d2373822"
+    },
+    "v8_training_verification": {
+      "bytes": 938,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/training_file_manifest_verification.json",
+      "sha256": "c6f124d80952577ddb6d6c6597c0fbf67704c4af92deb35fc0b5f5a0e99809aa"
+    },
+    "v9_training_policies": {
+      "bytes": 41290,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/training_policies_v9_adaptive.json",
+      "sha256": "b0753c76fbd03d31e93b9a7fbeccffcd3c47c6a607f5573d30c8ff384e0b1f1c"
+    }
+  },
+  "corrected_method_budget_aliases": 60,
+  "corrected_remote_sumo_episodes": 252,
+  "corrected_unique_actor_tensors": 42,
+  "created_utc": "2026-08-17T06:42:44.107767+00:00",
+  "demand_scales": 3,
+  "development_blocks": 2,
+  "formal_held_out_outcomes_read": false,
+  "identity_evidence": [
+    {
+      "duplicate_groups": [
+        [
+          "h2oplus-seed6201-events000000000",
+          "h2oplus-seed6201-events000005000",
+          "h2oplus-v9-adaptation-seed6201-events000000000",
+          "h2oplus-v9-combined-seed6201-events000000000",
+          "h2oplus-v9-ratio-gated-seed6201-events000000000",
+          "h2oplus-v9-ratio-gated-seed6201-events000005000"
+        ],
+        [
+          "sac-online-seed6201-events000000000",
+          "sac-online-seed6201-events000005000"
+        ]
+      ],
+      "method_budget_aliases": 20,
+      "training_seed": 6201,
+      "unique_actor_tensors": 14
+    },
+    {
+      "duplicate_groups": [
+        [
+          "h2oplus-seed6202-events000000000",
+          "h2oplus-seed6202-events000005000",
+          "h2oplus-v9-adaptation-seed6202-events000000000",
+          "h2oplus-v9-combined-seed6202-events000000000",
+          "h2oplus-v9-ratio-gated-seed6202-events000000000",
+          "h2oplus-v9-ratio-gated-seed6202-events000005000"
+        ],
+        [
+          "sac-online-seed6202-events000000000",
+          "sac-online-seed6202-events000005000"
+        ]
+      ],
+      "method_budget_aliases": 20,
+      "training_seed": 6202,
+      "unique_actor_tensors": 14
+    },
+    {
+      "duplicate_groups": [
+        [
+          "h2oplus-seed6203-events000000000",
+          "h2oplus-seed6203-events000005000",
+          "h2oplus-v9-adaptation-seed6203-events000000000",
+          "h2oplus-v9-combined-seed6203-events000000000",
+          "h2oplus-v9-ratio-gated-seed6203-events000000000",
+          "h2oplus-v9-ratio-gated-seed6203-events000005000"
+        ],
+        [
+          "sac-online-seed6203-events000000000",
+          "sac-online-seed6203-events000005000"
+        ]
+      ],
+      "method_budget_aliases": 20,
+      "training_seed": 6203,
+      "unique_actor_tensors": 14
+    }
+  ],
+  "performance_or_evaluation_outcomes_read": false,
+  "reason": "the frozen registration counted 45 policies, but exact tensor identities across the five method curves yield 60 budget aliases and 42 distinct actors",
+  "registered_remote_sumo_episodes": 270,
+  "registered_unique_policies": 45,
+  "schema_version": "transit-h2oplus-v9-adaptive-evaluation-count-correction-v1",
+  "scope": "pre-evaluation actor-identity arithmetic correction only",
+  "training_or_policy_artifacts_changed": false
+}

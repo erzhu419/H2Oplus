@@ -1,0 +1,19 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We studied cross-fidelity offline-to-online RL for asynchronous multi-line bus
+holding under an exact chronological passenger-time contract. The final
+controller combines a fixed IQL-initialized, simulator-continued H2O+ actor with
+a deterministic completion-safety reserve. Relative to the identical direct
+parent without the final reserve, the fixed candidate reduced generalized
+passenger time by 92.12 s per departed passenger, increased completion by
+0.00466, and reduced unfinished passengers by 77.22. These paired effects were
+confirmed within a 1,350-episode fresh formal SUMO matrix. Primary superiority and completion noninferiority passed in all
+ten independent blocks under the preregistered intersection--union test.
+
+The completion-aware reserve
+improves the fixed parent policy at the registered endpoint in the evaluated
+SUMO scenario family. Future work should align
+training and evaluation runtimes, collect more independent environment cells
+with richer positive-hold support, incorporate completion into the learning
+objective, and validate the fixed policy against held-out operational records.

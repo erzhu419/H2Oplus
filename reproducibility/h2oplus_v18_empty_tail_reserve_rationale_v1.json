@@ -1,0 +1,105 @@
+{
+  "authorization": {
+    "bytes": 1118,
+    "path": "reproducibility/h2oplus_v18_empty_tail_reserve_authorization_v1.json",
+    "sha256": "8354467e41971cc39dc99382a2327a75c358f8baa06df22e215854a5c8036f92"
+  },
+  "claim_boundary": {
+    "screen_can_authorize_full_control_matrix_only": true,
+    "screen_can_establish_formal_confirmation_eligibility": false,
+    "screen_can_establish_formal_held_out_effect": false
+  },
+  "created_utc": "2026-08-25T04:51:25.170578+00:00",
+  "data_environment_audit": {
+    "data_environment_audit": {
+      "bytes": 17446,
+      "path": "reproducibility/h2oplus_v17_data_environment_convergence_audit_v1.json",
+      "sha256": "ff5210e82913c456314ba1e47a1f3400e0e5bdb58fce2f14d8e9bc1cdd0c95e9"
+    },
+    "data_environment_verification": {
+      "bytes": 955,
+      "path": "reproducibility/h2oplus_v17_data_environment_convergence_verification_v1.json",
+      "sha256": "925fa9ace1af907bd50042718ba9d7492a892a8e8a2a863b567091540af62390"
+    }
+  },
+  "diagnosis": {
+    "data_environment_validity_factors": [
+      "training objective and completion constraint are not identical",
+      "v14-v17 reused the same nine development cells",
+      "training and evaluation SUMO runtime versions differ"
+    ],
+    "mitigation_in_v18": "use three fresh disjoint development blocks and limit the extra hold to empty tail buses, where direct onboard holding cost is zero",
+    "uniform_floor_tradeoff": "raising the broad v17 floor from 20 to 40 seconds increased the mean primary endpoint by 13.201942264439 seconds, so another broad floor increase is not an acceptable completion repair",
+    "v17_failed_boundaries": [
+      "completion-rate noninferiority against all controls",
+      "relative AULC improvement against every control"
+    ]
+  },
+  "fixed_design": {
+    "activation_fraction": [
+      0.25,
+      0.75
+    ],
+    "candidate_max_onboard_capacity_fraction": 0.0,
+    "diagnostic_max_onboard_capacity_fraction": 0.02,
+    "diagnostics": [
+      "baseline",
+      "one-seat-forty"
+    ],
+    "empty_reserve_floor_seconds": 40.0,
+    "new_remote_development_episodes": 135,
+    "new_training_runs": 0,
+    "parent": "sealed v17 twenty-second 25k behavior",
+    "predesignated_candidate": "empty-forty",
+    "requires_backward_bus_absent": true,
+    "requires_forward_bus_present": true,
+    "requires_positive_eligible_arrival_rate": true
+  },
+  "formal_held_out_outcomes_read": false,
+  "frozen_v17_evidence": {
+    "v17_analysis": {
+      "bytes": 32572,
+      "path": "reproducibility/h2oplus_v17_tail_service_reserve_results/tail_service_reserve_analysis_v2.json",
+      "sha256": "84e80b7f08d16f6e356f09c56ff75d1bbdf322578641df4ede9e73f8d4ff4f78"
+    },
+    "v17_audit": {
+      "bytes": 13341,
+      "path": "reproducibility/h2oplus_v17_tail_service_reserve_results/evaluation_audit_v2.json",
+      "sha256": "c23e5a3f0e7b2a9de889cee024f293f3e07f9087689d16f3c649b23fff7d39ec"
+    },
+    "v17_closeout": {
+      "bytes": 35964,
+      "path": "reproducibility/h2oplus_v17_tail_service_reserve_results/evaluation_closeout_v2.json",
+      "sha256": "09351ebb883e5aad18d33353be877ed542f1ed7741e1d03b0c9b4368b39e268b"
+    },
+    "v17_methods": {
+      "bytes": 64482,
+      "path": "reproducibility/h2oplus_v17_tail_service_reserve_evaluation_methods_v1.json",
+      "sha256": "f2383ced11263bdd78287f7bc48f61be13ef1f181868827f555b9c06e9038ec5"
+    },
+    "v17_protocol": {
+      "bytes": 7244,
+      "path": "reproducibility/h2oplus_v17_tail_service_reserve_protocol_v1.json",
+      "sha256": "5f7bcde7c90f165b3ae91215f69de0dfea1f204615d0639637eeef5f51a28790"
+    },
+    "v17_verification": {
+      "bytes": 2500,
+      "path": "reproducibility/h2oplus_v17_tail_service_reserve_results/evaluation_closeout_verification_v2.json",
+      "sha256": "d781daea3138595989156935367b15a9e8db543aa464bad0a2c58636db95d596"
+    }
+  },
+  "prior_v14_v15_v16_v17_development_outcomes_used_for_design": true,
+  "schema_version": "transit-h2oplus-v18-empty-tail-reserve-rationale-v1",
+  "status": "frozen-before-any-v18-development-outcome",
+  "study_stage": "development",
+  "v17_observed_design_signal": {
+    "v17_forty_mean_primary_at_25000": 2420.231054806202,
+    "v17_thirty_completion_aulc_delta_vs_h2oplus": -0.0038785184078677926,
+    "v17_thirty_completion_aulc_delta_vs_sac": -0.003786922323087638,
+    "v17_thirty_completion_aulc_delta_vs_v10": -0.0030710495473807997,
+    "v17_thirty_mean_primary_at_25000": 2412.2338950552207,
+    "v17_thirty_relative_aulc_vs_v11": 0.009789298652594222,
+    "v17_twenty_mean_primary_at_25000": 2407.029112541763
+  },
+  "v18_development_evaluation_outcomes_read": false
+}

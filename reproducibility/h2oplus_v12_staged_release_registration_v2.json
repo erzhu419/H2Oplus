@@ -1,0 +1,270 @@
+{
+  "authorized_plan_text": "\u4fdd\u6301 V11 \u7684 5k warmup \u548c actor/temperature \u4e25\u683c\u51bb\u7ed3\u5230 10k\uff0c\u5e76\u7531\u6bcf\u4e2a\u79cd\u5b50\u7684\u4e00\u4e2a\u5b8c\u6574 10k \u72b6\u6001\u5206\u51fa\u4e94\u4e2a\u7cbe\u786e\u5206\u652f\u3002\u7a81\u53d8\u5bf9\u7167\u4fdd\u6301 V11 \u7684 10k \u540e\u884c\u4e3a\uff1bactor-ramp \u4e0e temperature-ramp \u5206\u522b\u628a\u5bf9\u5e94\u4f18\u5316\u5668\u5b66\u4e60\u7387\u5728 10k-15k \u4ece 0.1 \u7ebf\u6027\u6062\u590d\u5230 1.0\uff1bactor-anchor \u4fdd\u6301 actor batch \u5927\u5c0f\u5e76\u4f7f\u7528 20% \u79bb\u7ebf\u300180% \u5728\u7ebf\u72b6\u6001\uff1bcombined \u540c\u65f6\u5e94\u7528\u4e09\u4e2a\u56e0\u7d20\u3002critic replay \u56fa\u5b9a 0.5\u3001\u66f4\u65b0\u987a\u5e8f\u4fdd\u6301 actor-before-critic\u3001ratio \u4ec5\u4f5c\u8bca\u65ad\u4e14 TD \u6743\u91cd\u6052\u4e3a 1\u3002\u4f7f\u7528\u65b0\u7684\u5f00\u53d1\u573a\u666f\u548c\u4e94\u4e2a\u914d\u5bf9\u79cd\u5b50\uff0c\u53ea\u505a\u5f00\u53d1\u7b5b\u9009\u3002",
+  "authorized_plan_text_sha256": "7ec0155419c2fb8bfc7d482385676181ffc95b0b4d180084a5fa3edf78af2514",
+  "campaign": "H2O+ v12 staged-release single-factor development pilot",
+  "causal_design": {
+    "branch_runs": 25,
+    "branch_variants": [
+      "abrupt-control",
+      "actor-ramp",
+      "temperature-ramp",
+      "actor-anchor",
+      "staged-combined"
+    ],
+    "fixed_controls": [
+      "sealed v8 h2oplus",
+      "sealed v8 sac-online",
+      "sealed v10 delayed-actor",
+      "sealed v11 actor-hold"
+    ],
+    "maximum_online_events": 25000,
+    "new_training_runs": 30,
+    "new_variants": [
+      "shared-prefix",
+      "abrupt-control",
+      "actor-ramp",
+      "temperature-ramp",
+      "actor-anchor",
+      "staged-combined"
+    ],
+    "prefix_runs": 5,
+    "shared_prefix": "one exact 0-10k trajectory per seed, then five branches",
+    "training_seeds": [
+      6201,
+      6202,
+      6203,
+      6204,
+      6205
+    ]
+  },
+  "deployment_correction": {
+    "bytes": 4032,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v12_staged_release_deployment_correction_v2.json",
+    "sha256": "40dabd0dddab6ce7fd8f08ac025f8cc96a5545d1c36ff24730ce885b5eb67b25"
+  },
+  "development_evaluation": {
+    "actor_hash_deduplication_required": true,
+    "blocks": [
+      {
+        "demand_realization_seed": 5201,
+        "name": "v12-staged-release-development-01",
+        "sumo_seed": 5101
+      },
+      {
+        "demand_realization_seed": 5202,
+        "name": "v12-staged-release-development-02",
+        "sumo_seed": 5102
+      },
+      {
+        "demand_realization_seed": 5203,
+        "name": "v12-staged-release-development-03",
+        "sumo_seed": 5103
+      }
+    ],
+    "common_online_event_budgets": [
+      0,
+      5000,
+      10000,
+      25000
+    ],
+    "demand_scales": [
+      0.85,
+      1.0,
+      1.15
+    ],
+    "logical_policy_aliases": 180,
+    "maximum_unique_remote_sumo_episodes": 1620,
+    "physical_actor_tensors": "determined only by exact actor hashes after all training closes",
+    "submitted_with_training": false
+  },
+  "formal_held_out_outcomes_read": false,
+  "frozen_v7_v8_v9_v10_v11_trainer_or_evidence_modified": false,
+  "generator": {
+    "bytes": 54554,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/prepare_h2oplus_v12_staged_release.py",
+    "sha256": "e4d3b883b7e3ee092d5cc43dcfd82e42e9b2b704249f176976aab6baf999354e"
+  },
+  "interpretation": {
+    "all_registered_outcomes_retained": true,
+    "five_seed_development_screen_only": true,
+    "formal_stage_authorized_or_submitted": false,
+    "supports_formal_held_out_model_effect_claim": false
+  },
+  "local_training_or_sumo_allowed": false,
+  "rationale": {
+    "bytes": 3022,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v12_staged_release_rationale_v1.json",
+    "sha256": "4e6a66c21c37495247dc635173633a1c4afc158193d64305ded5f8f610c4c79d"
+  },
+  "registered_utc": "2026-08-21T01:32:50.087274+00:00",
+  "schema_version": "transit-h2oplus-v12-staged-release-registration-v2",
+  "screening_gates": {
+    "all_30_training_runs_pass_registered_stability": true,
+    "all_branches_share_exact_seed_matched_10k_state": true,
+    "candidate_mean_lower_than_sac_and_fixed_h2o_at_10000_and_25000": true,
+    "candidate_mean_lower_than_v11_and_v10_delayed_actor_at_25000": true,
+    "candidate_relative_aulc_improvement_over_abrupt_control_at_least": 0.01,
+    "candidate_relative_aulc_improvement_over_fixed_h2o_at_least": 0.03,
+    "candidate_relative_aulc_improvement_over_sac_at_least": 0.02,
+    "candidate_relative_aulc_improvement_over_v10_delayed_actor_at_least": 0.02,
+    "candidate_relative_aulc_improvement_over_v11_at_least": 0.01,
+    "candidate_seed_wins_over_fixed_h2o_at_least": 4,
+    "candidate_seed_wins_over_sac_at_least": 4,
+    "candidate_seed_wins_over_v10_delayed_actor_at_least": 4,
+    "candidate_seed_wins_over_v11_at_least": 4,
+    "completion_rate_noninferiority_margin": 0.003,
+    "formal_confirmation_eligibility_created": false,
+    "no_demand_scale_relative_aulc_degradation_over_sac_greater_than": 0.01,
+    "single_factors_beating_abrupt_control_in_mean_aulc_at_least": 2
+  },
+  "sources": {
+    "base_v7_training_deployment": {
+      "bytes": 116595,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/deployment_manifest.json",
+      "sha256": "db1bc95b9763a202cb3398abc550aa62b49d7c548eac034021c1ba21697f89cd"
+    },
+    "deployment_verifier": {
+      "bytes": 23710,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/verify_h2oplus_v12_staged_release_deployment_v2.py",
+      "sha256": "d27162ca5b66732e6105d7293a8a992d750b38e36efcd112ec9d1589b7a51318"
+    },
+    "sealed_v10_analysis": {
+      "bytes": 12865,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_results/delayed_analysis_v1.json",
+      "sha256": "1670ede04401d22fd76c47acc4b7d6f5e058c62fe94f987a9e205266a1fca0ce"
+    },
+    "sealed_v10_branch_closeout": {
+      "bytes": 1184,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_results/branch_closeout_v4.json",
+      "sha256": "9204b4196f40a7fa4ce0bab1277d8c7bbbe930aafa644760b7251d463fbc6498"
+    },
+    "sealed_v10_branch_verification": {
+      "bytes": 1248,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_results/branch_closeout_verification_v4.json",
+      "sha256": "101cadbfc03bde2719f0a786a961006ed2d1d86a27080376afd59842ff4bcb17"
+    },
+    "sealed_v10_evaluation_closeout": {
+      "bytes": 6512,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_results/evaluation_closeout_v1.json",
+      "sha256": "2fabaafca1cd0ba5aaa02f8571f28cb3544d44792359ce745a1bee24be47a5af"
+    },
+    "sealed_v10_evaluation_verification": {
+      "bytes": 1156,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_results/evaluation_closeout_verification_v1.json",
+      "sha256": "b6126fcf1aef60048518fef71a50c288b3f1b6dd2191e2e45467348d0c527550"
+    },
+    "sealed_v10_methods_manifest": {
+      "bytes": 116255,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v10_delayed_evaluation_methods_v1.json",
+      "sha256": "dca00ae59b34e0810ec407c0df3a08583d35eac2b404a0b879866922b2d0d9f7"
+    },
+    "sealed_v11_analysis": {
+      "bytes": 9512,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_results/actor_hold_analysis_v1.json",
+      "sha256": "e3f6df3d075774dec3e662cbf2b6ef848e5f361f57be45fff7cf159768fa04e1"
+    },
+    "sealed_v11_evaluation_closeout": {
+      "bytes": 10113,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_results/evaluation_closeout_v1.json",
+      "sha256": "27456e2d2a9acd639e8a7e70c69b8003e0167e4dc0289272a57406a56dc60cd2"
+    },
+    "sealed_v11_evaluation_verification": {
+      "bytes": 963,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_results/evaluation_closeout_verification_v1.json",
+      "sha256": "45d1e924d2e55d11b1f74a19f628b3ff3d00760bf44488819afeef360f19f8a5"
+    },
+    "sealed_v11_methods_manifest": {
+      "bytes": 96806,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_evaluation_methods_v1.json",
+      "sha256": "6716c56c73e9d491431b1ab019727f9bfd18a2242cb7500826cf7ccc0628b260"
+    },
+    "sealed_v11_training_closeout": {
+      "bytes": 1168,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_results/training_closeout_v2.json",
+      "sha256": "489c7efe5cf91f73bb31a9b6df03441c2fb3bcd4d280c65493c5ae8ec3af01a6"
+    },
+    "sealed_v11_training_verification": {
+      "bytes": 1229,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_results/training_closeout_verification_v2.json",
+      "sha256": "ff0ef7c69bac850bf9f743275ffd9bbfc87c0b1c9713a83769a052bd936d256e"
+    },
+    "sealed_v8_analysis": {
+      "bytes": 10600,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/fewshot_analysis_v3.json",
+      "sha256": "ebe3455ce134f61ec5d2dc36ec20f36da4addc88a6e4e12295298bdc7da6ae78"
+    },
+    "sealed_v8_fewshot_closeout": {
+      "bytes": 3920,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/fewshot_closeout_v3.json",
+      "sha256": "5d7b9c06bb11b6ceda7761cf8b71cdd3484849381635ad60beb89ed13e6fab44"
+    },
+    "sealed_v8_training_closeout": {
+      "bytes": 1096,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/training_closeout.json",
+      "sha256": "8a12385844f7949d3f7c2cbc16d8e021787c9de04fb14b7e64b46779d2373822"
+    },
+    "sealed_v8_training_manifest_verification": {
+      "bytes": 938,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/training_file_manifest_verification.json",
+      "sha256": "c6f124d80952577ddb6d6c6597c0fbf67704c4af92deb35fc0b5f5a0e99809aa"
+    },
+    "sealed_v9_analysis": {
+      "bytes": 7082,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/adaptive_analysis_v3.json",
+      "sha256": "458dd42056d2bee49a6948e84e96038ca13b631185d0c0d78151536c9f4fcfdd"
+    },
+    "sealed_v9_closeout": {
+      "bytes": 8137,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/adaptive_closeout_v3.json",
+      "sha256": "b694b32ad2042dd187695460d9d6b62849570dd4df1b999e43d9680f89b7b810"
+    },
+    "sealed_v9_closeout_verification": {
+      "bytes": 1044,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/adaptive_closeout_verification_v3.json",
+      "sha256": "ade4313b636feccfb080d412e0fae48d267d8a7bc88d353a055c340776a5026e"
+    },
+    "sealed_v9_training_closeout": {
+      "bytes": 1273,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/training_closeout.json",
+      "sha256": "fc263b3d51ac5a532bd13dc3fdaecf43153e1336d9d57a4ce6b87e6eac18bafd"
+    },
+    "v12_source_sha256": {
+      "SimpleSAC/train_transit_v12_staged_release.py": "4e4b7d97e92800ce609ac3d6f6cd4116d65f70b3a410f3d954e2a27153e7b557",
+      "SimpleSAC/transit_v10/__init__.py": "a40d5cf193fc8d78f269ff3cec3b3ff691d3999ac4fce41c8e97b83a316cdbc1",
+      "SimpleSAC/transit_v10/provenance.py": "4f5afabae851b6d673288cc979e47e1876742cb45471bd0c6977a8fa4a36f8bb",
+      "SimpleSAC/transit_v10/trainer.py": "0ab1c8dbbe9d37301104f02e5cb48af5bd40f0357d9ad5173c911574a7b1ca0a",
+      "SimpleSAC/transit_v11/__init__.py": "8acc1801b4b2a537b795cb83e8e7a6910be48e4122042bb6adbcaecf879f3a73",
+      "SimpleSAC/transit_v11/provenance.py": "a55886e943a4bfc62c5298099a9d3be87302c596243a0d698c8c801ae3073212",
+      "SimpleSAC/transit_v11/trainer.py": "492156a6c7b4d388acdd2889db9a5704d99c83206f8664856f5c0c79ed42ea0b",
+      "SimpleSAC/transit_v12/__init__.py": "2b133235c10c96baac7da7c4afe9438873c72f808b2b0ea522a4f673e812d7c7",
+      "SimpleSAC/transit_v12/provenance.py": "3ca8bf4af0d3cfbbe3cd1c5c4d7dfab21c47ad9c58650c7ce05f2bb177270299",
+      "SimpleSAC/transit_v12/trainer.py": "6113b88d2a8a6e78b8f75b8fa265db30df4a978b63a2da9f7f1ddfe16605d742"
+    }
+  },
+  "staged_release": {
+    "actor_and_temperature_held_through_online_events": 10000,
+    "common_prefix_end_online_events": 10000,
+    "factors": {
+      "actor_anchor": "nearest-row 20% nominal anchor: 26 offline and 102 online states at the registered actor batch size 128",
+      "actor_ramp": "actor LR 0.1 to 1.0 over 10k-15k",
+      "temperature_ramp": "temperature LR 0.1 to 1.0 over 10k-15k"
+    },
+    "offline_critic_replay_share": 0.5,
+    "online_update_order": "actor-before-critic",
+    "ratio_classifiers_continue_for_diagnostics": true,
+    "unit_ratio_weights": true,
+    "warmup_events": 5000
+  },
+  "status": "registered-before-v12-training-or-new-development-evaluation",
+  "stop_rules": [
+    "stop on nonfinite state, nonzero exit or source/event/update mismatch",
+    "never restart or checkpoint-select because an outcome is poor",
+    "never use formal held-out outcomes for development selection",
+    "never train or run SUMO locally",
+    "submit only five prefix runs before exact prefix closeout",
+    "do not submit branches until all five handoffs are independently audited",
+    "do not submit development evaluation until all 30 training runs close",
+    "do not launch a formal confirmation stage from this registration"
+  ],
+  "study_stage": "development"
+}

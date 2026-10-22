@@ -1,0 +1,90 @@
+\section{Related Work}
+\label{sec:related}
+
+The study connects offline-to-online RL, transfer across transition dynamics,
+and bus holding. We distinguish the algorithmic lineage from the mechanism
+that is actually confirmed in the final experiment.
+
+\subsection{Offline and offline-to-online reinforcement learning}
+
+Soft actor-critic (SAC) provides the entropy-regularized, off-policy backbone
+used by the online learners in this study~\citep{haarnoja2018soft}. Its later
+formulation adds automatic entropy-temperature adjustment
+~\citep{haarnoja2018applications}.
+Conservative Q-learning (CQL) depresses values for actions outside offline
+support~\citep{kumar2020cql}; IQL instead fits an
+expectile state value and extracts an advantage-weighted policy without
+evaluating unseen actions in its fitted target~\citep{kostrikov2022iql}. We use
+IQL to initialize the frozen H2O+ actors and SAC-style updates for their online
+continuation.
+
+Offline-to-online fine-tuning can destroy a useful offline policy when early
+online data shift the state--action distribution and bootstrap errors
+propagate. Balanced replay with a pessimistic critic ensemble is one
+stabilization route: it prioritizes online and near-on-policy offline samples
+~\citep{lee2022balanced}, rather than simply fixing a 50/50 replay split.
+Calibrated Q-learning (Cal-QL) constrains conservative values to a reference
+policy's scale~\citep{nakamoto2023calql}. Policy expansion (PEX) retains an
+offline policy and adaptively composes it with a newly learned policy
+~\citep{zhang2023pex}. Reinforcement learning with prior data (RLPD) mixes
+prior and newly collected replay while learning from random initialization
+~\citep{ball2023efficient}, whereas warm-start reinforcement learning (WSRL) begins
+from an offline policy, collects a frozen-policy warmup buffer, and then trains
+from online replay~\citep{zhou2025wsrl}. These methods motivate the stabilization
+controls in the development lineage, but the formal comparison in this paper
+does not claim a universal ranking among their source algorithms.
+
+Reward-guided conservative Q-learning (RG-CQL) has combined offline training
+and online fine-tuning for coordinating ride-pooling with public transit
+~\citep{hu2025rgcql}. We therefore make no broad novelty claim for
+offline-to-online RL in transportation. Our focus is an asynchronous fixed-route
+holding problem with a target-simulator dynamics gap and an explicit completion
+boundary.
+
+\subsection{Transfer across dynamics}
+
+Off-dynamics RL corrects source-domain rewards using a conditional
+target-to-source dynamics log ratio estimated by domain classifiers
+~\citep{eysenbach2021off}. H2O combines a fixed target-domain
+dataset with interaction in an imperfect simulator and uses dynamics-aware
+correction when simulator transitions are poorly supported by target dynamics
+~\citep{niu2022h2o}. H2O+ broadens that construction across offline and online
+base learners~\citep{niu2025h2oplus}.
+
+Our adaptation includes physical event duration in a joint/marginal classifier,
+but the final training profile uses unit simulator weights. Thus the classifier
+is a domain-shift diagnostic, not the confirmed mechanism. Its empirical
+validation is reported in \Cref{sec:exp:validity,app:ratio}; the formal comparison
+isolates the action reserve applied to a fixed learned actor.
+
+\subsection{Bus holding and service completion}
+
+The bus-bunching literature spans demand, supply, and control mechanisms
+~\citep{rezazada2024review}. \citet{daganzo2009headway} studies headway-based
+holding and its stability, whereas \citet{xuan2011dynamic} uses arrival
+deviations from a virtual schedule to improve schedule reliability. These are
+distinct control objectives. \citet{delgado2012holding} compares holding with
+boarding limits under passenger-time objectives. Real-time optimization
+incorporates changing demand and running times
+~\citep{sanchezmartinez2016realtime}, while predictive control combines
+headway forecasts with dynamic holding~\citep{andres2017predictive}.
+
+RL formulations include high-frequency single-service control
+~\citep{alesiani2018reinforcement}, multi-agent dynamic holding
+~\citep{wang2020real}, asynchronous multi-agent coordination
+~\citep{wang2021asynchronous}, and shared-corridor multi-line control
+~\citep{wang2023multiobjective}. Asynchronous bus control is therefore not
+itself a new contribution. Our study instead combines immutable
+target replay, online interaction in a separate reduced-order simulator,
+adaptive development of a fixed action transform, and final confirmation on
+fresh target-simulator cells. The common passenger ledger and the paired final
+reserve comparison distinguish this evaluation from a generic claim that a
+new RL learner outperforms existing bus-holding algorithms.
+
+The completion-safety reserve is intentionally simple. It is not a new generic
+safe-RL algorithm and does not certify arbitrary operational constraints.
+Instead, it encodes one observed transit requirement: when a lightly loaded
+tail bus has no follower, a leader exists, and demand remains, suppressing hold
+can improve accrued time while leaving passengers unfinished. The paired parent
+comparison changes only the reserve, allowing this concrete mechanism to be
+tested without reselecting a checkpoint or retraining the actor.

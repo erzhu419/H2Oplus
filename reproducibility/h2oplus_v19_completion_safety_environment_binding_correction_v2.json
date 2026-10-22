@@ -1,0 +1,35 @@
+{
+  "schema_version": "transit-h2oplus-v19-completion-safety-environment-binding-correction-v2",
+  "created_utc": "2026-08-25T12:01:02Z",
+  "status": "frozen-predeployment-zero-result-correction",
+  "study_stage": "development",
+  "defect": {
+    "affected_component": "reproducibility/run_h2oplus_v19_completion_safety_evaluation_dispatch.py",
+    "description": "The v19 evaluator required H2OPLUS_V19_COMPLETION_SAFETY_PROTOCOL_SHA256, but the dispatcher's exact required-environment map did not bind that variable.",
+    "failure_mode_if_uncorrected": "A task could pass dispatch environment validation and then fail closed during policy construction because the v19 protocol environment binding was absent or incorrect."
+  },
+  "correction_scope": {
+    "add_exact_protocol_environment_binding": true,
+    "change_policy_behavior": false,
+    "change_candidate_or_diagnostic": false,
+    "change_scenarios_or_seeds": false,
+    "change_analysis_or_gates": false,
+    "change_parent_actors": false,
+    "new_training_runs": 0
+  },
+  "superseded_predeployment_evidence": {
+    "source_freeze_v1_sha256": "9d8619304dd8f433d568012a25777a8f9a774eea0a4ba56cf7c7fed70007be63",
+    "local_deployment_manifest_v1_sha256": "24b3e9aeba8ace7b10356ff9fe6d1d935282f3d529cef9b527bf1469513b9787",
+    "local_deployment_audit_v1_sha256": "4b699882df1e8829bf7d937fe3093a410528a068c38cbcbe41f0518d71f85ed7"
+  },
+  "execution_boundary": {
+    "remote_deployment_sync_started": false,
+    "scheduler_task_submitted": false,
+    "sumo_episode_started": false,
+    "completed_scientific_result_count": 0,
+    "scientific_numeric_outcomes_read": false,
+    "prior_v19_result_reuse_allowed": false
+  },
+  "formal_held_out_outcomes_read": false,
+  "formal_confirmation_stage_authorized_or_submitted": false
+}

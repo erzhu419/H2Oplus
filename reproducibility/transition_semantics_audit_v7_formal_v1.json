@@ -1,0 +1,312 @@
+{
+  "created_utc": "2026-08-08T18:14:36.909195+00:00",
+  "evaluation": {
+    "checks": {
+      "additional_hold_duration": {
+        "observed": {
+          "held_postdecision_seconds": 61.0,
+          "paired_delta_seconds": 59.0,
+          "zero_postdecision_seconds": 2.0
+        },
+        "passed": true,
+        "requirement": "paired postdecision stop-time delta equals the requested hold within one simulation-step tolerance"
+      },
+      "departure_prediction": {
+        "observed": {
+          "held": 1.0,
+          "zero": 2.0
+        },
+        "passed": true,
+        "requirement": "actual departure matches service completion plus additional hold within step tolerance"
+      },
+      "downstream_action_response": {
+        "observed": {
+          "next_event_time_delta_seconds": 62.0,
+          "next_forward_headway_delta_seconds": 62.0
+        },
+        "passed": true,
+        "requirement": "holding changes the next-stop event and its service-completion forward headway consistently"
+      },
+      "event_semantic_invariants": {
+        "observed": {
+          "held": 0,
+          "zero": 0
+        },
+        "passed": true,
+        "requirement": "no event violates schedule, presence, service-completion, or spatial-gap definitions"
+      },
+      "open_door_boarding_during_hold": {
+        "observed": [],
+        "passed": false,
+        "requirement": "at least one eligible passenger appearing after the decision boards the held bus"
+      },
+      "paired_intervention_identity": {
+        "observed": {
+          "event_time_error_seconds": 0.0,
+          "held": {
+            "bus_id": "7X_2",
+            "line_id": "7X",
+            "stop_id": "7X13_102X26_705X27",
+            "stop_index": 12
+          },
+          "zero": {
+            "bus_id": "7X_2",
+            "line_id": "7X",
+            "stop_id": "7X13_102X26_705X27",
+            "stop_index": 12
+          }
+        },
+        "passed": true,
+        "requirement": "same trip, stop, and pre-intervention event time"
+      },
+      "zero_action_does_not_repeat_base_dwell": {
+        "observed": {
+          "actual_total_stop_seconds": 6.0,
+          "base_dwell_seconds": 4.0
+        },
+        "passed": true,
+        "requirement": "zero-action total stop is no more than base dwell plus step tolerance"
+      }
+    },
+    "derived_effects": {
+      "actual_postdecision_stop_delta_seconds": 59.0,
+      "late_boarding_count": 0,
+      "next_event_time_delta_seconds": 62.0,
+      "next_forward_headway_delta_seconds": 62.0
+    },
+    "status": "failed"
+  },
+  "held_trajectory": {
+    "actual_departure_time_seconds": 1622.0,
+    "actual_postdecision_stop_seconds": 61.0,
+    "actual_total_stop_seconds": 65.0,
+    "applied_hold_seconds": 60.0,
+    "future_passenger_outcomes": [
+      {
+        "boarded_bus_id": "",
+        "boarding_time_seconds": null,
+        "next_stop_id": "7X19_102X32",
+        "passenger_id": "workday6_7350.0",
+        "scheduled_appearance_time_seconds": 1562.08,
+        "state_at_next_stop_event": "Lane"
+      }
+    ],
+    "intervention": {
+      "arrival_time_seconds": 1557.0,
+      "backward_bus_present": true,
+      "backward_headway_seconds": 312.39018924885363,
+      "base_dwell_seconds": 4.0,
+      "bus_id": "7X_2",
+      "eligible_stranded_passengers": 0,
+      "event_time_seconds": 1561.0,
+      "forward_bus_present": true,
+      "forward_headway_seconds": 634.0,
+      "future_eligible_passengers": [
+        {
+          "next_stop_id": "7X19_102X32",
+          "passenger_id": "workday6_7350.0",
+          "scheduled_appearance_time_seconds": 1562.08
+        }
+      ],
+      "line_id": "7X",
+      "onboard_passengers": 0,
+      "predicted_departure_time_seconds": 1621.0,
+      "segment_mean_speed_mps": 13.89,
+      "service_completion_time_seconds": 1561.0,
+      "stop_id": "7X13_102X26_705X27",
+      "stop_index": 12,
+      "target_backward_headway_seconds": 600.0,
+      "target_forward_headway_seconds": 600.0
+    },
+    "next_event": {
+      "arrival_time_seconds": 1691.0,
+      "backward_bus_present": true,
+      "backward_headway_seconds": 300.45280265731725,
+      "base_dwell_seconds": 4.0,
+      "bus_id": "7X_2",
+      "eligible_stranded_passengers": 0,
+      "event_time_seconds": 1695.0,
+      "forward_bus_present": true,
+      "forward_headway_seconds": 695.0,
+      "line_id": "7X",
+      "onboard_passengers": 1,
+      "segment_mean_speed_mps": 13.89,
+      "service_completion_time_seconds": 1695.0,
+      "stop_id": "7X14_102X27_705X28",
+      "stop_index": 13,
+      "target_backward_headway_seconds": 600.0,
+      "target_forward_headway_seconds": 600.0
+    },
+    "runtime": {
+      "event_batches": 99,
+      "wall_time_seconds": 17.347352486998716
+    },
+    "semantic_event_audit": {
+      "checked_events": 101,
+      "maximum_absolute_error_seconds": {
+        "backward_headway": 0.0,
+        "base_dwell": 0.0,
+        "event_clock": 0.0,
+        "forward_headway": 0.0,
+        "target_backward_headway": 0.0,
+        "target_forward_headway": 0.0
+      },
+      "violations": []
+    }
+  },
+  "protocol": {
+    "episode_seconds": 3600,
+    "minimum_selection_time_seconds": 1200.0,
+    "requested_additional_hold_seconds": 60.0,
+    "seed": 42,
+    "selection_rule": "first nonterminal event after the minimum time with observed predecessor and active follower plus an eligible passenger scheduled to appear within the hold window",
+    "simulation_step_tolerance_seconds": 2.0
+  },
+  "provenance": {
+    "git_head": "cdaafcc0c4613c4a006669afd790c368a7190a1e",
+    "git_status_porcelain": "M SimpleSAC/bus_replay_buffer.py\n M SimpleSAC/bus_sampler.py\n M SimpleSAC/eval_with_metrics.py\n M SimpleSAC/h2o+_bus_main.py\n M SimpleSAC/h2o+_main.py\n M SimpleSAC/h2oplus_bus.py\n M SimpleSAC/h2oplus_ensemble.py\n M SimpleSAC/mixed_replay_buffer.py\n D SimpleSAC/run_full_experiments.sh\n M SimpleSAC/train_offline_ensemble.py\n M SimpleSAC/utils.py\n M bus_h2o/calibrate_speeds.py\n M bus_h2o/common/data_utils.py\n M bus_h2o/data/extract_sumo_network.py\n M bus_h2o/envs/sumo_gym_env.py\n M bus_h2o/sim_core/bus.py\n M bus_h2o/sim_core/route.py\n M bus_h2o/sim_core/sim.py\n M bus_h2o/sumo_env/case/f_8_create_obj.py\n M bus_h2o/sumo_env/rl_bridge.py\n M bus_h2o/sumo_env/rl_env.py\n M bus_h2o/sumo_env/sumo_snapshot.py\n M bus_h2o/train_discriminator.py\n M bus_h2o/train_sim.py\n M collect_policy/merge_v2_lazy.py\n M viskit/logging.py\n?? SimpleSAC/aggregate_multiseed.py\n?? SimpleSAC/check_bc_checkpoints.py\n?? SimpleSAC/deploy/\n?? SimpleSAC/dispatch_r3_evals.py\n?? SimpleSAC/dispatch_r3_nosnap_evals.py\n?? SimpleSAC/eval_daganzo.py\n?? SimpleSAC/evaluate_simulator_v4.py\n?? SimpleSAC/evaluate_transit_v3.py\n?? SimpleSAC/evaluate_transit_v4.py\n?? SimpleSAC/evaluate_transit_v5.py\n?? SimpleSAC/evaluate_transit_v6.py\n?? SimpleSAC/paired_analysis.py\n?? SimpleSAC/r3_rlpd_missing_eval_supervisor.py\n?? SimpleSAC/rollout_sim_for_verification.py\n?? SimpleSAC/run_bc_queue.sh\n?? SimpleSAC/run_full_experiments_H2O+.sh\n?? SimpleSAC/run_h2oplus_minimal_ablation.sh\n?? SimpleSAC/run_multiseed_eval.sh\n?? SimpleSAC/run_p4_hold_calibration.sh\n?? SimpleSAC/train_awac_bus.py\n?? SimpleSAC/train_bc.py\n?? SimpleSAC/train_iql_bus.py\n?? SimpleSAC/train_td3bc_bus.py\n?? SimpleSAC/train_transit_v3.py\n?? SimpleSAC/train_transit_v4.py\n?? SimpleSAC/train_transit_v5.py\n?? SimpleSAC/train_transit_v6.py\n?? SimpleSAC/transit_v3/\n?? SimpleSAC/transit_v4/\n?? SimpleSAC/transit_v5/\n?? SimpleSAC/transit_v6/\n?? SimpleSAC/verify_assumption1.py\n?? bus_h2o/calibrated_env/fidelity_audit_v6_formal_v1.json\n?? bus_h2o/calibrated_env/fidelity_audit_v6_formal_v2.json\n?? bus_h2o/calibrated_env/fidelity_audit_v6_formal_v3.json\n?? bus_h2o/calibrated_env/fidelity_audit_v6_formal_v4.json\n?? bus_h2o/calibrated_env/fidelity_audit_v6_formal_v5.json\n?? bus_h2o/calibrated_env/fidelity_audit_v6_formal_v6.json\n?? bus_h2o/calibrated_env/fidelity_audit_v6_pilot.json\n?? bus_h2o/calibrated_env/segment_runtime_calibration_v4.json\n?? bus_h2o/calibrated_env/simulator_demand_calibration.json\n?? bus_h2o/calibrated_env/simulator_journeys_v1.json\n?? bus_h2o/daganzo_policy.py\n?? bus_h2o/datasets_v3/\n?? bus_h2o/datasets_v4/\n?? bus_h2o/datasets_v5/\n?? bus_h2o/datasets_v6/\n?? bus_h2o/envs/all_lines_sim_env.py\n?? bus_h2o/envs/all_lines_sumo_env.py\n?? bus_h2o/evaluation_scenarios/\n?? bus_h2o/mdp_contract.py\n?? bus_h2o/mdp_contract_v4.py\n?? bus_h2o/mdp_contract_v5.py\n?? bus_h2o/mdp_contract_v6.py\n?? bus_h2o/passenger_time.py\n?? bus_h2o/sim_core/journey.py\n?? bus_h2o/sumo_provenance.py\n?? bus_h2o/training_scenarios_v5/\n?? bus_h2o/training_scenarios_v6/\n?? collect_policy/build_canonical_v3.py\n?? collect_policy/build_transit_v4_dataset.py\n?? collect_policy/build_transit_v5_dataset.py\n?? collect_policy/build_transit_v6_dataset.py\n?? collect_policy/collect_transit_v4.py\n?? collect_policy/collect_transit_v5.py\n?? collect_policy/collect_transit_v6.py\n?? collect_policy/rebuild_lazy_snapshot_index.sh\n?? collect_policy/validate_lazy_snapshot_index.py\n?? experiment_output_v5/\n?? experiment_output_v6/\n?? experiment_output_v7/\n?? paper/\n?? pytest.ini\n?? reproducibility/",
+    "inputs": [
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/audit_transition_semantics_v7.py",
+        "sha256": "2848509ecf40126d2f9d10bce104e9e9595f6c8b282cd613db9256c638ee02ea",
+        "size_bytes": 26881
+      },
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py",
+        "sha256": "fa71863a1b010f513849b6b9568cd3682ba7f71cc3b3b0ac4cb632dad9cd560b",
+        "size_bytes": 56720
+      },
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py",
+        "sha256": "f4d5feefa32b5a2e787fcb01f33ba73e3dd77d49db729d5c60cfd57b77c66012",
+        "size_bytes": 8270
+      },
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml",
+        "sha256": "7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332",
+        "size_bytes": 218210
+      },
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/control_sim_traci_period.sumocfg",
+        "sha256": "49b2b97e0e6ea41af100cfe5cc169f75f98eca5a7d6540a9b77e62c434c07023",
+        "size_bytes": 4648
+      },
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml",
+        "sha256": "1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd",
+        "size_bytes": 30443
+      },
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_line.add.xml",
+        "sha256": "3436791192adf67e927873637a61718471dabe1afc03b1b679db4ba0327560aa",
+        "size_bytes": 298343
+      },
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_passenger.add.xml",
+        "sha256": "405b6e0d8dd00fe5b03aecd4d67d58076bf33d0c68bc05b1a807ff4aa76fd3ef",
+        "size_bytes": 3662745
+      },
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_stop.add.xml",
+        "sha256": "afd2d4099971465258e5acc86943ae34ef9191638b72665516b4888687c392b8",
+        "size_bytes": 41034
+      },
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/bus.py",
+        "sha256": "a088753355fb1a392a870add678346af0a709c0a5d7097e88ec37a801b43d29e",
+        "size_bytes": 30357
+      },
+      {
+        "path": "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/passenger.py",
+        "sha256": "ea973ae4919dd30e0b1274dea5a128b3ee49d241313c9c65d15f01df91afaf06",
+        "size_bytes": 5724
+      }
+    ],
+    "numpy": "2.2.6",
+    "python": "3.10.12",
+    "sumo_version": "Eclipse SUMO sumo 1.27.1\n Build features: Linux-6.8.0-117-generic x86_64 GNU 11.4.0 Release FMI Proj GUI Intl SWIG Eigen GDAL GL2PS\n Copyright (C) 2001-2026 German Aerospace Center (DLR) and others; https://sumo.dlr.de\n\nEclipse SUMO sumo 1.27.1 is part of SUMO.\nThis program and the accompanying materials\nare made available under the terms of the Eclipse Public License v2.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v20.html\nThis program may also be made available under the following Secondary\nLicenses when the conditions for such availability set forth in the Eclipse\nPublic License 2.0 are satisfied: GNU General Public License, version 2\nor later which is available at\nhttps://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html\nSPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later"
+  },
+  "runtime": {
+    "wall_time_seconds": 33.831884345003346
+  },
+  "schema_version": "transit-transition-semantics-audit-v7-v1",
+  "status": "failed",
+  "zero_action_trajectory": {
+    "actual_departure_time_seconds": 1563.0,
+    "actual_postdecision_stop_seconds": 2.0,
+    "actual_total_stop_seconds": 6.0,
+    "applied_hold_seconds": 0.0,
+    "future_passenger_outcomes": [
+      {
+        "boarded_bus_id": "",
+        "boarding_time_seconds": null,
+        "next_stop_id": "7X19_102X32",
+        "passenger_id": "workday6_7350.0",
+        "scheduled_appearance_time_seconds": 1562.08,
+        "state_at_next_stop_event": "Stop"
+      }
+    ],
+    "intervention": {
+      "arrival_time_seconds": 1557.0,
+      "backward_bus_present": true,
+      "backward_headway_seconds": 312.39018924885363,
+      "base_dwell_seconds": 4.0,
+      "bus_id": "7X_2",
+      "eligible_stranded_passengers": 0,
+      "event_time_seconds": 1561.0,
+      "forward_bus_present": true,
+      "forward_headway_seconds": 634.0,
+      "future_eligible_passengers": [
+        {
+          "next_stop_id": "7X19_102X32",
+          "passenger_id": "workday6_7350.0",
+          "scheduled_appearance_time_seconds": 1562.08
+        }
+      ],
+      "line_id": "7X",
+      "onboard_passengers": 0,
+      "predicted_departure_time_seconds": 1561.0,
+      "segment_mean_speed_mps": 13.89,
+      "service_completion_time_seconds": 1561.0,
+      "stop_id": "7X13_102X26_705X27",
+      "stop_index": 12,
+      "target_backward_headway_seconds": 600.0,
+      "target_forward_headway_seconds": 600.0
+    },
+    "next_event": {
+      "arrival_time_seconds": 1629.0,
+      "backward_bus_present": true,
+      "backward_headway_seconds": 332.61467116057946,
+      "base_dwell_seconds": 4.0,
+      "bus_id": "7X_2",
+      "eligible_stranded_passengers": 0,
+      "event_time_seconds": 1633.0,
+      "forward_bus_present": true,
+      "forward_headway_seconds": 633.0,
+      "line_id": "7X",
+      "onboard_passengers": 0,
+      "segment_mean_speed_mps": 13.89,
+      "service_completion_time_seconds": 1633.0,
+      "stop_id": "7X14_102X27_705X28",
+      "stop_index": 13,
+      "target_backward_headway_seconds": 600.0,
+      "target_forward_headway_seconds": 600.0
+    },
+    "runtime": {
+      "event_batches": 90,
+      "wall_time_seconds": 16.059800028997415
+    },
+    "semantic_event_audit": {
+      "checked_events": 91,
+      "maximum_absolute_error_seconds": {
+        "backward_headway": 0.0,
+        "base_dwell": 0.0,
+        "event_clock": 0.0,
+        "forward_headway": 0.0,
+        "target_backward_headway": 0.0,
+        "target_forward_headway": 0.0
+      },
+      "violations": []
+    }
+  }
+}

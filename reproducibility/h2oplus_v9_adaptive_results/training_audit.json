@@ -1,0 +1,1209 @@
+{
+  "artifact_integrity": {
+    "milestone_aliases": 48,
+    "passed": true,
+    "training_runs": 9
+  },
+  "controls": {
+    "authorization_sha256": "c99b2cb637018a67c04d3be8e088195c8ec9c4d05f3fcf02ca7e672b967f0fa6",
+    "correction_sha256": "24af17a218a8cac45c630085641bef460c116f8d72f37c6d4ea41ff46ff04f22",
+    "freeze_sha256": "b3265d5e55e4df53afacd50c9f54cc3530a5d8f28a7d3eceec217655dc9bd822",
+    "plan_sha256": "bfee11ccbcb45cdbd7eb63996bb330aa782f4a9e98364957423892002c76a4e9",
+    "protocol_sha256": "e0652db511c5ca46e0e14801895bdfdc57761223842a4e30673075b9163d3c7d",
+    "registration_sha256": "f4f6922324ef518acde9b5489328bf13c7154012dfd6f4cc2b61797adb90785e",
+    "submission_sha256": "bbc48c062dd295764f2ca41ba3a348e3e3e14cb401e0ed4d796251c992076d20"
+  },
+  "created_utc": "2026-08-17T06:39:12.708066+00:00",
+  "development_scientific_diagnostics": {
+    "intervention_attribution_available": false,
+    "ratio_gate_open_runs": [],
+    "ratio_gate_relevant_runs": 6,
+    "ratio_intervention_ever_applied": false,
+    "stability_failures": [
+      {
+        "run": "h2oplus_v9_adaptation_seed6202",
+        "violations": [
+          {
+            "epoch": 43,
+            "metric": "hold_probability",
+            "value": 0.001664580311626196
+          },
+          {
+            "epoch": 46,
+            "metric": "hold_probability",
+            "value": 9.777223795026657e-07
+          },
+          {
+            "epoch": 46,
+            "metric": "positive_action_mean",
+            "value": -0.9942648410797119
+          },
+          {
+            "epoch": 47,
+            "metric": "hold_probability",
+            "value": 1.0330091271271158e-07
+          },
+          {
+            "epoch": 47,
+            "metric": "positive_action_mean",
+            "value": -0.9979299902915955
+          },
+          {
+            "epoch": 48,
+            "metric": "hold_probability",
+            "value": 2.231586080370107e-07
+          },
+          {
+            "epoch": 48,
+            "metric": "positive_action_mean",
+            "value": -0.9917771816253662
+          }
+        ]
+      }
+    ],
+    "stability_passed": false,
+    "training_rewards_support_held_out_effect_claim": false
+  },
+  "file_manifest": {
+    "bytes": 40465,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/training_file_manifest.json",
+    "sha256": "010ddf60b394230cdeb28edd32e4df52d189d754c1a2a2301e9c40f0ed46f4ce"
+  },
+  "formal_held_out_outcomes_read": false,
+  "runs": [
+    {
+      "blocked_atomic_batch": 2,
+      "completed_epochs": 40,
+      "event_cap": 25000,
+      "events": 24999,
+      "export_summary": {
+        "bytes": 881,
+        "path": "h2oplus_v9_ratio_gated_seed6201/v9_export_summary.json",
+        "sha256": "478904d3f50c0e4f8df27176d1d126951f7116f05dd4775ea82d6fc479f42c5b"
+      },
+      "maximum_simultaneous_decisions": 7,
+      "metadata": {
+        "bytes": 37075,
+        "path": "h2oplus_v9_ratio_gated_seed6201/metadata.json",
+        "sha256": "99854460104a2fe4eeee1efb9b9b911c86ec4d86de2a27271e24151531adad9a"
+      },
+      "policy_manifest": {
+        "bytes": 4257,
+        "path": "h2oplus_v9_ratio_gated_seed6201/v9_policies/policy_manifest.json",
+        "sha256": "4926e5e4e8fe7f4081087f1abc2dd3d3f7c54370ccdcf6cf3faa31a75c7ad3fa"
+      },
+      "ratio_gate": {
+        "first_validation_epoch": 18,
+        "gate_ever_opened": false,
+        "gate_open_epochs": [],
+        "last_validation": {
+          "ratio/validation_available": 1.0,
+          "ratio/validation_clip_fraction": 0.7890625,
+          "ratio/validation_ess_fraction": 1.0,
+          "ratio/validation_high_clip_fraction": 0.7890625,
+          "ratio/validation_joint_accuracy": 0.490234375,
+          "ratio/validation_joint_auc": 0.4844818115234375,
+          "ratio/validation_joint_brier": 0.4810773730278015,
+          "ratio/validation_joint_loss": 3.119455575942993,
+          "ratio/validation_joint_real_logit_mean": 5.225121021270752,
+          "ratio/validation_joint_sim_logit_mean": 5.990211486816406,
+          "ratio/validation_log_weight_mean": 0.36682868003845215,
+          "ratio/validation_log_weight_std": 0.9001141786575317,
+          "ratio/validation_loss": 6.096792221069336,
+          "ratio/validation_low_clip_fraction": 0.0,
+          "ratio/validation_raw_ess_fraction": 0.03416333720088005,
+          "ratio/validation_state_action_accuracy": 0.48046875,
+          "ratio/validation_state_action_auc": 0.43115234375,
+          "ratio/validation_state_action_brier": 0.4838050603866577,
+          "ratio/validation_state_action_loss": 2.9773366451263428,
+          "ratio/validation_state_action_real_logit_mean": 4.817653656005859,
+          "ratio/validation_state_action_sim_logit_mean": 5.623382568359375,
+          "ratio/validation_v9_failure_streak": 22.0,
+          "ratio/validation_v9_gate_open": 0.0,
+          "ratio/validation_v9_gate_pass": 0.0,
+          "ratio/validation_v9_pass_streak": 0.0,
+          "ratio/validation_v9_tempering_exponent": 0.0,
+          "ratio/validation_v9_validation_count": 23.0,
+          "ratio/validation_weight_max": 1.0,
+          "ratio/validation_weight_mean": 1.0,
+          "ratio/validation_weight_min": 1.0
+        },
+        "ratio_intervention_applied": false,
+        "reliability_gate_configured": true,
+        "validation_pass_epochs": [
+          18
+        ],
+        "validation_rows": 23
+      },
+      "run": "h2oplus_v9_ratio_gated_seed6201",
+      "scientific_stability": {
+        "maximum_absolute_positive_action_mean": 0.7417349219322205,
+        "maximum_actor_grad_norm": 0.5118778944015503,
+        "maximum_critic_grad_norm": 113.85704040527344,
+        "maximum_hold_probability": 0.8771151304244995,
+        "minimum_hold_probability": 0.5244556665420532,
+        "passed": true,
+        "thresholds": {
+          "maximum_absolute_positive_action_mean": 0.98,
+          "maximum_critic_grad_norm": 1000000.0,
+          "maximum_hold_probability": 0.99,
+          "minimum_hold_probability": 0.01
+        },
+        "violations": []
+      },
+      "seed": 6201,
+      "summary": {
+        "bytes": 10028,
+        "path": "h2oplus_v9_ratio_gated_seed6201/summary.json",
+        "sha256": "ece5b3d196ec5498fe002d39fc3f1243743dce14ba94152d2023757f0f8d20ed"
+      },
+      "total_updates": 70000,
+      "training_admission": {
+        "bytes": 21602,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_training_admissions_v2/h2oplus_v9_ratio_gated_seed6201.json",
+        "sha256": "d67ce9fe6626b591399452179039e0459a994005f802bf692e3893e491dcab52"
+      },
+      "underfill": 1,
+      "variant": "ratio-gated",
+      "zero_and_warmup_actor_identical": true
+    },
+    {
+      "blocked_atomic_batch": 0,
+      "completed_epochs": 40,
+      "event_cap": 25000,
+      "events": 25000,
+      "export_summary": {
+        "bytes": 881,
+        "path": "h2oplus_v9_ratio_gated_seed6202/v9_export_summary.json",
+        "sha256": "48acbf0825f8f7ee97afe83b4c4b2863c6722502abadc5dc27ea3f6b3a403537"
+      },
+      "maximum_simultaneous_decisions": 8,
+      "metadata": {
+        "bytes": 36855,
+        "path": "h2oplus_v9_ratio_gated_seed6202/metadata.json",
+        "sha256": "21da0fd92d4413aa92176af756a842660cc16375c29177325c00601857708572"
+      },
+      "policy_manifest": {
+        "bytes": 4256,
+        "path": "h2oplus_v9_ratio_gated_seed6202/v9_policies/policy_manifest.json",
+        "sha256": "5571b3983a11db1ab7e53826e7342d4d6e1def5ebc61548636da21c12ea72f30"
+      },
+      "ratio_gate": {
+        "first_validation_epoch": 18,
+        "gate_ever_opened": false,
+        "gate_open_epochs": [],
+        "last_validation": {
+          "ratio/validation_available": 1.0,
+          "ratio/validation_clip_fraction": 0.64453125,
+          "ratio/validation_ess_fraction": 1.0,
+          "ratio/validation_high_clip_fraction": 0.64453125,
+          "ratio/validation_joint_accuracy": 0.451171875,
+          "ratio/validation_joint_auc": 0.510711669921875,
+          "ratio/validation_joint_brier": 0.5068089365959167,
+          "ratio/validation_joint_loss": 3.0643200874328613,
+          "ratio/validation_joint_real_logit_mean": 4.710058212280273,
+          "ratio/validation_joint_sim_logit_mean": 5.588137626647949,
+          "ratio/validation_log_weight_mean": 0.2975803315639496,
+          "ratio/validation_log_weight_std": 1.0387473106384277,
+          "ratio/validation_loss": 5.988707065582275,
+          "ratio/validation_low_clip_fraction": 0.0,
+          "ratio/validation_raw_ess_fraction": 0.16386164724826813,
+          "ratio/validation_state_action_accuracy": 0.439453125,
+          "ratio/validation_state_action_auc": 0.4804534912109375,
+          "ratio/validation_state_action_brier": 0.5034060478210449,
+          "ratio/validation_state_action_loss": 2.924386978149414,
+          "ratio/validation_state_action_real_logit_mean": 4.282696723937988,
+          "ratio/validation_state_action_sim_logit_mean": 5.290556907653809,
+          "ratio/validation_v9_failure_streak": 23.0,
+          "ratio/validation_v9_gate_open": 0.0,
+          "ratio/validation_v9_gate_pass": 0.0,
+          "ratio/validation_v9_pass_streak": 0.0,
+          "ratio/validation_v9_tempering_exponent": 0.0,
+          "ratio/validation_v9_validation_count": 23.0,
+          "ratio/validation_weight_max": 1.0,
+          "ratio/validation_weight_mean": 1.0,
+          "ratio/validation_weight_min": 1.0
+        },
+        "ratio_intervention_applied": false,
+        "reliability_gate_configured": true,
+        "validation_pass_epochs": [],
+        "validation_rows": 23
+      },
+      "run": "h2oplus_v9_ratio_gated_seed6202",
+      "scientific_stability": {
+        "maximum_absolute_positive_action_mean": 0.7872912883758545,
+        "maximum_actor_grad_norm": 0.6125244498252869,
+        "maximum_critic_grad_norm": 120.50176239013672,
+        "maximum_hold_probability": 0.6653510332107544,
+        "minimum_hold_probability": 0.42963528633117676,
+        "passed": true,
+        "thresholds": {
+          "maximum_absolute_positive_action_mean": 0.98,
+          "maximum_critic_grad_norm": 1000000.0,
+          "maximum_hold_probability": 0.99,
+          "minimum_hold_probability": 0.01
+        },
+        "violations": []
+      },
+      "seed": 6202,
+      "summary": {
+        "bytes": 10030,
+        "path": "h2oplus_v9_ratio_gated_seed6202/summary.json",
+        "sha256": "268dde37346ff6808c761be4b35e4363d70b9d4a5a8eb9b37dcb4fe32659b922"
+      },
+      "total_updates": 70000,
+      "training_admission": {
+        "bytes": 21602,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_training_admissions_v2/h2oplus_v9_ratio_gated_seed6202.json",
+        "sha256": "71dc350d8fe91bbb20ceb0caf01ebc0de1ca11da26a3b6a9c245a3da022f7ef7"
+      },
+      "underfill": 0,
+      "variant": "ratio-gated",
+      "zero_and_warmup_actor_identical": true
+    },
+    {
+      "blocked_atomic_batch": 0,
+      "completed_epochs": 40,
+      "event_cap": 25000,
+      "events": 25000,
+      "export_summary": {
+        "bytes": 881,
+        "path": "h2oplus_v9_ratio_gated_seed6203/v9_export_summary.json",
+        "sha256": "f722fa10c0a989f44f48e3cb8081e882a8676147ffbe9d7e0984ab9c1d0b5e04"
+      },
+      "maximum_simultaneous_decisions": 6,
+      "metadata": {
+        "bytes": 37075,
+        "path": "h2oplus_v9_ratio_gated_seed6203/metadata.json",
+        "sha256": "5a08f12b7518cfc0e34483afcd70f88c2f268d6926c13765f5b50a9d5a9de47e"
+      },
+      "policy_manifest": {
+        "bytes": 4256,
+        "path": "h2oplus_v9_ratio_gated_seed6203/v9_policies/policy_manifest.json",
+        "sha256": "003624d9a73004a224abc507a0b6cd4472fd636bd7c3151f4211c1e7eef3e755"
+      },
+      "ratio_gate": {
+        "first_validation_epoch": 18,
+        "gate_ever_opened": false,
+        "gate_open_epochs": [],
+        "last_validation": {
+          "ratio/validation_available": 1.0,
+          "ratio/validation_clip_fraction": 0.73828125,
+          "ratio/validation_ess_fraction": 1.0,
+          "ratio/validation_high_clip_fraction": 0.73828125,
+          "ratio/validation_joint_accuracy": 0.451171875,
+          "ratio/validation_joint_auc": 0.45709228515625,
+          "ratio/validation_joint_brier": 0.5099157094955444,
+          "ratio/validation_joint_loss": 3.268256664276123,
+          "ratio/validation_joint_real_logit_mean": 4.884260177612305,
+          "ratio/validation_joint_sim_logit_mean": 6.097993850708008,
+          "ratio/validation_log_weight_mean": 0.42923277616500854,
+          "ratio/validation_log_weight_std": 0.9426891207695007,
+          "ratio/validation_loss": 6.3384199142456055,
+          "ratio/validation_low_clip_fraction": 0.0,
+          "ratio/validation_raw_ess_fraction": 0.07858259230852127,
+          "ratio/validation_state_action_accuracy": 0.44140625,
+          "ratio/validation_state_action_auc": 0.456329345703125,
+          "ratio/validation_state_action_brier": 0.5060782432556152,
+          "ratio/validation_state_action_loss": 3.0701634883880615,
+          "ratio/validation_state_action_real_logit_mean": 4.499422073364258,
+          "ratio/validation_state_action_sim_logit_mean": 5.668761253356934,
+          "ratio/validation_v9_failure_streak": 23.0,
+          "ratio/validation_v9_gate_open": 0.0,
+          "ratio/validation_v9_gate_pass": 0.0,
+          "ratio/validation_v9_pass_streak": 0.0,
+          "ratio/validation_v9_tempering_exponent": 0.0,
+          "ratio/validation_v9_validation_count": 23.0,
+          "ratio/validation_weight_max": 1.0,
+          "ratio/validation_weight_mean": 1.0,
+          "ratio/validation_weight_min": 1.0
+        },
+        "ratio_intervention_applied": false,
+        "reliability_gate_configured": true,
+        "validation_pass_epochs": [],
+        "validation_rows": 23
+      },
+      "run": "h2oplus_v9_ratio_gated_seed6203",
+      "scientific_stability": {
+        "maximum_absolute_positive_action_mean": 0.8349661827087402,
+        "maximum_actor_grad_norm": 1.026910424232483,
+        "maximum_critic_grad_norm": 116.31925964355469,
+        "maximum_hold_probability": 0.7048009634017944,
+        "minimum_hold_probability": 0.4351049065589905,
+        "passed": true,
+        "thresholds": {
+          "maximum_absolute_positive_action_mean": 0.98,
+          "maximum_critic_grad_norm": 1000000.0,
+          "maximum_hold_probability": 0.99,
+          "minimum_hold_probability": 0.01
+        },
+        "violations": []
+      },
+      "seed": 6203,
+      "summary": {
+        "bytes": 10028,
+        "path": "h2oplus_v9_ratio_gated_seed6203/summary.json",
+        "sha256": "cfbc775717acf0bf6fa149646d2e76a6f26fd82782f667986c01860d79187c74"
+      },
+      "total_updates": 70000,
+      "training_admission": {
+        "bytes": 21602,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_training_admissions_v2/h2oplus_v9_ratio_gated_seed6203.json",
+        "sha256": "1734919db0d33c99e0895b7db18fc10267f38db10e680641d651555e4cb7d383"
+      },
+      "underfill": 0,
+      "variant": "ratio-gated",
+      "zero_and_warmup_actor_identical": true
+    },
+    {
+      "blocked_atomic_batch": 0,
+      "completed_epochs": 48,
+      "event_cap": 25000,
+      "events": 25000,
+      "export_summary": {
+        "bytes": 879,
+        "path": "h2oplus_v9_adaptation_seed6201/v9_export_summary.json",
+        "sha256": "45d4ae688312772c5ca30f07ce197c0f9ce990b38617e28dc8dcb98f67f53129"
+      },
+      "maximum_simultaneous_decisions": 6,
+      "metadata": {
+        "bytes": 37364,
+        "path": "h2oplus_v9_adaptation_seed6201/metadata.json",
+        "sha256": "63fc891193bd70cd37f79c8ca83f3d8400971a0464cad28f8dc87878ef21548b"
+      },
+      "policy_manifest": {
+        "bytes": 6191,
+        "path": "h2oplus_v9_adaptation_seed6201/v9_policies/policy_manifest.json",
+        "sha256": "32acddea941f994d22fe28e4addb61c7ab49be9902d9028f2480f6b980b95ae0"
+      },
+      "ratio_gate": {
+        "first_validation_epoch": 26,
+        "gate_ever_opened": false,
+        "gate_open_epochs": [],
+        "last_validation": {
+          "ratio/validation_available": 1.0,
+          "ratio/validation_clip_fraction": 0.765625,
+          "ratio/validation_ess_fraction": 0.9518398642539978,
+          "ratio/validation_high_clip_fraction": 0.765625,
+          "ratio/validation_joint_accuracy": 0.5234375,
+          "ratio/validation_joint_auc": 0.639495849609375,
+          "ratio/validation_joint_brier": 0.4334558844566345,
+          "ratio/validation_joint_loss": 2.3394391536712646,
+          "ratio/validation_joint_real_logit_mean": 5.150763511657715,
+          "ratio/validation_joint_sim_logit_mean": 3.966864585876465,
+          "ratio/validation_log_weight_mean": 0.8897491693496704,
+          "ratio/validation_log_weight_std": 1.456436038017273,
+          "ratio/validation_loss": 4.2727203369140625,
+          "ratio/validation_low_clip_fraction": 0.0,
+          "ratio/validation_raw_ess_fraction": 0.06188305839896202,
+          "ratio/validation_state_action_accuracy": 0.537109375,
+          "ratio/validation_state_action_auc": 0.644439697265625,
+          "ratio/validation_state_action_brier": 0.40182313323020935,
+          "ratio/validation_state_action_loss": 1.9332809448242188,
+          "ratio/validation_state_action_real_logit_mean": 4.519409656524658,
+          "ratio/validation_state_action_sim_logit_mean": 3.077115535736084,
+          "ratio/validation_weight_max": 1.0,
+          "ratio/validation_weight_mean": 0.9097785949707031,
+          "ratio/validation_weight_min": 0.030259104445576668
+        },
+        "ratio_intervention_applied": null,
+        "reliability_gate_configured": false,
+        "validation_pass_epochs": [],
+        "validation_rows": 23
+      },
+      "run": "h2oplus_v9_adaptation_seed6201",
+      "scientific_stability": {
+        "maximum_absolute_positive_action_mean": 0.9065888524055481,
+        "maximum_actor_grad_norm": 0.7050424218177795,
+        "maximum_critic_grad_norm": 127.99945068359375,
+        "maximum_hold_probability": 0.8188371658325195,
+        "minimum_hold_probability": 0.05386589467525482,
+        "passed": true,
+        "thresholds": {
+          "maximum_absolute_positive_action_mean": 0.98,
+          "maximum_critic_grad_norm": 1000000.0,
+          "maximum_hold_probability": 0.99,
+          "minimum_hold_probability": 0.01
+        },
+        "violations": []
+      },
+      "seed": 6201,
+      "summary": {
+        "bytes": 9788,
+        "path": "h2oplus_v9_adaptation_seed6201/summary.json",
+        "sha256": "ddccd7803325529d37bb0c7f0b34d875544b8b72d026183d177dd28c5e1140e5"
+      },
+      "total_updates": 74000,
+      "training_admission": {
+        "bytes": 21869,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_training_admissions_v2/h2oplus_v9_adaptation_seed6201.json",
+        "sha256": "8441db1e29ec8d823c6f071f3107b2681fee5a298a9d33670d7fc09fdfbd2c16"
+      },
+      "underfill": 0,
+      "variant": "adaptation",
+      "zero_and_warmup_actor_identical": true
+    },
+    {
+      "blocked_atomic_batch": 0,
+      "completed_epochs": 48,
+      "event_cap": 25000,
+      "events": 25000,
+      "export_summary": {
+        "bytes": 879,
+        "path": "h2oplus_v9_adaptation_seed6202/v9_export_summary.json",
+        "sha256": "fcc98e12dd58f0a3709bebfe4454009392ea6a523b43d390b3543d71bb230bb3"
+      },
+      "maximum_simultaneous_decisions": 7,
+      "metadata": {
+        "bytes": 37144,
+        "path": "h2oplus_v9_adaptation_seed6202/metadata.json",
+        "sha256": "09bf0ff1533644ad12338c185bc679395839c4044c3be8f1fb18bb897870e88f"
+      },
+      "policy_manifest": {
+        "bytes": 6191,
+        "path": "h2oplus_v9_adaptation_seed6202/v9_policies/policy_manifest.json",
+        "sha256": "7ee980939604b6d0030156bf9a52b340b30a363a7be5b72f5766eddb4554ded5"
+      },
+      "ratio_gate": {
+        "first_validation_epoch": 26,
+        "gate_ever_opened": false,
+        "gate_open_epochs": [],
+        "last_validation": {
+          "ratio/validation_available": 1.0,
+          "ratio/validation_clip_fraction": 0.55078125,
+          "ratio/validation_ess_fraction": 0.8765017986297607,
+          "ratio/validation_high_clip_fraction": 0.55078125,
+          "ratio/validation_joint_accuracy": 0.56640625,
+          "ratio/validation_joint_auc": 0.660400390625,
+          "ratio/validation_joint_brier": 0.3946288228034973,
+          "ratio/validation_joint_loss": 2.213158369064331,
+          "ratio/validation_joint_real_logit_mean": 5.493128776550293,
+          "ratio/validation_joint_sim_logit_mean": 3.732347249984741,
+          "ratio/validation_log_weight_mean": 0.4475148320198059,
+          "ratio/validation_log_weight_std": 1.6344350576400757,
+          "ratio/validation_loss": 4.242249488830566,
+          "ratio/validation_low_clip_fraction": 0.0,
+          "ratio/validation_raw_ess_fraction": 0.027784403413534164,
+          "ratio/validation_state_action_accuracy": 0.560546875,
+          "ratio/validation_state_action_auc": 0.6475677490234375,
+          "ratio/validation_state_action_brier": 0.38462525606155396,
+          "ratio/validation_state_action_loss": 2.0290913581848145,
+          "ratio/validation_state_action_real_logit_mean": 4.995419502258301,
+          "ratio/validation_state_action_sim_logit_mean": 3.284832239151001,
+          "ratio/validation_weight_max": 1.0,
+          "ratio/validation_weight_mean": 0.787266731262207,
+          "ratio/validation_weight_min": 0.028693176805973053
+        },
+        "ratio_intervention_applied": null,
+        "reliability_gate_configured": false,
+        "validation_pass_epochs": [],
+        "validation_rows": 23
+      },
+      "run": "h2oplus_v9_adaptation_seed6202",
+      "scientific_stability": {
+        "maximum_absolute_positive_action_mean": 0.9979299902915955,
+        "maximum_actor_grad_norm": 0.42223885655403137,
+        "maximum_critic_grad_norm": 73.41471099853516,
+        "maximum_hold_probability": 0.6682453155517578,
+        "minimum_hold_probability": 1.0330091271271158e-07,
+        "passed": false,
+        "thresholds": {
+          "maximum_absolute_positive_action_mean": 0.98,
+          "maximum_critic_grad_norm": 1000000.0,
+          "maximum_hold_probability": 0.99,
+          "minimum_hold_probability": 0.01
+        },
+        "violations": [
+          {
+            "epoch": 43,
+            "metric": "hold_probability",
+            "value": 0.001664580311626196
+          },
+          {
+            "epoch": 46,
+            "metric": "hold_probability",
+            "value": 9.777223795026657e-07
+          },
+          {
+            "epoch": 46,
+            "metric": "positive_action_mean",
+            "value": -0.9942648410797119
+          },
+          {
+            "epoch": 47,
+            "metric": "hold_probability",
+            "value": 1.0330091271271158e-07
+          },
+          {
+            "epoch": 47,
+            "metric": "positive_action_mean",
+            "value": -0.9979299902915955
+          },
+          {
+            "epoch": 48,
+            "metric": "hold_probability",
+            "value": 2.231586080370107e-07
+          },
+          {
+            "epoch": 48,
+            "metric": "positive_action_mean",
+            "value": -0.9917771816253662
+          }
+        ]
+      },
+      "seed": 6202,
+      "summary": {
+        "bytes": 9778,
+        "path": "h2oplus_v9_adaptation_seed6202/summary.json",
+        "sha256": "028043a4f1fdece4c79e86e119efdf9214947f779ce91a0d6c5d960ca75c6628"
+      },
+      "total_updates": 74000,
+      "training_admission": {
+        "bytes": 21869,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_training_admissions_v2/h2oplus_v9_adaptation_seed6202.json",
+        "sha256": "b5aea7060a90e441557039e9d6851ea3db5773136b451bc5fdfa8c9f120d38fc"
+      },
+      "underfill": 0,
+      "variant": "adaptation",
+      "zero_and_warmup_actor_identical": true
+    },
+    {
+      "blocked_atomic_batch": 0,
+      "completed_epochs": 48,
+      "event_cap": 25000,
+      "events": 25000,
+      "export_summary": {
+        "bytes": 879,
+        "path": "h2oplus_v9_adaptation_seed6203/v9_export_summary.json",
+        "sha256": "5d8d3c9474a6791e852a2751fb0ac6d7f61ada367b73527456f81e23770fe066"
+      },
+      "maximum_simultaneous_decisions": 7,
+      "metadata": {
+        "bytes": 37364,
+        "path": "h2oplus_v9_adaptation_seed6203/metadata.json",
+        "sha256": "94357202558a1ecff6b2bc677cd5c16ef0cd3327932ed5ed4165f70f6fce812e"
+      },
+      "policy_manifest": {
+        "bytes": 6191,
+        "path": "h2oplus_v9_adaptation_seed6203/v9_policies/policy_manifest.json",
+        "sha256": "bbdfaf71165cf2f06cb6ea6b008f7a77ed256a55531aa3bd6cb954be2506bef7"
+      },
+      "ratio_gate": {
+        "first_validation_epoch": 26,
+        "gate_ever_opened": false,
+        "gate_open_epochs": [],
+        "last_validation": {
+          "ratio/validation_available": 1.0,
+          "ratio/validation_clip_fraction": 0.62109375,
+          "ratio/validation_ess_fraction": 0.8770480751991272,
+          "ratio/validation_high_clip_fraction": 0.62109375,
+          "ratio/validation_joint_accuracy": 0.55859375,
+          "ratio/validation_joint_auc": 0.6775665283203125,
+          "ratio/validation_joint_brier": 0.38826245069503784,
+          "ratio/validation_joint_loss": 1.9486404657363892,
+          "ratio/validation_joint_real_logit_mean": 4.958522319793701,
+          "ratio/validation_joint_sim_logit_mean": 3.171652317047119,
+          "ratio/validation_log_weight_mean": 0.5313453078269958,
+          "ratio/validation_log_weight_std": 1.7079211473464966,
+          "ratio/validation_loss": 3.6974549293518066,
+          "ratio/validation_low_clip_fraction": 0.0,
+          "ratio/validation_raw_ess_fraction": 0.03493823483586311,
+          "ratio/validation_state_action_accuracy": 0.546875,
+          "ratio/validation_state_action_auc": 0.65435791015625,
+          "ratio/validation_state_action_brier": 0.3840583562850952,
+          "ratio/validation_state_action_loss": 1.748814344406128,
+          "ratio/validation_state_action_real_logit_mean": 4.295816421508789,
+          "ratio/validation_state_action_sim_logit_mean": 2.6403071880340576,
+          "ratio/validation_weight_max": 1.0,
+          "ratio/validation_weight_mean": 0.8036746978759766,
+          "ratio/validation_weight_min": 0.01280745305120945
+        },
+        "ratio_intervention_applied": null,
+        "reliability_gate_configured": false,
+        "validation_pass_epochs": [],
+        "validation_rows": 23
+      },
+      "run": "h2oplus_v9_adaptation_seed6203",
+      "scientific_stability": {
+        "maximum_absolute_positive_action_mean": 0.6956497430801392,
+        "maximum_actor_grad_norm": 0.4640759825706482,
+        "maximum_critic_grad_norm": 85.41139221191406,
+        "maximum_hold_probability": 0.8991000652313232,
+        "minimum_hold_probability": 0.5152841210365295,
+        "passed": true,
+        "thresholds": {
+          "maximum_absolute_positive_action_mean": 0.98,
+          "maximum_critic_grad_norm": 1000000.0,
+          "maximum_hold_probability": 0.99,
+          "minimum_hold_probability": 0.01
+        },
+        "violations": []
+      },
+      "seed": 6203,
+      "summary": {
+        "bytes": 9794,
+        "path": "h2oplus_v9_adaptation_seed6203/summary.json",
+        "sha256": "d616f5736316a2bae692be18aad41665a204164ab5be567a0684225828c640ed"
+      },
+      "total_updates": 74000,
+      "training_admission": {
+        "bytes": 21869,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_training_admissions_v2/h2oplus_v9_adaptation_seed6203.json",
+        "sha256": "3c7712310a260f7eb0d02f8dbdee1b0745626dd8acc2a4fc7f1740ebaeb368af"
+      },
+      "underfill": 0,
+      "variant": "adaptation",
+      "zero_and_warmup_actor_identical": true
+    },
+    {
+      "blocked_atomic_batch": 3,
+      "completed_epochs": 48,
+      "event_cap": 25000,
+      "events": 24998,
+      "export_summary": {
+        "bytes": 875,
+        "path": "h2oplus_v9_combined_seed6201/v9_export_summary.json",
+        "sha256": "f7098138710b59fcfb389b6e968907ad58153b4250c5ed129022d004340ede14"
+      },
+      "maximum_simultaneous_decisions": 7,
+      "metadata": {
+        "bytes": 37346,
+        "path": "h2oplus_v9_combined_seed6201/metadata.json",
+        "sha256": "792c3ff459dd288c9ac4338075c35764ea71f4ea1a58fbf1382ef58bd6e1ff53"
+      },
+      "policy_manifest": {
+        "bytes": 6190,
+        "path": "h2oplus_v9_combined_seed6201/v9_policies/policy_manifest.json",
+        "sha256": "b312e06dcc407f9e3305ce917de0d9db71cb94f81ab261f2b97eb5f3fd948546"
+      },
+      "ratio_gate": {
+        "first_validation_epoch": 26,
+        "gate_ever_opened": false,
+        "gate_open_epochs": [],
+        "last_validation": {
+          "ratio/validation_available": 1.0,
+          "ratio/validation_clip_fraction": 0.625,
+          "ratio/validation_ess_fraction": 1.0,
+          "ratio/validation_high_clip_fraction": 0.625,
+          "ratio/validation_joint_accuracy": 0.533203125,
+          "ratio/validation_joint_auc": 0.6986541748046875,
+          "ratio/validation_joint_brier": 0.41908496618270874,
+          "ratio/validation_joint_loss": 2.061171293258667,
+          "ratio/validation_joint_real_logit_mean": 5.274156093597412,
+          "ratio/validation_joint_sim_logit_mean": 3.53067946434021,
+          "ratio/validation_log_weight_mean": 0.4608902335166931,
+          "ratio/validation_log_weight_std": 1.684561014175415,
+          "ratio/validation_loss": 3.9196367263793945,
+          "ratio/validation_low_clip_fraction": 0.0,
+          "ratio/validation_raw_ess_fraction": 0.03259195387363434,
+          "ratio/validation_state_action_accuracy": 0.533203125,
+          "ratio/validation_state_action_auc": 0.6725006103515625,
+          "ratio/validation_state_action_brier": 0.4114849269390106,
+          "ratio/validation_state_action_loss": 1.8584654331207275,
+          "ratio/validation_state_action_real_logit_mean": 4.628867149353027,
+          "ratio/validation_state_action_sim_logit_mean": 3.069789171218872,
+          "ratio/validation_v9_failure_streak": 23.0,
+          "ratio/validation_v9_gate_open": 0.0,
+          "ratio/validation_v9_gate_pass": 0.0,
+          "ratio/validation_v9_pass_streak": 0.0,
+          "ratio/validation_v9_tempering_exponent": 0.0,
+          "ratio/validation_v9_validation_count": 23.0,
+          "ratio/validation_weight_max": 1.0,
+          "ratio/validation_weight_mean": 1.0,
+          "ratio/validation_weight_min": 1.0
+        },
+        "ratio_intervention_applied": false,
+        "reliability_gate_configured": true,
+        "validation_pass_epochs": [],
+        "validation_rows": 23
+      },
+      "run": "h2oplus_v9_combined_seed6201",
+      "scientific_stability": {
+        "maximum_absolute_positive_action_mean": 0.3760957717895508,
+        "maximum_actor_grad_norm": 0.8476391434669495,
+        "maximum_critic_grad_norm": 98.13033294677734,
+        "maximum_hold_probability": 0.7499964833259583,
+        "minimum_hold_probability": 0.3456668257713318,
+        "passed": true,
+        "thresholds": {
+          "maximum_absolute_positive_action_mean": 0.98,
+          "maximum_critic_grad_norm": 1000000.0,
+          "maximum_hold_probability": 0.99,
+          "minimum_hold_probability": 0.01
+        },
+        "violations": []
+      },
+      "seed": 6201,
+      "summary": {
+        "bytes": 10007,
+        "path": "h2oplus_v9_combined_seed6201/summary.json",
+        "sha256": "57db2486c8a134a28caa86cd9f5ed3f73b862fd08b3b883cb9f7ff81f6be420e"
+      },
+      "total_updates": 74000,
+      "training_admission": {
+        "bytes": 21855,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_training_admissions_v2/h2oplus_v9_combined_seed6201.json",
+        "sha256": "58fd7ff48594f105c9ab1d8a83588335dc926cf61179ae704a853e323ee51455"
+      },
+      "underfill": 2,
+      "variant": "combined",
+      "zero_and_warmup_actor_identical": true
+    },
+    {
+      "blocked_atomic_batch": 3,
+      "completed_epochs": 48,
+      "event_cap": 25000,
+      "events": 24998,
+      "export_summary": {
+        "bytes": 875,
+        "path": "h2oplus_v9_combined_seed6202/v9_export_summary.json",
+        "sha256": "56109ad247f10f5808e41dff73b93bfd2c2de565654dc8a23b215cbc134bed43"
+      },
+      "maximum_simultaneous_decisions": 9,
+      "metadata": {
+        "bytes": 37126,
+        "path": "h2oplus_v9_combined_seed6202/metadata.json",
+        "sha256": "76e3eaaeb9aa48d4560ca12fdae1238ab5e193893d2295ebc703d255aeea3430"
+      },
+      "policy_manifest": {
+        "bytes": 6190,
+        "path": "h2oplus_v9_combined_seed6202/v9_policies/policy_manifest.json",
+        "sha256": "018a7b053d6d4e5a98a9ca646606d2bbefa7a3392d25d310d0d9308157135032"
+      },
+      "ratio_gate": {
+        "first_validation_epoch": 26,
+        "gate_ever_opened": false,
+        "gate_open_epochs": [],
+        "last_validation": {
+          "ratio/validation_available": 1.0,
+          "ratio/validation_clip_fraction": 0.59765625,
+          "ratio/validation_ess_fraction": 1.0,
+          "ratio/validation_high_clip_fraction": 0.59765625,
+          "ratio/validation_joint_accuracy": 0.541015625,
+          "ratio/validation_joint_auc": 0.6531219482421875,
+          "ratio/validation_joint_brier": 0.4271036386489868,
+          "ratio/validation_joint_loss": 2.453364372253418,
+          "ratio/validation_joint_real_logit_mean": 5.656667709350586,
+          "ratio/validation_joint_sim_logit_mean": 4.379977703094482,
+          "ratio/validation_log_weight_mean": 0.6229321956634521,
+          "ratio/validation_log_weight_std": 1.667095422744751,
+          "ratio/validation_loss": 4.670235633850098,
+          "ratio/validation_low_clip_fraction": 0.0,
+          "ratio/validation_raw_ess_fraction": 0.05736152082681656,
+          "ratio/validation_state_action_accuracy": 0.541015625,
+          "ratio/validation_state_action_auc": 0.629058837890625,
+          "ratio/validation_state_action_brier": 0.4129272997379303,
+          "ratio/validation_state_action_loss": 2.2168712615966797,
+          "ratio/validation_state_action_real_logit_mean": 5.047399520874023,
+          "ratio/validation_state_action_sim_logit_mean": 3.757045269012451,
+          "ratio/validation_v9_failure_streak": 23.0,
+          "ratio/validation_v9_gate_open": 0.0,
+          "ratio/validation_v9_gate_pass": 0.0,
+          "ratio/validation_v9_pass_streak": 0.0,
+          "ratio/validation_v9_tempering_exponent": 0.0,
+          "ratio/validation_v9_validation_count": 23.0,
+          "ratio/validation_weight_max": 1.0,
+          "ratio/validation_weight_mean": 1.0,
+          "ratio/validation_weight_min": 1.0
+        },
+        "ratio_intervention_applied": false,
+        "reliability_gate_configured": true,
+        "validation_pass_epochs": [],
+        "validation_rows": 23
+      },
+      "run": "h2oplus_v9_combined_seed6202",
+      "scientific_stability": {
+        "maximum_absolute_positive_action_mean": 0.7875544428825378,
+        "maximum_actor_grad_norm": 0.4109545648097992,
+        "maximum_critic_grad_norm": 137.75643920898438,
+        "maximum_hold_probability": 0.8076989650726318,
+        "minimum_hold_probability": 0.4680253863334656,
+        "passed": true,
+        "thresholds": {
+          "maximum_absolute_positive_action_mean": 0.98,
+          "maximum_critic_grad_norm": 1000000.0,
+          "maximum_hold_probability": 0.99,
+          "minimum_hold_probability": 0.01
+        },
+        "violations": []
+      },
+      "seed": 6202,
+      "summary": {
+        "bytes": 10005,
+        "path": "h2oplus_v9_combined_seed6202/summary.json",
+        "sha256": "d67017253f09954d89d434c20f1e5377f094350e4ac7022226bce970cddb6a7c"
+      },
+      "total_updates": 74000,
+      "training_admission": {
+        "bytes": 21855,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_training_admissions_v2/h2oplus_v9_combined_seed6202.json",
+        "sha256": "311848618cee67125a1b3c60fc8599e671a0b8a8ebfad5d0487a2cc47e225e2b"
+      },
+      "underfill": 2,
+      "variant": "combined",
+      "zero_and_warmup_actor_identical": true
+    },
+    {
+      "blocked_atomic_batch": 0,
+      "completed_epochs": 48,
+      "event_cap": 25000,
+      "events": 25000,
+      "export_summary": {
+        "bytes": 875,
+        "path": "h2oplus_v9_combined_seed6203/v9_export_summary.json",
+        "sha256": "4e65f5e092bd3d65b483bd4562fb1c0145dade289237036edca7f7864e491d55"
+      },
+      "maximum_simultaneous_decisions": 7,
+      "metadata": {
+        "bytes": 37346,
+        "path": "h2oplus_v9_combined_seed6203/metadata.json",
+        "sha256": "7ee207e3b5b0cad55c021e8596ddafa32c9218ce511af48d8830108d733a14fc"
+      },
+      "policy_manifest": {
+        "bytes": 6189,
+        "path": "h2oplus_v9_combined_seed6203/v9_policies/policy_manifest.json",
+        "sha256": "2eb5cfb06d9218d96b96fe9a1843ec092268e773f33f3016388abecac57d767b"
+      },
+      "ratio_gate": {
+        "first_validation_epoch": 26,
+        "gate_ever_opened": false,
+        "gate_open_epochs": [],
+        "last_validation": {
+          "ratio/validation_available": 1.0,
+          "ratio/validation_clip_fraction": 0.63671875,
+          "ratio/validation_ess_fraction": 1.0,
+          "ratio/validation_high_clip_fraction": 0.63671875,
+          "ratio/validation_joint_accuracy": 0.53125,
+          "ratio/validation_joint_auc": 0.6533660888671875,
+          "ratio/validation_joint_brier": 0.43005532026290894,
+          "ratio/validation_joint_loss": 2.2665305137634277,
+          "ratio/validation_joint_real_logit_mean": 5.308234214782715,
+          "ratio/validation_joint_sim_logit_mean": 3.998223066329956,
+          "ratio/validation_log_weight_mean": 0.6408257484436035,
+          "ratio/validation_log_weight_std": 1.7595030069351196,
+          "ratio/validation_loss": 4.304903984069824,
+          "ratio/validation_low_clip_fraction": 0.0,
+          "ratio/validation_raw_ess_fraction": 0.029959214851260185,
+          "ratio/validation_state_action_accuracy": 0.5390625,
+          "ratio/validation_state_action_auc": 0.6262359619140625,
+          "ratio/validation_state_action_brier": 0.4037785232067108,
+          "ratio/validation_state_action_loss": 2.0383734703063965,
+          "ratio/validation_state_action_real_logit_mean": 4.564844608306885,
+          "ratio/validation_state_action_sim_logit_mean": 3.3573970794677734,
+          "ratio/validation_v9_failure_streak": 23.0,
+          "ratio/validation_v9_gate_open": 0.0,
+          "ratio/validation_v9_gate_pass": 0.0,
+          "ratio/validation_v9_pass_streak": 0.0,
+          "ratio/validation_v9_tempering_exponent": 0.0,
+          "ratio/validation_v9_validation_count": 23.0,
+          "ratio/validation_weight_max": 1.0,
+          "ratio/validation_weight_mean": 1.0,
+          "ratio/validation_weight_min": 1.0
+        },
+        "ratio_intervention_applied": false,
+        "reliability_gate_configured": true,
+        "validation_pass_epochs": [],
+        "validation_rows": 23
+      },
+      "run": "h2oplus_v9_combined_seed6203",
+      "scientific_stability": {
+        "maximum_absolute_positive_action_mean": 0.8796675205230713,
+        "maximum_actor_grad_norm": 0.6783133745193481,
+        "maximum_critic_grad_norm": 103.44799041748047,
+        "maximum_hold_probability": 0.7508658766746521,
+        "minimum_hold_probability": 0.23677285015583038,
+        "passed": true,
+        "thresholds": {
+          "maximum_absolute_positive_action_mean": 0.98,
+          "maximum_critic_grad_norm": 1000000.0,
+          "maximum_hold_probability": 0.99,
+          "minimum_hold_probability": 0.01
+        },
+        "violations": []
+      },
+      "seed": 6203,
+      "summary": {
+        "bytes": 10019,
+        "path": "h2oplus_v9_combined_seed6203/summary.json",
+        "sha256": "9cd739c0e4e58fb8de678111233d6e2b4e2ea26083e548880db45954311c3dc9"
+      },
+      "total_updates": 74000,
+      "training_admission": {
+        "bytes": 21855,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_training_admissions_v2/h2oplus_v9_combined_seed6203.json",
+        "sha256": "5cf19d8b254b972f6c5d7b6502dc692824ce91ea4825be573c2eda864162c07e"
+      },
+      "underfill": 0,
+      "variant": "combined",
+      "zero_and_warmup_actor_identical": true
+    }
+  ],
+  "scheduler_tasks": [
+    {
+      "backend_exit": {
+        "bytes": 54,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/scheduleurm_exit_t82499_01f3c666c9d51b48139a94c6.status",
+        "sha256": "a8c56d1d2c6b7210aa47bbdfefeb08db96e272f6d16d42d2fe05abeceb3b6cd6"
+      },
+      "backend_finished_epoch": 1786937257,
+      "backend_returncode": 0,
+      "backend_token": "1786936262222329104:1245:132676308054016",
+      "exit_code": 0,
+      "exit_status_token": "1786936262222329104:1245:132676308054016",
+      "finished_at": 1786937369.6923513,
+      "node": "jtl110gpu",
+      "residual_process_count": 0,
+      "run_name": "h2oplus_v9_ratio_gated_seed6201",
+      "scheduler_log": {
+        "bytes": 24915,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/sched_t82499.log",
+        "sha256": "fb3572aabbe55ce3fb2d5856bc5841aa7a29347204923359a045fcd87b1eef3c"
+      },
+      "signature": "H2Oplus/v9/development/adaptive-v2/ratio-gated/seed6201/77ca1a10cd2668f9",
+      "status": "done",
+      "task_id": "t82499",
+      "token_matches": true
+    },
+    {
+      "backend_exit": {
+        "bytes": 54,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/scheduleurm_exit_t82500_b2eb745c19c9b9a4ea22e115.status",
+        "sha256": "50c1c80bd2f2409e123805e5f98e574f140efd64ac160c2b160a4527059c0771"
+      },
+      "backend_finished_epoch": 1786937421,
+      "backend_returncode": 0,
+      "backend_token": "1786936262392882237:1245:132676308054016",
+      "exit_code": 0,
+      "exit_status_token": "1786936262392882237:1245:132676308054016",
+      "finished_at": 1786937497.7886717,
+      "node": "jtl110gpu2",
+      "residual_process_count": 0,
+      "run_name": "h2oplus_v9_ratio_gated_seed6202",
+      "scheduler_log": {
+        "bytes": 24909,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/sched_t82500.log",
+        "sha256": "83fc5a0385cf22673fcb70256c6295fa7c403bf8defb3d7ea1619249fc5a63d5"
+      },
+      "signature": "H2Oplus/v9/development/adaptive-v2/ratio-gated/seed6202/81d1e9a10b7cd090",
+      "status": "done",
+      "task_id": "t82500",
+      "token_matches": true
+    },
+    {
+      "backend_exit": {
+        "bytes": 54,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/scheduleurm_exit_t82501_5ffef6d6fcd44ebca19238f7.status",
+        "sha256": "9fea4f93f87db9d548e8d8403c5cef25a3b5e006f759d6ba7eba720d9ca9450b"
+      },
+      "backend_finished_epoch": 1786937248,
+      "backend_returncode": 0,
+      "backend_token": "1786936262564357518:1245:132676308054016",
+      "exit_code": 0,
+      "exit_status_token": "1786936262564357518:1245:132676308054016",
+      "finished_at": 1786937258.224646,
+      "node": "jtl110gpu",
+      "residual_process_count": 0,
+      "run_name": "h2oplus_v9_ratio_gated_seed6203",
+      "scheduler_log": {
+        "bytes": 24907,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/sched_t82501.log",
+        "sha256": "3f792c599040b05d1aecd6bf994115a834905ccdd78e9a8e1798979379fc7e40"
+      },
+      "signature": "H2Oplus/v9/development/adaptive-v2/ratio-gated/seed6203/51bf3a310ed7fd6b",
+      "status": "done",
+      "task_id": "t82501",
+      "token_matches": true
+    },
+    {
+      "backend_exit": {
+        "bytes": 54,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/scheduleurm_exit_t82502_8c25e51d2a0a05aeaa0e0a70.status",
+        "sha256": "bb0c716de26e7c2ad1f7b74389fa18e5b50981f59eaca8524b13a087e84ccde9"
+      },
+      "backend_finished_epoch": 1786938499,
+      "backend_returncode": 0,
+      "backend_token": "1786937376893798200:1245:132676308054016",
+      "exit_code": 0,
+      "exit_status_token": "1786937376893798200:1245:132676308054016",
+      "finished_at": 1786938574.0650282,
+      "node": "jtl110gpu",
+      "residual_process_count": 0,
+      "run_name": "h2oplus_v9_adaptation_seed6201",
+      "scheduler_log": {
+        "bytes": 27340,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/sched_t82502.log",
+        "sha256": "cf189d36a362074d279d7a89ccd86949690bef2d48660a2f5c6f0df398898da6"
+      },
+      "signature": "H2Oplus/v9/development/adaptive-v2/adaptation/seed6201/61071b4024d7eba6",
+      "status": "done",
+      "task_id": "t82502",
+      "token_matches": true
+    },
+    {
+      "backend_exit": {
+        "bytes": 54,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/scheduleurm_exit_t82503_75415d2ec70ee3a11c229ffc.status",
+        "sha256": "6d6ec70aaa373fd52572925488acbebe4e917504a129d38de39814cca04d042b"
+      },
+      "backend_finished_epoch": 1786937582,
+      "backend_returncode": 0,
+      "backend_token": "1786936262905427310:1245:132676308054016",
+      "exit_code": 0,
+      "exit_status_token": "1786936262905427310:1245:132676308054016",
+      "finished_at": 1786937632.9597685,
+      "node": "jtl110gpu2",
+      "residual_process_count": 0,
+      "run_name": "h2oplus_v9_adaptation_seed6202",
+      "scheduler_log": {
+        "bytes": 27319,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/sched_t82503.log",
+        "sha256": "a94558e2fdc80707cddf3a4f4c687cbe9118fdc93b1128258584f88e5b86d8f6"
+      },
+      "signature": "H2Oplus/v9/development/adaptive-v2/adaptation/seed6202/5662dd1496c0fdd6",
+      "status": "done",
+      "task_id": "t82503",
+      "token_matches": true
+    },
+    {
+      "backend_exit": {
+        "bytes": 54,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/scheduleurm_exit_t82504_055dc8761c3555dcd517f111.status",
+        "sha256": "2c1790fad2aa7907e411cdbbb7b139bfbc4ca9361b605c34211c7490c35c1882"
+      },
+      "backend_finished_epoch": 1786938649,
+      "backend_returncode": 0,
+      "backend_token": "1786937505068265104:1245:132676308054016",
+      "exit_code": 0,
+      "exit_status_token": "1786937505068265104:1245:132676308054016",
+      "finished_at": 1786938677.7892816,
+      "node": "jtl110gpu",
+      "residual_process_count": 0,
+      "run_name": "h2oplus_v9_adaptation_seed6203",
+      "scheduler_log": {
+        "bytes": 27353,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/sched_t82504.log",
+        "sha256": "f1983c087dc8a81ac1a021954e3908b38a4322b0dfafa3e94d019ca1dde9e76f"
+      },
+      "signature": "H2Oplus/v9/development/adaptive-v2/adaptation/seed6203/8782a4dd0f8904e4",
+      "status": "done",
+      "task_id": "t82504",
+      "token_matches": true
+    },
+    {
+      "backend_exit": {
+        "bytes": 54,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/scheduleurm_exit_t82505_12ccfb5df6e53e46b771c57f.status",
+        "sha256": "e4c3f4778a36526f43638073036c4417b97407961e6424e8063d06b89d062693"
+      },
+      "backend_finished_epoch": 1786939956,
+      "backend_returncode": 0,
+      "backend_token": "1786938803982265331:1245:132676308054016",
+      "exit_code": 0,
+      "exit_status_token": "1786938803982265331:1245:132676308054016",
+      "finished_at": 1786940041.6792204,
+      "node": "jtl110gpu",
+      "residual_process_count": 0,
+      "run_name": "h2oplus_v9_combined_seed6201",
+      "scheduler_log": {
+        "bytes": 27530,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/sched_t82505.log",
+        "sha256": "4a5d2ce6694d97412f9add3139bab306c190cb2033e16d9e63f0b7a593c2c301"
+      },
+      "signature": "H2Oplus/v9/development/adaptive-v2/combined/seed6201/a67e2c7d8dc8ddeb",
+      "status": "done",
+      "task_id": "t82505",
+      "token_matches": true
+    },
+    {
+      "backend_exit": {
+        "bytes": 54,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/scheduleurm_exit_t82506_d27460e4781541b40cc2a04f.status",
+        "sha256": "5483d01ea7bc6f79522dd267f7707ccb7c6612da214d324cf4164dbf06f2b842"
+      },
+      "backend_finished_epoch": 1786938814,
+      "backend_returncode": 0,
+      "backend_token": "1786937505400027402:1245:132676308054016",
+      "exit_code": 0,
+      "exit_status_token": "1786937505400027402:1245:132676308054016",
+      "finished_at": 1786938920.0698962,
+      "node": "jtl110gpu2",
+      "residual_process_count": 0,
+      "run_name": "h2oplus_v9_combined_seed6202",
+      "scheduler_log": {
+        "bytes": 27522,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/sched_t82506.log",
+        "sha256": "4eac17c48de6e42454e7b5d9eb64cacea375cbd0d228fb9e5c34c63637040f15"
+      },
+      "signature": "H2Oplus/v9/development/adaptive-v2/combined/seed6202/9d2d988caa074be5",
+      "status": "done",
+      "task_id": "t82506",
+      "token_matches": true
+    },
+    {
+      "backend_exit": {
+        "bytes": 54,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/scheduleurm_exit_t82508_b7464d1047fc7368ea1cb530.status",
+        "sha256": "0e3c655106ba0d58efe968ec1470d57de2b158dbc10634249d55ed0fdb00f585"
+      },
+      "backend_finished_epoch": 1786939955,
+      "backend_returncode": 0,
+      "backend_token": "1786938804162664708:1245:132676308054016",
+      "exit_code": 0,
+      "exit_status_token": "1786938804162664708:1245:132676308054016",
+      "finished_at": 1786940042.5025997,
+      "node": "jtl110gpu",
+      "residual_process_count": 0,
+      "run_name": "h2oplus_v9_combined_seed6203",
+      "scheduler_log": {
+        "bytes": 27551,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/sched_t82508.log",
+        "sha256": "5f3cc924b16e089ec7b0827fad478c9246e580d512ded10b8681f27fcd2326e5"
+      },
+      "signature": "H2Oplus/v9/development/adaptive-v2/combined/seed6203/10de5146b46a4452",
+      "status": "done",
+      "task_id": "t82508",
+      "token_matches": true
+    }
+  ],
+  "schema_version": "transit-h2oplus-v9-adaptive-training-audit-v1",
+  "source_partition_sync": [
+    {
+      "evidence": {
+        "bytes": 867,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/source_sync_jtl110gpu_v9_training_v2.json",
+        "sha256": "3821dc40df578a7541a08f3048586d938fda0f6df81d4a70a2e7847138de11cc"
+      },
+      "run_names": [
+        "h2oplus_v9_adaptation_seed6201",
+        "h2oplus_v9_adaptation_seed6203",
+        "h2oplus_v9_combined_seed6201",
+        "h2oplus_v9_combined_seed6203",
+        "h2oplus_v9_ratio_gated_seed6201",
+        "h2oplus_v9_ratio_gated_seed6203"
+      ],
+      "source_file_count": 136,
+      "source_host": "jtl110gpu",
+      "source_total_bytes": 1707186537
+    },
+    {
+      "evidence": {
+        "bytes": 751,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/evidence_v2/source_sync_jtl110gpu2_v9_training_v2.json",
+        "sha256": "2cba3e877e8c76524674303fff98da327fec1f73d1d740485729d9037cd07501"
+      },
+      "run_names": [
+        "h2oplus_v9_adaptation_seed6202",
+        "h2oplus_v9_combined_seed6202",
+        "h2oplus_v9_ratio_gated_seed6202"
+      ],
+      "source_file_count": 68,
+      "source_host": "jtl110gpu2",
+      "source_total_bytes": 851723166
+    }
+  ],
+  "training_policies": {
+    "bytes": 41290,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_results/training_policies_v9_adaptive.json",
+    "sha256": "b0753c76fbd03d31e93b9a7fbeccffcd3c47c6a607f5573d30c8ff384e0b1f1c"
+  }
+}

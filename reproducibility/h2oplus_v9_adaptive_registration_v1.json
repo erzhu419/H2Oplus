@@ -1,0 +1,160 @@
+{
+  "adaptive_bundle": {
+    "actor_burn_in_critic_updates": 500,
+    "actor_state_source": "online-only after online interaction begins",
+    "offline_replay_share_knots": [
+      [
+        1000,
+        0.5
+      ],
+      [
+        10000,
+        0.25
+      ],
+      [
+        25000,
+        0.1
+      ]
+    ],
+    "online_update_order": "critic-before-actor",
+    "warmup_events": 1000
+  },
+  "campaign": "H2O+ v9 development ratio/replay adaptation 2x2 pilot",
+  "causal_design": {
+    "adaptation_factor": [
+      "fixed-v7",
+      "adaptive-v9"
+    ],
+    "fixed_fixed_control": "sealed v8 h2oplus seed6201-6203",
+    "maximum_online_events": 25000,
+    "new_training_runs": 9,
+    "new_variants": [
+      "ratio-gated",
+      "adaptation",
+      "combined"
+    ],
+    "ratio_factor": [
+      "fixed-v7",
+      "reliability-gated-tempered"
+    ],
+    "training_seeds": [
+      6201,
+      6202,
+      6203
+    ]
+  },
+  "development_evaluation": {
+    "blocks": [
+      {
+        "demand_realization_seed": 4601,
+        "name": "v9-adaptive-development-01",
+        "sumo_seed": 4501
+      },
+      {
+        "demand_realization_seed": 4602,
+        "name": "v9-adaptive-development-02",
+        "sumo_seed": 4502
+      }
+    ],
+    "common_online_event_budgets": [
+      0,
+      5000,
+      10000,
+      25000
+    ],
+    "demand_scales": [
+      0.85,
+      1.0,
+      1.15
+    ],
+    "submitted_with_training": false,
+    "unique_policies_after_training": 45,
+    "unique_remote_sumo_episodes": 270
+  },
+  "formal_held_out_outcomes_read": false,
+  "frozen_v7_trainer_or_evidence_modified": false,
+  "generator": {
+    "bytes": 32693,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/prepare_h2oplus_v9_adaptive_pilot.py",
+    "sha256": "4524464340ed72293d49f7655af39f7976a8f08b7f8ddd179999753dde8eeb93"
+  },
+  "interpretation": {
+    "all_registered_outcomes_retained": true,
+    "formal_stage_authorized_or_submitted": false,
+    "supports_formal_held_out_model_effect_claim": false,
+    "three_seed_development_screen_only": true
+  },
+  "local_training_or_sumo_allowed": false,
+  "ratio_bundle": {
+    "closed_gate_behavior": "unit TD weights while classifiers keep training",
+    "hysteresis": "open after two passes; close after two failures",
+    "maximum_high_clip_fraction": 0.25,
+    "maximum_joint_brier": 0.24,
+    "maximum_state_action_brier": 0.26,
+    "maximum_total_clip_fraction": 0.5,
+    "minimum_joint_auc": 0.6,
+    "minimum_raw_ess_fraction": 0.25,
+    "target_applied_ess_fraction": 0.5,
+    "validation_partition": "trajectory-disjoint ratio_validation"
+  },
+  "registered_utc": "2026-08-17T02:42:07.237768+00:00",
+  "schema_version": "transit-h2oplus-v9-adaptive-registration-v1",
+  "screening_gates": {
+    "combined_mean_lower_at_10000_and_25000": true,
+    "combined_relative_aulc_improvement_over_fixed_h2o_at_least": 0.03,
+    "combined_relative_aulc_improvement_over_sac_at_least": 0.02,
+    "combined_seed_wins_over_fixed_h2o": 3,
+    "combined_seed_wins_over_sac": 3,
+    "completion_rate_noninferiority_margin": 0.005,
+    "formal_confirmation_eligibility_created": false,
+    "intervention_attribution_required": true,
+    "no_demand_scale_relative_aulc_degradation_over_sac_greater_than": 0.01
+  },
+  "sources": {
+    "base_v7_training_deployment": {
+      "bytes": 116595,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/deployment_manifest.json",
+      "sha256": "db1bc95b9763a202cb3398abc550aa62b49d7c548eac034021c1ba21697f89cd"
+    },
+    "deployment_verifier": {
+      "bytes": 7731,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/verify_h2oplus_v9_adaptive_deployment.py",
+      "sha256": "0d30cc0b377be4574e71ed55ce4d7d1a1c7860a8bb5ccb5d729c310684898886"
+    },
+    "sealed_v8_analysis": {
+      "bytes": 10600,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/fewshot_analysis_v3.json",
+      "sha256": "ebe3455ce134f61ec5d2dc36ec20f36da4addc88a6e4e12295298bdc7da6ae78"
+    },
+    "sealed_v8_fewshot_closeout": {
+      "bytes": 3920,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/fewshot_closeout_v3.json",
+      "sha256": "5d7b9c06bb11b6ceda7761cf8b71cdd3484849381635ad60beb89ed13e6fab44"
+    },
+    "sealed_v8_training_closeout": {
+      "bytes": 1096,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/training_closeout.json",
+      "sha256": "8a12385844f7949d3f7c2cbc16d8e021787c9de04fb14b7e64b46779d2373822"
+    },
+    "sealed_v8_training_manifest_verification": {
+      "bytes": 938,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_fewshot_results/training_file_manifest_verification.json",
+      "sha256": "c6f124d80952577ddb6d6c6597c0fbf67704c4af92deb35fc0b5f5a0e99809aa"
+    },
+    "v9_source_sha256": {
+      "SimpleSAC/train_transit_v9_adaptive.py": "54f743f033d45a1195baf0e494a8bbb1696a0c644b9d7d30e9d57675e5d2fd67",
+      "SimpleSAC/transit_v9/__init__.py": "82b9baacf827c1be58b5ecfd1f615455796da671bba17348cb683e87f9b23e6d",
+      "SimpleSAC/transit_v9/trainer.py": "702e1ef15dc211e6c24377fffe861fe8e5519de03ff6af5a42fe0d173327bd6f"
+    }
+  },
+  "status": "registered-before-training-or-new-development-evaluation",
+  "stop_rules": [
+    "stop on nonfinite state, nonzero exit or source/event/update mismatch",
+    "never restart or checkpoint-select because an outcome is poor",
+    "never use formal held-out outcomes for development selection",
+    "never train or run SUMO locally",
+    "do not submit development evaluation until all nine training runs close",
+    "do not launch a formal confirmation stage from this registration"
+  ],
+  "study_stage": "development"
+}

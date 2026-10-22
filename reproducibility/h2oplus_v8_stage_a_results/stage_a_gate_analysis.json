@@ -1,0 +1,324 @@
+{
+  "candidate": "h2oplus-lambda0p5",
+  "checks": {
+    "completion_rate_noninferiority": {
+      "candidate_minus_reference": 0.005346306140270873,
+      "margin": 0.005,
+      "passed": true
+    },
+    "mean_relative_improvement": {
+      "observed": -0.01880427400214247,
+      "passed": false,
+      "required_at_least": 0.02
+    },
+    "no_demand_scale_relative_degradation": {
+      "maximum_allowed": 0.01,
+      "maximum_observed": 0.043234246608863734,
+      "passed": false
+    },
+    "one_sided_paired_permutation": {
+      "observed_p": 0.9415992200374603,
+      "passed": false,
+      "required_less_than": 0.05,
+      "test": "exact sign flip over 25 preregistered training-seed x environment-block paired means"
+    },
+    "training_seeds_with_lower_paired_mean": {
+      "observed": 3,
+      "passed": false,
+      "required_at_least": 4
+    }
+  },
+  "completion_rate_means": {
+    "candidate": 0.9704869331886196,
+    "candidate_minus_reference": 0.005346306140270873,
+    "reference": 0.9651406270483487
+  },
+  "created_utc": "2026-08-14T03:42:43.238708+00:00",
+  "demand_scale_means": [
+    {
+      "candidate_mean": 2175.387202538454,
+      "demand_scale": 0.85,
+      "reference_mean": 2194.2834382365645,
+      "relative_degradation": -0.008611574680295867
+    },
+    {
+      "candidate_mean": 2535.600212215664,
+      "demand_scale": 1.0,
+      "reference_mean": 2430.5185728496585,
+      "relative_degradation": 0.043234246608863734
+    },
+    {
+      "candidate_mean": 2980.106656340689,
+      "demand_scale": 1.15,
+      "reference_mean": 2924.3360003613348,
+      "relative_degradation": 0.01907122026075768
+    }
+  ],
+  "evidence": {
+    "analysis_source": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/analyze_h2oplus_v8_stage_a.py",
+      "sha256": "3aa9aff2438703045a498d306be2ba6e5ec215e5871c4bf3798597632e2704fd"
+    },
+    "freeze": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_freeze_v1.json",
+      "sha256": "0291c8f78ecb76a4ea36f25e1a70a1ea3b8237d02811adc28181c1fbd12615c0"
+    },
+    "matrix_manifests": [
+      {
+        "evaluation_outputs_aggregate_sha256": "72114eb3dbe620e537a598ddf0f6475d645aa78693f1ae9597beeffecde1b6d3",
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/canonical/v8-development-01/matrix_manifest.json",
+        "sha256": "f7d4ce9ae2ac9ac3e4e74d77f29896cce5afe70cce3b8da8146029378e897804"
+      },
+      {
+        "evaluation_outputs_aggregate_sha256": "1d3f2c90f04cc6a493677a8470061e7fc7f4f85eba312dc23b602fc2d94e0d66",
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/canonical/v8-development-02/matrix_manifest.json",
+        "sha256": "9b95495e6f314846d8ae169099961956296edd2ad53f78fe0eff1874525c2e07"
+      },
+      {
+        "evaluation_outputs_aggregate_sha256": "7c9e9bc3ba03b4eabea73192a9f70aab5b1a38a19fb958922c8da60ded6ccefc",
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/canonical/v8-development-03/matrix_manifest.json",
+        "sha256": "e5806b40b7cffc435e483f171cdab0b00655f72938994cd03d9403874821f3c2"
+      },
+      {
+        "evaluation_outputs_aggregate_sha256": "1622ea4852041ffead64abfe26591600e0d18ddb4bf4b3d5e38e5ddf3f7073b3",
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/canonical/v8-development-04/matrix_manifest.json",
+        "sha256": "ea16a392e7bc06c82771d3beb8ebe31d74dd52dab8ae3653396cc178ba185d1f"
+      },
+      {
+        "evaluation_outputs_aggregate_sha256": "c83305cf5c1132c736b009d2bd338dec57672e96fdb3bb961908e276272c90be",
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/canonical/v8-development-05/matrix_manifest.json",
+        "sha256": "c6685ab3b953ad3fad07b8eda2ef4e121e4438fbf2d781f998878ac56ac09be7"
+      }
+    ],
+    "registration": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_development_pilot_registration_v1.json",
+      "sha256": "d76dbde2d54b53c18b12770523f02a85221d0622839b3619c882362a2cc6a820"
+    }
+  },
+  "formal_held_out_outcomes_read": false,
+  "paired_units": [
+    {
+      "candidate_mean": 2484.6366797539763,
+      "environment_block": "v8-development-01",
+      "improvement_reference_minus_candidate": 86.90089761006311,
+      "reference_mean": 2571.5375773640394,
+      "training_seed": 5101
+    },
+    {
+      "candidate_mean": 2501.4085779225748,
+      "environment_block": "v8-development-02",
+      "improvement_reference_minus_candidate": 56.990131934155215,
+      "reference_mean": 2558.39870985673,
+      "training_seed": 5101
+    },
+    {
+      "candidate_mean": 2488.8786906354876,
+      "environment_block": "v8-development-03",
+      "improvement_reference_minus_candidate": 76.11218042187829,
+      "reference_mean": 2564.990871057366,
+      "training_seed": 5101
+    },
+    {
+      "candidate_mean": 2513.6187510869986,
+      "environment_block": "v8-development-04",
+      "improvement_reference_minus_candidate": 66.28926685019769,
+      "reference_mean": 2579.9080179371963,
+      "training_seed": 5101
+    },
+    {
+      "candidate_mean": 2479.452571603913,
+      "environment_block": "v8-development-05",
+      "improvement_reference_minus_candidate": 83.56242230628868,
+      "reference_mean": 2563.0149939102016,
+      "training_seed": 5101
+    },
+    {
+      "candidate_mean": 2756.9421241103137,
+      "environment_block": "v8-development-01",
+      "improvement_reference_minus_candidate": -286.1299780179829,
+      "reference_mean": 2470.8121460923307,
+      "training_seed": 5102
+    },
+    {
+      "candidate_mean": 2746.6703922058073,
+      "environment_block": "v8-development-02",
+      "improvement_reference_minus_candidate": -274.0788886667465,
+      "reference_mean": 2472.591503539061,
+      "training_seed": 5102
+    },
+    {
+      "candidate_mean": 2756.7464195861576,
+      "environment_block": "v8-development-03",
+      "improvement_reference_minus_candidate": -288.6024502911582,
+      "reference_mean": 2468.1439692949994,
+      "training_seed": 5102
+    },
+    {
+      "candidate_mean": 2793.726985048193,
+      "environment_block": "v8-development-04",
+      "improvement_reference_minus_candidate": -288.72421896446804,
+      "reference_mean": 2505.002766083725,
+      "training_seed": 5102
+    },
+    {
+      "candidate_mean": 2740.691497154381,
+      "environment_block": "v8-development-05",
+      "improvement_reference_minus_candidate": -266.8828466947584,
+      "reference_mean": 2473.8086504596226,
+      "training_seed": 5102
+    },
+    {
+      "candidate_mean": 2630.6706064504565,
+      "environment_block": "v8-development-01",
+      "improvement_reference_minus_candidate": -135.68366047884592,
+      "reference_mean": 2494.9869459716106,
+      "training_seed": 5103
+    },
+    {
+      "candidate_mean": 2635.56602305778,
+      "environment_block": "v8-development-02",
+      "improvement_reference_minus_candidate": -130.14689235837704,
+      "reference_mean": 2505.419130699403,
+      "training_seed": 5103
+    },
+    {
+      "candidate_mean": 2643.494207716123,
+      "environment_block": "v8-development-03",
+      "improvement_reference_minus_candidate": -147.67277982613268,
+      "reference_mean": 2495.8214278899904,
+      "training_seed": 5103
+    },
+    {
+      "candidate_mean": 2671.8223877905803,
+      "environment_block": "v8-development-04",
+      "improvement_reference_minus_candidate": -156.2650999147827,
+      "reference_mean": 2515.5572878757976,
+      "training_seed": 5103
+    },
+    {
+      "candidate_mean": 2626.7547574319246,
+      "environment_block": "v8-development-05",
+      "improvement_reference_minus_candidate": -124.1304626821634,
+      "reference_mean": 2502.6242947497612,
+      "training_seed": 5103
+    },
+    {
+      "candidate_mean": 2453.6953246494236,
+      "environment_block": "v8-development-01",
+      "improvement_reference_minus_candidate": 20.440460415381494,
+      "reference_mean": 2474.135785064805,
+      "training_seed": 5104
+    },
+    {
+      "candidate_mean": 2456.829607821622,
+      "environment_block": "v8-development-02",
+      "improvement_reference_minus_candidate": 12.72843621503489,
+      "reference_mean": 2469.558044036657,
+      "training_seed": 5104
+    },
+    {
+      "candidate_mean": 2461.740836437051,
+      "environment_block": "v8-development-03",
+      "improvement_reference_minus_candidate": 11.143308847756998,
+      "reference_mean": 2472.884145284808,
+      "training_seed": 5104
+    },
+    {
+      "candidate_mean": 2476.8368359527867,
+      "environment_block": "v8-development-04",
+      "improvement_reference_minus_candidate": 18.175903084838865,
+      "reference_mean": 2495.0127390376256,
+      "training_seed": 5104
+    },
+    {
+      "candidate_mean": 2446.138269278222,
+      "environment_block": "v8-development-05",
+      "improvement_reference_minus_candidate": 30.03983224401418,
+      "reference_mean": 2476.1781015222364,
+      "training_seed": 5104
+    },
+    {
+      "candidate_mean": 2461.2388390210676,
+      "environment_block": "v8-development-01",
+      "improvement_reference_minus_candidate": 98.3412688212311,
+      "reference_mean": 2559.5801078422987,
+      "training_seed": 5105
+    },
+    {
+      "candidate_mean": 2460.4656941948047,
+      "environment_block": "v8-development-02",
+      "improvement_reference_minus_candidate": 99.53204681272427,
+      "reference_mean": 2559.997741007529,
+      "training_seed": 5105
+    },
+    {
+      "candidate_mean": 2473.053996188604,
+      "environment_block": "v8-development-03",
+      "improvement_reference_minus_candidate": 80.50036981619769,
+      "reference_mean": 2553.5543660048015,
+      "training_seed": 5105
+    },
+    {
+      "candidate_mean": 2479.7568159920506,
+      "environment_block": "v8-development-04",
+      "improvement_reference_minus_candidate": 82.49610719205657,
+      "reference_mean": 2562.252923184107,
+      "training_seed": 5105
+    },
+    {
+      "candidate_mean": 2451.6137013664297,
+      "environment_block": "v8-development-05",
+      "improvement_reference_minus_candidate": 92.09748159652008,
+      "reference_mean": 2543.71118296295,
+      "training_seed": 5105
+    }
+  ],
+  "primary_direction": "lower-is-better",
+  "primary_endpoint": "generalized_seconds_per_passenger",
+  "primary_means": {
+    "candidate": 2563.698023698269,
+    "reference": 2516.379337149186,
+    "relative_improvement": -0.01880427400214247
+  },
+  "reference": "h2oplus",
+  "schema_version": "transit-h2oplus-v8-stage-a-development-gate-v1",
+  "stage": "A-existing-policy-development-screen",
+  "stage_a_gate_passed": false,
+  "stage_b_authorized_or_submitted": false,
+  "stage_b_gate_eligible": false,
+  "study_stage": "development",
+  "supports_current_held_out_model_effect_claim": false,
+  "training": false,
+  "training_seed_means": [
+    {
+      "candidate_lower": true,
+      "candidate_mean": 2493.59905420059,
+      "reference_mean": 2567.5700340251065,
+      "training_seed": 5101
+    },
+    {
+      "candidate_lower": false,
+      "candidate_mean": 2758.95548362097,
+      "reference_mean": 2478.071807093948,
+      "training_seed": 5102
+    },
+    {
+      "candidate_lower": false,
+      "candidate_mean": 2641.661596489373,
+      "reference_mean": 2502.8818174373127,
+      "training_seed": 5103
+    },
+    {
+      "candidate_lower": true,
+      "candidate_mean": 2459.0481748278207,
+      "reference_mean": 2477.553762989226,
+      "training_seed": 5104
+    },
+    {
+      "candidate_lower": true,
+      "candidate_mean": 2465.2258093525916,
+      "reference_mean": 2555.8192642003373,
+      "training_seed": 5105
+    }
+  ]
+}

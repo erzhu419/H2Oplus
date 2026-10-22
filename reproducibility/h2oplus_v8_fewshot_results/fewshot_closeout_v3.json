@@ -1,0 +1,112 @@
+{
+  "artifact_integrity": {
+    "canonical_matrix_count": 3,
+    "corrected_source_file_count": 41,
+    "evaluation_results": 630,
+    "file_manifest_independently_verified": true,
+    "passed": true,
+    "source_partition_count": 2,
+    "training_runs": 10
+  },
+  "created_utc": "2026-08-17T01:33:52.912807+00:00",
+  "decision": {
+    "automatic_follow_on_experiment_submitted": false,
+    "development_campaign_closed": true,
+    "fewshot_advantage_supported": false,
+    "formal_confirmation_authorized_or_submitted": false,
+    "formal_confirmation_eligible": false
+  },
+  "development_scientific_result": {
+    "checks": {
+      "completion_noninferiority": true,
+      "demand_scale_robustness": false,
+      "exact_paired_sign_flip": false,
+      "final_100000_noncatastrophic": false,
+      "mean_at_10000_lower": true,
+      "mean_at_25000_lower": false,
+      "practical_aulc_improvement": false,
+      "seed_robustness": false
+    },
+    "completion_aulc_delta": 0.0014797223509319668,
+    "early_budgets": {
+      "10000": {
+        "h2oplus": 2559.674723955607,
+        "h2oplus_lower": true,
+        "relative_improvement": 0.012189104923873121,
+        "sac_online": 2591.25986230223
+      },
+      "25000": {
+        "h2oplus": 2642.3351476345497,
+        "h2oplus_lower": false,
+        "relative_improvement": -0.051354092274295854,
+        "sac_online": 2513.268523945756
+      }
+    },
+    "exact_one_sided_sign_flip_p": 1.0,
+    "fewshot_gate_passed": false,
+    "final_100000_relative_degradation": 0.07486681147746774,
+    "h2oplus_mean_aulc": 2633.3725401152833,
+    "h2oplus_relative_aulc_improvement": -0.05708404525999369,
+    "interpretation": "The preregistered development comparison does not support a few-shot advantage for H2O+ over SAC-online.",
+    "lower_is_better": true,
+    "primary_endpoint": "accrued generalized passenger seconds per departed passenger",
+    "sac_online_mean_aulc": 2491.1666692193767,
+    "seed_count": 5,
+    "seed_wins": 0
+  },
+  "evidence": {
+    "analysis": {
+      "path": "reproducibility/h2oplus_v8_fewshot_results/fewshot_analysis_v3.json",
+      "sha256": "ebe3455ce134f61ec5d2dc36ec20f36da4addc88a6e4e12295298bdc7da6ae78",
+      "size_bytes": 10600
+    },
+    "evaluation_audit": {
+      "path": "reproducibility/h2oplus_v8_fewshot_results/evaluation_audit_v3.json",
+      "sha256": "a66841179869ce245c733b4eda1d32ef132fb308bc529c689c3ae362fe07384f",
+      "size_bytes": 7850
+    },
+    "evaluation_file_manifest": {
+      "path": "reproducibility/h2oplus_v8_fewshot_results/evaluation_file_manifest_v3.json",
+      "sha256": "c67344113d266b758a53c1df3ee0bd4d9fd0233f41ac4efd04d450b5f8db1dda",
+      "size_bytes": 449908
+    },
+    "evaluation_file_manifest_verification": {
+      "path": "reproducibility/h2oplus_v8_fewshot_results/evaluation_file_manifest_verification_v3.json",
+      "sha256": "df17061a5d63011b14e2faa0fec55f9c16bfbd85cf89a02669fdd0e47a961c8d",
+      "size_bytes": 1056
+    },
+    "protocol": {
+      "path": "reproducibility/h2oplus_v8_fewshot_protocol_v1.json",
+      "sha256": "26d4f5c4ca9f337c11886855658127ef93a35954ca58eb43710aa70350610294",
+      "size_bytes": 49930
+    },
+    "registration": {
+      "path": "reproducibility/h2oplus_v8_fewshot_registration_v1.json",
+      "sha256": "fb632f92998d82cfb87b2cd1a534058925d4e410be17ecea9070b7a50db7c115",
+      "size_bytes": 6189
+    }
+  },
+  "excluded_invalid_evaluation_lineages": {
+    "cancelled_retries": [
+      "t82418",
+      "t82447"
+    ],
+    "used_as_scientific_evidence": false,
+    "v1_tasks": [
+      "t82395",
+      "t82396",
+      "t82397",
+      "t82398",
+      "t82399"
+    ],
+    "v2_tasks": [
+      "t82400",
+      "t82401"
+    ]
+  },
+  "formal_held_out_outcomes_read": false,
+  "passed": true,
+  "schema_version": "transit-h2oplus-v8-fewshot-closeout-v3",
+  "study_stage": "development",
+  "supports_current_formal_held_out_model_effect_claim": false
+}

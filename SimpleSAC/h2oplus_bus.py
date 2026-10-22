@@ -33,7 +33,13 @@ import os, sys
 _BUS_H2O = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "bus_h2o")
 if _BUS_H2O not in sys.path:
     sys.path.insert(0, _BUS_H2O)
-from common.data_utils import ZOnlyDiscriminator, TransitionDiscriminator, compute_z_importance_weight  # noqa
+from common.data_utils import (  # noqa
+    ZOnlyDiscriminator,
+    TransitionDiscriminator,
+    DynamicsDiscriminator,
+    ContrastiveDynamicsDiscriminator,
+    compute_z_importance_weight,
+)
 
 
 class H2OPlusBus:
@@ -73,6 +79,18 @@ class H2OPlusBus:
         config.use_td_target_ratio = True
         config.use_real_blended_target = True
         config.use_sim_blended_target = True
+        config.adaptive_sim_ratio = False       # scale sim batch share by online buffer size
+        config.adaptive_sim_ratio_min = 0.10    # keep H2O+ using fresh online data once it exists
+        config.adaptive_sim_ratio_max = 0.50
+        config.adaptive_sim_ratio_boost = 8.0   # natural ratio is tiny with 600k+ offline samples
+        config.disable_is_weighting = False
+        config.use_cal_ql = False
+        config.cal_ql_mode = "batch_mean"       # batch_mean | batch_quantile
+        config.cal_ql_quantile = 0.25
+        config.sim_reward_rescale = 1.0
+        config.ess_sim_loss_scale = False       # scale sim critic loss by normalized ESS
+        config.ess_min_scale = 0.20
+        config.contrastive_temperature = 0.07
         config.clip_dynamics_ratio_min = 0.1     # raise floor to prevent near-zero weights
         config.clip_dynamics_ratio_max = 5.0     # was 1.0 (allow good sim transitions more weight)
         config.disc_warmup_steps = 5000          # don't apply IS weighting until disc stabilizes
@@ -159,6 +177,39 @@ class H2OPlusBus:
         self.update_target_network(1.0)
         self._total_steps = 0
 
+    def _current_sim_ratio(self):
+        if not self.replay_buffer.has_online_data():
+            return 0.0
+        if self.config.adaptive_sim_ratio and self.replay_buffer.has_online_data():
+            online_n = float(self.replay_buffer.online_size)
+            offline_n = float(self.replay_buffer.fixed_dataset_size)
+            natural_ratio = online_n / (online_n + offline_n + 1e-8)
+            boosted = natural_ratio * float(self.config.adaptive_sim_ratio_boost)
+            return float(np.clip(
+                boosted,
+                float(self.config.adaptive_sim_ratio_min),
+                float(self.config.adaptive_sim_ratio_max),
+            ))
+        return float(self.config.batch_sim_ratio)
+
+    def _cal_ql_floor(self, real_q1_pred, real_q2_pred):
+        real_q_floor_src = torch.min(real_q1_pred, real_q2_pred).detach().flatten()
+        if self.config.cal_ql_mode == "batch_quantile":
+            return torch.quantile(real_q_floor_src, float(self.config.cal_ql_quantile))
+        return real_q_floor_src.mean()
+
+    def _weight_diagnostics(self, weight):
+        weight = weight.detach().flatten()
+        if weight.numel() == 0:
+            one = torch.tensor(1.0, device=self.config.device)
+            return one, one, one, one
+        ess = (weight.sum() ** 2) / (weight.pow(2).sum() + 1e-8)
+        ess_ratio = (ess / max(weight.numel(), 1)).clamp(0.0, 1.0)
+        loss_scale = torch.ones((), device=weight.device)
+        if self.config.ess_sim_loss_scale:
+            loss_scale = ess_ratio.clamp(min=float(self.config.ess_min_scale), max=1.0)
+        return weight.mean(), weight.max(), ess_ratio, loss_scale
+
     # ------------------------------------------------------------------
     # Q-network weight regularization (matches legacy SAC reg_norm)
     # ------------------------------------------------------------------
@@ -203,8 +254,9 @@ class H2OPlusBus:
             real_batch_size = batch_size
             sim_batch_size = 0
         else:
-            real_batch_size = int(batch_size * (1 - self.config.batch_sim_ratio))
-            sim_batch_size = int(batch_size * self.config.batch_sim_ratio)
+            sim_ratio = self._current_sim_ratio()
+            sim_batch_size = int(batch_size * sim_ratio)
+            real_batch_size = batch_size - sim_batch_size
 
         real_batch = self.replay_buffer.sample(real_batch_size, scope="real")
         if sim_batch_size > 0 and self.replay_buffer.has_online_data():
@@ -280,19 +332,34 @@ class H2OPlusBus:
             sim_z_t1 = sim_batch["z_t1"]
 
             # Global reward normalization for sim data (same scale as real)
+            if self.config.sim_reward_rescale != 1.0:
+                sim_rewards = sim_rewards * self.config.sim_reward_rescale
             sim_rewards = self.config.reward_scale * (
                 sim_rewards - self.reward_mean
             ) / self.reward_std
 
             # Train discriminator (every N steps to prevent overfitting)
             if self._total_steps % self.config.disc_train_interval == 0:
-                disc_loss = self._train_discriminator(
-                    real_z_t, real_z_t1, sim_z_t, sim_z_t1,
-                    real_obs=real_observations, real_actions=real_actions,
-                    real_next_obs=real_next_observations,
-                    sim_obs=sim_observations, sim_actions=sim_actions,
-                    sim_next_obs=sim_next_observations,
-                )
+                if isinstance(self.discriminator, ContrastiveDynamicsDiscriminator):
+                    disc_loss = self.discriminator.train_step(
+                        real_observations, real_actions, real_next_observations,
+                        sim_observations, sim_actions, sim_next_observations,
+                        self.discriminator_optimizer,
+                        temperature=self.config.contrastive_temperature,
+                    )
+                elif isinstance(self.discriminator, DynamicsDiscriminator):
+                    disc_loss = self.discriminator.train_step(
+                        real_observations, real_actions, real_next_observations,
+                        self.discriminator_optimizer,
+                    )
+                else:
+                    disc_loss = self._train_discriminator(
+                        real_z_t, real_z_t1, sim_z_t, sim_z_t1,
+                        real_obs=real_observations, real_actions=real_actions,
+                        real_next_obs=real_next_observations,
+                        sim_obs=sim_observations, sim_actions=sim_actions,
+                        sim_next_obs=sim_next_observations,
+                    )
                 self._last_disc_loss = disc_loss
             else:
                 disc_loss = getattr(self, '_last_disc_loss', 0.0)
@@ -407,6 +474,10 @@ class H2OPlusBus:
             else:
                 sim_td_target = sim_explore_td_target
 
+            if self.config.use_cal_ql:
+                q_floor = self._cal_ql_floor(real_q1_pred, real_q2_pred)
+                sim_td_target = torch.maximum(sim_td_target, q_floor)
+
             real_qf1_loss = F.mse_loss(real_q1_pred, real_td_target.detach())
             real_qf2_loss = F.mse_loss(real_q2_pred, real_td_target.detach())
 
@@ -414,29 +485,36 @@ class H2OPlusBus:
             # Warmup: don't apply IS weighting until discriminator has enough
             # data to be meaningful (disc_warmup_steps gradient steps).
             disc_warmup = getattr(self.config, 'disc_warmup_steps', 5000)
-            if self.config.use_td_target_ratio and self._total_steps > disc_warmup:
+            if (self.config.use_td_target_ratio
+                    and not self.config.disable_is_weighting
+                    and self._total_steps > disc_warmup
+                    and self.discriminator is not None):
                 raw_w = compute_z_importance_weight(
                     self.discriminator, sim_z_t, sim_z_t1,
                     obs=sim_observations, action=sim_actions,
                     next_obs=sim_next_observations,
-                ).squeeze()
-                sqrt_real_sim_ratio = torch.clamp(
+                ).reshape(-1)
+                is_weight = torch.clamp(
                     raw_w,
                     self.config.clip_dynamics_ratio_min,
                     self.config.clip_dynamics_ratio_max,
-                ).sqrt()
+                )
             else:
                 # During warmup: equal weight for all sim transitions
-                sqrt_real_sim_ratio = torch.ones(
+                is_weight = torch.ones(
                     sim_observations.shape[0],
                     device=self.config.device,
                 )
+            sqrt_real_sim_ratio = is_weight.sqrt()
+            is_weight_mean, is_weight_max, is_weight_ess, sim_loss_scale = (
+                self._weight_diagnostics(is_weight)
+            )
 
-            sim_qf1_loss = F.mse_loss(
+            sim_qf1_loss = sim_loss_scale * F.mse_loss(
                 sqrt_real_sim_ratio * sim_q1_pred,
                 sqrt_real_sim_ratio * sim_td_target.detach(),
             )
-            sim_qf2_loss = F.mse_loss(
+            sim_qf2_loss = sim_loss_scale * F.mse_loss(
                 sqrt_real_sim_ratio * sim_q2_pred,
                 sqrt_real_sim_ratio * sim_td_target.detach(),
             )
@@ -468,14 +546,17 @@ class H2OPlusBus:
                     # 3. Discriminator Drift (how far real dynamics are from
                     #    what the discriminator expects — high w means "real",
                     #    so drift = 1 - w/w_max)
-                    jtt_w_real = compute_z_importance_weight(
-                        self.discriminator, real_z_t, real_z_t1,
-                        obs=real_observations, action=real_actions,
-                        next_obs=real_next_observations,
-                    ).squeeze()
-                    jtt_disc_drift = (
-                        1.0 - jtt_w_real.clamp(0, 10) / 10.0
-                    ).cpu().numpy()
+                    if self.discriminator is not None and not self.config.disable_is_weighting:
+                        jtt_w_real = compute_z_importance_weight(
+                            self.discriminator, real_z_t, real_z_t1,
+                            obs=real_observations, action=real_actions,
+                            next_obs=real_next_observations,
+                        ).reshape(-1)
+                        jtt_disc_drift = (
+                            1.0 - jtt_w_real.clamp(0, 10) / 10.0
+                        ).cpu().numpy()
+                    else:
+                        jtt_disc_drift = np.zeros_like(jtt_td_error)
 
                 self.priority_index.update(
                     real_batch["_indices"].cpu().numpy(),
@@ -491,7 +572,14 @@ class H2OPlusBus:
             metrics = dict(
                 training_phase="main",
                 exploit_coeff=self.exploit_coeff,
+                batch_sim_ratio_actual=sim_observations.shape[0] / max(
+                    real_observations.shape[0] + sim_observations.shape[0], 1
+                ),
                 sqrt_IS_ratio=sqrt_real_sim_ratio.mean().item(),
+                is_weight_mean=is_weight_mean.item(),
+                is_weight_max=is_weight_max.item(),
+                is_weight_ess=is_weight_ess.item(),
+                sim_loss_scale=sim_loss_scale.item(),
                 mean_real_rewards=real_rewards.mean().item(),
                 mean_sim_rewards=sim_rewards.mean().item(),
                 log_pi=df_log_pi.mean().item(),
@@ -657,18 +745,30 @@ class H2OPlusBus:
         sim_batch = self.replay_buffer.sample(self.config.batch_size, scope="sim")
 
         with torch.no_grad():
-            real_logits = self._disc_forward(
-                real_batch["observations"], real_batch["actions"],
-                real_batch["next_observations"],
-                real_batch["z_t"], real_batch["z_t1"],
-            )
-            sim_logits = self._disc_forward(
-                sim_batch["observations"], sim_batch["actions"],
-                sim_batch["next_observations"],
-                sim_batch["z_t"], sim_batch["z_t1"],
-            )
-            real_acc = (torch.sigmoid(real_logits) > 0.5).float().mean().item()
-            sim_acc = (torch.sigmoid(sim_logits) < 0.5).float().mean().item()
+            if isinstance(self.discriminator, (DynamicsDiscriminator, ContrastiveDynamicsDiscriminator)):
+                w_real = self.discriminator.compute_weight(
+                    real_batch["observations"], real_batch["actions"],
+                    real_batch["next_observations"],
+                )
+                w_sim = self.discriminator.compute_weight(
+                    sim_batch["observations"], sim_batch["actions"],
+                    sim_batch["next_observations"],
+                )
+                real_acc = (w_real > 0.5).float().mean().item()
+                sim_acc = (w_sim < 0.5).float().mean().item()
+            else:
+                real_logits = self._disc_forward(
+                    real_batch["observations"], real_batch["actions"],
+                    real_batch["next_observations"],
+                    real_batch["z_t"], real_batch["z_t1"],
+                )
+                sim_logits = self._disc_forward(
+                    sim_batch["observations"], sim_batch["actions"],
+                    sim_batch["next_observations"],
+                    sim_batch["z_t"], sim_batch["z_t1"],
+                )
+                real_acc = (torch.sigmoid(real_logits) > 0.5).float().mean().item()
+                sim_acc = (torch.sigmoid(sim_logits) < 0.5).float().mean().item()
 
         return real_acc, sim_acc
 

@@ -55,6 +55,10 @@ parser.add_argument('--soft_tau', type=float, default=1e-2)
 parser.add_argument('--critic_actor_ratio', type=int, default=3, help='Critic updates per actor update')
 parser.add_argument('--max_alpha', type=float, default=0.6)
 parser.add_argument('--reward_scale', type=float, default=10.0)
+parser.add_argument('--max_offline_samples', type=int, default=0,
+                    help='0 = full buffer; otherwise cap offline at N transitions (data-size ablation)')
+parser.add_argument('--name_str', type=str, default='',
+                    help='Suffix appended to experiment_output dir name to disambiguate runs sharing config')
 # ── CQL (Conservative Q-Learning) ──
 parser.add_argument('--use_cql', action='store_true', help='Add CQL penalty to Q-loss')
 parser.add_argument('--cql_alpha', type=float, default=5.0, help='CQL penalty weight')
@@ -76,6 +80,8 @@ if args.use_cql:
     _method_suffix += "_cql"
 if args.use_reward_shaping:
     _method_suffix += "_rs"
+if args.name_str:
+    _method_suffix = args.name_str   # name_str overrides default to allow per-run dirs
 out_dir = os.path.join(_H2O_ROOT, "experiment_output", _method_suffix)
 os.makedirs(out_dir, exist_ok=True)
 
@@ -95,6 +101,8 @@ buf = BusMixedReplayBuffer(
     dataset_file=ds_file, device=args.device,
     buffer_ratio=1.0, reward_scale=1.0, reward_bias=0.0,
     action_scale=1.0, action_bias=0.0,
+    max_offline_samples=args.max_offline_samples,
+    subsample_seed=args.seed,
 )
 print(f"Loaded {buf.fixed_dataset_size:,} transitions")
 r_mean, r_std = buf.get_reward_stats()
@@ -445,11 +453,19 @@ print(f"\nModel saved: {ckpt_path}")
 # ── Convergence plot ──
 import csv as csv_mod
 rows = []
+expected_cols = None
 with open(csv_path) as f:
     reader = csv_mod.reader(f)
-    next(reader)
+    header = next(reader)
+    expected_cols = len(header)
     for r in reader:
-        rows.append([float(x) for x in r])
+        # Skip rows with inconsistent column count (some logger entries may be partial)
+        if len(r) != expected_cols:
+            continue
+        try:
+            rows.append([float(x) for x in r])
+        except ValueError:
+            continue
 if rows:
     data = np.array(rows)
     fig, axes = plt.subplots(1, 4, figsize=(20, 4))

@@ -8,7 +8,7 @@ from collections import defaultdict
 from typing import Callable, Dict, List, Tuple, Optional, Any
 
 import numpy as np
-from gym.spaces import Box
+from gymnasium.spaces import Box
 
 
 def _median_headway(sorted_times: List[float], fallback: float) -> float:
@@ -40,6 +40,10 @@ class DecisionEvent:
     co_line_forward_headway: float = 360.0
     co_line_backward_headway: float = 360.0
     segment_mean_speed: float = 10.0
+    eligible_stranded_passengers: int = 0
+    onboard_passengers: int = 0
+    eligible_arrival_rate_per_second: float = 0.0
+    bus_capacity: float = 50.0
     metadata: Dict[str, Any] = field(default_factory=dict)
     assigned_action: Optional[float] = None
     fleet_idx: int = -1   # physical-bus index (FIFO reuse); -1 means not set

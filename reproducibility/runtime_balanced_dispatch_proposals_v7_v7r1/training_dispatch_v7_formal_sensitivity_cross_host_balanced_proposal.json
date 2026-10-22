@@ -1,0 +1,174 @@
+{
+  "created_utc": "2026-08-13T03:59:18.715117+00:00",
+  "hosts": [
+    {
+      "gpus": [
+        {
+          "physical_gpu": "0",
+          "stages": [
+            {
+              "name": "runtime-balanced-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "h2oplus-lambda0_seed5101",
+                    "h2oplus-lambda0_seed5105",
+                    "h2oplus-lambda0p2_seed5104",
+                    "h2oplus-lambda0p5_seed5101",
+                    "h2oplus-lambda0p5_seed5105",
+                    "h2oplus-lambda1_seed5104"
+                  ],
+                  "name": "jtl110gpu-gpu0-runtime-balanced"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "physical_gpu": "1",
+          "stages": [
+            {
+              "name": "runtime-balanced-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "h2oplus-lambda0_seed5102",
+                    "h2oplus-lambda0p2_seed5101",
+                    "h2oplus-lambda0p2_seed5105",
+                    "h2oplus-lambda0p5_seed5102",
+                    "h2oplus-lambda1_seed5101",
+                    "h2oplus-lambda1_seed5105"
+                  ],
+                  "name": "jtl110gpu-gpu1-runtime-balanced"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "hostname": "jtl110gpu",
+      "hostname_aliases": [
+        "huiwei-Super-Server"
+      ]
+    },
+    {
+      "gpus": [
+        {
+          "physical_gpu": "0",
+          "stages": [
+            {
+              "name": "runtime-balanced-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "h2oplus-lambda0_seed5103",
+                    "h2oplus-lambda0p2_seed5102",
+                    "h2oplus-lambda0p5_seed5103",
+                    "h2oplus-lambda1_seed5102"
+                  ],
+                  "name": "jtl110gpu2-gpu0-runtime-balanced"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "physical_gpu": "1",
+          "stages": [
+            {
+              "name": "runtime-balanced-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "h2oplus-lambda0_seed5104",
+                    "h2oplus-lambda0p2_seed5103",
+                    "h2oplus-lambda0p5_seed5104",
+                    "h2oplus-lambda1_seed5103"
+                  ],
+                  "name": "jtl110gpu2-gpu1-runtime-balanced"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "hostname": "jtl110gpu2",
+      "hostname_aliases": [
+        "erzhu419-Super-Server"
+      ]
+    }
+  ],
+  "job_set_sha256": "8ae31d8f6a938dae9eb67beb79f56541c0a08124c145997819ae358b5126f6b5",
+  "plan": {
+    "path": "../training_plans_v7_formal_v2_v7r1/training_plan_v7_formal_sensitivity_server_h2oplus_v7.json",
+    "sha256": "923662172f77da2e475997cb783f407d024fa92c6028f8bfb8b8780599c696c5"
+  },
+  "plan_id": "v7-formal-sensitivity-server-h2oplus-v7",
+  "policy": {
+    "capacity_admission": "no method in this plan shares a physical GPU",
+    "h2oplus": "the formal H2O+ sensitivity jobs are deterministically distributed over all four server GPUs with one serial worker per GPU",
+    "runtime_balancing": "execution-only longest-processing-time sharding; signed plan, job signatures, and one process per physical GPU are unchanged",
+    "runtime_comparison": "wall-clock timings are resource observations and are not used for cross-method efficiency claims"
+  },
+  "runtime_balancing": {
+    "algorithm": "unrelated-machine-greedy-earliest-finish-v1",
+    "allow_cross_host": true,
+    "balanced_estimated_makespan_seconds": 28292.548644,
+    "balanced_lane_loads": [
+      {
+        "estimated_seconds": 28292.548644,
+        "hostname": "jtl110gpu",
+        "physical_gpu": "0"
+      },
+      {
+        "estimated_seconds": 28292.548644,
+        "hostname": "jtl110gpu",
+        "physical_gpu": "1"
+      },
+      {
+        "estimated_seconds": 26829.939648,
+        "hostname": "jtl110gpu2",
+        "physical_gpu": "0"
+      },
+      {
+        "estimated_seconds": 26829.939648,
+        "hostname": "jtl110gpu2",
+        "physical_gpu": "1"
+      }
+    ],
+    "estimated_reduction_fraction": 0.15638875,
+    "original_estimated_makespan_seconds": 33537.42456,
+    "original_lane_loads": [
+      {
+        "estimated_seconds": 23577.12387,
+        "hostname": "jtl110gpu",
+        "physical_gpu": "0"
+      },
+      {
+        "estimated_seconds": 23577.12387,
+        "hostname": "jtl110gpu",
+        "physical_gpu": "1"
+      },
+      {
+        "estimated_seconds": 33537.42456,
+        "hostname": "jtl110gpu2",
+        "physical_gpu": "0"
+      },
+      {
+        "estimated_seconds": 33537.42456,
+        "hostname": "jtl110gpu2",
+        "physical_gpu": "1"
+      }
+    ],
+    "runtime_profile": {
+      "path": "../runtime_profiles_v7_formal_v2_v7r1/h2oplus_observed_runtime_profile.json",
+      "sha256": "12768b7729104f894545f78f3b6230eb32542598fbab2f498ffab7c3485e4eff"
+    },
+    "source_dispatch": {
+      "path": "../training_dispatches_v7_formal_v2_v7r1/training_dispatch_v7_formal_sensitivity_server_h2oplus_v7.json",
+      "sha256": "361f5c8196b5df42ad5e2100711673042d6f18108129a4019a2e36ccbb114d0f"
+    }
+  },
+  "schema_version": "transit-training-dispatch-v1",
+  "status": "runtime-balanced-before-launch"
+}

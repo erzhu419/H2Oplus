@@ -1,0 +1,3323 @@
+{
+  "created_utc": "2026-08-08T08:48:12.074707+00:00",
+  "demand_calibration": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env/simulator_demand_calibration.json",
+    "sha256": "f99321ad63d642a688b14432286bd6aa2f674d3f04f4537b22a83d0b19efc052"
+  },
+  "design": {
+    "bootstrap_samples": 10000,
+    "demand_scales": [
+      0.75,
+      1.0,
+      1.25
+    ],
+    "episode_seconds": 24000.0,
+    "simulator_seeds": [
+      9901,
+      9902,
+      9903,
+      9904,
+      9905,
+      9906,
+      9907,
+      9908,
+      9909,
+      9910
+    ],
+    "sumo_blocks_per_scale": {
+      "0.75": 10,
+      "1": 10,
+      "1.25": 10
+    },
+    "thresholds": {
+      "completion_rate_absolute_gap": 0.05,
+      "decision_relative_gap": 0.1,
+      "demand_relative_error": 0.05,
+      "generalized_welfare_relative_gap": 0.2,
+      "in_vehicle_time_relative_gap": 0.25,
+      "trip_duration_relative_gap": 0.15,
+      "wait_time_relative_gap": 0.25
+    },
+    "zero_hold_policy": [
+      0.0,
+      1.0
+    ]
+  },
+  "passed": true,
+  "runtime_fingerprint": {
+    "host": {
+      "cc_environment": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+      "compiler": {
+        "configured": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+        "cpath": {
+          "entries": [
+            {
+              "crypt_h_sha256": "01023ab9ad67da6d459273369681d1a7279932f7b3f7cdd73a2967caac9651a7",
+              "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include"
+            }
+          ],
+          "value": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include"
+        },
+        "path": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc"
+      },
+      "cpath_environment": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+      "cpu_threads": 16,
+      "cuda_visible_devices": null,
+      "device": "cpu",
+      "float32_matmul_precision": "highest",
+      "gpu": null,
+      "libc": {
+        "name": "glibc",
+        "version": "2.35"
+      },
+      "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.17",
+      "python_executable": "/home/erzhu419/.conda/envs/h2oplus-v6/bin/python",
+      "torch_distribution_version": "2.4.1+cu121"
+    },
+    "required": {
+      "compiler": {
+        "cpath": {
+          "entries": [
+            {
+              "crypt_h_sha256": "01023ab9ad67da6d459273369681d1a7279932f7b3f7cdd73a2967caac9651a7"
+            }
+          ]
+        },
+        "sha256": "c742442e35732bc1536aea1ef4e840e7e5e54e47df2bf65932ef5fc09c03972d",
+        "version": "x86_64-conda-linux-gnu-gcc (conda-forge gcc 12.1.0-17) 12.1.0"
+      },
+      "packages": {
+        "gymnasium": "1.1.1",
+        "h5py": "3.11.0",
+        "matplotlib": "3.7.5",
+        "numpy": "1.24.4",
+        "openpyxl": "3.1.5",
+        "pandas": "2.0.3",
+        "psutil": "6.0.0",
+        "pytest": "8.3.3",
+        "torch": "2.4.1+cu121"
+      },
+      "python_cache_tag": "cpython-38",
+      "python_implementation": "CPython",
+      "python_version": "3.8.20",
+      "torch_binary_sha256": {
+        "cuda_library": "bee5f6c2f6b5dbff9b6a84a0dd33ab67b4adc739401c49c5295b83f268293a8f",
+        "python_extension": "43f30e2f5a1f3da2d63d3dcd67aca919fb5dc9863f2f8f7c4a9434c4483c1b8e"
+      },
+      "torch_cuda_version": "12.1"
+    }
+  },
+  "schema_version": "transit-simulator-fidelity-audit-v6-formal-v1",
+  "simulator_episodes": [
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13217,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9319
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23702914.0,
+        "accrued_in_vehicle_seconds_total": 12653104.0,
+        "accrued_wait_seconds_total": 5524905.0,
+        "completed_ride_legs": 11794,
+        "completion_rate": 0.9878549292235531,
+        "generated_ride_legs": 11939,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 11794,
+          "in_vehicle": 0,
+          "waiting": 145
+        },
+        "unfinished_ride_legs": 145,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 41.499415562997456
+      },
+      "seed": 9901,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3880.0,
+          "mean": 2696.221079691517,
+          "min": 1577.0,
+          "n": 389,
+          "p50": 2837.0,
+          "p90": 3497.0,
+          "p95": 3611.2,
+          "std": 659.7496967320307
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13225,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9312
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23117420.0,
+        "accrued_in_vehicle_seconds_total": 12769432.0,
+        "accrued_wait_seconds_total": 5173994.0,
+        "completed_ride_legs": 12082,
+        "completion_rate": 0.9912215932398064,
+        "generated_ride_legs": 12189,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 12082,
+          "in_vehicle": 0,
+          "waiting": 107
+        },
+        "unfinished_ride_legs": 107,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 42.78852013899814
+      },
+      "seed": 9902,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3902.0,
+          "mean": 2692.7480719794344,
+          "min": 1596.0,
+          "n": 389,
+          "p50": 2837.0,
+          "p90": 3503.2,
+          "p95": 3610.3999999999996,
+          "std": 663.5344429547366
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13222,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9346
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 22989089.0,
+        "accrued_in_vehicle_seconds_total": 12920301.0,
+        "accrued_wait_seconds_total": 5034394.0,
+        "completed_ride_legs": 12053,
+        "completion_rate": 0.9940618556701031,
+        "generated_ride_legs": 12125,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 12053,
+          "in_vehicle": 0,
+          "waiting": 72
+        },
+        "unfinished_ride_legs": 72,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 42.1499903690019
+      },
+      "seed": 9903,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3895.0,
+          "mean": 2701.4781491002573,
+          "min": 1548.0,
+          "n": 389,
+          "p50": 2837.0,
+          "p90": 3498.4,
+          "p95": 3627.3999999999996,
+          "std": 667.0919716345309
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13225,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9330
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23580822.0,
+        "accrued_in_vehicle_seconds_total": 12808876.0,
+        "accrued_wait_seconds_total": 5385973.0,
+        "completed_ride_legs": 11896,
+        "completion_rate": 0.9892723492723493,
+        "generated_ride_legs": 12025,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 11896,
+          "in_vehicle": 0,
+          "waiting": 129
+        },
+        "unfinished_ride_legs": 129,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 42.589967718999105
+      },
+      "seed": 9904,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3878.0,
+          "mean": 2699.3984575835475,
+          "min": 1575.0,
+          "n": 389,
+          "p50": 2838.0,
+          "p90": 3531.4,
+          "p95": 3640.6,
+          "std": 673.2046058501242
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13202,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9325
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 22730640.0,
+        "accrued_in_vehicle_seconds_total": 12394822.0,
+        "accrued_wait_seconds_total": 5167909.0,
+        "completed_ride_legs": 11531,
+        "completion_rate": 0.9901253649321655,
+        "generated_ride_legs": 11646,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 11531,
+          "in_vehicle": 0,
+          "waiting": 115
+        },
+        "unfinished_ride_legs": 115,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 46.42479637699944
+      },
+      "seed": 9905,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3892.0,
+          "mean": 2688.210796915167,
+          "min": 1596.0,
+          "n": 389,
+          "p50": 2831.0,
+          "p90": 3470.0,
+          "p95": 3605.6,
+          "std": 661.9085430538439
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13212,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9270
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 22797581.0,
+        "accrued_in_vehicle_seconds_total": 12639237.0,
+        "accrued_wait_seconds_total": 5079172.0,
+        "completed_ride_legs": 11796,
+        "completion_rate": 0.9910939337926399,
+        "generated_ride_legs": 11902,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 11796,
+          "in_vehicle": 0,
+          "waiting": 106
+        },
+        "unfinished_ride_legs": 106,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 44.96229251200202
+      },
+      "seed": 9906,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3882.0,
+          "mean": 2695.2673521850897,
+          "min": 1565.0,
+          "n": 389,
+          "p50": 2841.0,
+          "p90": 3474.3999999999996,
+          "p95": 3610.0,
+          "std": 664.4948980810184
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13227,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9345
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 24021641.0,
+        "accrued_in_vehicle_seconds_total": 12867679.0,
+        "accrued_wait_seconds_total": 5576981.0,
+        "completed_ride_legs": 12106,
+        "completion_rate": 0.9894564773191663,
+        "generated_ride_legs": 12235,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 12106,
+          "in_vehicle": 0,
+          "waiting": 129
+        },
+        "unfinished_ride_legs": 129,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 43.67921960199965
+      },
+      "seed": 9907,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3911.0,
+          "mean": 2696.272493573265,
+          "min": 1589.0,
+          "n": 389,
+          "p50": 2837.0,
+          "p90": 3511.4,
+          "p95": 3647.2,
+          "std": 667.7349911000506
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13209,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 5,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9325
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23651851.0,
+        "accrued_in_vehicle_seconds_total": 12812647.0,
+        "accrued_wait_seconds_total": 5419602.0,
+        "completed_ride_legs": 11977,
+        "completion_rate": 0.9898347107438017,
+        "generated_ride_legs": 12100,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 11977,
+          "in_vehicle": 0,
+          "waiting": 123
+        },
+        "unfinished_ride_legs": 123,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 44.87829837800018
+      },
+      "seed": 9908,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3953.0,
+          "mean": 2694.8431876606683,
+          "min": 1592.0,
+          "n": 389,
+          "p50": 2869.0,
+          "p90": 3507.2,
+          "p95": 3622.9999999999995,
+          "std": 664.6175348383119
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13211,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9290
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23473483.0,
+        "accrued_in_vehicle_seconds_total": 12671575.0,
+        "accrued_wait_seconds_total": 5400954.0,
+        "completed_ride_legs": 11882,
+        "completion_rate": 0.9896718307512911,
+        "generated_ride_legs": 12006,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 11882,
+          "in_vehicle": 0,
+          "waiting": 124
+        },
+        "unfinished_ride_legs": 124,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 50.446209792000445
+      },
+      "seed": 9909,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3967.0,
+          "mean": 2691.341902313625,
+          "min": 1592.0,
+          "n": 389,
+          "p50": 2838.0,
+          "p90": 3459.0,
+          "p95": 3626.2,
+          "std": 664.0255738286244
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13215,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9332
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23295575.0,
+        "accrued_in_vehicle_seconds_total": 12923439.0,
+        "accrued_wait_seconds_total": 5186068.0,
+        "completed_ride_legs": 11971,
+        "completion_rate": 0.9916335321404904,
+        "generated_ride_legs": 12072,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 11971,
+          "in_vehicle": 0,
+          "waiting": 101
+        },
+        "unfinished_ride_legs": 101,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 49.9742567439971
+      },
+      "seed": 9910,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3909.0,
+          "mean": 2700.2647814910024,
+          "min": 1600.0,
+          "n": 389,
+          "p50": 2863.0,
+          "p90": 3511.4,
+          "p95": 3636.3999999999996,
+          "std": 669.927249719142
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13213,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9347
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 39794990.0,
+        "accrued_in_vehicle_seconds_total": 16765294.0,
+        "accrued_wait_seconds_total": 11514848.0,
+        "completed_ride_legs": 15459,
+        "completion_rate": 0.9646199925121677,
+        "generated_ride_legs": 16026,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 15459,
+          "in_vehicle": 0,
+          "waiting": 567
+        },
+        "unfinished_ride_legs": 567,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 49.82108805900134
+      },
+      "seed": 9901,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3905.0,
+          "mean": 2722.4755784061695,
+          "min": 1594.0,
+          "n": 389,
+          "p50": 2862.0,
+          "p90": 3522.7999999999997,
+          "p95": 3639.2,
+          "std": 677.9654923440168
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13216,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9350
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 39896446.0,
+        "accrued_in_vehicle_seconds_total": 16808490.0,
+        "accrued_wait_seconds_total": 11543978.0,
+        "completed_ride_legs": 15580,
+        "completion_rate": 0.9662614735797569,
+        "generated_ride_legs": 16124,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 15580,
+          "in_vehicle": 0,
+          "waiting": 544
+        },
+        "unfinished_ride_legs": 544,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 51.30240475800019
+      },
+      "seed": 9902,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3884.0,
+          "mean": 2720.1568123393317,
+          "min": 1594.0,
+          "n": 389,
+          "p50": 2863.0,
+          "p90": 3536.6,
+          "p95": 3652.0,
+          "std": 675.3224801164532
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13209,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 9,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9314
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 40006078.0,
+        "accrued_in_vehicle_seconds_total": 17105784.0,
+        "accrued_wait_seconds_total": 11450147.0,
+        "completed_ride_legs": 15613,
+        "completion_rate": 0.9671684321377687,
+        "generated_ride_legs": 16143,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 15613,
+          "in_vehicle": 0,
+          "waiting": 530
+        },
+        "unfinished_ride_legs": 530,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 40.513176919001125
+      },
+      "seed": 9903,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3916.0,
+          "mean": 2724.4601542416453,
+          "min": 1600.0,
+          "n": 389,
+          "p50": 2846.0,
+          "p90": 3548.0,
+          "p95": 3671.2,
+          "std": 684.6131284532102
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13210,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9301
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 38362265.0,
+        "accrued_in_vehicle_seconds_total": 16797781.0,
+        "accrued_wait_seconds_total": 10782242.0,
+        "completed_ride_legs": 15546,
+        "completion_rate": 0.9680552960956473,
+        "generated_ride_legs": 16059,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 15546,
+          "in_vehicle": 0,
+          "waiting": 513
+        },
+        "unfinished_ride_legs": 513,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 41.15864344599686
+      },
+      "seed": 9904,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4046.0,
+          "mean": 2727.313624678663,
+          "min": 1582.0,
+          "n": 389,
+          "p50": 2868.0,
+          "p90": 3567.6,
+          "p95": 3644.9999999999995,
+          "std": 680.7049782140837
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13216,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9319
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 37571101.0,
+        "accrued_in_vehicle_seconds_total": 16468457.0,
+        "accrued_wait_seconds_total": 10551322.0,
+        "completed_ride_legs": 15230,
+        "completion_rate": 0.9702490921832198,
+        "generated_ride_legs": 15697,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 15230,
+          "in_vehicle": 0,
+          "waiting": 467
+        },
+        "unfinished_ride_legs": 467,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 40.48595434199888
+      },
+      "seed": 9905,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3965.0,
+          "mean": 2719.904884318766,
+          "min": 1591.0,
+          "n": 389,
+          "p50": 2886.0,
+          "p90": 3531.0,
+          "p95": 3678.0,
+          "std": 674.3625120294878
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13214,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9346
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 39839849.0,
+        "accrued_in_vehicle_seconds_total": 16946753.0,
+        "accrued_wait_seconds_total": 11446548.0,
+        "completed_ride_legs": 15551,
+        "completion_rate": 0.9684872641215669,
+        "generated_ride_legs": 16057,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 15551,
+          "in_vehicle": 0,
+          "waiting": 506
+        },
+        "unfinished_ride_legs": 506,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 42.32827009800167
+      },
+      "seed": 9906,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3896.0,
+          "mean": 2722.190231362468,
+          "min": 1581.0,
+          "n": 389,
+          "p50": 2878.0,
+          "p90": 3553.2,
+          "p95": 3658.2,
+          "std": 681.0641724666846
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13209,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9400
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 41464579.0,
+        "accrued_in_vehicle_seconds_total": 17052995.0,
+        "accrued_wait_seconds_total": 12205792.0,
+        "completed_ride_legs": 15749,
+        "completion_rate": 0.9618884749282355,
+        "generated_ride_legs": 16373,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 15749,
+          "in_vehicle": 0,
+          "waiting": 624
+        },
+        "unfinished_ride_legs": 624,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 37.265973362002114
+      },
+      "seed": 9907,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3898.0,
+          "mean": 2725.025706940874,
+          "min": 1600.0,
+          "n": 389,
+          "p50": 2885.0,
+          "p90": 3549.0,
+          "p95": 3667.0,
+          "std": 682.9472435567625
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13210,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9302
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 42559148.0,
+        "accrued_in_vehicle_seconds_total": 16743900.0,
+        "accrued_wait_seconds_total": 12907624.0,
+        "completed_ride_legs": 15497,
+        "completion_rate": 0.9572549261844462,
+        "generated_ride_legs": 16189,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 15497,
+          "in_vehicle": 0,
+          "waiting": 692
+        },
+        "unfinished_ride_legs": 692,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 37.12554349800121
+      },
+      "seed": 9908,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4006.0,
+          "mean": 2723.9691516709513,
+          "min": 1589.0,
+          "n": 389,
+          "p50": 2877.0,
+          "p90": 3538.0,
+          "p95": 3636.2,
+          "std": 675.9518901584746
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13212,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9350
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 38994164.0,
+        "accrued_in_vehicle_seconds_total": 16731334.0,
+        "accrued_wait_seconds_total": 11131415.0,
+        "completed_ride_legs": 15493,
+        "completion_rate": 0.9680704823794052,
+        "generated_ride_legs": 16004,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 15493,
+          "in_vehicle": 0,
+          "waiting": 511
+        },
+        "unfinished_ride_legs": 511,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 36.74420278099933
+      },
+      "seed": 9909,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4236.0,
+          "mean": 2729.9974293059126,
+          "min": 1596.0,
+          "n": 389,
+          "p50": 2881.0,
+          "p90": 3539.0,
+          "p95": 3658.0,
+          "std": 679.0914772911357
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13220,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9333
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 39934686.0,
+        "accrued_in_vehicle_seconds_total": 16945518.0,
+        "accrued_wait_seconds_total": 11494584.0,
+        "completed_ride_legs": 15628,
+        "completion_rate": 0.9665409116210032,
+        "generated_ride_legs": 16169,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 15628,
+          "in_vehicle": 0,
+          "waiting": 541
+        },
+        "unfinished_ride_legs": 541,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 36.720216753001296
+      },
+      "seed": 9910,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3916.0,
+          "mean": 2723.0796915167093,
+          "min": 1602.0,
+          "n": 389,
+          "p50": 2867.0,
+          "p90": 3558.0,
+          "p95": 3665.9999999999995,
+          "std": 682.4348965013376
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13218,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9275
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 63649690.0,
+        "accrued_in_vehicle_seconds_total": 20066772.0,
+        "accrued_wait_seconds_total": 21791459.0,
+        "completed_ride_legs": 18545,
+        "completion_rate": 0.928224635867661,
+        "generated_ride_legs": 19979,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 18545,
+          "in_vehicle": 0,
+          "waiting": 1434
+        },
+        "unfinished_ride_legs": 1434,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 43.05297797399908
+      },
+      "seed": 9901,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3971.0,
+          "mean": 2743.0488431876606,
+          "min": 1603.0,
+          "n": 389,
+          "p50": 2888.0,
+          "p90": 3592.6,
+          "p95": 3710.2,
+          "std": 691.090886633282
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13216,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9388
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 63775255.0,
+        "accrued_in_vehicle_seconds_total": 20084281.0,
+        "accrued_wait_seconds_total": 21845487.0,
+        "completed_ride_legs": 18576,
+        "completion_rate": 0.9260680991076324,
+        "generated_ride_legs": 20059,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 18576,
+          "in_vehicle": 0,
+          "waiting": 1483
+        },
+        "unfinished_ride_legs": 1483,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 41.83961557099974
+      },
+      "seed": 9902,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4011.0,
+          "mean": 2747.1619537275064,
+          "min": 1592.0,
+          "n": 389,
+          "p50": 2935.0,
+          "p90": 3564.0,
+          "p95": 3681.3999999999996,
+          "std": 684.731553985193
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13211,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9297
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 67046965.0,
+        "accrued_in_vehicle_seconds_total": 20074553.0,
+        "accrued_wait_seconds_total": 23486206.0,
+        "completed_ride_legs": 18524,
+        "completion_rate": 0.9212711990848959,
+        "generated_ride_legs": 20107,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 18524,
+          "in_vehicle": 0,
+          "waiting": 1583
+        },
+        "unfinished_ride_legs": 1583,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 43.89008614800332
+      },
+      "seed": 9903,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3887.0,
+          "mean": 2748.0488431876606,
+          "min": 1599.0,
+          "n": 389,
+          "p50": 2897.0,
+          "p90": 3581.2,
+          "p95": 3713.3999999999996,
+          "std": 682.3130386118536
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13209,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9324
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 62173012.0,
+        "accrued_in_vehicle_seconds_total": 19917518.0,
+        "accrued_wait_seconds_total": 21127747.0,
+        "completed_ride_legs": 18535,
+        "completion_rate": 0.9304251794588625,
+        "generated_ride_legs": 19921,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 18535,
+          "in_vehicle": 0,
+          "waiting": 1386
+        },
+        "unfinished_ride_legs": 1386,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 44.890438451999216
+      },
+      "seed": 9904,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3965.0,
+          "mean": 2745.367609254499,
+          "min": 1577.0,
+          "n": 389,
+          "p50": 2890.0,
+          "p90": 3577.2,
+          "p95": 3714.6,
+          "std": 692.1922786318987
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13208,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9393
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 62464521.0,
+        "accrued_in_vehicle_seconds_total": 19709847.0,
+        "accrued_wait_seconds_total": 21377337.0,
+        "completed_ride_legs": 18091,
+        "completion_rate": 0.9279815337265965,
+        "generated_ride_legs": 19495,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 18091,
+          "in_vehicle": 0,
+          "waiting": 1404
+        },
+        "unfinished_ride_legs": 1404,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 49.61437136099994
+      },
+      "seed": 9905,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3899.0,
+          "mean": 2749.624678663239,
+          "min": 1581.0,
+          "n": 389,
+          "p50": 2899.0,
+          "p90": 3570.4,
+          "p95": 3636.0,
+          "std": 676.2005535843226
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13209,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9337
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 65974024.0,
+        "accrued_in_vehicle_seconds_total": 20205206.0,
+        "accrued_wait_seconds_total": 22884409.0,
+        "completed_ride_legs": 18635,
+        "completion_rate": 0.9246762268644867,
+        "generated_ride_legs": 20153,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 18635,
+          "in_vehicle": 0,
+          "waiting": 1518
+        },
+        "unfinished_ride_legs": 1518,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 50.43912234799791
+      },
+      "seed": 9906,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3984.0,
+          "mean": 2745.9948586118253,
+          "min": 1598.0,
+          "n": 389,
+          "p50": 2923.0,
+          "p90": 3574.7999999999997,
+          "p95": 3689.2,
+          "std": 686.6824811151113
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13203,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9287
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 67419711.0,
+        "accrued_in_vehicle_seconds_total": 20315007.0,
+        "accrued_wait_seconds_total": 23552352.0,
+        "completed_ride_legs": 18630,
+        "completion_rate": 0.9203181346638344,
+        "generated_ride_legs": 20243,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 18630,
+          "in_vehicle": 0,
+          "waiting": 1613
+        },
+        "unfinished_ride_legs": 1613,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 48.8701826769975
+      },
+      "seed": 9907,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3916.0,
+          "mean": 2746.552699228792,
+          "min": 1600.0,
+          "n": 389,
+          "p50": 2894.0,
+          "p90": 3583.4,
+          "p95": 3669.6,
+          "std": 684.4144087550392
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13211,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9389
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 65906757.0,
+        "accrued_in_vehicle_seconds_total": 19998899.0,
+        "accrued_wait_seconds_total": 22953929.0,
+        "completed_ride_legs": 18549,
+        "completion_rate": 0.9237089786365221,
+        "generated_ride_legs": 20081,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 18549,
+          "in_vehicle": 0,
+          "waiting": 1532
+        },
+        "unfinished_ride_legs": 1532,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 49.386104703000456
+      },
+      "seed": 9908,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3993.0,
+          "mean": 2742.552699228792,
+          "min": 1569.0,
+          "n": 389,
+          "p50": 2873.0,
+          "p90": 3557.6,
+          "p95": 3682.9999999999995,
+          "std": 693.0399420394364
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13202,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9357
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 63431086.0,
+        "accrued_in_vehicle_seconds_total": 20084590.0,
+        "accrued_wait_seconds_total": 21673248.0,
+        "completed_ride_legs": 18554,
+        "completion_rate": 0.92890757985381,
+        "generated_ride_legs": 19974,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 18554,
+          "in_vehicle": 0,
+          "waiting": 1420
+        },
+        "unfinished_ride_legs": 1420,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 36.410872673000995
+      },
+      "seed": 9909,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3932.0,
+          "mean": 2749.159383033419,
+          "min": 1597.0,
+          "n": 389,
+          "p50": 2898.0,
+          "p90": 3594.4,
+          "p95": 3693.2,
+          "std": 691.5366426588142
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13208,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9360
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 66508628.0,
+        "accrued_in_vehicle_seconds_total": 20268844.0,
+        "accrued_wait_seconds_total": 23119892.0,
+        "completed_ride_legs": 18628,
+        "completion_rate": 0.9213572064496983,
+        "generated_ride_legs": 20218,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "completed": 18628,
+          "in_vehicle": 0,
+          "waiting": 1590
+        },
+        "unfinished_ride_legs": 1590,
+        "unit": "independently simulated ride legs"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 37.2923214950024
+      },
+      "seed": 9910,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4020.0,
+          "mean": 2758.5912596401026,
+          "min": 1584.0,
+          "n": 389,
+          "p50": 2903.0,
+          "p90": 3566.4,
+          "p95": 3707.0,
+          "std": 689.531770031064
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    }
+  ],
+  "simulator_inputs": {
+    "aggregate_sha256": "fdc62696d470d3621de43aa14682fd2cacc90eaccf0bf7d8a5e7815efb2083e7",
+    "calibration_report": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env/simulator_demand_calibration.json",
+      "sha256": "f99321ad63d642a688b14432286bd6aa2f674d3f04f4537b22a83d0b19efc052",
+      "source_bus_objects_sha256": "1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd",
+      "source_manifest_sha256": "3a87e327cabce2cf09dc9564a6c3bc06db46b0349d72efa044fb07d9ac7194eb"
+    },
+    "line_ids": [
+      "102S",
+      "102X",
+      "122S",
+      "122X",
+      "311S",
+      "311X",
+      "406S",
+      "406X",
+      "705S",
+      "705X",
+      "7S",
+      "7X"
+    ],
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env",
+    "runtime_files_sha256": {
+      "config.json": "799a5372909960b52faef03433ba8d989471a878b39359095af5e2108a445dd5",
+      "data/102S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "15b46236c03b1a715c5f4da9f6deba3a2b006113ba4ac87dec64e83c25576e4c",
+      "data/102S/route_news.xlsx:route_news.xlsx": "5b7772d04df0ba7998d401a2bbc20a911c607cbd721724d399b834e661827890",
+      "data/102S/stop_news.xlsx:stop_news.xlsx": "9118bac6bf65d93fafdc9ae87b5c7545fa893cd7ab50d1aba3be7c59c7898e3b",
+      "data/102S/time_table.xlsx:time_table_sumo.xlsx": "8236fd19c5d0e209a0802121b4cec1743c2013426c7cd3d81dcbb6e1df211d46",
+      "data/102X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "e0013ec59f539d5eb8f9249a9816449c68de766a8702caf7bf8758fee55661e9",
+      "data/102X/route_news.xlsx:route_news.xlsx": "ed8d10b4fa3b179f4cf329668bb721608cf975cb6f2275e42ced2c8bc245d470",
+      "data/102X/stop_news.xlsx:stop_news.xlsx": "d48e81b47d57933062c16b9f71dc2f9a42916956cab17bc41fcd1382f0617caf",
+      "data/102X/time_table.xlsx:time_table_sumo.xlsx": "04aced205c8be145b3343835a783d195f91ddfca38ad00b515a5c8d5c3338e8f",
+      "data/122S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "37d7b7c257c43ebbc56dddcd6437aa60764c51a970ea32a3f8d26ed5d21c970e",
+      "data/122S/route_news.xlsx:route_news.xlsx": "86ab7bc8302adf75af8f297b349995b2b8918a7b7f4ffa3b3c62b2a97d7b308f",
+      "data/122S/stop_news.xlsx:stop_news.xlsx": "63a81bdfaf2be9c746a6c6e0e5c72397f91c588e9a7d5b4185bf2315fc0b4502",
+      "data/122S/time_table.xlsx:time_table_sumo.xlsx": "6a312c7743adeea3034ea050eee33c73cdb5d057646d0c585f2cbebef83dcb04",
+      "data/122X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "6da40a00e48fb8c28b76d565cab75fb402f3c68c7a54afe998b85ef91439aa03",
+      "data/122X/route_news.xlsx:route_news.xlsx": "f0d71e267e9a5faeb6d0c20e397162c93806199d2330873d8464b1c7127612e1",
+      "data/122X/stop_news.xlsx:stop_news.xlsx": "2d13f33708ee54597826cdd58be38034d6663417ed0540f25de20eaae79f8236",
+      "data/122X/time_table.xlsx:time_table_sumo.xlsx": "d54bc2a70c64330103dc1d3b78a52eece11c35fa9fd93ec8fd59368a48a3ebfa",
+      "data/311S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "fa675c933aca48fb32af345b30ad913557ddad05d9626bd6c33cebb5bc44e37c",
+      "data/311S/route_news.xlsx:route_news.xlsx": "d57f0a552d0e4afdb838f210bf0042bc28d6fc3501b2e05f30ccd1936a708a48",
+      "data/311S/stop_news.xlsx:stop_news.xlsx": "6925498e62b7de4b38a92078f6b9d23cb48a4d864fe29b221041cfd74d2a9415",
+      "data/311S/time_table.xlsx:time_table_sumo.xlsx": "f624caa5676fe5e7ae74007325d91dc399e5e412f6bd4ad2ebb1c4c1c446cc49",
+      "data/311X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "3f27dc6cbbbb3a2bc5ffec815cff4176f60ba6aa927cbc354a015102534d4711",
+      "data/311X/route_news.xlsx:route_news.xlsx": "81752b4974d12ab26d2257f6b11cdb3a3da6c5ef45f751b888ddf2ccc50f2a6b",
+      "data/311X/stop_news.xlsx:stop_news.xlsx": "b97079a37f2ffd1750d5826ce8d3e01b5eb5bae06bcb6ed43148b001d12b8ac2",
+      "data/311X/time_table.xlsx:time_table_sumo.xlsx": "30441ccfce11239fc8709613008c6a56c09a5e1772aeb479610333e9c691b012",
+      "data/406S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "e7ffee3227a3fd6974c89ffb5b8a0b0a9cfb843942cd27cc2f530acc5913c7c5",
+      "data/406S/route_news.xlsx:route_news.xlsx": "a1ada5087bd771e8c924d1a0b8257b6268ab819804b38e356cfef328f3dd638d",
+      "data/406S/stop_news.xlsx:stop_news.xlsx": "0110b0b59124eb06547a2f9d7d6a2743caaf05b27bd16062b07060eba864dc58",
+      "data/406S/time_table.xlsx:time_table_sumo.xlsx": "dc3c40612f3eed931410894e911fcf6d56fbd001bf52287200a65fda48b195ad",
+      "data/406X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "fc2897a328074717559d730c259534b35340c2d68815c693576357395a79dd9f",
+      "data/406X/route_news.xlsx:route_news.xlsx": "9179aef23690a6a430b9ec2480f5a5988d1f93ae57c8c7289743ed59a2b31614",
+      "data/406X/stop_news.xlsx:stop_news.xlsx": "96324ee727a3eb7ea40807a5234dd6784908ffe53fde9644676ee087d6823346",
+      "data/406X/time_table.xlsx:time_table_sumo.xlsx": "cc7d5052e245d379326f7abd065a6ae5293d32ab456bd03bc6f9fb5e799a1223",
+      "data/705S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "ec26b32d307247364accede1c6fa4066729bc4b385b04e7d4d9e9d1ca8c19cb8",
+      "data/705S/route_news.xlsx:route_news.xlsx": "86095ad1ef31d6c3743d757d20a98dc94d6c4e730814978139ddf7e1e384ae0b",
+      "data/705S/stop_news.xlsx:stop_news.xlsx": "7ce640ac922a46cb749a5f92f837b94efe2f2f9c19060e6dc5e4c4319f0b562b",
+      "data/705S/time_table.xlsx:time_table_sumo.xlsx": "5480ff3884e2d3a88383e2fedc67450797af9bf03119849a5d826a966ae42621",
+      "data/705X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "47dcec820fd69715fc4fd6e705b1ae0f1940fd046d9036106b476003db681a3b",
+      "data/705X/route_news.xlsx:route_news.xlsx": "ecc57d37a2331a6aab50291f162bec20855aae8a40896ffe13785310952efdd2",
+      "data/705X/stop_news.xlsx:stop_news.xlsx": "e54543d95ff784f5dbabcec0ae9ec9aeae1e059c7c24c1c02b274c184a7381d2",
+      "data/705X/time_table.xlsx:time_table_sumo.xlsx": "3aa3ea5b40f4a7376a2d3bcb013a626b6a4d6451be7a9166cfbc6bc7a1b587ed",
+      "data/7S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "010f6c60afd08845d10cd6b4411f811564abf52e63994b92293913768ede3665",
+      "data/7S/route_news.xlsx:route_news.xlsx": "8884242230d3bd53f9c328a6675ae27e261e3364d83299648afaa57c037dadb9",
+      "data/7S/stop_news.xlsx:stop_news.xlsx": "3d5d9cdc9a136360475872c19fcb982d743887c154e52e5d7c49a28504ed9a0b",
+      "data/7S/time_table.xlsx:time_table_sumo.xlsx": "9e01b4fba0a6b272aee6b8c92aec6a5bdd896305a62ede2da1c75ae797859183",
+      "data/7X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "d592c41cb7f106954596d106d6f9d79706e649011203bc447f36557ead661ccf",
+      "data/7X/route_news.xlsx:route_news.xlsx": "fcc10534c19c45a89e7a731095d68811c23cd17e910eb60911013101f19e9496",
+      "data/7X/stop_news.xlsx:stop_news.xlsx": "dc91b497e557d8cf819f006f45f24590a102e38c32c2ba29a4486be02ec67710",
+      "data/7X/time_table.xlsx:time_table_sumo.xlsx": "b048e44e9acb8b0250c6157acadf7a8d45b4f3fa8b8240e128e361b961f55cdd",
+      "repository:bus_h2o/network_data/a_sorted_busline_edge.xml": "7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332",
+      "segment_runtime_calibration_v4.json": "4ba0aca950229c3a972c0a59b487435ff08c5d4d74f4275daa6f4feba9485219"
+    },
+    "runtime_sha256": "8b25fea869717454b46af0cbae30528c741e36cecd25ab7694e946b233ebf7c5",
+    "schema_version": "transit-simulator-inputs-v1"
+  },
+  "source_sha256": {
+    "SimpleSAC/train_transit_v3.py": "fb2e2c275533a6500afc4490a6aa367fac931feee3003a2113e485f3847746d8",
+    "SimpleSAC/train_transit_v6.py": "82295c71062c005dd7c4e3cd74de46623529a22e292098cf035fcd71621c67eb",
+    "SimpleSAC/transit_v3/domain_ratio.py": "d57dea4f747be2961316a8672d51bf161573c22aecf8599305265159db9de09b",
+    "SimpleSAC/transit_v3/networks.py": "82d07bb082e543ded1cb6d811b37eb783e098bbd9cc33ae341c7f9a47ed26b7b",
+    "SimpleSAC/transit_v3/protocols.py": "7e830de0787b8dab3bf44b35c88c6631659756531edaf654d24fb19a4b2bc218",
+    "SimpleSAC/transit_v3/replay_buffer.py": "3c7fa81d3e614cf3cecb3424447b6b7f9e149373de52bc67e8bf01dca8627fe7",
+    "SimpleSAC/transit_v3/sampler.py": "b2c603368488b3c4eb5e440facefc357e81bc9eb72eb6a87f36149b1bf8b32dc",
+    "SimpleSAC/transit_v3/trainer.py": "d70a09c5ed5ea207ee5d5a1836a09ac0f2197955265bed28d377980b9e1cdaeb",
+    "SimpleSAC/transit_v4/networks.py": "4441a8009f189a3c4bbe231c0991d9a4f9b9c82747a11937ea65a45b93c5172e",
+    "SimpleSAC/transit_v6/networks.py": "4a7d2ecaafd9f769d536b683e96444533392a3be0045a104dd006d136458a26d",
+    "SimpleSAC/transit_v6/replay_buffer.py": "791e7d5a96ba40aba9e8eef2f58a3850a3c6bb221f9031ca6d9a294e3ea937eb",
+    "SimpleSAC/transit_v6/sampler.py": "c093fe36d02c6c2dc2b34672ce46cdb9a151c4be0b5f7b6afcc13c639597da60",
+    "SimpleSAC/transit_v6/trainer.py": "2260baceb57521fb1c6df46dc81caef3e04ffd350c7eefea3104c0188bfaccc7",
+    "bus_h2o/envs/all_lines_sim_env.py": "c7ca9cbbb25964606cbcf0386141204455aa70232eff3378b2cb3bfdefff3bba",
+    "bus_h2o/mdp_contract.py": "da6788ce23518d73d92b6b7bbdf6f602eec2b06bee22fe1e1963f90152a54fb8",
+    "bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+    "bus_h2o/mdp_contract_v5.py": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a",
+    "bus_h2o/mdp_contract_v6.py": "8dfc95373b039b2c239602ee7a4bda5acdde58d5760c04be3a20e425138fb4c1",
+    "bus_h2o/passenger_time.py": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7",
+    "bus_h2o/sim_core/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "bus_h2o/sim_core/bus.py": "3e1232bc5c3525f7f0b20d7d2ef838fe4da0a874257e4519565af4a5cced9784",
+    "bus_h2o/sim_core/co_line_scheduler.py": "07b9480fc53d96b80cd86c6a3f594c8ea4a13b01939715f9f106b9537546a69b",
+    "bus_h2o/sim_core/passenger.py": "583ff63e20d6331709e456e10a354f77d96840a5a4bd9c9c43986ac92cd1e55c",
+    "bus_h2o/sim_core/route.py": "e5d4468c15205b4fdccc067ac312359ddf8d3e687b2751b6bd188a65f5c12223",
+    "bus_h2o/sim_core/sim.py": "0e6f1b6afce393621dff850b5280b7ea119ee0dc2e89091baee9fe53cc64bbde",
+    "bus_h2o/sim_core/station.py": "4aff4c4d8cbfe6c39c3cbd93535956b6cb7a771ada3acbe38967997ef2996f82",
+    "bus_h2o/sim_core/timetable.py": "a2bc21860562149f1988820c62727baeb03312f8d2e933eecadfce025763dc9c",
+    "bus_h2o/sim_core/visualize.py": "c35f989d5c9ce37808d92fba1a7ddc9013dbdb24b0fcc735e4e4013cd3e0c34f",
+    "reproducibility/audit_simulator_fidelity_v6.py": "6988b0d5c1076ae88b4d8e537ac998e3a73b89997e68eb8b79aababa3a0d078b",
+    "reproducibility/build_simulator_demand.py": "c2cac54dbaf250c515a353044a9e3d8dfa93cca49f23b5ffbbc936a56a4c8a1d",
+    "reproducibility/build_simulator_runtime_calibration_v4.py": "e18d57f437aee42cd37e3a91038bc758f0ffa505e8847d82e33ac924aea084f7"
+  },
+  "strata": {
+    "0.75": {
+      "comparison": {
+        "bootstrap_samples": 10000,
+        "checks": {
+          "all_gap_confidence_intervals": true,
+          "all_invariants": true,
+          "completion_rate": true,
+          "decisions": true,
+          "demand": true,
+          "generalized_welfare": true,
+          "in_vehicle_time": true,
+          "trip_duration": true,
+          "wait_time": true
+        },
+        "gap_bootstrap_95_ci": {
+          "completion_rate_absolute_gap": [
+            0.0008745162469533385,
+            0.0031900263368565968
+          ],
+          "decision_relative_gap": [
+            -0.018765923325967587,
+            -0.01726637000803401
+          ],
+          "demand_relative_error": [
+            -0.003516021822285657,
+            0.01294705378232125
+          ],
+          "generalized_welfare_relative_gap": [
+            0.015258596595105095,
+            0.03621944288152359
+          ],
+          "in_vehicle_time_relative_gap": [
+            0.011243619638844128,
+            0.020774007743604304
+          ],
+          "trip_duration_relative_gap": [
+            0.006874155656232103,
+            0.009989160275500106
+          ],
+          "wait_time_relative_gap": [
+            0.013198076545769285,
+            0.062168961317328124
+          ]
+        },
+        "gap_bootstrap_interval_checks": {
+          "completion_rate_absolute_gap": true,
+          "decision_relative_gap": true,
+          "demand_relative_error": true,
+          "generalized_welfare_relative_gap": true,
+          "in_vehicle_time_relative_gap": true,
+          "trip_duration_relative_gap": true,
+          "wait_time_relative_gap": true
+        },
+        "gaps": {
+          "completion_rate_absolute_gap": 0.0020055434775824166,
+          "decision_relative_gap": -0.018024979381979504,
+          "demand_relative_error": 0.005321795112978989,
+          "generalized_welfare_relative_gap": 0.025843317923664507,
+          "in_vehicle_time_relative_gap": 0.01603012461229266,
+          "trip_duration_relative_gap": 0.008403408216112275,
+          "wait_time_relative_gap": 0.0379084351871814
+        },
+        "invariants": [
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9901
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9902
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9903
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9904
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9905
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9906
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9907
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9908
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9909
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9910
+          }
+        ],
+        "normalization": {
+          "disclosure": "sim-core models independent ride legs, whereas SUMO completion is measured per person journey; completion rates are therefore a structural diagnostic, not identical estimands",
+          "expected_simulator_ride_legs": 11960.249999999993,
+          "formula": "simulator total * expected ride legs / generated ride legs / source SUMO persons",
+          "source_sumo_persons": 11309.25
+        },
+        "passed": true,
+        "simulator": {
+          "completion_rate": {
+            "max": 0.9940618556701031,
+            "mean": 0.9904226577085368,
+            "min": 0.9878549292235531,
+            "n": 10,
+            "p50": 0.9899800378379836,
+            "p90": 0.9918763644934517,
+            "p95": 0.9929691100817774,
+            "std": 0.0016880836479194238
+          },
+          "control_decisions": {
+            "max": 13227.0,
+            "mean": 13216.5,
+            "min": 13202.0,
+            "n": 10,
+            "p50": 13216.0,
+            "p90": 13225.2,
+            "p95": 13226.1,
+            "std": 8.195527235429498
+          },
+          "generalized_seconds_per_equivalent_source_person": {
+            "max": 2099.617779052046,
+            "mean": 2052.6317206749336,
+            "min": 2005.1481566594616,
+            "n": 10,
+            "p50": 2065.6840386947856,
+            "p90": 2078.696525340946,
+            "p95": 2089.157152196496,
+            "std": 31.81848372095347
+          },
+          "generated_ride_legs": {
+            "max": 12235.0,
+            "mean": 12023.9,
+            "min": 11646.0,
+            "n": 10,
+            "p50": 12048.5,
+            "p90": 12193.6,
+            "p95": 12214.3,
+            "std": 168.4388778030641
+          },
+          "in_vehicle_seconds_per_equivalent_source_person": {
+            "max": 1132.1535260715032,
+            "mean": 1121.1258105198933,
+            "min": 1107.923962996079,
+            "n": 10,
+            "p50": 1121.945317236549,
+            "p90": 1127.4532791414233,
+            "p95": 1129.8034026064631,
+            "std": 7.354727226451855
+          },
+          "trip_duration_seconds": {
+            "max": 2701.4781491002573,
+            "mean": 2695.6046272493577,
+            "min": 2688.210796915167,
+            "n": 10,
+            "p50": 2695.7442159383036,
+            "p90": 2700.3861182519277,
+            "p95": 2700.9321336760927,
+            "std": 4.1248233328960024
+          },
+          "wait_seconds_per_equivalent_source_person": {
+            "max": 489.39926819012817,
+            "mean": 465.75295507752014,
+            "min": 439.10856358846814,
+            "n": 10,
+            "p50": 471.4870106320389,
+            "p90": 482.79447407866644,
+            "p95": 486.0968711343973,
+            "std": 16.31573576062951
+          }
+        },
+        "sumo": {
+          "completion_rate": {
+            "max": 0.9907645857383891,
+            "mean": 0.9884171142309544,
+            "min": 0.9870255957634598,
+            "n": 10,
+            "p50": 0.988047459250128,
+            "p90": 0.9892782642031538,
+            "p95": 0.9900214249707715,
+            "std": 0.0010347706553894772
+          },
+          "control_decisions": {
+            "max": 13479.0,
+            "mean": 13459.1,
+            "min": 13431.0,
+            "n": 10,
+            "p50": 13459.0,
+            "p90": 13475.4,
+            "p95": 13477.2,
+            "std": 15.480812496621603
+          },
+          "generalized_seconds_per_person": {
+            "max": 2029.6286849073256,
+            "mean": 2000.9212759990653,
+            "min": 1968.6217032235147,
+            "n": 10,
+            "p50": 2002.5212282134135,
+            "p90": 2011.5993793776152,
+            "p95": 2020.6140321424705,
+            "std": 16.080222133474912
+          },
+          "in_vehicle_seconds_per_person": {
+            "max": 1110.4578686493185,
+            "mean": 1103.4375687902996,
+            "min": 1092.6014300847457,
+            "n": 10,
+            "p50": 1103.217078248891,
+            "p90": 1108.600559975668,
+            "p95": 1109.5292143124932,
+            "std": 5.128010065879797
+          },
+          "trip_duration_seconds": {
+            "max": 2681.1696658097685,
+            "mean": 2673.1411311053985,
+            "min": 2661.7840616966582,
+            "n": 10,
+            "p50": 2672.6658097686377,
+            "p90": 2680.551928020566,
+            "p95": 2680.860796915167,
+            "std": 5.684751612525225
+          },
+          "wait_seconds_per_person": {
+            "max": 462.9548984995587,
+            "mean": 448.74185360438275,
+            "min": 430.1137554391262,
+            "n": 10,
+            "p50": 450.0308542373598,
+            "p90": 454.2220788330067,
+            "p95": 458.5884886662827,
+            "std": 8.463163534703346
+          }
+        },
+        "thresholds": {
+          "completion_rate_absolute_gap": 0.05,
+          "decision_relative_gap": 0.1,
+          "demand_relative_error": 0.05,
+          "generalized_welfare_relative_gap": 0.2,
+          "in_vehicle_time_relative_gap": 0.25,
+          "trip_duration_relative_gap": 0.15,
+          "wait_time_relative_gap": 0.25
+        }
+      },
+      "demand_scale": 0.75,
+      "simulator_seeds": [
+        9901,
+        9902,
+        9903,
+        9904,
+        9905,
+        9906,
+        9907,
+        9908,
+        9909,
+        9910
+      ],
+      "sumo_scaled_person_counts": {
+        "max": 11425.0,
+        "mean": 11308.1,
+        "min": 11178.0,
+        "n": 10,
+        "p50": 11313.0,
+        "p90": 11345.8,
+        "p95": 11385.4,
+        "std": 63.068657473863794
+      },
+      "sumo_sources": [
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11330,
+          "scenario_manifest_sha256": "8bb17334c730d1b188b07b192b802ad9788da2a098ce2829dead8b4de2abefbd",
+          "shard_sha256": "f0b5d56e7bd7539ca2490311ffa622338dcafa56f1356974fda220d3873f6f97",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1201/sumo_seed1101.npz.json",
+            "sha256": "3e345026abbb45bc71bba1242f5082f914f51199c8ffd017da1e3831cbedbfeb"
+          },
+          "sumo_seed": 1101
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11336,
+          "scenario_manifest_sha256": "cc62cc327201a2c121663078fbcec023927d798c058339ec99f1f82225851119",
+          "shard_sha256": "4592fcbc375730c757f625114d5a695edb076271c6902f8400a4aab574c003e0",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1202/sumo_seed1102.npz.json",
+            "sha256": "33307b5f121db32b463e68e0b7517770affccc9d4df44e828c1fcc0132484f01"
+          },
+          "sumo_seed": 1102
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11328,
+          "scenario_manifest_sha256": "924143d60fe47c2b926742190cb37ad858721e7c89f4edb918f27997c3be6428",
+          "shard_sha256": "470d764915231b28feb923a092a23a8a524e8f04e5d42427cfe0545f5988c85e",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1203/sumo_seed1103.npz.json",
+            "sha256": "864687c111e525a4e96cacd33a039f7823bbaaee87306c46d8148a078ad02fc1"
+          },
+          "sumo_seed": 1103
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11178,
+          "scenario_manifest_sha256": "bb4d852a181f9bc968a7839d9aa82edb834828e8810ff42329df7ef7fd6df848",
+          "shard_sha256": "c9022eafefb66a5af31aafb7d4ffc203334d900788ab7692d2752c7c24a2c871",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1204/sumo_seed1104.npz.json",
+            "sha256": "3b44fe3b3683c2d2b3a33f6df136f804769d0fde2c888168c559456f82cfd6c1"
+          },
+          "sumo_seed": 1104
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11337,
+          "scenario_manifest_sha256": "a2fe18dd6a5a7deb26bcbc40b71c7a1b7376a303804b63f67f40bf6e8788a0ea",
+          "shard_sha256": "1914e498250af32e41a5bb260502086570b2643eaa40deeedd1ad8bb6742e8b8",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1205/sumo_seed1105.npz.json",
+            "sha256": "fb3af2fcd9165d5a9829a4a6ade4d9308f6dc8330aff5baf4c5e28b5cfbda16a"
+          },
+          "sumo_seed": 1105
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11294,
+          "scenario_manifest_sha256": "af24d9b074d6587c7dec3f710e665a9c4e6c94e00b12b89c3437b3be07a2173c",
+          "shard_sha256": "ee02203e45804e9e9d0d7dbba70d150938f83c5eed8ccf8a27e5b2b1ba202782",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1206/sumo_seed1106.npz.json",
+            "sha256": "9bc72c36e7c3ea874dd8f0f309ba60b795df162e155ab5be4fd42a357e8bdb0e"
+          },
+          "sumo_seed": 1106
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11425,
+          "scenario_manifest_sha256": "279b580b32026fbee12d52c61c35ba6d0f6b64e8f6b36079858816e27eca05f9",
+          "shard_sha256": "0e7aad24c0ba7711c1999f7c3e856ffe3fe906dbd6cbd38b8ad1acd70eb758ee",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1207/sumo_seed1107.npz.json",
+            "sha256": "d218fe01e312eb78acd5cadca5f57f1c68108caebdd5fae4ea08fcbd0720d746"
+          },
+          "sumo_seed": 1107
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11298,
+          "scenario_manifest_sha256": "ab12db317b194090da552192e5cba44d6e044110a656e34ff4364dac848fd4ef",
+          "shard_sha256": "b0b22530ff2e355e16404df9d04f5d92c02092a6c6104acd26fa17859b8ecbc4",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1208/sumo_seed1108.npz.json",
+            "sha256": "2c993c48372f8206579d76045617b2cfb9d1c79a14b5786b86b508bb215ebbd7"
+          },
+          "sumo_seed": 1108
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11294,
+          "scenario_manifest_sha256": "f9bfc815af625fd01f1d9a75f09976127b6b5b71e7f5e7575e5087f4b80e65aa",
+          "shard_sha256": "68c4425a65c9196338cd13041963e1b355a4adbf8919e8ddd2e6867c2b9a2bbe",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1209/sumo_seed1109.npz.json",
+            "sha256": "4fde2edd49d17ae9fa756fdf29117793797ca96e199d7d97c8e2c61ca38e4e88"
+          },
+          "sumo_seed": 1109
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11261,
+          "scenario_manifest_sha256": "677653e7b485f11299f50e70fd5a8432ce4b153f606108792cafbf2268816a3b",
+          "shard_sha256": "42d75c6c65b0bfa437849ee800c3ef376206980c3577f6e3e4d73da21ddc1817",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1210/sumo_seed1110.npz.json",
+            "sha256": "4e70d7628fa9eca0d5cd8fcf1d1061a236275b9835831f6ef8841a5cf203c3e0"
+          },
+          "sumo_seed": 1110
+        }
+      ]
+    },
+    "1": {
+      "comparison": {
+        "bootstrap_samples": 10000,
+        "checks": {
+          "all_gap_confidence_intervals": true,
+          "all_invariants": true,
+          "completion_rate": true,
+          "decisions": true,
+          "demand": true,
+          "generalized_welfare": true,
+          "in_vehicle_time": true,
+          "trip_duration": true,
+          "wait_time": true
+        },
+        "gap_bootstrap_95_ci": {
+          "completion_rate_absolute_gap": [
+            -0.007994608995914577,
+            -0.0036179765115778315
+          ],
+          "decision_relative_gap": [
+            -0.017801665291923903,
+            -0.01648849415792082
+          ],
+          "demand_relative_error": [
+            0.0019063146673362118,
+            0.014617169373550601
+          ],
+          "generalized_welfare_relative_gap": [
+            0.07434101594651235,
+            0.11077849117512586
+          ],
+          "in_vehicle_time_relative_gap": [
+            -0.005976446427566663,
+            0.002748593792103671
+          ],
+          "trip_duration_relative_gap": [
+            -0.0008633192186224565,
+            0.0014688664978738505
+          ],
+          "wait_time_relative_gap": [
+            0.13857131804806377,
+            0.21033519958589147
+          ]
+        },
+        "gap_bootstrap_interval_checks": {
+          "completion_rate_absolute_gap": true,
+          "decision_relative_gap": true,
+          "demand_relative_error": true,
+          "generalized_welfare_relative_gap": true,
+          "in_vehicle_time_relative_gap": true,
+          "trip_duration_relative_gap": true,
+          "wait_time_relative_gap": true
+        },
+        "gaps": {
+          "completion_rate_absolute_gap": -0.005590726855481343,
+          "decision_relative_gap": -0.01713133777671991,
+          "demand_relative_error": 0.008597228318806759,
+          "generalized_welfare_relative_gap": 0.0915179420585883,
+          "in_vehicle_time_relative_gap": -0.0016468988949368683,
+          "trip_duration_relative_gap": 0.0003148463011929781,
+          "wait_time_relative_gap": 0.17155553302456175
+        },
+        "invariants": [
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9901
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9902
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9903
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9904
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9905
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9906
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9907
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9908
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9909
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9910
+          }
+        ],
+        "normalization": {
+          "disclosure": "sim-core models independent ride legs, whereas SUMO completion is measured per person journey; completion rates are therefore a structural diagnostic, not identical estimands",
+          "expected_simulator_ride_legs": 15946.999999999989,
+          "formula": "simulator total * expected ride legs / generated ride legs / source SUMO persons",
+          "source_sumo_persons": 15079.0
+        },
+        "passed": true,
+        "simulator": {
+          "completion_rate": {
+            "max": 0.9702490921832198,
+            "mean": 0.9658596345743218,
+            "min": 0.9572549261844462,
+            "n": 10,
+            "p50": 0.966854671879386,
+            "p90": 0.9686634469277322,
+            "p95": 0.969456269555476,
+            "std": 0.00379424922431317
+          },
+          "control_decisions": {
+            "max": 13220.0,
+            "mean": 13212.9,
+            "min": 13209.0,
+            "n": 10,
+            "p50": 13212.5,
+            "p90": 13216.4,
+            "p95": 13218.2,
+            "std": 3.6347092196090616
+          },
+          "generalized_seconds_per_equivalent_source_person": {
+            "max": 2780.221228570522,
+            "mean": 2619.2660496734434,
+            "min": 2526.3423126813664,
+            "n": 10,
+            "p50": 2618.8351529646707,
+            "p90": 2688.47119896436,
+            "p95": 2734.346213767441,
+            "std": 72.7986948881965
+          },
+          "generated_ride_legs": {
+            "max": 16373.0,
+            "mean": 16084.1,
+            "min": 15697.0,
+            "n": 10,
+            "p50": 16091.5,
+            "p90": 16207.4,
+            "p95": 16290.199999999999,
+            "std": 172.47830781482833
+          },
+          "in_vehicle_seconds_per_equivalent_source_person": {
+            "max": 1120.63760010941,
+            "mean": 1107.0645111538943,
+            "min": 1093.812926637111,
+            "n": 10,
+            "p50": 1106.2828500117357,
+            "p90": 1116.6125959077183,
+            "p95": 1118.625098008564,
+            "std": 7.498731391834504
+          },
+          "trip_duration_seconds": {
+            "max": 2729.9974293059126,
+            "mean": 2723.857326478149,
+            "min": 2719.904884318766,
+            "n": 10,
+            "p50": 2723.52442159383,
+            "p90": 2727.582005141388,
+            "p95": 2728.7897172236503,
+            "std": 3.091145652154566
+          },
+          "wait_seconds_per_equivalent_source_person": {
+            "max": 843.2041509667052,
+            "mean": 756.1007692597747,
+            "min": 710.0632402745291,
+            "n": 10,
+            "p50": 752.8647776049065,
+            "p90": 793.8763965901271,
+            "p95": 818.5402737784161,
+            "std": 38.426907090863374
+          }
+        },
+        "sumo": {
+          "completion_rate": {
+            "max": 0.9722130114729094,
+            "mean": 0.9714503614298031,
+            "min": 0.9708203461768021,
+            "n": 10,
+            "p50": 0.9713840440347503,
+            "p90": 0.9719742688507196,
+            "p95": 0.9720936401618145,
+            "std": 0.00047745454089477194
+          },
+          "control_decisions": {
+            "max": 13472.0,
+            "mean": 13443.2,
+            "min": 13421.0,
+            "n": 10,
+            "p50": 13441.5,
+            "p90": 13455.8,
+            "p95": 13463.9,
+            "std": 14.748257900888197
+          },
+          "generalized_seconds_per_person": {
+            "max": 2417.4345115723854,
+            "mean": 2399.6545991113467,
+            "min": 2365.6638371244776,
+            "n": 10,
+            "p50": 2401.011705020227,
+            "p90": 2409.7954042045226,
+            "p95": 2413.6149578884542,
+            "std": 13.476345012335083
+          },
+          "in_vehicle_seconds_per_person": {
+            "max": 1115.013794018171,
+            "mean": 1108.8907420916507,
+            "min": 1103.771072352278,
+            "n": 10,
+            "p50": 1109.3335764971152,
+            "p90": 1111.7074474434644,
+            "p95": 1113.3606207308178,
+            "std": 3.284968245009839
+          },
+          "trip_duration_seconds": {
+            "max": 2729.974293059126,
+            "mean": 2723.0,
+            "min": 2716.218508997429,
+            "n": 10,
+            "p50": 2722.4897172236506,
+            "p90": 2729.0025706940874,
+            "p95": 2729.4884318766067,
+            "std": 4.317358416425649
+          },
+          "wait_seconds_per_person": {
+            "max": 653.0472179852775,
+            "mean": 645.3819285098482,
+            "min": 628.3115591219577,
+            "n": 10,
+            "p50": 646.4971483520127,
+            "p90": 650.2812056502421,
+            "p95": 651.6642118177598,
+            "std": 6.734434049475917
+          }
+        },
+        "thresholds": {
+          "completion_rate_absolute_gap": 0.05,
+          "decision_relative_gap": 0.1,
+          "demand_relative_error": 0.05,
+          "generalized_welfare_relative_gap": 0.2,
+          "in_vehicle_time_relative_gap": 0.25,
+          "trip_duration_relative_gap": 0.15,
+          "wait_time_relative_gap": 0.25
+        }
+      },
+      "demand_scale": 1.0,
+      "simulator_seeds": [
+        9901,
+        9902,
+        9903,
+        9904,
+        9905,
+        9906,
+        9907,
+        9908,
+        9909,
+        9910
+      ],
+      "sumo_scaled_person_counts": {
+        "max": 15079.0,
+        "mean": 15079.0,
+        "min": 15079.0,
+        "n": 10,
+        "p50": 15079.0,
+        "p90": 15079.0,
+        "p95": 15079.0,
+        "std": 0.0
+      },
+      "sumo_sources": [
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "7ebca4924b4e1249f5b97f8fb2a0f5f99b9e44ccb6a221bc9119bc61fa8b791e",
+          "shard_sha256": "2a4c5f40cd06b4bf33549826787e616b36427786d777856f779817333e3949b3",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz.json",
+            "sha256": "70a2da455d1e9f454cd5caa479942043081194da0d9ad90073d59a63c5521887"
+          },
+          "sumo_seed": 1101
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "c222ff4cbe6bb9b0db0e2b1c49fa03bc57481ba8b5ac3286ea547980aaf0c39f",
+          "shard_sha256": "bddfffa7d29c00e74c13d9bdb041868919b92b7abd8ec61a66fde3a760208b34",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1202/sumo_seed1102.npz.json",
+            "sha256": "1f241719db8d72c0911885c35e142887625f86b2c4fe302a1561d32d1703ad9c"
+          },
+          "sumo_seed": 1102
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "33da4f4407b630dea1312fe125527fa8830e2e16c3949feb108ca75845259cbf",
+          "shard_sha256": "b20868acb6b343fb45e370203a2fccbec646ea238fad51fbe37ac7dd8449947d",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1203/sumo_seed1103.npz.json",
+            "sha256": "6ec5b46b8bbf895a1c0d7abf79f45113c0448f0dc41d6b5227f34fee05b3055d"
+          },
+          "sumo_seed": 1103
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "cfff207a2a3a4f52d765410de0d47a8763eba91e5aa4b7b901bfb1f1c4df4479",
+          "shard_sha256": "fdabc40ba491ff882063a85fd7ad3fc2be9cbdcdaaeb40fe3017b1b8b3ce08ed",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1204/sumo_seed1104.npz.json",
+            "sha256": "d5c5b1c743af4eabe65dcf83cea9d218a206ab2edac02938b6cff1d6fb762fd6"
+          },
+          "sumo_seed": 1104
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "e18f23cec485e67f4677f6a2dd30473502cf2eccd7876dc69aafd83a19f103fb",
+          "shard_sha256": "2df16a256ec51b4953e78eb066039369048dc3295ed5f0c26a8a7cdee12b26e7",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1205/sumo_seed1105.npz.json",
+            "sha256": "38abb5f4d5eaf6f112c02c732eaf69a704c86b73295c160d98ee95ba366bd388"
+          },
+          "sumo_seed": 1105
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "fb885ce246dae7af95f0156a1f39cfcdcd72477f557e923de2e816739a1ebce2",
+          "shard_sha256": "d1d4bbf2e27be7235e9fac44e42dbcb7d9211377c036b6f88bd79699c8749429",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1206/sumo_seed1106.npz.json",
+            "sha256": "cbf4b51204f41187a67a5f87abc6619ff52ae109cde5c9ef971936466c79ceb1"
+          },
+          "sumo_seed": 1106
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "46e5e00006aaebad6f863f8fa11a6c9a9772488f1c8b2bcb036911f3944b9cac",
+          "shard_sha256": "9d033f862b56f2d2fc9614c100e0ebd1514d450e5bf9458a60a58ee6e187203c",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1207/sumo_seed1107.npz.json",
+            "sha256": "3a5a61615422a0cad218749f64f5aec5044bf5d2caf0cc638f9726eef39f6af6"
+          },
+          "sumo_seed": 1107
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "0c57ac5a1f4efa36dd489d1bc37a1d79adcf50a29e8fbaea164a3e9c830ee3c2",
+          "shard_sha256": "8044bb6a4937f18c9ed9dc3f579496466fb714edab05015aeca1b35eaabd6e5e",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1208/sumo_seed1108.npz.json",
+            "sha256": "99f27b30ad09d2bc3793e1c26ccf3a76a49ec4d66c57a7274a8dd7b638c5e0de"
+          },
+          "sumo_seed": 1108
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "f603d713e1b5e7c870e8e459ee0dcdb5674a916d783951caeca54248bb420435",
+          "shard_sha256": "edd87262594f99091b303d7f0f8cc9d06f5972ccdfb05efda4da38ee72c08e22",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1209/sumo_seed1109.npz.json",
+            "sha256": "bf9dad4f52b8309f29278a9b860a4261711bf95a56c5242a5fdc774ed33adb82"
+          },
+          "sumo_seed": 1109
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "17e23e9c51422047838d25e69b65a85ef4ad7ecace8c6fbffd274ec0159fc8a8",
+          "shard_sha256": "37d2a98facb68dbdcb7fc4f263ea0d38dc521bd1acaf4ac84aa937e91e2a631c",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1210/sumo_seed1110.npz.json",
+            "sha256": "49a517ea64113f837183767820f5fbfdd8ab32a94138f7013cc3bd1066cefdff"
+          },
+          "sumo_seed": 1110
+        }
+      ]
+    },
+    "1.25": {
+      "comparison": {
+        "bootstrap_samples": 10000,
+        "checks": {
+          "all_gap_confidence_intervals": true,
+          "all_invariants": true,
+          "completion_rate": true,
+          "decisions": true,
+          "demand": true,
+          "generalized_welfare": true,
+          "in_vehicle_time": true,
+          "trip_duration": true,
+          "wait_time": true
+        },
+        "gap_bootstrap_95_ci": {
+          "completion_rate_absolute_gap": [
+            -0.003995398039462264,
+            0.0004293339029724422
+          ],
+          "decision_relative_gap": [
+            -0.019534808811053954,
+            -0.018379685110003267
+          ],
+          "demand_relative_error": [
+            -0.0023102777951958266,
+            0.009920361196464021
+          ],
+          "generalized_welfare_relative_gap": [
+            0.03530101345870923,
+            0.0651754479780492
+          ],
+          "in_vehicle_time_relative_gap": [
+            -0.01683235889287602,
+            -0.00941237242173942
+          ],
+          "trip_duration_relative_gap": [
+            -0.011035222064783714,
+            -0.00819867156686161
+          ],
+          "wait_time_relative_gap": [
+            0.059630014229768685,
+            0.10518127971238234
+          ]
+        },
+        "gap_bootstrap_interval_checks": {
+          "completion_rate_absolute_gap": true,
+          "decision_relative_gap": true,
+          "demand_relative_error": true,
+          "generalized_welfare_relative_gap": true,
+          "in_vehicle_time_relative_gap": true,
+          "trip_duration_relative_gap": true,
+          "wait_time_relative_gap": true
+        },
+        "gaps": {
+          "completion_rate_absolute_gap": -0.001794653290628223,
+          "decision_relative_gap": -0.01897512068325288,
+          "demand_relative_error": 0.004477331159466464,
+          "generalized_welfare_relative_gap": 0.050576474986804905,
+          "in_vehicle_time_relative_gap": -0.0131924785499878,
+          "trip_duration_relative_gap": -0.009612450624035197,
+          "wait_time_relative_gap": 0.08193526182475258
+        },
+        "invariants": [
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9901
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9902
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9903
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9904
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9905
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9906
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9907
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9908
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9909
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9910
+          }
+        ],
+        "normalization": {
+          "disclosure": "sim-core models independent ride legs, whereas SUMO completion is measured per person journey; completion rates are therefore a structural diagnostic, not identical estimands",
+          "expected_simulator_ride_legs": 19933.749999999985,
+          "formula": "simulator total * expected ride legs / generated ride legs / source SUMO persons",
+          "source_sumo_persons": 18848.75
+        },
+        "passed": true,
+        "simulator": {
+          "completion_rate": {
+            "max": 0.9304251794588625,
+            "mean": 0.9252938773714,
+            "min": 0.9203181346638344,
+            "n": 10,
+            "p50": 0.9253721629860596,
+            "p90": 0.9290593398143152,
+            "p95": 0.9297422596365889,
+            "std": 0.0035766542135686596
+          },
+          "control_decisions": {
+            "max": 13218.0,
+            "mean": 13209.5,
+            "min": 13202.0,
+            "n": 10,
+            "p50": 13209.0,
+            "p90": 13216.2,
+            "p95": 13217.1,
+            "std": 4.972144630058766
+          },
+          "generalized_seconds_per_equivalent_source_person": {
+            "max": 3526.454612642969,
+            "mean": 3424.000512696481,
+            "min": 3300.632905387779,
+            "n": 10,
+            "p50": 3425.3361027227875,
+            "p90": 3522.6579551801083,
+            "p95": 3524.5562839115387,
+            "std": 77.73567348788237
+          },
+          "generated_ride_legs": {
+            "max": 20243.0,
+            "mean": 20023.0,
+            "min": 19495.0,
+            "n": 10,
+            "p50": 20070.0,
+            "p90": 20220.5,
+            "p95": 20231.75,
+            "std": 213.06389234739476
+          },
+          "in_vehicle_seconds_per_equivalent_source_person": {
+            "max": 1069.218505063721,
+            "mean": 1060.2070128745586,
+            "min": 1053.2396594145184,
+            "n": 10,
+            "p50": 1060.2630733583833,
+            "p90": 1063.998867981035,
+            "p95": 1066.6086865223779,
+            "std": 4.396701607824023
+          },
+          "trip_duration_seconds": {
+            "max": 2758.5912596401026,
+            "mean": 2747.61028277635,
+            "min": 2742.552699228792,
+            "n": 10,
+            "p50": 2746.857326478149,
+            "p90": 2750.5213367609254,
+            "p95": 2754.556298200514,
+            "std": 4.504025787214585
+          },
+          "wait_seconds_per_equivalent_source_person": {
+            "max": 1235.298860763988,
+            "mean": 1181.8967499109613,
+            "min": 1121.6271292262297,
+            "n": 10,
+            "p50": 1180.2876503538407,
+            "p90": 1230.9397072354225,
+            "p95": 1233.1192839997052,
+            "std": 39.54465269001474
+          }
+        },
+        "sumo": {
+          "completion_rate": {
+            "max": 0.929002541296061,
+            "mean": 0.9270885306620282,
+            "min": 0.9239725663246319,
+            "n": 10,
+            "p50": 0.9272496809423441,
+            "p90": 0.9280880001140759,
+            "p95": 0.9285452707050684,
+            "std": 0.0013011494688179278
+          },
+          "control_decisions": {
+            "max": 13484.0,
+            "mean": 13465.0,
+            "min": 13447.0,
+            "n": 10,
+            "p50": 13466.0,
+            "p90": 13477.7,
+            "p95": 13480.85,
+            "std": 12.418624006798105
+          },
+          "generalized_seconds_per_person": {
+            "max": 3307.543835397948,
+            "mean": 3259.1635109090807,
+            "min": 3218.169875545155,
+            "n": 10,
+            "p50": 3258.856631508991,
+            "p90": 3284.7321108365354,
+            "p95": 3296.1379731172415,
+            "std": 26.589018781622453
+          },
+          "in_vehicle_seconds_per_person": {
+            "max": 1084.7256459127489,
+            "mean": 1074.3807579787122,
+            "min": 1066.3993834378655,
+            "n": 10,
+            "p50": 1074.3011918051925,
+            "p90": 1078.4897163694288,
+            "p95": 1081.607681141089,
+            "std": 5.239130706172682
+          },
+          "trip_duration_seconds": {
+            "max": 2786.017994858612,
+            "mean": 2774.2778920308488,
+            "min": 2768.7352185089976,
+            "n": 10,
+            "p50": 2774.169665809769,
+            "p90": 2778.09383033419,
+            "p95": 2782.055912596401,
+            "std": 5.009551413921157
+          },
+          "wait_seconds_per_person": {
+            "max": 1120.2718379499177,
+            "mean": 1092.3913764651843,
+            "min": 1070.8151792362514,
+            "n": 10,
+            "p50": 1092.632556116932,
+            "p90": 1105.598323316361,
+            "p95": 1112.9350806331395,
+            "std": 14.52105908489559
+          }
+        },
+        "thresholds": {
+          "completion_rate_absolute_gap": 0.05,
+          "decision_relative_gap": 0.1,
+          "demand_relative_error": 0.05,
+          "generalized_welfare_relative_gap": 0.2,
+          "in_vehicle_time_relative_gap": 0.25,
+          "trip_duration_relative_gap": 0.15,
+          "wait_time_relative_gap": 0.25
+        }
+      },
+      "demand_scale": 1.25,
+      "simulator_seeds": [
+        9901,
+        9902,
+        9903,
+        9904,
+        9905,
+        9906,
+        9907,
+        9908,
+        9909,
+        9910
+      ],
+      "sumo_scaled_person_counts": {
+        "max": 18929.0,
+        "mean": 18865.5,
+        "min": 18802.0,
+        "n": 10,
+        "p50": 18875.0,
+        "p90": 18906.5,
+        "p95": 18917.75,
+        "std": 43.787999370705315
+      },
+      "sumo_sources": [
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18863,
+          "scenario_manifest_sha256": "4beb6d4690c86c05d679ea4e2d66fb6d43a56d637e5a54a88ee7ccde65bad42b",
+          "shard_sha256": "b233c9633356437d6e8adc9f9be03c015a50f424228605a327dfc11000acd093",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1201/sumo_seed1101.npz.json",
+            "sha256": "81305371cee4c4212f29acf5045a60a5cc3a51c0d9093c048cc9473553380970"
+          },
+          "sumo_seed": 1101
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18886,
+          "scenario_manifest_sha256": "2a82086b29b066b32813a826dec58810273ce835abe17e0a420256f4ceb018ea",
+          "shard_sha256": "f603d4d53b36330ed43606af914c72c00499879746a97d9e8e2d8af6cd213bd2",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1202/sumo_seed1102.npz.json",
+            "sha256": "09d1420499678a258517c0f9322c3cda875edd16719a5514198ff39204f95f73"
+          },
+          "sumo_seed": 1102
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18809,
+          "scenario_manifest_sha256": "0034c813cc076378e4993b6f92268854f7dfc44901edd95c17a3aaf9f21c6f5a",
+          "shard_sha256": "016b2ea89bacbcbd25168578718460f22565aa6698274e740a98e6bb404b141a",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1203/sumo_seed1103.npz.json",
+            "sha256": "0aeed5e0b864e951530fb0807975de5142de49db9a50d1e0ef070b8e083fb751"
+          },
+          "sumo_seed": 1103
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18814,
+          "scenario_manifest_sha256": "394af7e89e60f76cb17ee217b72df79c64514a6431f176cdbded30bfca9f2aa6",
+          "shard_sha256": "e32f3a4307497598fc81b19a4173e1326eae8a067b5420405c2039e25eee6ee6",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1204/sumo_seed1104.npz.json",
+            "sha256": "e6681e38f42f5c7f15c785c8d582f47169f9b3d5f28cd47154a2edc7cbfdea7c"
+          },
+          "sumo_seed": 1104
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18896,
+          "scenario_manifest_sha256": "01cf0ccac2705e3079d599a010a68493cd57f1149dc4d1ccbc422be62f595553",
+          "shard_sha256": "2b81e7e6a2914b4b2cc078bb3d5ba4c5e6ef69edbdf9739959fd93a8cc04e3a1",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1205/sumo_seed1105.npz.json",
+            "sha256": "19053d02e3e187e6e5bb6ae546996562bcf2e8d42af551fdd049e84584490fb2"
+          },
+          "sumo_seed": 1105
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18904,
+          "scenario_manifest_sha256": "88aa96acac8c18794bfed9bec3aaaf1020ff06ac01c38ea84f5ec4a214efe22e",
+          "shard_sha256": "1b73f43608fc0ebb40b0c279bd93bbf325bcc984d3e7fa3db19645ffe0d60fdc",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1206/sumo_seed1106.npz.json",
+            "sha256": "520d6eb939d8d6f640e18adfc71c145e890499868d5d90c14624964cf77a4314"
+          },
+          "sumo_seed": 1106
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18929,
+          "scenario_manifest_sha256": "d1d1328a8d234100775ec083e503a394cfc6f7c029c96c3a2fe86cda933daacc",
+          "shard_sha256": "219cd8e709478efcfd4f036bbf6f7b69261e36eee79cb0a3b72d56edceee332a",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1207/sumo_seed1107.npz.json",
+            "sha256": "bfbd666861c4005fa51022164f96ecd3405aee74c11b4f2fe3d4fcbb8467a909"
+          },
+          "sumo_seed": 1107
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18864,
+          "scenario_manifest_sha256": "6aa3a43ba1d21f37d1733da5e2c0d0584c39342a32d2c68057192a900fd3e73f",
+          "shard_sha256": "42ddf42ee5cd6e313e5f2fa069e78f565f16190ee183bf5fbff81703ef9f3b68",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1208/sumo_seed1108.npz.json",
+            "sha256": "9e6eedbad57f32361f1ddd5a3b7e33f12ea69cd2036b7b6a0d28658e8ef4eb71"
+          },
+          "sumo_seed": 1108
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18888,
+          "scenario_manifest_sha256": "08fc9b68f76d2cdc3af98897d310b66597880ed236f37d011c30d794f6a376f5",
+          "shard_sha256": "3958a00a2e1676ae862953405e76668bd8010408203a60031ed19468a9741081",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1209/sumo_seed1109.npz.json",
+            "sha256": "c84401d3c93211f17afc79d74e40607669c4191d61b9b920b96881f932a248b6"
+          },
+          "sumo_seed": 1109
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18802,
+          "scenario_manifest_sha256": "83ee7a563c6d8d1859f0ac7b72ba0db816e437cd74991664f7aeb97f7d22687f",
+          "shard_sha256": "dfbc6b144340e5da035f60cbb4352af6eab046916fa44ff6516dfa1b3f3787ca",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1210/sumo_seed1110.npz.json",
+            "sha256": "5cfc62d6806059ef0e417d9c9d710a10662ec3a8f87f0f632858d87500584353"
+          },
+          "sumo_seed": 1110
+        }
+      ]
+    }
+  },
+  "study_stage": "formal",
+  "sumo_sources": [
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11330,
+      "scenario_manifest_sha256": "8bb17334c730d1b188b07b192b802ad9788da2a098ce2829dead8b4de2abefbd",
+      "shard_sha256": "f0b5d56e7bd7539ca2490311ffa622338dcafa56f1356974fda220d3873f6f97",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1201/sumo_seed1101.npz.json",
+        "sha256": "3e345026abbb45bc71bba1242f5082f914f51199c8ffd017da1e3831cbedbfeb"
+      },
+      "sumo_seed": 1101
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11336,
+      "scenario_manifest_sha256": "cc62cc327201a2c121663078fbcec023927d798c058339ec99f1f82225851119",
+      "shard_sha256": "4592fcbc375730c757f625114d5a695edb076271c6902f8400a4aab574c003e0",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1202/sumo_seed1102.npz.json",
+        "sha256": "33307b5f121db32b463e68e0b7517770affccc9d4df44e828c1fcc0132484f01"
+      },
+      "sumo_seed": 1102
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11328,
+      "scenario_manifest_sha256": "924143d60fe47c2b926742190cb37ad858721e7c89f4edb918f27997c3be6428",
+      "shard_sha256": "470d764915231b28feb923a092a23a8a524e8f04e5d42427cfe0545f5988c85e",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1203/sumo_seed1103.npz.json",
+        "sha256": "864687c111e525a4e96cacd33a039f7823bbaaee87306c46d8148a078ad02fc1"
+      },
+      "sumo_seed": 1103
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11178,
+      "scenario_manifest_sha256": "bb4d852a181f9bc968a7839d9aa82edb834828e8810ff42329df7ef7fd6df848",
+      "shard_sha256": "c9022eafefb66a5af31aafb7d4ffc203334d900788ab7692d2752c7c24a2c871",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1204/sumo_seed1104.npz.json",
+        "sha256": "3b44fe3b3683c2d2b3a33f6df136f804769d0fde2c888168c559456f82cfd6c1"
+      },
+      "sumo_seed": 1104
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11337,
+      "scenario_manifest_sha256": "a2fe18dd6a5a7deb26bcbc40b71c7a1b7376a303804b63f67f40bf6e8788a0ea",
+      "shard_sha256": "1914e498250af32e41a5bb260502086570b2643eaa40deeedd1ad8bb6742e8b8",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1205/sumo_seed1105.npz.json",
+        "sha256": "fb3af2fcd9165d5a9829a4a6ade4d9308f6dc8330aff5baf4c5e28b5cfbda16a"
+      },
+      "sumo_seed": 1105
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11294,
+      "scenario_manifest_sha256": "af24d9b074d6587c7dec3f710e665a9c4e6c94e00b12b89c3437b3be07a2173c",
+      "shard_sha256": "ee02203e45804e9e9d0d7dbba70d150938f83c5eed8ccf8a27e5b2b1ba202782",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1206/sumo_seed1106.npz.json",
+        "sha256": "9bc72c36e7c3ea874dd8f0f309ba60b795df162e155ab5be4fd42a357e8bdb0e"
+      },
+      "sumo_seed": 1106
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11425,
+      "scenario_manifest_sha256": "279b580b32026fbee12d52c61c35ba6d0f6b64e8f6b36079858816e27eca05f9",
+      "shard_sha256": "0e7aad24c0ba7711c1999f7c3e856ffe3fe906dbd6cbd38b8ad1acd70eb758ee",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1207/sumo_seed1107.npz.json",
+        "sha256": "d218fe01e312eb78acd5cadca5f57f1c68108caebdd5fae4ea08fcbd0720d746"
+      },
+      "sumo_seed": 1107
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11298,
+      "scenario_manifest_sha256": "ab12db317b194090da552192e5cba44d6e044110a656e34ff4364dac848fd4ef",
+      "shard_sha256": "b0b22530ff2e355e16404df9d04f5d92c02092a6c6104acd26fa17859b8ecbc4",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1208/sumo_seed1108.npz.json",
+        "sha256": "2c993c48372f8206579d76045617b2cfb9d1c79a14b5786b86b508bb215ebbd7"
+      },
+      "sumo_seed": 1108
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11294,
+      "scenario_manifest_sha256": "f9bfc815af625fd01f1d9a75f09976127b6b5b71e7f5e7575e5087f4b80e65aa",
+      "shard_sha256": "68c4425a65c9196338cd13041963e1b355a4adbf8919e8ddd2e6867c2b9a2bbe",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1209/sumo_seed1109.npz.json",
+        "sha256": "4fde2edd49d17ae9fa756fdf29117793797ca96e199d7d97c8e2c61ca38e4e88"
+      },
+      "sumo_seed": 1109
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11261,
+      "scenario_manifest_sha256": "677653e7b485f11299f50e70fd5a8432ce4b153f606108792cafbf2268816a3b",
+      "shard_sha256": "42d75c6c65b0bfa437849ee800c3ef376206980c3577f6e3e4d73da21ddc1817",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1210/sumo_seed1110.npz.json",
+        "sha256": "4e70d7628fa9eca0d5cd8fcf1d1061a236275b9835831f6ef8841a5cf203c3e0"
+      },
+      "sumo_seed": 1110
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "7ebca4924b4e1249f5b97f8fb2a0f5f99b9e44ccb6a221bc9119bc61fa8b791e",
+      "shard_sha256": "2a4c5f40cd06b4bf33549826787e616b36427786d777856f779817333e3949b3",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz.json",
+        "sha256": "70a2da455d1e9f454cd5caa479942043081194da0d9ad90073d59a63c5521887"
+      },
+      "sumo_seed": 1101
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "c222ff4cbe6bb9b0db0e2b1c49fa03bc57481ba8b5ac3286ea547980aaf0c39f",
+      "shard_sha256": "bddfffa7d29c00e74c13d9bdb041868919b92b7abd8ec61a66fde3a760208b34",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1202/sumo_seed1102.npz.json",
+        "sha256": "1f241719db8d72c0911885c35e142887625f86b2c4fe302a1561d32d1703ad9c"
+      },
+      "sumo_seed": 1102
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "33da4f4407b630dea1312fe125527fa8830e2e16c3949feb108ca75845259cbf",
+      "shard_sha256": "b20868acb6b343fb45e370203a2fccbec646ea238fad51fbe37ac7dd8449947d",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1203/sumo_seed1103.npz.json",
+        "sha256": "6ec5b46b8bbf895a1c0d7abf79f45113c0448f0dc41d6b5227f34fee05b3055d"
+      },
+      "sumo_seed": 1103
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "cfff207a2a3a4f52d765410de0d47a8763eba91e5aa4b7b901bfb1f1c4df4479",
+      "shard_sha256": "fdabc40ba491ff882063a85fd7ad3fc2be9cbdcdaaeb40fe3017b1b8b3ce08ed",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1204/sumo_seed1104.npz.json",
+        "sha256": "d5c5b1c743af4eabe65dcf83cea9d218a206ab2edac02938b6cff1d6fb762fd6"
+      },
+      "sumo_seed": 1104
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "e18f23cec485e67f4677f6a2dd30473502cf2eccd7876dc69aafd83a19f103fb",
+      "shard_sha256": "2df16a256ec51b4953e78eb066039369048dc3295ed5f0c26a8a7cdee12b26e7",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1205/sumo_seed1105.npz.json",
+        "sha256": "38abb5f4d5eaf6f112c02c732eaf69a704c86b73295c160d98ee95ba366bd388"
+      },
+      "sumo_seed": 1105
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "fb885ce246dae7af95f0156a1f39cfcdcd72477f557e923de2e816739a1ebce2",
+      "shard_sha256": "d1d4bbf2e27be7235e9fac44e42dbcb7d9211377c036b6f88bd79699c8749429",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1206/sumo_seed1106.npz.json",
+        "sha256": "cbf4b51204f41187a67a5f87abc6619ff52ae109cde5c9ef971936466c79ceb1"
+      },
+      "sumo_seed": 1106
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "46e5e00006aaebad6f863f8fa11a6c9a9772488f1c8b2bcb036911f3944b9cac",
+      "shard_sha256": "9d033f862b56f2d2fc9614c100e0ebd1514d450e5bf9458a60a58ee6e187203c",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1207/sumo_seed1107.npz.json",
+        "sha256": "3a5a61615422a0cad218749f64f5aec5044bf5d2caf0cc638f9726eef39f6af6"
+      },
+      "sumo_seed": 1107
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "0c57ac5a1f4efa36dd489d1bc37a1d79adcf50a29e8fbaea164a3e9c830ee3c2",
+      "shard_sha256": "8044bb6a4937f18c9ed9dc3f579496466fb714edab05015aeca1b35eaabd6e5e",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1208/sumo_seed1108.npz.json",
+        "sha256": "99f27b30ad09d2bc3793e1c26ccf3a76a49ec4d66c57a7274a8dd7b638c5e0de"
+      },
+      "sumo_seed": 1108
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "f603d713e1b5e7c870e8e459ee0dcdb5674a916d783951caeca54248bb420435",
+      "shard_sha256": "edd87262594f99091b303d7f0f8cc9d06f5972ccdfb05efda4da38ee72c08e22",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1209/sumo_seed1109.npz.json",
+        "sha256": "bf9dad4f52b8309f29278a9b860a4261711bf95a56c5242a5fdc774ed33adb82"
+      },
+      "sumo_seed": 1109
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "17e23e9c51422047838d25e69b65a85ef4ad7ecace8c6fbffd274ec0159fc8a8",
+      "shard_sha256": "37d2a98facb68dbdcb7fc4f263ea0d38dc521bd1acaf4ac84aa937e91e2a631c",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1210/sumo_seed1110.npz.json",
+        "sha256": "49a517ea64113f837183767820f5fbfdd8ab32a94138f7013cc3bd1066cefdff"
+      },
+      "sumo_seed": 1110
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18863,
+      "scenario_manifest_sha256": "4beb6d4690c86c05d679ea4e2d66fb6d43a56d637e5a54a88ee7ccde65bad42b",
+      "shard_sha256": "b233c9633356437d6e8adc9f9be03c015a50f424228605a327dfc11000acd093",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1201/sumo_seed1101.npz.json",
+        "sha256": "81305371cee4c4212f29acf5045a60a5cc3a51c0d9093c048cc9473553380970"
+      },
+      "sumo_seed": 1101
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18886,
+      "scenario_manifest_sha256": "2a82086b29b066b32813a826dec58810273ce835abe17e0a420256f4ceb018ea",
+      "shard_sha256": "f603d4d53b36330ed43606af914c72c00499879746a97d9e8e2d8af6cd213bd2",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1202/sumo_seed1102.npz.json",
+        "sha256": "09d1420499678a258517c0f9322c3cda875edd16719a5514198ff39204f95f73"
+      },
+      "sumo_seed": 1102
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18809,
+      "scenario_manifest_sha256": "0034c813cc076378e4993b6f92268854f7dfc44901edd95c17a3aaf9f21c6f5a",
+      "shard_sha256": "016b2ea89bacbcbd25168578718460f22565aa6698274e740a98e6bb404b141a",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1203/sumo_seed1103.npz.json",
+        "sha256": "0aeed5e0b864e951530fb0807975de5142de49db9a50d1e0ef070b8e083fb751"
+      },
+      "sumo_seed": 1103
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18814,
+      "scenario_manifest_sha256": "394af7e89e60f76cb17ee217b72df79c64514a6431f176cdbded30bfca9f2aa6",
+      "shard_sha256": "e32f3a4307497598fc81b19a4173e1326eae8a067b5420405c2039e25eee6ee6",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1204/sumo_seed1104.npz.json",
+        "sha256": "e6681e38f42f5c7f15c785c8d582f47169f9b3d5f28cd47154a2edc7cbfdea7c"
+      },
+      "sumo_seed": 1104
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18896,
+      "scenario_manifest_sha256": "01cf0ccac2705e3079d599a010a68493cd57f1149dc4d1ccbc422be62f595553",
+      "shard_sha256": "2b81e7e6a2914b4b2cc078bb3d5ba4c5e6ef69edbdf9739959fd93a8cc04e3a1",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1205/sumo_seed1105.npz.json",
+        "sha256": "19053d02e3e187e6e5bb6ae546996562bcf2e8d42af551fdd049e84584490fb2"
+      },
+      "sumo_seed": 1105
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18904,
+      "scenario_manifest_sha256": "88aa96acac8c18794bfed9bec3aaaf1020ff06ac01c38ea84f5ec4a214efe22e",
+      "shard_sha256": "1b73f43608fc0ebb40b0c279bd93bbf325bcc984d3e7fa3db19645ffe0d60fdc",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1206/sumo_seed1106.npz.json",
+        "sha256": "520d6eb939d8d6f640e18adfc71c145e890499868d5d90c14624964cf77a4314"
+      },
+      "sumo_seed": 1106
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18929,
+      "scenario_manifest_sha256": "d1d1328a8d234100775ec083e503a394cfc6f7c029c96c3a2fe86cda933daacc",
+      "shard_sha256": "219cd8e709478efcfd4f036bbf6f7b69261e36eee79cb0a3b72d56edceee332a",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1207/sumo_seed1107.npz.json",
+        "sha256": "bfbd666861c4005fa51022164f96ecd3405aee74c11b4f2fe3d4fcbb8467a909"
+      },
+      "sumo_seed": 1107
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18864,
+      "scenario_manifest_sha256": "6aa3a43ba1d21f37d1733da5e2c0d0584c39342a32d2c68057192a900fd3e73f",
+      "shard_sha256": "42ddf42ee5cd6e313e5f2fa069e78f565f16190ee183bf5fbff81703ef9f3b68",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1208/sumo_seed1108.npz.json",
+        "sha256": "9e6eedbad57f32361f1ddd5a3b7e33f12ea69cd2036b7b6a0d28658e8ef4eb71"
+      },
+      "sumo_seed": 1108
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18888,
+      "scenario_manifest_sha256": "08fc9b68f76d2cdc3af98897d310b66597880ed236f37d011c30d794f6a376f5",
+      "shard_sha256": "3958a00a2e1676ae862953405e76668bd8010408203a60031ed19468a9741081",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1209/sumo_seed1109.npz.json",
+        "sha256": "c84401d3c93211f17afc79d74e40607669c4191d61b9b920b96881f932a248b6"
+      },
+      "sumo_seed": 1109
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18802,
+      "scenario_manifest_sha256": "83ee7a563c6d8d1859f0ac7b72ba0db816e437cd74991664f7aeb97f7d22687f",
+      "shard_sha256": "dfbc6b144340e5da035f60cbb4352af6eab046916fa44ff6516dfa1b3f3787ca",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1210/sumo_seed1110.npz.json",
+        "sha256": "5cfc62d6806059ef0e417d9c9d710a10662ec3a8f87f0f632858d87500584353"
+      },
+      "sumo_seed": 1110
+    }
+  ]
+}

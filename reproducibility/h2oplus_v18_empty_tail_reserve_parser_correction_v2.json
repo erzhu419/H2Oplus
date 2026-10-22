@@ -1,0 +1,67 @@
+{
+  "changed_source_paths": [
+    "SimpleSAC/evaluate_transit_v18_empty_tail_reserve_v2.py",
+    "reproducibility/run_evaluation_matrix_v18_empty_tail_reserve_v2.py",
+    "reproducibility/run_h2oplus_v18_empty_tail_reserve_evaluation_dispatch_v2.py"
+  ],
+  "created_utc": "2026-08-25T05:40:03.146019+00:00",
+  "formal_held_out_outcomes_read": false,
+  "incident_closeout": {
+    "bytes": 18123,
+    "path": "reproducibility/h2oplus_v18_empty_tail_reserve_results/evaluation_incidents/v1_parser_contract/incident_closeout_v1.json",
+    "sha256": "a47fadd4c8b515d9fe5b1ce0a9781862f4cf974a289ef5100309b2fcaddf2600"
+  },
+  "incident_verification": {
+    "bytes": 716,
+    "path": "reproducibility/h2oplus_v18_empty_tail_reserve_results/evaluation_incidents/v1_parser_contract/incident_verification_v1.json",
+    "sha256": "80dc525acc2466a45bc9d26aa9d1ea8f8cbe5738f0529eddb2646d088834ea0e"
+  },
+  "methods_protocol_scenarios_or_gates_changed": false,
+  "new_dispatch": {
+    "bytes": 11443,
+    "path": "reproducibility/run_h2oplus_v18_empty_tail_reserve_evaluation_dispatch_v2.py",
+    "sha256": "eda37797a270c0ee8c3435859510c8fbe9f97072f1ff7d12709be3d0dec0976f"
+  },
+  "new_evaluator": {
+    "bytes": 2965,
+    "path": "SimpleSAC/evaluate_transit_v18_empty_tail_reserve_v2.py",
+    "sha256": "7ff636c4b1b8b62397372bc67f25ca7fd43fa442c5a4132f358309ef0cf81eb4"
+  },
+  "new_matrix": {
+    "bytes": 2170,
+    "path": "reproducibility/run_evaluation_matrix_v18_empty_tail_reserve_v2.py",
+    "sha256": "cb074ae7f6daa377dd702822f9c27c9e5829837c31d08a03f8ff0d7941ceb31e"
+  },
+  "old_dispatch": {
+    "bytes": 29136,
+    "path": "reproducibility/run_h2oplus_v18_empty_tail_reserve_evaluation_dispatch.py",
+    "sha256": "60d725b092f8d41a2a22b7aa89929f3a069c68220e37af73f0d511b084210d18"
+  },
+  "old_evaluator": {
+    "bytes": 12418,
+    "path": "SimpleSAC/evaluate_transit_v18_empty_tail_reserve.py",
+    "sha256": "62c18dd3b6542f45082a33bdc73d25379b2363f0680f5f2661ae8b57abcbdf9f"
+  },
+  "old_matrix": {
+    "bytes": 12552,
+    "path": "reproducibility/run_evaluation_matrix_v18_empty_tail_reserve.py",
+    "sha256": "fe663400ff1804bbfbf948ff3078c5fad3301293172cdc66ed43c6dab3f5db25"
+  },
+  "parent_v17_option_names_preserved": true,
+  "parser_stack_smoke_required": true,
+  "renamed_v18_specific_options": {
+    "--expected-activation-end-fraction": "--expected-empty-activation-end-fraction",
+    "--expected-activation-start-fraction": "--expected-empty-activation-start-fraction",
+    "--expected-max-onboard-capacity-fraction": "--expected-empty-max-onboard-capacity-fraction"
+  },
+  "root_cause": "The v18-v1 outer parser consumed three option names also required by the nested v17 parser, so all jobs failed before SUMO rollout.",
+  "runtime_changed": false,
+  "schema_version": "transit-h2oplus-v18-empty-tail-reserve-parser-correction-v2",
+  "scientific_behavior_changed": false,
+  "scope": "nested argparse option names and fresh evidence identity only",
+  "status": "corrected-before-any-v18-v2-development-outcome",
+  "study_stage": "development",
+  "training_or_policy_artifacts_changed": false,
+  "v18_v1_results_reused": false,
+  "v18_v1_scientific_numeric_outcomes_read": false
+}

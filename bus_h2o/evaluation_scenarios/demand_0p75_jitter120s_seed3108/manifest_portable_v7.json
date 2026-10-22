@@ -1,0 +1,47 @@
+{
+  "created_utc": "2026-08-03T17:35:27.120877+00:00",
+  "demand_generator_sha256": "997824bba01b10d675d82a5b471975a4cb7245909c21629dbb5eb8f2432bd718",
+  "demand_scale": 0.75,
+  "depart_jitter_seconds": 120.0,
+  "generation_config": {
+    "demand_scale": 0.75,
+    "depart_jitter_seconds": 120.0,
+    "departure_time_support": "clipped to [0, maximum source departure] independently per route",
+    "selection_seed": 3108
+  },
+  "passenger_objects": "passenger_objects.add.xml",
+  "passenger_routes": [
+    "passengers_direct.rou.xml",
+    "passengers_transfer.rou.xml"
+  ],
+  "path_semantics": "all runtime paths are relative to this manifest/config; content identity is independent of host mount point",
+  "portable_manifest_generator": "../../../reproducibility/build_portable_evaluation_bundle_v7.py",
+  "portable_manifest_generator_sha256": "560838cc9d2cc5cdcf156c88e2441168ac16ad9492832b80ee1f1b1279f98602",
+  "realization_design": "independent stable-uniform departure-time perturbations clipped to each source route's original time support",
+  "scaled_person_counts": [
+    10681,
+    654
+  ],
+  "scaled_total_persons": 11335,
+  "scenario_sha256": {
+    "passenger_objects.add.xml": "4af90b1b9e38703c0843a439ad09665c0b267a4dc1b89ba55b2d6808d8cb8bc0",
+    "passengers_direct.rou.xml": "af9775ed8682ba8804c8e36ac02eef3ed7dc493f980d4457dbc375359f7e4b1b",
+    "passengers_transfer.rou.xml": "116ec6e98ccf0b6d65bc6d5f7f8e7a53d342fc3320ecedb2b1973e776ba31676",
+    "scenario_portable_v7.sumocfg": "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31"
+  },
+  "schema_version": "transit-passenger-demand-v1",
+  "scope": "passengers only; social traffic and bus timetable are unchanged",
+  "selection_seed": 3108,
+  "source_content_sha256": {
+    "SUMO_ruiguang/e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml": "ed15a19b482a2b8e31180ce42cce86f9daa496597de1e596dca9dc72146b859d",
+    "SUMO_ruiguang/e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml": "053498bc893e6d79da7efd5eaae96bdf747dcccf865eb5515983d9c8f05c50a0",
+    "SUMO_ruiguang/online_control/control_sim_traci_period.sumocfg": "49b2b97e0e6ea41af100cfe5cc169f75f98eca5a7d6540a9b77e62c434c07023",
+    "SUMO_ruiguang/online_control/initialize_obj/save_obj_passenger.add.xml": "405b6e0d8dd00fe5b03aecd4d67d58076bf33d0c68bc05b1a807ff4aa76fd3ef"
+  },
+  "source_person_counts": [
+    14211,
+    868
+  ],
+  "source_total_persons": 15079,
+  "sumo_config": "scenario_portable_v7.sumocfg"
+}

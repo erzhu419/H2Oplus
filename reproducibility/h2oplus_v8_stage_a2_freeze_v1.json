@@ -1,0 +1,116 @@
+{
+  "analysis_source": {
+    "bytes": 18151,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/analyze_h2oplus_v8_stage_a2.py",
+    "sha256": "d4071f49e612833feebbad6014a252e4ae722f59cdae3519933f2fde583e5861"
+  },
+  "baseline_audit": {
+    "bytes": 48034,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/baseline_matrix_audit.json",
+    "sha256": "52c88d9d33a4aae518a8bf3889f7cedd4e3e971e84e18d6b23fcd3b951b53a12"
+  },
+  "baseline_manifest": {
+    "bytes": 63479,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/baseline_manifest.json",
+    "sha256": "9d35a4397c758b06b03f1c4e399e727d116c6a9198656ba2b13a49f4a5e2826f"
+  },
+  "comparison_gate": {
+    "completion_rate_noninferiority_margin": 0.005,
+    "directional_mean_improvement_greater_than": 0.0,
+    "holm_adjusted_one_sided_p_less_than": 0.05,
+    "mean_relative_improvement_at_least": 0.02,
+    "no_demand_scale_mean_relative_degradation_greater_than": 0.01,
+    "training_seeds_with_lower_paired_mean_at_least": 4
+  },
+  "created_utc": "2026-08-14T04:15:05.529542+00:00",
+  "dataset": {
+    "bytes": 589504302,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5",
+    "sha256": "6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899"
+  },
+  "endpoint": {
+    "direction": "lower-is-better",
+    "paired_unit": "training seed x development environment block",
+    "primary": "generalized_seconds_per_passenger",
+    "secondary_constraint": "passenger_completion_rate"
+  },
+  "environment_design": {
+    "bytes": 11029,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_development_environment_stage_a_v1.json",
+    "sha256": "d4a40a900cf9f72043c1d7c2067d02d6c79f2081f856b38cb257ec2ad0d18f3c"
+  },
+  "execution_authorization": {
+    "bytes": 842,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a2_execution_authorization_v1.json",
+    "sha256": "147344656c073f518af79c3d682a75c01d255a7e0fdf13c03130bf1021d5cabb"
+  },
+  "formal_held_out_outcomes_read": false,
+  "generator": {
+    "bytes": 23516,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/prepare_h2oplus_v8_stage_a2.py",
+    "sha256": "cf1c88f05453833a80bf7302f02b78721cc6a564a795a506733634fc645a7502"
+  },
+  "matrix": {
+    "assignment": "sorted-portable-job-key-round-robin-v1 within each block",
+    "new_sac_methods": 10,
+    "new_sumo_episodes": 150,
+    "reused_h2oplus_sumo_episodes": 75,
+    "shards": 2,
+    "workers_per_shard": 12
+  },
+  "methods_manifest": {
+    "bytes": 6596,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a2_policy_export_v1/evaluation_methods_v8_stage_a2.json",
+    "sha256": "7904e95a1d010234f60214813876b0cf51afbbd35d69a3365403b850a44d7b35"
+  },
+  "multiple_testing": {
+    "family": [
+      "h2oplus-vs-sac-mixed",
+      "h2oplus-vs-sac-online"
+    ],
+    "familywise_alpha": 0.05,
+    "one_sided_alternative": "H2O+ has lower generalized seconds per passenger",
+    "procedure": "Holm step-down"
+  },
+  "policy_export_manifest": {
+    "bytes": 13444,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a2_policy_export_v1/policy_export_manifest_v8_stage_a2.json",
+    "sha256": "9307ece8974bb22aa12341aafcf4d0d334495444ce0e70b13cc1481b2e393e59"
+  },
+  "reference_reuse_policy": "reuse exactly the 75 sealed H2O+ rows from the verified Stage A manifest; do not rerun H2O+",
+  "reference_stage_a_analysis": {
+    "bytes": 11789,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/stage_a_gate_analysis.json",
+    "sha256": "20c8532b264d3f0048bf2b654ea6a1968aa4c272fcc87e48c989e578bf4e95c8"
+  },
+  "reference_stage_a_file_manifest": {
+    "bytes": 120685,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/stage_a_file_manifest.json",
+    "sha256": "a424b65d330d8338a2aaaf1f7af3c381ef787a6c85267553ff9e7dec8a6ceb8d"
+  },
+  "reference_stage_a_verification": {
+    "bytes": 1263,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/stage_a_file_manifest_verification.json",
+    "sha256": "bfc52b45946b66440e27e4248d5a790e9b9cab9e2053cd6b60c0c37bf1dacf3c"
+  },
+  "registration": {
+    "bytes": 5467,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a2_registration_v1.json",
+    "sha256": "ac84a4ce4612a7c8a5e03c64e0edc767f1c8a5a8c1c33de1f838781f3bde9308"
+  },
+  "runtime_requirements": {
+    "bytes": 742,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_sumo_runtime_requirements_py38.json",
+    "sha256": "bea74923890a4b990418fdad6f93c55a298c7c22e3c2d0a9f3b7ad3c44e21a7c"
+  },
+  "schema_version": "transit-h2oplus-v8-stage-a2-sac-baseline-freeze-v1",
+  "stage": "A2-H2Oplus-vs-SAC-development-baseline-confirmation",
+  "stage_b_authorized_or_submitted": false,
+  "status": "frozen-before-stage-A2-SAC-outcomes",
+  "sumo_runtime_lock": {
+    "bytes": 41885,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_sumo_runtime_lock_py38.json",
+    "sha256": "ac60ae58e0e6db6bb1386ffdfe0d164b96f81e49e4983b8b062ceddb65da51a4"
+  },
+  "training": false
+}

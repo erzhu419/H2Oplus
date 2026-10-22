@@ -1,0 +1,63 @@
+{
+  "changed_source_paths": [
+    "SimpleSAC/evaluate_transit_v9_adaptive.py",
+    "reproducibility/run_evaluation_matrix_v9_adaptive.py"
+  ],
+  "created_utc": "2026-08-17T07:38:25.324725+00:00",
+  "deployment_v2": {
+    "bytes": 94614,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v9_adaptive_evaluation_v2/workspace/deployment_manifest.json",
+    "sha256": "a688840dc924553ba7a2c3fd6b8d9a84ee66bd1373529b8724fae76e2e439801"
+  },
+  "failed_remote_verification_v2": {
+    "bytes": 2201,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_evaluation_deployment_v2_jtl110gpu_verification.json",
+    "sha256": "4f7cc0f7751939a78d81aa39c5784f1365b6fd4be6365b223a9607578ef45a19"
+  },
+  "formal_held_out_outcomes_read": false,
+  "invalid_v2_policy": "never submit, merge, analyze, select, or reuse",
+  "methods_manifest": {
+    "bytes": 61842,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_evaluation_methods_v2.json",
+    "sha256": "e1c83b52c78dc60d4a8da8888f3b2a0d82f2c6ea77ca4b9d372d56a33eb58f0c"
+  },
+  "methods_or_aliases_changed": false,
+  "next_stage": "freeze the corrected four-file source set, build a fresh deployment, verify it under the frozen Python 3.8 runtime, then submit new task signatures",
+  "portability_correction": {
+    "bytes": 4259,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_evaluation_portability_correction_v1.json",
+    "sha256": "b5063671012b48c55f537ab5f017356ff2a72229f59aa74b5eabf67214842d23"
+  },
+  "reason": "the frozen remote runtime is Python 3.8, where str.removeprefix is unavailable; equivalent prefix slicing preserves algorithm semantics",
+  "remote_sumo_episode_count": 0,
+  "schema_version": "transit-h2oplus-v9-adaptive-evaluation-source-correction-v2",
+  "scientific_evaluation_outcomes_read": false,
+  "scope": "Python 3.8 compatibility only",
+  "source_changes": [
+    {
+      "after_sha256": "3e7cf3d1a5261ca022d2b3ef4df8dba6b5777876ff4bdab09067d254b7174b87",
+      "before_sha256": "989e391666384d136c9f2b7c5e3385898ce07a0829d39c61b4befbc0a921b436",
+      "path": "SimpleSAC/evaluate_transit_v9_adaptive.py",
+      "rewrite": {
+        "after": "algorithm[len(\"h2oplus-v9-\"):]",
+        "before": "algorithm.removeprefix(\"h2oplus-v9-\")"
+      }
+    },
+    {
+      "after_sha256": "1a9473a6ae2576e9b91efa1b4160334852e0f946a2556bbf514f2fb66b72572f",
+      "before_sha256": "192f39f2e1b3b3592824cf8cc63c7b2a45904084203ac33abe7e087ef7018b84",
+      "path": "reproducibility/run_evaluation_matrix_v9_adaptive.py",
+      "rewrite": {
+        "after": "raw[\"algorithm\"][len(\"h2oplus-v9-\"):]",
+        "before": "raw[\"algorithm\"].removeprefix(\"h2oplus-v9-\")"
+      }
+    }
+  ],
+  "source_freeze_v1": {
+    "bytes": 3990,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_evaluation_source_freeze_v1.json",
+    "sha256": "434109f7a738d9e642c0b9b724fd352b6cab48b5f54f11a73224170e3e99f474"
+  },
+  "status": "v2-invalid-before-sumo-python38-source-corrected",
+  "training_or_policy_artifacts_changed": false
+}

@@ -1,0 +1,295 @@
+{
+  "artifact_integrity": {
+    "canonical_matrix_count": 3,
+    "evaluation_audit": {
+      "path": "reproducibility/h2oplus_v11_actor_hold_results/evaluation_audit_v1.json",
+      "sha256": "966011c08878167e3fc963c3f78c3bd8d5e63d3040a908b3a2aa9f096e337f57",
+      "size_bytes": 12759
+    },
+    "evaluation_file_manifest": {
+      "path": "reproducibility/h2oplus_v11_actor_hold_results/evaluation_file_manifest_v1.json",
+      "sha256": "289ca18c98982b44f4c2c803a19175099e7d7d985c77a306329d9448f4abed5d",
+      "size_bytes": 296678
+    },
+    "evaluation_file_manifest_verification": {
+      "path": "reproducibility/h2oplus_v11_actor_hold_results/evaluation_file_manifest_verification_v1.json",
+      "sha256": "a71941d0517604f450c562494f962cb3e03069a3e8f0277b5a6427ce7946432d",
+      "size_bytes": 1307
+    },
+    "file_records_aggregate_sha256": "bc6a3a6643d416579a4bb0a0efa8b48d54846e6d60d67774e90819a842447159",
+    "logical_evaluation_rows": 720,
+    "passed": true,
+    "physical_evaluation_results": 405,
+    "source_partition_count": 2
+  },
+  "closeout_tools": {
+    "builder": {
+      "path": "reproducibility/close_h2oplus_v11_actor_hold_evaluation_v1.py",
+      "sha256": "d61f9af7bb0bbcb475900568dd4479e3481581eef4fd80d601f406912e092850",
+      "size_bytes": 6436
+    },
+    "independent_verifier": {
+      "path": "reproducibility/verify_h2oplus_v11_actor_hold_evaluation_closeout_v1.py",
+      "sha256": "e22bc67cb32f357594fdfbd8f3c66fe735e8b389860222abfd72ae5957175b56",
+      "size_bytes": 6205
+    }
+  },
+  "created_utc": "2026-08-21T00:37:11.536598+00:00",
+  "development_scientific_result": {
+    "analysis": {
+      "path": "reproducibility/h2oplus_v11_actor_hold_results/actor_hold_analysis_v1.json",
+      "sha256": "e3f6df3d075774dec3e662cbf2b6ef848e5f361f57be45fff7cf159768fa04e1",
+      "size_bytes": 9512
+    },
+    "analysis_source": {
+      "path": "reproducibility/analyze_h2oplus_v11_actor_hold.py",
+      "sha256": "9ae635c00ed3be4137a736fc1ad76efe4ded47173962ae8cd5254d4427c3ba4b",
+      "size_bytes": 25700
+    },
+    "budget_results": {
+      "10000": {
+        "candidate_lower_than_fixed_h2o": true,
+        "candidate_lower_than_sac": true,
+        "means": {
+          "h2oplus": 2567.9677280690316,
+          "h2oplus-v10-delayed-actor": 2602.3316706655055,
+          "h2oplus-v11-actor-hold": 2450.1748781996002,
+          "sac-online": 2597.7959051787175
+        }
+      },
+      "25000": {
+        "candidate_lower_than_fixed_h2o": true,
+        "candidate_lower_than_sac": true,
+        "means": {
+          "h2oplus": 2649.4116337857026,
+          "h2oplus-v10-delayed-actor": 2457.851010349264,
+          "h2oplus-v11-actor-hold": 2499.19459679419,
+          "sac-online": 2520.580390027536
+        }
+      }
+    },
+    "checks": {
+      "all_5_training_runs_stability": true,
+      "candidate_lower_than_fixed_h2o_at_10000": true,
+      "candidate_lower_than_fixed_h2o_at_25000": true,
+      "candidate_lower_than_sac_at_10000": true,
+      "candidate_lower_than_sac_at_25000": true,
+      "completion_rate_noninferiority": true,
+      "demand_scale_robustness": true,
+      "relative_aulc_improvement_over_fixed_h2o": true,
+      "relative_aulc_improvement_over_sac": true,
+      "relative_aulc_improvement_over_v10_delayed_actor": true,
+      "seed_wins_over_fixed_h2o": true,
+      "seed_wins_over_sac": true,
+      "seed_wins_over_v10_delayed_actor": true,
+      "zero_5k_10k_actor_and_temperature_hashes_identical": true
+    },
+    "comparisons": {
+      "h2oplus": {
+        "candidate": "h2oplus-v11-actor-hold",
+        "candidate_mean_aulc": 2464.880793777977,
+        "control": "h2oplus",
+        "control_mean_aulc": 2557.063044823203,
+        "mean_lower": true,
+        "per_seed": [
+          {
+            "candidate_aulc": 2461.656877201409,
+            "candidate_lower": true,
+            "control_aulc": 2549.824659878762,
+            "seed": 6201
+          },
+          {
+            "candidate_aulc": 2460.598122681506,
+            "candidate_lower": true,
+            "control_aulc": 2613.1371057196816,
+            "seed": 6202
+          },
+          {
+            "candidate_aulc": 2469.996854000691,
+            "candidate_lower": true,
+            "control_aulc": 2593.463653240291,
+            "seed": 6203
+          },
+          {
+            "candidate_aulc": 2472.287673150937,
+            "candidate_lower": true,
+            "control_aulc": 2524.834566056989,
+            "seed": 6204
+          },
+          {
+            "candidate_aulc": 2459.864441855342,
+            "candidate_lower": true,
+            "control_aulc": 2504.0552392202944,
+            "seed": 6205
+          }
+        ],
+        "relative_improvement": 0.0360500501666746,
+        "seed_wins": 5
+      },
+      "h2oplus-v10-delayed-actor": {
+        "candidate": "h2oplus-v11-actor-hold",
+        "candidate_mean_aulc": 2464.880793777977,
+        "control": "h2oplus-v10-delayed-actor",
+        "control_mean_aulc": 2513.3404348308613,
+        "mean_lower": true,
+        "per_seed": [
+          {
+            "candidate_aulc": 2461.656877201409,
+            "candidate_lower": true,
+            "control_aulc": 2515.159876084573,
+            "seed": 6201
+          },
+          {
+            "candidate_aulc": 2460.598122681506,
+            "candidate_lower": true,
+            "control_aulc": 2486.1535566571542,
+            "seed": 6202
+          },
+          {
+            "candidate_aulc": 2469.996854000691,
+            "candidate_lower": true,
+            "control_aulc": 2516.789285976429,
+            "seed": 6203
+          },
+          {
+            "candidate_aulc": 2472.287673150937,
+            "candidate_lower": true,
+            "control_aulc": 2526.4775133984194,
+            "seed": 6204
+          },
+          {
+            "candidate_aulc": 2459.864441855342,
+            "candidate_lower": true,
+            "control_aulc": 2522.121942037732,
+            "seed": 6205
+          }
+        ],
+        "relative_improvement": 0.019280969812649144,
+        "seed_wins": 5
+      },
+      "sac-online": {
+        "candidate": "h2oplus-v11-actor-hold",
+        "candidate_mean_aulc": 2464.880793777977,
+        "control": "sac-online",
+        "control_mean_aulc": 2533.32398940993,
+        "mean_lower": true,
+        "per_seed": [
+          {
+            "candidate_aulc": 2461.656877201409,
+            "candidate_lower": true,
+            "control_aulc": 2535.004302136028,
+            "seed": 6201
+          },
+          {
+            "candidate_aulc": 2460.598122681506,
+            "candidate_lower": true,
+            "control_aulc": 2538.2633829246424,
+            "seed": 6202
+          },
+          {
+            "candidate_aulc": 2469.996854000691,
+            "candidate_lower": true,
+            "control_aulc": 2509.0291103261065,
+            "seed": 6203
+          },
+          {
+            "candidate_aulc": 2472.287673150937,
+            "candidate_lower": true,
+            "control_aulc": 2552.3257982185696,
+            "seed": 6204
+          },
+          {
+            "candidate_aulc": 2459.864441855342,
+            "candidate_lower": true,
+            "control_aulc": 2531.997353444303,
+            "seed": 6205
+          }
+        ],
+        "relative_improvement": 0.027017150557159936,
+        "seed_wins": 5
+      }
+    },
+    "completion_aulc": {
+      "h2oplus": {
+        "candidate_aulc": 0.9638050198847182,
+        "control_aulc": 0.968311474903414,
+        "delta": -0.004506455018695732
+      },
+      "h2oplus-v10-delayed-actor": {
+        "candidate_aulc": 0.9638050198847182,
+        "control_aulc": 0.9674668641351509,
+        "delta": -0.0036618442504327
+      },
+      "sac-online": {
+        "candidate_aulc": 0.9638050198847182,
+        "control_aulc": 0.9680895141732246,
+        "delta": -0.004284494288506413
+      }
+    },
+    "demand_scale_aulc": [
+      {
+        "candidate_aulc": 2061.6528421578673,
+        "demand_scale": 0.85,
+        "relative_degradation": -0.05418612242194467,
+        "sac_online_aulc": 2179.7659042994164
+      },
+      {
+        "candidate_aulc": 2378.5091447266614,
+        "demand_scale": 1.0,
+        "relative_degradation": -0.032205607001226946,
+        "sac_online_aulc": 2457.6595627473084
+      },
+      {
+        "candidate_aulc": 2954.480394449402,
+        "demand_scale": 1.15,
+        "relative_degradation": -0.002722693713142272,
+        "sac_online_aulc": 2962.5465011830647
+      }
+    ],
+    "failed_checks": [],
+    "passed_checks": [
+      "all_5_training_runs_stability",
+      "candidate_lower_than_fixed_h2o_at_10000",
+      "candidate_lower_than_fixed_h2o_at_25000",
+      "candidate_lower_than_sac_at_10000",
+      "candidate_lower_than_sac_at_25000",
+      "completion_rate_noninferiority",
+      "demand_scale_robustness",
+      "relative_aulc_improvement_over_fixed_h2o",
+      "relative_aulc_improvement_over_sac",
+      "relative_aulc_improvement_over_v10_delayed_actor",
+      "seed_wins_over_fixed_h2o",
+      "seed_wins_over_sac",
+      "seed_wins_over_v10_delayed_actor",
+      "zero_5k_10k_actor_and_temperature_hashes_identical"
+    ],
+    "screening_gate_passed": true
+  },
+  "formal_confirmation_eligibility_does_not_authorize_submission": true,
+  "formal_confirmation_eligible": true,
+  "formal_confirmation_stage_authorized_or_submitted": false,
+  "formal_held_out_outcomes_read": false,
+  "passed": true,
+  "scheduler_closeout": {
+    "passed": true,
+    "scheduler_evidence": {
+      "path": "reproducibility/h2oplus_v11_actor_hold_results/evidence/evaluation_v1/scheduler_evidence_v1.json",
+      "sha256": "315c54b46d32dfb01d073682ebc06ea5526ded30fa0dd794bde933f359309647",
+      "size_bytes": 4930
+    },
+    "tasks": [
+      "t82929",
+      "t82930"
+    ],
+    "token_bound_backend_exit0": true
+  },
+  "schema_version": "transit-h2oplus-v11-actor-hold-evaluation-closeout-v1",
+  "status": "closed",
+  "study_stage": "development",
+  "supports_formal_held_out_model_effect_claim": false,
+  "training_scientific_stability": {
+    "failure_runs": [],
+    "passed": true,
+    "separate_from_artifact_integrity": true
+  }
+}

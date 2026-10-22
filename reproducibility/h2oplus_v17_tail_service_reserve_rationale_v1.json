@@ -1,0 +1,98 @@
+{
+  "created_utc": "2026-08-24T15:26:41.176818+00:00",
+  "diagnosis": {
+    "intervention": "preserve the complete v16 three-quarter policy except on low-load tail buses with a forward bus, no backward bus and positive eligible arrival rate during the fixed 0.5-0.75 horizon interval",
+    "mechanistic_boundary": "inside the guard, raise the inherited physical hold to a fixed floor; outside the guard, preserve the sealed v16 action bit-for-bit",
+    "single_failed_boundary": "the sealed v16 candidate passed endpoint, AULC, seed-win and demand-scale gates but missed only completion-rate noninferiority"
+  },
+  "fixed_design": {
+    "activation_end_fraction": 0.75,
+    "activation_start_fraction": 0.5,
+    "candidate_floor_seconds": 30.0,
+    "checkpoint_selection_by_behavior": false,
+    "diagnostic_floor_seconds": [
+      20.0,
+      40.0
+    ],
+    "max_onboard_capacity_fraction": 0.25,
+    "new_remote_development_episodes": 135,
+    "new_training_runs": 0,
+    "parent": "sealed v16 headway-reserve-three-quarter 25k behaviors, exact seeds 6201-6205",
+    "parent_base_hold_scale": 0.125,
+    "parent_headway_balance_gain": 1.0,
+    "parent_reserve_horizon_fraction": 0.75,
+    "predesignated_candidate": "tail-service-reserve-thirty",
+    "requires_backward_bus_absent": true,
+    "requires_forward_bus_present": true,
+    "requires_positive_eligible_arrival_rate": true,
+    "tail_service_formula": "if guard: min(60, max(v16_parent_hold, registered_floor_seconds)); otherwise: v16_parent_hold"
+  },
+  "formal_held_out_outcomes_read": false,
+  "frozen_v16_evidence": {
+    "development_analysis": {
+      "bytes": 32420,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v16_headway_reserve_results/headway_reserve_analysis_v1.json",
+      "sha256": "4a88f48946c2ec478ca47274df39e0ccdf3535c1c21ad41141142d529617f75e"
+    },
+    "evaluation_audit": {
+      "bytes": 10733,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v16_headway_reserve_results/evaluation_audit_v1.json",
+      "sha256": "ed5e58e52f1ea50d7195a10b313bd9c36e88b618fa802de2693ffdfe133112c9"
+    },
+    "evaluation_closeout": {
+      "bytes": 33800,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v16_headway_reserve_results/evaluation_closeout_v1.json",
+      "sha256": "ef7d456e6c71bb2fbcbd176642c01acf123f8e709cefffd2b8d4ae26a850ddf5"
+    },
+    "evaluation_closeout_verification": {
+      "bytes": 1822,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v16_headway_reserve_results/evaluation_closeout_verification_v1.json",
+      "sha256": "54b25d3c9307e9f926319b7f9ae543e6747d4639ce9b8af762e123bade9f4c85"
+    },
+    "methods": {
+      "bytes": 53092,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v16_headway_reserve_evaluation_methods_v1.json",
+      "sha256": "35047fd2ce616acbccd4592ae333a7ba84a1e4231c1a2505c7768d96b91de06a"
+    },
+    "protocol": {
+      "bytes": 6363,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v16_headway_reserve_protocol_v1.json",
+      "sha256": "978faf1b8ddf51128b5fac570552e8388c3d882e39244c4b6f0ec7615e79a43b"
+    },
+    "source_freeze": {
+      "bytes": 6733,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v16_headway_reserve_evaluation_source_freeze_v1.json",
+      "sha256": "606a15bf7db8b9aa1c4dbefa7b9bcc12bc94ca60e605de5a3e185eefec679577"
+    }
+  },
+  "prior_v14_v15_v16_development_outcomes_used_for_design": true,
+  "schema_version": "transit-h2oplus-v17-tail-service-reserve-rationale-v1",
+  "status": "frozen-before-any-v17-outcome",
+  "study_stage": "development",
+  "v16_failed_preregistered_gates": [
+    "completion_rate_noninferiority_against_all_controls"
+  ],
+  "v16_observed_design_signal": {
+    "candidate_aulc": 2435.4733301441265,
+    "candidate_completion_aulc": 0.9642396602171646,
+    "candidate_endpoint": 2408.7944811656685,
+    "completion_delta_vs_h2oplus": -0.00408723947011802,
+    "completion_delta_vs_sac": -0.003995643385337866,
+    "completion_delta_vs_v10": -0.0032797706096310275,
+    "relative_vs_v11": 0.010208638349098213,
+    "relative_vs_v12": 0.01228893534282494
+  },
+  "v17_design_inputs": {
+    "authorization": {
+      "bytes": 877,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v17_tail_service_reserve_authorization_v1.json",
+      "sha256": "6871d458b23bbc796aa8f0a981eb21f865f6a5a0d61c3c427173573e44261e4a"
+    },
+    "offline_design_evidence": {
+      "bytes": 3105,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v17_tail_service_reserve_offline_design_evidence_v1.json",
+      "sha256": "5bc0e0366fa19ef9597db20de702d554bb1dc05ddc6ec7ddb1fdedc72818b24e"
+    }
+  },
+  "v17_development_evaluation_outcomes_read": false
+}

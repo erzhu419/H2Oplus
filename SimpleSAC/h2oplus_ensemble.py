@@ -53,6 +53,9 @@ class H2OPlusEnsemble:
         config.beta_ood = 0.01          # OOD Q-std penalty in critic loss
         config.beta_bc = 0.005          # behavior cloning regularization
         config.adaptive_sim_ratio = False  # auto-scale sim_ratio by buffer sizes
+        config.adaptive_sim_ratio_min = 0.10
+        config.adaptive_sim_ratio_max = 0.50
+        config.adaptive_sim_ratio_boost = 8.0
         config.disable_is_weighting = False # disable discriminator IS weighting (for zero-gap)
         config.alpha_multiplier = 1.0
         config.use_automatic_entropy_tuning = True
@@ -68,6 +71,7 @@ class H2OPlusEnsemble:
         config.use_gradient_clip = True
         config.gradient_clip_max_norm = 1.0
         config.reward_scale = 10.0
+        config.sim_reward_rescale = 1.0   # sim-only reward multiplier; baseline for paper comparison
         # Discriminator
         config.discriminator_lr = 1e-4
         config.disc_train_interval = 5
@@ -80,12 +84,17 @@ class H2OPlusEnsemble:
         config.clip_dynamics_ratio_min = 0.1
         config.clip_dynamics_ratio_max = 5.0
         config.use_td_target_ratio = True
+        config.ess_sim_loss_scale = False
+        config.ess_min_scale = 0.20
+        config.contrastive_temperature = 0.07
         # CQL (optional)
         config.use_cql = False
         config.cql_alpha = 5.0
         config.cql_n_actions = 10
         # Cal-QL: prevent sim Q-targets from dropping below offline baseline
         config.use_cal_ql = False
+        config.cal_ql_mode = "batch_mean"  # batch_mean | batch_quantile
+        config.cal_ql_quantile = 0.25
         # RE-SAC v4-v6 improvements
         config.independent_ratio = 0.8   # blend: 80% independent targets + 20% min-Q
         config.q_std_clip = 0.5          # clip Q-std to 0.5 * max(|Q_mean|, 1) — prevents explosion
@@ -139,25 +148,51 @@ class H2OPlusEnsemble:
     def total_steps(self):
         return self._total_steps
 
+    def _current_sim_ratio(self):
+        if not self.replay_buffer.has_online_data():
+            return 0.0
+        if self.config.adaptive_sim_ratio and self.replay_buffer.has_online_data():
+            online_n = float(self.replay_buffer.online_size)
+            offline_n = float(self.replay_buffer.fixed_dataset_size)
+            natural_ratio = online_n / (online_n + offline_n + 1e-8)
+            boosted = natural_ratio * float(self.config.adaptive_sim_ratio_boost)
+            return float(np.clip(
+                boosted,
+                float(self.config.adaptive_sim_ratio_min),
+                float(self.config.adaptive_sim_ratio_max),
+            ))
+        return float(self.config.batch_sim_ratio)
+
+    def _cal_ql_floor(self, q_pred_real):
+        real_q_floor_src = q_pred_real.mean(0).detach().flatten()
+        if self.config.cal_ql_mode == "batch_quantile":
+            return torch.quantile(real_q_floor_src, float(self.config.cal_ql_quantile))
+        return real_q_floor_src.mean()
+
+    def _weight_diagnostics(self, weight):
+        weight = weight.detach().flatten()
+        if weight.numel() == 0:
+            one = torch.tensor(1.0, device=self.config.device)
+            return one, one, one, one
+        ess = (weight.sum() ** 2) / (weight.pow(2).sum() + 1e-8)
+        ess_ratio = (ess / max(weight.numel(), 1)).clamp(0.0, 1.0)
+        loss_scale = torch.ones((), device=weight.device)
+        if self.config.ess_sim_loss_scale:
+            loss_scale = ess_ratio.clamp(min=float(self.config.ess_min_scale), max=1.0)
+        return weight.mean(), weight.max(), ess_ratio, loss_scale
+
     def train(self, batch_size, pretrain_steps=0):
         self._total_steps += 1
         is_pretrain = (self._total_steps <= pretrain_steps)
 
         if is_pretrain:
+            sim_ratio = 0.0
             real_batch_size = batch_size
             sim_batch_size = 0
         else:
-            # Adaptive sim_ratio: scale by actual buffer sizes to prevent oversampling
-            if self.config.adaptive_sim_ratio and self.replay_buffer.has_online_data():
-                online_n = self.replay_buffer.online_size
-                offline_n = self.replay_buffer.fixed_dataset_size
-                natural_ratio = online_n / (online_n + offline_n + 1e-8)
-                # Boost slightly (2x) to give online data more weight, but cap at 0.5
-                sim_ratio = min(0.5, natural_ratio * 2.0)
-            else:
-                sim_ratio = self.config.batch_sim_ratio
-            real_batch_size = int(batch_size * (1 - sim_ratio))
+            sim_ratio = self._current_sim_ratio()
             sim_batch_size = int(batch_size * sim_ratio)
+            real_batch_size = batch_size - sim_batch_size
 
         real_batch = self.replay_buffer.sample(real_batch_size, scope="real")
         sim_batch = None
@@ -186,6 +221,9 @@ class H2OPlusEnsemble:
             sim_D = sim_batch.get("terminals", sim_batch.get("dones", torch.zeros_like(sim_R))).squeeze()
             sim_z_t = sim_batch["z_t"]
             sim_z_t1 = sim_batch["z_t1"]
+            # Sim-only pre-rescale (baseline comparison to offline-Q floor): align sim reward magnitude to real scale
+            if self.config.sim_reward_rescale != 1.0:
+                sim_R = sim_R * self.config.sim_reward_rescale
             sim_R = self.config.reward_scale * (sim_R - self.reward_mean) / (self.reward_std + 1e-6)
 
             # Train discriminator
@@ -194,7 +232,8 @@ class H2OPlusEnsemble:
                     # Contrastive: needs both real (anchor/positive) and sim (negative)
                     disc_loss = self.discriminator.train_step(
                         S, A, S2, sim_S, sim_A, sim_S2,
-                        self.disc_optimizer, temperature=0.07)
+                        self.disc_optimizer,
+                        temperature=self.config.contrastive_temperature)
                 elif isinstance(self.discriminator, DynamicsDiscriminator):
                     disc_loss = self.discriminator.train_step(
                         S, A, S2, self.disc_optimizer)
@@ -216,12 +255,24 @@ class H2OPlusEnsemble:
                 raw_w = compute_z_importance_weight(
                     self.discriminator, sim_z_t, sim_z_t1,
                     obs=sim_S, action=sim_A, next_obs=sim_S2,
-                ).squeeze()
-                sqrt_w = torch.clamp(raw_w, self.config.clip_dynamics_ratio_min, self.config.clip_dynamics_ratio_max).sqrt().to(sim_S.device)
+                ).reshape(-1)
+                is_weight = torch.clamp(
+                    raw_w,
+                    self.config.clip_dynamics_ratio_min,
+                    self.config.clip_dynamics_ratio_max,
+                ).to(sim_S.device)
             else:
-                sqrt_w = torch.ones(sim_S.shape[0], device=sim_S.device)
+                is_weight = torch.ones(sim_S.shape[0], device=sim_S.device)
+            sqrt_w = is_weight.sqrt()
+            is_weight_mean, is_weight_max, is_weight_ess, sim_loss_scale = (
+                self._weight_diagnostics(is_weight)
+            )
         else:
             disc_loss_val = 0.0
+            is_weight_mean = torch.tensor(1.0, device=S.device)
+            is_weight_max = torch.tensor(1.0, device=S.device)
+            is_weight_ess = torch.tensor(1.0, device=S.device)
+            sim_loss_scale = torch.tensor(1.0, device=S.device)
 
         # ── Critic update ──────────────────────────────────────────
         with torch.no_grad():
@@ -256,17 +307,16 @@ class H2OPlusEnsemble:
                 # offline targets, making the critic "forget" offline knowledge.
                 # max(sim_target, offline_baseline) keeps the floor at offline level.
                 if self.config.use_cal_ql:
-                    # Offline Q baseline: what the current Q predicts for the same (s,a)
-                    # on offline-like next states
-                    offline_q_baseline = q_pred_real.mean(0).detach()  # (B_real,)
-                    # Use mean offline Q as floor for sim targets
-                    q_floor = offline_q_baseline.mean()  # scalar
+                    q_floor = self._cal_ql_floor(q_pred_real)
                     td_target_sim = torch.max(td_target_sim, q_floor)
 
             sim_q_pred = self.qf(sim_S, sim_A)
             # IS-weighted sim loss
             w_expanded = sqrt_w.unsqueeze(0).expand(self.E, -1)
-            sim_qf_loss = F.mse_loss(w_expanded * sim_q_pred, w_expanded * td_target_sim)
+            sim_qf_loss = sim_loss_scale * F.mse_loss(
+                w_expanded * sim_q_pred,
+                w_expanded * td_target_sim,
+            )
             total_q_loss = total_q_loss + sim_qf_loss
 
         # CQL penalty (optional)
@@ -339,7 +389,11 @@ class H2OPlusEnsemble:
             pi_loss = (alpha * lp_new - q_pessimistic).mean()
 
             # BC regularization
-            bc_loss = F.mse_loss(a_new, all_A.detach()) if self.config.beta_bc > 0 else torch.tensor(0.0)
+            bc_loss = (
+                F.mse_loss(a_new, all_A.detach())
+                if self.config.beta_bc > 0
+                else torch.tensor(0.0, device=all_S.device)
+            )
             total_pi_loss = pi_loss + self.config.beta_bc * bc_loss
 
             # RE-SAC v4: Policy anchoring (L2 to best policy)
@@ -384,6 +438,11 @@ class H2OPlusEnsemble:
             alpha_loss=al_loss.item() if self.config.use_automatic_entropy_tuning else 0,
             disc_loss=disc_loss_val,
             sqrt_IS_ratio=sqrt_w.mean().item() if sim_batch is not None else 1.0,
+            is_weight_mean=is_weight_mean.item(),
+            is_weight_max=is_weight_max.item(),
+            is_weight_ess=is_weight_ess.item(),
+            sim_loss_scale=sim_loss_scale.item(),
+            batch_sim_ratio_actual=(sim_batch_size / max(real_batch_size + sim_batch_size, 1)),
             log_pi=lp_new.mean().item() if self._total_steps % self.config.critic_actor_ratio == 0 else 0,
             total_steps=self.total_steps,
             mean_real_rewards=R.mean().item(),
@@ -477,6 +536,7 @@ class H2OPlusEnsemble:
         self.config.device = device  # keep config in sync
 
     def save_checkpoint(self, path, epoch, variant=None):
+        """Backwards-compatible weight-only checkpoint (no optimizer/buffer)."""
         torch.save({
             'epoch': epoch,
             'policy_state_dict': self.policy.state_dict(),
@@ -486,3 +546,76 @@ class H2OPlusEnsemble:
             'log_alpha': self.log_alpha.state_dict() if self.log_alpha else None,
             'variant': variant,
         }, path)
+
+    def save_full_state(self, path, epoch, train_step, variant=None, replay_buffer=None):
+        """Iter-level resumable checkpoint: networks + optimizers + step counter + RE-SAC v4 state.
+
+        The replay buffer's online portion is saved as a side-car file
+        `<path>_buffer.npz` so the main checkpoint stays a single torch object.
+        """
+        state = {
+            'epoch': epoch,
+            'train_step': train_step,
+            '_total_steps': self._total_steps,
+            '_best_eval_return': self._best_eval_return,
+            # Networks
+            'policy_state_dict': self.policy.state_dict(),
+            'qf_state_dict': self.qf.state_dict(),
+            'target_qf_state_dict': self.target_qf.state_dict(),
+            'discriminator_state_dict': self.discriminator.state_dict() if self.discriminator else None,
+            'log_alpha_state_dict': self.log_alpha.state_dict() if self.log_alpha else None,
+            # Optimizers (Adam moments)
+            'qf_optimizer': self.qf_optimizer.state_dict(),
+            'policy_optimizer': self.policy_optimizer.state_dict(),
+            'alpha_optimizer': self.alpha_optimizer.state_dict() if self.log_alpha else None,
+            'disc_optimizer': self.disc_optimizer.state_dict() if hasattr(self, 'disc_optimizer') and self.discriminator else None,
+            # RE-SAC v4 state (EMA policy + best-policy anchor)
+            'ema_policy_state_dict': self.ema_policy.state_dict(),
+            'anchor_params': self._anchor_params,
+            # Reward running stats
+            'reward_mean': self.reward_mean,
+            'reward_std': self.reward_std,
+            'variant': variant,
+        }
+        torch.save(state, path)
+
+        # Buffer side-car: only save online portion (offline is loaded fresh from h5)
+        if replay_buffer is not None and hasattr(replay_buffer, 'save_online_portion'):
+            buf_path = path.replace('.pt', '_buffer.npz')
+            replay_buffer.save_online_portion(buf_path)
+
+    def load_full_state(self, state, replay_buffer=None, ckpt_path=None):
+        """Restore networks + optimizers + step counter + EMA + anchor + buffer."""
+        self.policy.load_state_dict(state['policy_state_dict'])
+        self.qf.load_state_dict(state['qf_state_dict'])
+        self.target_qf.load_state_dict(state['target_qf_state_dict'])
+        if self.discriminator and state.get('discriminator_state_dict') is not None:
+            self.discriminator.load_state_dict(state['discriminator_state_dict'])
+        if self.log_alpha and state.get('log_alpha_state_dict') is not None:
+            self.log_alpha.load_state_dict(state['log_alpha_state_dict'])
+
+        self.qf_optimizer.load_state_dict(state['qf_optimizer'])
+        self.policy_optimizer.load_state_dict(state['policy_optimizer'])
+        if self.log_alpha and state.get('alpha_optimizer') is not None:
+            self.alpha_optimizer.load_state_dict(state['alpha_optimizer'])
+        if hasattr(self, 'disc_optimizer') and state.get('disc_optimizer') is not None:
+            self.disc_optimizer.load_state_dict(state['disc_optimizer'])
+
+        if state.get('ema_policy_state_dict') is not None:
+            self.ema_policy.load_state_dict(state['ema_policy_state_dict'])
+        if state.get('anchor_params') is not None:
+            self._anchor_params = state['anchor_params']
+
+        self._total_steps = state.get('_total_steps', 0)
+        self._best_eval_return = state.get('_best_eval_return', -float('inf'))
+        if 'reward_mean' in state:
+            self.reward_mean = state['reward_mean']
+        if 'reward_std' in state:
+            self.reward_std = state['reward_std']
+
+        if replay_buffer is not None and ckpt_path is not None:
+            buf_path = ckpt_path.replace('.pt', '_buffer.npz')
+            if os.path.exists(buf_path) and hasattr(replay_buffer, 'load_online_portion'):
+                replay_buffer.load_online_portion(buf_path)
+
+        return state.get('epoch', 0), state.get('train_step', 0)

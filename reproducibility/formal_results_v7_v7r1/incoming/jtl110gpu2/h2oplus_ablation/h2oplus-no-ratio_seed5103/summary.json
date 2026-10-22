@@ -1,0 +1,216 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/h2oplus-no-ratio_seed5103/checkpoints/latest.pt",
+    "sha256": "e9606da1603072dfeafce3c57a6b6a7bdfb4c885e3fc4dd7558042ba5e94caae"
+  },
+  "completed_epochs": 190,
+  "completed_utc": "2026-08-13T06:52:52.907500+00:00",
+  "final_blocked_simultaneous_batch_size": 3,
+  "final_policy": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/h2oplus-no-ratio_seed5103/checkpoints/final_actor.pt",
+    "sha256": "7e9bac8634c3518b9138392a43c76eb908ca495ffc3bc52b43a391ca15a228a7",
+    "source_training_checkpoint_sha256": "e9606da1603072dfeafce3c57a6b6a7bdfb4c885e3fc4dd7558042ba5e94caae"
+  },
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 6171.130859375,
+  "max_rss_mb": 9240.52734375,
+  "maximum_simultaneous_decisions": 7,
+  "mdp_version": "v7",
+  "method": "h2oplus-no-ratio",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "cql_penalty_subset_replacement": false,
+    "cql_penalty_subset_size": null,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "critic_loss": "mse",
+    "default_offline_updates": 50000,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 5000,
+    "description": "transit-adapted H2O+ warm start and mixed value backup without conditional dynamics-ratio correction",
+    "ensemble_size": 2,
+    "gradient_clip_norm": null,
+    "huber_delta": 1.0,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.1,
+    "offline_cql_alpha": 0.0,
+    "offline_initializer": null,
+    "offline_objective": "iql",
+    "offline_temperature_action_samples": 1,
+    "offline_update_order": "critic-before-actor",
+    "online_backup": "h2oplus",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "online_update_order": "actor-before-critic",
+    "ratio_update_interval": 4,
+    "reference": "https://doi.org/10.1109/ICRA55743.2025.11127503",
+    "reference_commit": "02171768283d307244700c69003423704db83b05",
+    "reference_implementation": "https://github.com/t6-thu/H2Oplus",
+    "target_entropy": -1.0,
+    "target_subset_replacement": false,
+    "target_subset_size": 2,
+    "temperature_state_source": "actor",
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003,
+    "warmup_action_mode": "policy"
+  },
+  "method_protocol": "transit-adapted H2O+ warm start and mixed value backup without conditional dynamics-ratio correction",
+  "offline_initializer_consumed": {
+    "bytes": 19085875,
+    "offline_updates": 50000,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_core/h2oplus_seed5103/checkpoints/offline_initializer.pt",
+    "schema_version": "transit-offline-initializer-v7-v1",
+    "sha256": "8140c6d96d0bfce82c1117b426120458181020683a124036d1027e55242eb4c2",
+    "source_method": "h2oplus",
+    "source_run_name": "h2oplus_seed5103",
+    "source_run_signature": "5c9c1da6e56edfabe8c56981b6f9d307d192d0b8b1b9bcdb39f7bec1faa62076",
+    "source_training_seed": 5103
+  },
+  "offline_initializer_produced": null,
+  "offline_metrics": {
+    "train/actor_grad_norm": 7.187527179718018,
+    "train/actor_loss": 0.3790145516395569,
+    "train/actor_updated": 1.0,
+    "train/alpha": 1.0,
+    "train/alpha_loss": 0.0,
+    "train/cql_penalty": 0.0,
+    "train/critic_grad_norm": 129.9476776123047,
+    "train/critic_loss": 0.21837793290615082,
+    "train/offline_max_abs_td": 7.5219879150390625,
+    "train/offline_nonterminal_abs_td": 0.4868972897529602,
+    "train/offline_td_loss": 0.21837793290615082,
+    "train/offline_terminal_abs_td": 0.0,
+    "train/offline_terminal_loss_fraction": 0.0,
+    "train/offline_terminal_rows": 0.0,
+    "train/online_critic_update": 0.0,
+    "train/q_data_mean": -43.51765441894531,
+    "train/sim_td_loss": 0.0,
+    "train/update": 50000.0,
+    "train/value_advantage": -0.024141069501638412,
+    "train/value_grad_norm": 25.069049835205078,
+    "train/value_loss": 0.043063580989837646
+  },
+  "online_buffer_size": 99998,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "critic_loss": {
+        "effective": "huber",
+        "profile": "mse"
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "huber_delta": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 50000,
+        "profile": 50000
+      },
+      "online_fraction": {
+        "effective": 0.5,
+        "profile": 0.5
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": 0.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 500,
+        "profile": 500
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 5000,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/h2oplus-no-ratio_seed5103",
+  "run_signature": "5347e4ff6103c7c4efa647f4674639b9dc18d777ff389804c36708a8363c03da",
+  "schema_version": "transit-training-summary-v8",
+  "seed": 5103,
+  "simulator_decision_event_cap": 100000,
+  "simulator_decision_event_underfill": 1,
+  "simulator_decision_events": 99999,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 80.53774204000365,
+    "data_load": 17.592741597996792,
+    "device_cache": 0.6368066770082805,
+    "model_init": 2.07532015099423,
+    "offline_initializer_restore": 0.08245794000686146,
+    "online_rollout": 800.0134287219262,
+    "online_training": 3434.324820833106,
+    "online_warmup_rollout": 24.446339183021337,
+    "provenance_audit": 0.8396239160210826,
+    "simulator_init": 4.095274410996353
+  },
+  "total_updates": 145000,
+  "warmup_metrics": {
+    "action_mode": "policy",
+    "blocked_simultaneous_batch_size": 0,
+    "current_demand_scale": 0.75,
+    "demand_scale_episode_starts": {
+      "0.75": 1,
+      "1": 0,
+      "1.25": 0
+    },
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 5000,
+    "hard_event_cap_reached": false,
+    "maximum_simultaneous_decisions": 7,
+    "mean_delta_t": 1.5203040608121625,
+    "mean_hold_seconds": 4.399944366931916,
+    "mean_reward": -676.7983596719343,
+    "online_buffer_size": 4999,
+    "transitions": 4999,
+    "trip_boundaries_total": 0
+  }
+}

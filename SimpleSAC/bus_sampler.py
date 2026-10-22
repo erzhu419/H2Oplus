@@ -121,6 +121,7 @@ class BusStepSampler:
         h_rollout: int = 30,
         w_threshold: float = 0.3,
         warmup_episodes: int = 20,
+        jtt_uniform_mix: float = 0.0,
         action_dim: int = 2,
     ):
         """
@@ -132,6 +133,9 @@ class BusStepSampler:
             h_rollout:        Max decision events after a buffer reset episode.
             w_threshold:      Discriminator threshold for early truncation.
             warmup_episodes:  Skip early truncation for this many episodes.
+            jtt_uniform_mix:  Probability of uniform snapshot reset even after
+                              JTT warmup. Keeps targeted reset from collapsing
+                              onto a narrow hard-state distribution.
             action_dim:       Action dimension (2 for hold + speed).
         """
         self.env = env
@@ -141,6 +145,7 @@ class BusStepSampler:
         self.h_rollout = h_rollout
         self.w_threshold = w_threshold
         self.warmup_episodes = warmup_episodes
+        self.jtt_uniform_mix = float(np.clip(jtt_uniform_mix, 0.0, 1.0))
         self.action_dim = action_dim
 
         self._episode_count = 0
@@ -189,9 +194,13 @@ class BusStepSampler:
             if use_buffer_reset:
                 if has_sumo_snaps:
                     # ── SUMO snapshot pool reset ───────────────────────
-                    if (self.priority_index is not None
-                            and self._episode_count > self.warmup_episodes
-                            and hasattr(self.env, 'get_prioritized_snapshot')):
+                    use_jtt_reset = (
+                        self.priority_index is not None
+                        and self._episode_count > self.warmup_episodes
+                        and hasattr(self.env, 'get_prioritized_snapshot')
+                        and np.random.random() >= self.jtt_uniform_mix
+                    )
+                    if use_jtt_reset:
                         # JTT: use priority-weighted snapshot selection
                         snap_path = self.env.get_prioritized_snapshot(
                             temperature=getattr(self, 'current_temperature', 1.0))
@@ -203,10 +212,12 @@ class BusStepSampler:
                     self.env.reset(snapshot=snap_path)
                 elif has_buffer_snaps:
                     # ── Offline buffer snapshot reset ──────────────────
-                    if (
+                    use_jtt_reset = (
                         self.priority_index is not None
                         and self._episode_count > self.warmup_episodes
-                    ):
+                        and np.random.random() >= self.jtt_uniform_mix
+                    )
+                    if use_jtt_reset:
                         idx = self.priority_index.sample_reset_idx(
                             temperature=self.current_temperature,
                             valid_indices=self.replay_buffer._valid_snap_indices,
@@ -399,6 +410,7 @@ class BusStepSampler:
             "uniform_resets": uniform_resets,
             "fresh_resets": fresh_resets,
             "jtt_reset_ratio": jtt_resets / max(jtt_resets + uniform_resets + fresh_resets, 1),
+            "jtt_uniform_mix": self.jtt_uniform_mix,
             "jtt_temperature": self.current_temperature,
             "jtt_priority_index_attached": self.priority_index is not None,
             "jtt_past_warmup": self._episode_count > self.warmup_episodes,

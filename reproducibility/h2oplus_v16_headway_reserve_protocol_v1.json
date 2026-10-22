@@ -1,0 +1,150 @@
+{
+  "analysis": {
+    "all_v15_numeric_thresholds_retained": true,
+    "budgets": [
+      0,
+      5000,
+      10000,
+      25000
+    ],
+    "candidate_25000_source": "new v16 three-quarter reserve results only",
+    "control_source": "frozen v14 development closeout only",
+    "diagnostic_25000_sources": [
+      "headway-reserve-half",
+      "headway-reserve-full"
+    ],
+    "diagnostics_cannot_replace_candidate": true,
+    "formula_source": "unchanged frozen v15 AULC, endpoint, seed-win, completion and demand-scale gates",
+    "prefix_source": "frozen v14 terminal-quarter logical results at 0/5k/10k"
+  },
+  "analysis_gates": {
+    "all_15_training_runs_pass_registered_stability": true,
+    "all_branches_share_exact_seed_matched_v12_10k_state": true,
+    "candidate_mean_lower_than_all_controls_at_25000": true,
+    "candidate_relative_aulc_improvement_over_fixed_h2o_at_least": 0.03,
+    "candidate_relative_aulc_improvement_over_sac_at_least": 0.02,
+    "candidate_relative_aulc_improvement_over_v10_delayed_actor_at_least": 0.02,
+    "candidate_relative_aulc_improvement_over_v11_at_least": 0.01,
+    "candidate_relative_aulc_improvement_over_v12_actor_ramp_at_least": 0.01,
+    "candidate_relative_aulc_improvement_over_v13_strong_at_least": 0.005,
+    "candidate_seed_wins_over_fixed_h2o_at_least": 4,
+    "candidate_seed_wins_over_sac_at_least": 4,
+    "candidate_seed_wins_over_v10_delayed_actor_at_least": 4,
+    "candidate_seed_wins_over_v11_at_least": 4,
+    "candidate_seed_wins_over_v12_actor_ramp_at_least": 4,
+    "candidate_seed_wins_over_v13_strong_at_least": 4,
+    "completion_rate_noninferiority_margin": 0.003,
+    "no_demand_scale_relative_aulc_degradation_over_sac_greater_than": 0.01,
+    "predesignated_candidate": "headway-reserve-three-quarter"
+  },
+  "created_utc": "2026-08-24T11:12:06.937550+00:00",
+  "evaluation": {
+    "cpu_cores": 12,
+    "demand_scales": [
+      0.85,
+      1.0,
+      1.15
+    ],
+    "development_blocks": [
+      "v12-staged-release-development-01",
+      "v12-staged-release-development-02",
+      "v12-staged-release-development-03"
+    ],
+    "formal_held_out_outcomes_read": false,
+    "gpu_count": 0,
+    "host": "jtl110gpu",
+    "jobs_per_block": 45,
+    "new_physical_methods": 15,
+    "new_remote_sumo_episodes": 135,
+    "ram_mb": 32768,
+    "training_seeds": [
+      6201,
+      6202,
+      6203,
+      6204,
+      6205
+    ],
+    "workers": 12
+  },
+  "formal_confirmation_stage_authorized_or_submitted": false,
+  "formal_held_out_outcomes_read": false,
+  "frozen_v15_evidence": {
+    "development_analysis": {
+      "bytes": 31340,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_results/hold_calibration_analysis_v1.json",
+      "sha256": "d122aa79f6ee2cd5010e241607347921ed9bdc80bbed6ba41c3105e601ac9d9c"
+    },
+    "evaluation_audit": {
+      "bytes": 9733,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_results/evaluation_audit_v1.json",
+      "sha256": "a060b49e3155092542681c7d6afef66bcb2b31ab04ffe523273754ae2dcfa7e8"
+    },
+    "evaluation_closeout": {
+      "bytes": 33938,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_results/evaluation_closeout_v1.json",
+      "sha256": "2e4598c433eb6ffaf18fb9919b608b00d5cdd17f5a53e466ca587d6c8213feab"
+    },
+    "evaluation_closeout_verification": {
+      "bytes": 2251,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_results/evaluation_closeout_verification_v1.json",
+      "sha256": "f5edd5c2ef651172068c9cd595e6cb7710a3ffdd66e545671f5b4a014885e0b6"
+    },
+    "methods": {
+      "bytes": 46822,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_evaluation_methods_v1.json",
+      "sha256": "7712a35cbb1adbc55acf50bd8843bb3f4f7dc17090d0e65deeeb10ffe5177e5a"
+    },
+    "protocol": {
+      "bytes": 5373,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_protocol_v1.json",
+      "sha256": "6cd856504438ad0e9614b49156100cef12f24201b41562bf223e898f15ef0a8c"
+    },
+    "source_freeze": {
+      "bytes": 6060,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_evaluation_source_freeze_v1.json",
+      "sha256": "af025dbd817a4d7c4661227fefae7653ecc5ca9bf666e94a1c0a8ca7e05f642d"
+    }
+  },
+  "headway_reserve": {
+    "activation_budget_online_events": 25000,
+    "actor_or_temperature_tensor_modification_forbidden": true,
+    "base_hold_scale": 0.125,
+    "candidate_horizon_cutoff": 0.75,
+    "checkpoint_selection_by_behavior": false,
+    "diagnostic_horizon_cutoffs": [
+      0.5,
+      1.0
+    ],
+    "headway_balance_gain": 1.0,
+    "headway_formula_source": "SimpleSAC.transit_v4.policies.headway_balance_hold_seconds_v4",
+    "parent_actor_algorithm": "h2oplus-v14-terminal-quarter",
+    "parent_algorithm": "h2oplus-v15-hold-eighth",
+    "parent_budget_online_events": 25000,
+    "predesignated_candidate": "headway-reserve-three-quarter",
+    "raw_action_multiplication_forbidden": true,
+    "seed_or_scenario_specific_transform_forbidden": true,
+    "transformed_hold_never_exceeds_parent": true,
+    "unit": "physical_hold_seconds",
+    "zero_hold_preserved_exactly": true
+  },
+  "local_training_or_sumo_allowed": false,
+  "parent_v15_protocol": {
+    "bytes": 5373,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_protocol_v1.json",
+    "sha256": "6cd856504438ad0e9614b49156100cef12f24201b41562bf223e898f15ef0a8c"
+  },
+  "rationale": {
+    "bytes": 4155,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v16_headway_reserve_rationale_v1.json",
+    "sha256": "48e0445e1d82b4f08fc2068e57d5ec1931c26c5d31db9761f51d5082eadadf25"
+  },
+  "registration": {
+    "bytes": 3925,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v16_headway_reserve_registration_v1.json",
+    "sha256": "6858bea266a4f46ec919804e643a5b8c6de4c189dd0517ee5bf123f08b64950a"
+  },
+  "schema_version": "transit-h2oplus-v16-headway-reserve-protocol-v1",
+  "status": "frozen-before-any-v16-outcome",
+  "study_stage": "development",
+  "v16_development_evaluation_outcomes_read": false
+}

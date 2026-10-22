@@ -20,6 +20,8 @@ Key API:
     buffer.append(obs, action, reward, next_obs, done, z_t, z_t1)
 """
 
+from __future__ import annotations
+
 import os
 import glob
 import logging
@@ -48,6 +50,8 @@ class BusMixedReplayBuffer:
         reward_scale: float = 1.0,
         reward_bias: float = 0.0,
         skip_snapshots: bool = False,
+        max_offline_samples: int = 0,   # 0 = no cap; otherwise subsample offline data to N transitions
+        subsample_seed: int = 42,
     ):
         """
         Args:
@@ -75,6 +79,8 @@ class BusMixedReplayBuffer:
         self.reward_scale = reward_scale
         self.reward_bias = reward_bias
         self.skip_snapshots = skip_snapshots
+        self.max_offline_samples = max_offline_samples
+        self.subsample_seed = subsample_seed
 
         # ------------------------------------------------------------------
         # 1. Load offline data from HDF5
@@ -98,14 +104,20 @@ class BusMixedReplayBuffer:
                 if "snap_file_id" in f and "snap_row_id" in f:
                     self._snap_file_id = np.array(f["snap_file_id"], dtype=np.uint8)
                     self._snap_row_id = np.array(f["snap_row_id"], dtype=np.uint32)
-                    self._has_lazy_snap_index = True
+                    if "snap_valid" in f:
+                        self._snap_valid = np.array(f["snap_valid"], dtype=bool)
+                    else:
+                        self._snap_valid = np.ones(n, dtype=bool)
+                    self._has_lazy_snap_index = bool(self._snap_valid.any())
                     logging.info(
                         "[BusMixedReplayBuffer] Loaded lazy snapshot index "
-                        f"(snap_file_id + snap_row_id, {n:,} entries)"
+                        f"(snap_file_id + snap_row_id, "
+                        f"{int(self._snap_valid.sum()):,}/{n:,} resettable entries)"
                     )
                 else:
                     self._snap_file_id = None
                     self._snap_row_id = None
+                    self._snap_valid = None
                     self._has_lazy_snap_index = False
 
             # Actions stored in raw tanh [-1, 1] space
@@ -176,6 +188,28 @@ class BusMixedReplayBuffer:
             zt = np.zeros((0, context_dim), dtype=np.float32)
             zt1 = np.zeros((0, context_dim), dtype=np.float32)
 
+        # ── Optional offline subsampling (data-size ablation) ──
+        if self.max_offline_samples > 0 and fixed_dataset_size > self.max_offline_samples:
+            rng = np.random.RandomState(self.subsample_seed)
+            keep = rng.choice(fixed_dataset_size, size=self.max_offline_samples, replace=False)
+            keep.sort()
+            s = s[keep]; a = a[keep]; r = r[keep]; s_ = s_[keep]
+            done = done[keep]; zt = zt[keep]; zt1 = zt1[keep]
+            if all_snap_bytes:
+                all_snap_bytes = [all_snap_bytes[i] for i in keep]
+            if hasattr(self, "_snap_file_id") and self._snap_file_id is not None:
+                self._snap_file_id = self._snap_file_id[keep]
+                self._snap_row_id = self._snap_row_id[keep]
+                if getattr(self, "_snap_valid", None) is not None:
+                    self._snap_valid = self._snap_valid[keep]
+                    self._has_lazy_snap_index = bool(self._snap_valid.any())
+            logging.info(
+                f"[BusMixedReplayBuffer] Subsampled offline data: "
+                f"{fixed_dataset_size:,} -> {self.max_offline_samples:,} "
+                f"(seed={self.subsample_seed})"
+            )
+            fixed_dataset_size = self.max_offline_samples
+
         self.fixed_dataset_size = fixed_dataset_size
         self.max_size = int((self.buffer_ratio + 1) * max(fixed_dataset_size, 1))
 
@@ -220,8 +254,11 @@ class BusMixedReplayBuffer:
                 i for i, sb in enumerate(self._snapshot_bytes) if sb is not None
             ]
         elif getattr(self, '_has_lazy_snap_index', False):
-            # All offline transitions have snapshot pointers
-            self._valid_snap_indices = list(range(fixed_dataset_size))
+            if getattr(self, '_snap_valid', None) is not None:
+                self._valid_snap_indices = np.flatnonzero(self._snap_valid).tolist()
+            else:
+                # Backward compatibility for older lazy-index files.
+                self._valid_snap_indices = list(range(fixed_dataset_size))
         else:
             self._valid_snap_indices = []
 
@@ -330,6 +367,71 @@ class BusMixedReplayBuffer:
         ):
             self.append(o, a, r, no, d, zt, zt1)
 
+    def save_online_portion(self, path):
+        """Persist the online partition (sim rollouts) for iter-level resume.
+
+        Offline partition is reproducible from the source HDF5, so we only save the
+        online slice + the circular buffer pointer (ptr) + current logical size.
+        """
+        fds = self.fixed_dataset_size
+        cap = self.max_size - fds
+        # online_n: how many of the online slots are populated.
+        # If buffer hasn't wrapped: size - fds. If wrapped: cap (full).
+        online_n = max(0, min(self.size - fds, cap))
+        if online_n == 0:
+            # Still save metadata so loader knows
+            np.savez_compressed(
+                path, online_n=np.int64(0), ptr=np.int64(self.ptr),
+                size=np.int64(self.size),
+            )
+            return
+        # Save the entire online slice from fds to fds+cap (whether wrapped or not).
+        # The pointer self.ptr tells where the next write goes; on load we restore
+        # the same circular semantics.
+        end = fds + cap
+        np.savez_compressed(
+            path,
+            online_n=np.int64(online_n),
+            ptr=np.int64(self.ptr),
+            size=np.int64(self.size),
+            state=self.state[fds:end],
+            action=self.action[fds:end],
+            reward=self.reward[fds:end],
+            next_state=self.next_state[fds:end],
+            done=self.done[fds:end],
+            z_t=self.z_t[fds:end],
+            z_t1=self.z_t1[fds:end],
+        )
+
+    def load_online_portion(self, path):
+        """Restore online partition + circular pointer from a save_online_portion file."""
+        if not os.path.exists(path):
+            return
+        data = np.load(path, allow_pickle=False)
+        online_n = int(data['online_n'])
+        if online_n == 0:
+            self.ptr = int(data['ptr'])
+            self.size = int(data['size'])
+            return
+        fds = self.fixed_dataset_size
+        cap = self.max_size - fds
+        end = fds + cap
+        # Sanity check shapes
+        if data['state'].shape[0] != cap:
+            raise ValueError(
+                f"online buffer size mismatch on load: ckpt cap={data['state'].shape[0]}, "
+                f"buffer cap={cap}. Did buffer_ratio or fixed_dataset_size change?"
+            )
+        self.state[fds:end] = data['state']
+        self.action[fds:end] = data['action']
+        self.reward[fds:end] = data['reward']
+        self.next_state[fds:end] = data['next_state']
+        self.done[fds:end] = data['done']
+        self.z_t[fds:end] = data['z_t']
+        self.z_t1[fds:end] = data['z_t1']
+        self.ptr = int(data['ptr'])
+        self.size = int(data['size'])
+
     # ------------------------------------------------------------------
     # Sampling
     # ------------------------------------------------------------------
@@ -411,7 +513,8 @@ class BusMixedReplayBuffer:
         # Check if this specific index has a snapshot
         has_snap = False
         if self.snapshot_store is not None and self._has_lazy_snap_index:
-            has_snap = True  # lazy mode: all indices are valid
+            snap_valid = getattr(self, "_snap_valid", None)
+            has_snap = bool(snap_valid[idx]) if snap_valid is not None else True
         elif idx < len(self._snapshot_bytes) and self._snapshot_bytes[idx] is not None:
             has_snap = True  # in-memory mode
 
@@ -432,7 +535,9 @@ class BusMixedReplayBuffer:
             (snapshot_dict, obs, z_t)
         """
         # Method 1: Lazy SnapshotStore (preferred for merged mode)
-        if self.snapshot_store is not None and self._has_lazy_snap_index:
+        snap_valid = getattr(self, "_snap_valid", None)
+        if (self.snapshot_store is not None and self._has_lazy_snap_index
+                and (snap_valid is None or bool(snap_valid[idx]))):
             snapshot_dict = self.snapshot_store.get_by_buffer_idx(
                 self._snap_file_id, self._snap_row_id, idx
             )
@@ -453,8 +558,11 @@ class BusMixedReplayBuffer:
         """
         self.snapshot_store = store
         if self._has_lazy_snap_index and not self._valid_snap_indices:
-            # Rebuild valid indices now that store is available
-            self._valid_snap_indices = list(range(self.fixed_dataset_size))
+            # Rebuild valid indices now that store is available.
+            if getattr(self, '_snap_valid', None) is not None:
+                self._valid_snap_indices = np.flatnonzero(self._snap_valid).tolist()
+            else:
+                self._valid_snap_indices = list(range(self.fixed_dataset_size))
         logging.info(
             f"[BusMixedReplayBuffer] SnapshotStore attached: "
             f"{len(self._valid_snap_indices):,} valid snapshot indices"

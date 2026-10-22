@@ -1,0 +1,269 @@
+{
+  "artifact_integrity": {
+    "logical_evaluation_rows": 720,
+    "logical_policy_budget_aliases": 80,
+    "matrix_blocks": 3,
+    "passed": true,
+    "physical_evaluation_results": 405
+  },
+  "created_utc": "2026-08-21T00:35:35.713442+00:00",
+  "development_scientific_result": {
+    "all_algorithm_mean_aulc": {
+      "h2oplus": 2557.063044823203,
+      "h2oplus-v10-delayed-actor": 2513.3404348308613,
+      "h2oplus-v11-actor-hold": 2464.880793777977,
+      "sac-online": 2533.32398940993
+    },
+    "budget_results": {
+      "10000": {
+        "candidate_lower_than_fixed_h2o": true,
+        "candidate_lower_than_sac": true,
+        "means": {
+          "h2oplus": 2567.9677280690316,
+          "h2oplus-v10-delayed-actor": 2602.3316706655055,
+          "h2oplus-v11-actor-hold": 2450.1748781996002,
+          "sac-online": 2597.7959051787175
+        }
+      },
+      "25000": {
+        "candidate_lower_than_fixed_h2o": true,
+        "candidate_lower_than_sac": true,
+        "means": {
+          "h2oplus": 2649.4116337857026,
+          "h2oplus-v10-delayed-actor": 2457.851010349264,
+          "h2oplus-v11-actor-hold": 2499.19459679419,
+          "sac-online": 2520.580390027536
+        }
+      }
+    },
+    "checks": {
+      "all_5_training_runs_stability": true,
+      "candidate_lower_than_fixed_h2o_at_10000": true,
+      "candidate_lower_than_fixed_h2o_at_25000": true,
+      "candidate_lower_than_sac_at_10000": true,
+      "candidate_lower_than_sac_at_25000": true,
+      "completion_rate_noninferiority": true,
+      "demand_scale_robustness": true,
+      "relative_aulc_improvement_over_fixed_h2o": true,
+      "relative_aulc_improvement_over_sac": true,
+      "relative_aulc_improvement_over_v10_delayed_actor": true,
+      "seed_wins_over_fixed_h2o": true,
+      "seed_wins_over_sac": true,
+      "seed_wins_over_v10_delayed_actor": true,
+      "zero_5k_10k_actor_and_temperature_hashes_identical": true
+    },
+    "comparisons": {
+      "h2oplus": {
+        "candidate": "h2oplus-v11-actor-hold",
+        "candidate_mean_aulc": 2464.880793777977,
+        "control": "h2oplus",
+        "control_mean_aulc": 2557.063044823203,
+        "mean_lower": true,
+        "per_seed": [
+          {
+            "candidate_aulc": 2461.656877201409,
+            "candidate_lower": true,
+            "control_aulc": 2549.824659878762,
+            "seed": 6201
+          },
+          {
+            "candidate_aulc": 2460.598122681506,
+            "candidate_lower": true,
+            "control_aulc": 2613.1371057196816,
+            "seed": 6202
+          },
+          {
+            "candidate_aulc": 2469.996854000691,
+            "candidate_lower": true,
+            "control_aulc": 2593.463653240291,
+            "seed": 6203
+          },
+          {
+            "candidate_aulc": 2472.287673150937,
+            "candidate_lower": true,
+            "control_aulc": 2524.834566056989,
+            "seed": 6204
+          },
+          {
+            "candidate_aulc": 2459.864441855342,
+            "candidate_lower": true,
+            "control_aulc": 2504.0552392202944,
+            "seed": 6205
+          }
+        ],
+        "relative_improvement": 0.0360500501666746,
+        "seed_wins": 5
+      },
+      "h2oplus-v10-delayed-actor": {
+        "candidate": "h2oplus-v11-actor-hold",
+        "candidate_mean_aulc": 2464.880793777977,
+        "control": "h2oplus-v10-delayed-actor",
+        "control_mean_aulc": 2513.3404348308613,
+        "mean_lower": true,
+        "per_seed": [
+          {
+            "candidate_aulc": 2461.656877201409,
+            "candidate_lower": true,
+            "control_aulc": 2515.159876084573,
+            "seed": 6201
+          },
+          {
+            "candidate_aulc": 2460.598122681506,
+            "candidate_lower": true,
+            "control_aulc": 2486.1535566571542,
+            "seed": 6202
+          },
+          {
+            "candidate_aulc": 2469.996854000691,
+            "candidate_lower": true,
+            "control_aulc": 2516.789285976429,
+            "seed": 6203
+          },
+          {
+            "candidate_aulc": 2472.287673150937,
+            "candidate_lower": true,
+            "control_aulc": 2526.4775133984194,
+            "seed": 6204
+          },
+          {
+            "candidate_aulc": 2459.864441855342,
+            "candidate_lower": true,
+            "control_aulc": 2522.121942037732,
+            "seed": 6205
+          }
+        ],
+        "relative_improvement": 0.019280969812649144,
+        "seed_wins": 5
+      },
+      "sac-online": {
+        "candidate": "h2oplus-v11-actor-hold",
+        "candidate_mean_aulc": 2464.880793777977,
+        "control": "sac-online",
+        "control_mean_aulc": 2533.32398940993,
+        "mean_lower": true,
+        "per_seed": [
+          {
+            "candidate_aulc": 2461.656877201409,
+            "candidate_lower": true,
+            "control_aulc": 2535.004302136028,
+            "seed": 6201
+          },
+          {
+            "candidate_aulc": 2460.598122681506,
+            "candidate_lower": true,
+            "control_aulc": 2538.2633829246424,
+            "seed": 6202
+          },
+          {
+            "candidate_aulc": 2469.996854000691,
+            "candidate_lower": true,
+            "control_aulc": 2509.0291103261065,
+            "seed": 6203
+          },
+          {
+            "candidate_aulc": 2472.287673150937,
+            "candidate_lower": true,
+            "control_aulc": 2552.3257982185696,
+            "seed": 6204
+          },
+          {
+            "candidate_aulc": 2459.864441855342,
+            "candidate_lower": true,
+            "control_aulc": 2531.997353444303,
+            "seed": 6205
+          }
+        ],
+        "relative_improvement": 0.027017150557159936,
+        "seed_wins": 5
+      }
+    },
+    "completion_aulc": {
+      "h2oplus": {
+        "candidate_aulc": 0.9638050198847182,
+        "control_aulc": 0.968311474903414,
+        "delta": -0.004506455018695732
+      },
+      "h2oplus-v10-delayed-actor": {
+        "candidate_aulc": 0.9638050198847182,
+        "control_aulc": 0.9674668641351509,
+        "delta": -0.0036618442504327
+      },
+      "sac-online": {
+        "candidate_aulc": 0.9638050198847182,
+        "control_aulc": 0.9680895141732246,
+        "delta": -0.004284494288506413
+      }
+    },
+    "demand_scale_aulc": [
+      {
+        "candidate_aulc": 2061.6528421578673,
+        "demand_scale": 0.85,
+        "relative_degradation": -0.05418612242194467,
+        "sac_online_aulc": 2179.7659042994164
+      },
+      {
+        "candidate_aulc": 2378.5091447266614,
+        "demand_scale": 1.0,
+        "relative_degradation": -0.032205607001226946,
+        "sac_online_aulc": 2457.6595627473084
+      },
+      {
+        "candidate_aulc": 2954.480394449402,
+        "demand_scale": 1.15,
+        "relative_degradation": -0.002722693713142272,
+        "sac_online_aulc": 2962.5465011830647
+      }
+    ],
+    "screening_gate_passed": true
+  },
+  "formal_confirmation_eligible": true,
+  "formal_confirmation_stage_authorized_or_submitted": false,
+  "formal_held_out_outcomes_read": false,
+  "matrix_evidence": [
+    {
+      "jobs": 135,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_results/evaluation_canonical_v1/v11-actor-hold-development-01/matrix_manifest.json",
+      "sha256": "6a04385fc3cce8b4c345d1a7ab5e9437c15c2b0b253830f2cabc0d24c942a1c5",
+      "source_file_count": 41
+    },
+    {
+      "jobs": 135,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_results/evaluation_canonical_v1/v11-actor-hold-development-02/matrix_manifest.json",
+      "sha256": "3afac7d6f0a5881c4beb7a15b8eb50c1056afbc95223aab7280b427e8727b702",
+      "source_file_count": 41
+    },
+    {
+      "jobs": 135,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_results/evaluation_canonical_v1/v11-actor-hold-development-03/matrix_manifest.json",
+      "sha256": "6f72c1a82de51ef7958b45a0acb7db18288d1f28c821495ed047d67a9bef49a1",
+      "source_file_count": 41
+    }
+  ],
+  "methods_manifest": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_evaluation_methods_v1.json",
+    "sha256": "6716c56c73e9d491431b1ab019727f9bfd18a2242cb7500826cf7ccc0628b260"
+  },
+  "protocol": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_protocol_v2.json",
+    "sha256": "c5b162541c6ce2476bb0f57f6dc936de13b85b5e1e6ede77b533a5cf9a4dfced"
+  },
+  "registration": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_registration_v2.json",
+    "sha256": "caab9c2c3aa7ee2ce977c13403b415be9b0debc2d7c88fc6b7a12c51b3e9efb5"
+  },
+  "schema_version": "transit-h2oplus-v11-actor-hold-analysis-v1",
+  "supports_formal_held_out_model_effect_claim": false,
+  "training_closeout": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_results/training_closeout_v2.json",
+    "sha256": "489c7efe5cf91f73bb31a9b6df03441c2fb3bcd4d280c65493c5ae8ec3af01a6"
+  },
+  "training_scientific_stability": {
+    "failure_runs": [],
+    "passed": true,
+    "separate_from_artifact_integrity": true
+  },
+  "training_verification": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_results/training_closeout_verification_v2.json",
+    "sha256": "ff0ef7c69bac850bf9f743275ffd9bbfc87c0b1c9713a83769a052bd936d256e"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "corrected_utc": "2026-08-13T23:09:09Z",
+  "failure_scope": {
+    "completed_evaluation_jobs": 0,
+    "completed_matrix_manifests": 0,
+    "completed_shard_summaries": 0,
+    "formal_held_out_outcomes_read": false,
+    "stage": "host execution evidence serialization before the first evaluation block",
+    "training": false
+  },
+  "incident": {
+    "error": "TypeError: Object of type PosixPath is not JSON serializable",
+    "root_cause": "verify_design returned Path objects inside evidence.blocks[*].manifests, which write_json_atomic rejected before run_evaluation_matrix_v4.py was launched",
+    "superseded_deployment": {
+      "aggregate_sha256": "9b0271f69e0625aa439655b117dbfd0e4ac14587a55a93671eb7c2795ed87d2d",
+      "manifest_sha256": "f93cc9f543b55054245236ca77c06017d243a4cfee4080d1b881009d69fbb9e7",
+      "stage_a_dispatch_sha256": "8120ad3a58a4b1234f59a15cb9099147e23a220aa3e747f6e911595902a3a015"
+    }
+  },
+  "old_scheduler_tasks": [
+    {
+      "id": "t82273",
+      "outcome": "cancelled before remote launch after WAL recovery proved no process or exit sentinel",
+      "shard_index": 0,
+      "status": "cancelled"
+    },
+    {
+      "backend_exit_code": 1,
+      "id": "t82274",
+      "outcome": "pre-evaluation JSON serialization failure",
+      "shard_index": 1,
+      "status": "failed"
+    },
+    {
+      "backend_exit_code": 1,
+      "id": "t82276",
+      "outcome": "automatic retry; same pre-evaluation JSON serialization failure",
+      "shard_index": 1,
+      "status": "failed"
+    },
+    {
+      "backend_exit_code": 1,
+      "id": "t82279",
+      "outcome": "automatic retry; exit sentinel proved the same failure and absent process before cancellation suppressed further obsolete retries",
+      "shard_index": 1,
+      "status": "cancelled"
+    }
+  ],
+  "replacement": {
+    "deployment": {
+      "aggregate_sha256": "ab56483dbe329043a3fd659f83f2d6b32562e49a262c8db7af63d0d8fb89fe8a",
+      "entry_count": 410,
+      "manifest_sha256": "60f9e4212673eb6cf3491e1a1d21321a7f68d9bf4071cffbb2702e2ad0288826",
+      "remote_file_and_runtime_verification_passed": true,
+      "total_file_bytes": 808229382
+    },
+    "scheduler_tasks": [
+      {
+        "id": "t82278",
+        "shard_index": 0,
+        "signature": "H2Oplus/v8/development/stage-a/60f9e4212673/shard0/jtl110gpu/glibc227"
+      },
+      {
+        "id": "t82281",
+        "shard_index": 1,
+        "signature": "H2Oplus/v8/development/stage-a/60f9e4212673/shard1/jtl110gpu/glibc227"
+      }
+    ]
+  },
+  "schema_version": "transit-h2oplus-v8-stage-a-pre-execution-correction-v1",
+  "source_fix": {
+    "change": "serialize validated scenario manifest paths as strings in execution evidence",
+    "dispatcher_path": "reproducibility/run_h2oplus_v8_stage_a_dispatch.py",
+    "dispatcher_sha256": "79dbb7fbba8110b9fec7f1396bf60ee76bf44b84adc7ca8872eea9e8a7899eaa",
+    "focused_test": {
+      "command": "python3 -m pytest -q -s --basetemp=/tmp/h2oplus-v8-dispatch-pytest-758726 tests/test_h2oplus_v8_stage_a_dispatch.py",
+      "passed": 1,
+      "test_path": "tests/test_h2oplus_v8_stage_a_dispatch.py",
+      "test_sha256": "367508a3ac465bcd5737c92cf1772fdc62a087fd3c5fbd50d58ce76a435d0325"
+    }
+  },
+  "stage_b_authorized": false,
+  "status": "corrected-before-any-evaluation-outcome"
+}

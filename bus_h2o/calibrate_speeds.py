@@ -15,6 +15,8 @@ Usage:
     python calibrate_speeds.py [--dry-run]
 """
 
+from __future__ import annotations
+
 import argparse
 import csv
 import os

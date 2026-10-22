@@ -1,0 +1,182 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/core/iql_seed5105/checkpoints/latest.pt",
+    "sha256": "daf3590e787cf02524b3381afd09aade7161e1dba1e3d9956f6ef0c386b2642a"
+  },
+  "completed_epochs": 0,
+  "completed_utc": "2026-08-12T15:05:19.148176+00:00",
+  "final_blocked_simultaneous_batch_size": 0,
+  "final_policy": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/core/iql_seed5105/checkpoints/final_actor.pt",
+    "sha256": "7f74c2c0a3d374beee317154306d02bb9184c1f6f8ff7359ba76272a94002933",
+    "source_training_checkpoint_sha256": "daf3590e787cf02524b3381afd09aade7161e1dba1e3d9956f6ef0c386b2642a"
+  },
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 5851.6298828125,
+  "max_rss_mb": 7247.2421875,
+  "maximum_simultaneous_decisions": 0,
+  "mdp_version": "v7",
+  "method": "iql",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "cql_penalty_subset_replacement": false,
+    "cql_penalty_subset_size": null,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "critic_loss": "mse",
+    "default_offline_updates": 250000,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 0,
+    "description": "offline-only Implicit Q-Learning",
+    "ensemble_size": 2,
+    "gradient_clip_norm": null,
+    "huber_delta": 1.0,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.0,
+    "offline_initializer": null,
+    "offline_objective": "iql",
+    "offline_temperature_action_samples": 1,
+    "offline_update_order": "critic-before-actor",
+    "online_backup": "sac",
+    "online_fraction": 0.0,
+    "online_update_mode": "none",
+    "online_update_order": "critic-before-actor",
+    "ratio_update_interval": 4,
+    "reference": "https://openreview.net/forum?id=68n2s9ZJWF8",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_replacement": false,
+    "target_subset_size": 2,
+    "temperature_state_source": "actor",
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003,
+    "warmup_action_mode": "policy"
+  },
+  "method_protocol": "offline-only Implicit Q-Learning",
+  "offline_initializer_consumed": null,
+  "offline_initializer_produced": null,
+  "offline_metrics": {
+    "train/actor_grad_norm": 0.7039262056350708,
+    "train/actor_loss": 0.15540406107902527,
+    "train/actor_updated": 1.0,
+    "train/alpha": 1.0,
+    "train/alpha_loss": 0.0,
+    "train/cql_penalty": 0.0,
+    "train/critic_grad_norm": 489.709716796875,
+    "train/critic_loss": 0.7692891955375671,
+    "train/offline_max_abs_td": 8.867828369140625,
+    "train/offline_nonterminal_abs_td": 1.1860016584396362,
+    "train/offline_td_loss": 0.7692891955375671,
+    "train/offline_terminal_abs_td": 0.0,
+    "train/offline_terminal_loss_fraction": 0.0,
+    "train/offline_terminal_rows": 0.0,
+    "train/online_critic_update": 0.0,
+    "train/q_data_mean": -139.07534790039062,
+    "train/sim_td_loss": 0.0,
+    "train/update": 250000.0,
+    "train/value_advantage": -0.49882203340530396,
+    "train/value_grad_norm": 375.3978576660156,
+    "train/value_loss": 0.16273987293243408
+  },
+  "online_buffer_size": 0,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "critic_loss": {
+        "effective": "huber",
+        "profile": "mse"
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "huber_delta": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 250000,
+        "profile": 250000
+      },
+      "online_fraction": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": 0.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 0,
+        "profile": 0
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 0,
+        "profile": 0
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/core/iql_seed5105",
+  "run_signature": "339f32f898110ec350f5c8e57e8cd257a2031289b0cfff342c82023c4214b821",
+  "schema_version": "transit-training-summary-v8",
+  "seed": 5105,
+  "simulator_decision_event_cap": 0,
+  "simulator_decision_event_underfill": 0,
+  "simulator_decision_events": 0,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 1.3861903380020522,
+    "data_load": 16.557080263999524,
+    "device_cache": 0.5332493770110887,
+    "model_init": 1.9882023750105873,
+    "offline_pretraining": 4058.864781037031,
+    "provenance_audit": 0.7965152969991323
+  },
+  "total_updates": 250000,
+  "warmup_metrics": {}
+}

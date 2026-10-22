@@ -1,0 +1,484 @@
+{
+  "conclusions": {
+    "algorithm_convergence_failure_proven": false,
+    "artifact_integrity": "passed",
+    "formal_effect_claim_supported": false,
+    "highest_priority_factors": [
+      "objective-constraint-mismatch",
+      "adaptive-development-cell-reuse",
+      "sumo-runtime-version-shift"
+    ],
+    "material_data_or_environment_factors_present": true,
+    "sealed_parent_training_accounting": "passed",
+    "v17_v2_allowed_change": "Python 3.8 compatibility and fresh evidence identity only; scientific design and frozen runtime remain unchanged"
+  },
+  "created_utc": "2026-08-25T00:46:11.413226+00:00",
+  "dataset": {
+    "bytes": 589504302,
+    "path": "bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5",
+    "sha256": "6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899"
+  },
+  "environment_comparison": {
+    "development_evaluation": {
+      "demand_scales": [
+        0.85,
+        1.0,
+        1.15
+      ],
+      "development_blocks": [
+        "v12-staged-release-development-01",
+        "v12-staged-release-development-02",
+        "v12-staged-release-development-03"
+      ],
+      "environment_cells": 9,
+      "python_version": "3.8.20",
+      "runtime_signature": "264d3c412b8e6c42320995208d2e009eb809b85626047206c4de752c2dae06e7",
+      "same_cells_reused_by_v14_v15_v16_and_v17_design": true,
+      "sumo_version": "1.25.0"
+    },
+    "evidence": {
+      "environment_design": {
+        "bytes": 10143,
+        "path": "reproducibility/h2oplus_v12_staged_release_environment_v2.json",
+        "sha256": "bfe97d430921f38fbbec04490ac980e330d2000f6c1ad4d62627c95d3deba5e3"
+      },
+      "runtime_lock": {
+        "bytes": 41885,
+        "path": "reproducibility/h2oplus_v8_stage_a_sumo_runtime_lock_py38.json",
+        "sha256": "ac60ae58e0e6db6bb1386ffdfe0d164b96f81e49e4983b8b062ceddb65da51a4"
+      },
+      "v16_analysis": {
+        "bytes": 32420,
+        "path": "reproducibility/h2oplus_v16_headway_reserve_results/headway_reserve_analysis_v1.json",
+        "sha256": "4a88f48946c2ec478ca47274df39e0ccdf3535c1c21ad41141142d529617f75e"
+      },
+      "v17_python38_incident": {
+        "bytes": 2847,
+        "path": "reproducibility/h2oplus_v17_tail_service_reserve_results/evaluation_incidents/v1_python38_removeprefix/incident_closeout_v1.json",
+        "sha256": "0d189243e83ee014c414fd154f26ebc52107c934dee51131a5aecaf9cd3e19ed"
+      }
+    },
+    "training_collection": {
+      "demand_scales": [
+        0.75,
+        1.0,
+        1.25
+      ],
+      "environment_cells": 30,
+      "episodes": 240,
+      "independent_realization_blocks": 10,
+      "policies": [
+        "headway-gain-0.05",
+        "headway-gain-0.1",
+        "headway-gain-0.25",
+        "headway-gain-0.5",
+        "myopic-welfare-v2",
+        "random-hurdle-p0.5-beta1-3",
+        "random-hurdle-p0.5-uniform",
+        "zero"
+      ],
+      "python_version": "3.10.12",
+      "sumo_version": "Eclipse SUMO sumo 1.27.1"
+    },
+    "v16_completion_aulc_deltas": {
+      "h2oplus": -0.00408723947011802,
+      "h2oplus-v10-delayed-actor": -0.0032797706096310275,
+      "h2oplus-v11-actor-hold": 0.0002772740044717503,
+      "h2oplus-v12-actor-ramp": -0.00018448128054715518,
+      "h2oplus-v13-proximal-strong": 0.00021385390421746475,
+      "sac-online": -0.003995643385337866
+    }
+  },
+  "existing_data_integrity": {
+    "bellman_credit_maximum_error": 0.0,
+    "credit_audit": {
+      "bytes": 1718,
+      "path": "bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.credit_audit.json",
+      "sha256": "15f4f9e3f0c5f153375c7e621c17fd1775b9ebdba1c3982632e2e8a4e36c1ebc"
+    },
+    "dataset_audit": {
+      "bytes": 31756,
+      "path": "bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.audit.json",
+      "sha256": "be0731ace024fa4302cf7e373b29d77702532052f9f133343d7838e8497f0090"
+    },
+    "existing_checks_passed": true,
+    "reconstruction_maximum_error": 0.0,
+    "reward_conditioning": {
+      "bytes": 25794,
+      "path": "bus_h2o/datasets_v7/formal_v2_full/reward_conditioning_v7_formal_v2.json",
+      "sha256": "d5d450931accc16f5e9d149e431aea8dd2b257feb77f7716727217e586555989"
+    },
+    "summary": {
+      "bytes": 34787,
+      "path": "bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5.summary.json",
+      "sha256": "19c6375c945faffd84e163466bc175ec8c2f4e811cc4b10434feff713535e2e4"
+    }
+  },
+  "formal_confirmation_authorized_or_submitted": false,
+  "formal_held_out_outcomes_read": false,
+  "independent_dataset_scan": {
+    "canonical_feature_clipping_exposure": {
+      "backward_headway_ratio_above_5": {
+        "fraction": 0.0004764488153929805,
+        "rows": 1565
+      },
+      "demand_capacity_ratio_above_2": {
+        "fraction": 0.0,
+        "rows": 0
+      },
+      "forward_headway_ratio_above_5": {
+        "fraction": 0.0,
+        "rows": 0
+      },
+      "onboard_capacity_ratio_above_1": {
+        "fraction": 0.0,
+        "rows": 0
+      },
+      "queue_capacity_ratio_above_2": {
+        "fraction": 0.0,
+        "rows": 0
+      },
+      "system_in_vehicle_above_scale_cap": {
+        "fraction": 0.0,
+        "rows": 0
+      },
+      "system_waiting_above_scale_cap": {
+        "fraction": 0.0,
+        "rows": 0
+      }
+    },
+    "episodes": 240,
+    "independent_environment_cells": 30,
+    "maximum_duration_seconds": 2944.0,
+    "maximum_reward_ledger_error": 0.0,
+    "nonfinite_rows": 0,
+    "policies_per_environment_cell": 8.0,
+    "rows": 3284718,
+    "source_shards": 240,
+    "terminal_rows": 240,
+    "trajectories": 240,
+    "v17_guard_training_support": {
+      "behavior_hold_at_least_20_seconds_fraction": 0.0581063089296698,
+      "behavior_hold_at_least_30_seconds_fraction": 0.03692082499591239,
+      "behavior_hold_at_least_40_seconds_fraction": 0.021668210873813622,
+      "behavior_hold_seconds_on_guard": {
+        "count": 128437,
+        "mean": 3.3348869594376405,
+        "q0": 0.0,
+        "q01": 0.0,
+        "q05": 0.0,
+        "q100": 60.0,
+        "q50": 0.0,
+        "q95": 23.431363821029663,
+        "q99": 50.2860547542572
+      },
+      "by_demand_scale": {
+        "0.75": 50672,
+        "1.00": 42240,
+        "1.25": 35525
+      },
+      "by_policy": {
+        "headway-gain-0.05": 16440,
+        "headway-gain-0.1": 16449,
+        "headway-gain-0.25": 16278,
+        "headway-gain-0.5": 15929,
+        "myopic-welfare-v2": 16421,
+        "random-hurdle-p0.5-beta1-3": 15539,
+        "random-hurdle-p0.5-uniform": 14909,
+        "zero": 16472
+      },
+      "component_true_rows": {
+        "activation_window": 1057076,
+        "backward_bus_absent": 755466,
+        "forward_bus_present": 3194761,
+        "low_onboard_load": 1821601,
+        "positive_arrival_rate": 2781539
+      },
+      "guard_fraction": 0.03910137795695095,
+      "guard_rows": 128437
+    },
+    "zero_duration_rows": 1025206
+  },
+  "local_training_or_sumo_executed": false,
+  "risk_register": [
+    {
+      "affects": [
+        "effectiveness",
+        "development-gate-pass-rate"
+      ],
+      "evidence": {
+        "reward_objective": "undiscounted negative waiting and in-vehicle passenger-seconds",
+        "v16_completion_aulc_deltas": {
+          "h2oplus": -0.00408723947011802,
+          "h2oplus-v10-delayed-actor": -0.0032797706096310275,
+          "h2oplus-v11-actor-hold": 0.0002772740044717503,
+          "h2oplus-v12-actor-ramp": -0.00018448128054715518,
+          "h2oplus-v13-proximal-strong": 0.00021385390421746475,
+          "sac-online": -0.003995643385337866
+        }
+      },
+      "finding": "The optimized reward is generalized passenger time, while completion rate is only an evaluation constraint. A policy can improve welfare and still fail the completion noninferiority boundary.",
+      "id": "objective-constraint-mismatch",
+      "remediation": "For a future training generation, preregister a completion-aware constrained objective or terminal service-shortfall cost. Do not retrofit this into v17-v2.",
+      "severity": "high"
+    },
+    {
+      "affects": [
+        "validity",
+        "selection-bias"
+      ],
+      "evidence": {
+        "development_cells": 9,
+        "reused_rounds": [
+          "v14",
+          "v15",
+          "v16",
+          "v17"
+        ]
+      },
+      "finding": "The same nine development cells informed v14-v17 design. Repeated tuning can overfit these cells even when each individual analysis is preregistered.",
+      "id": "adaptive-development-cell-reuse",
+      "remediation": "Treat v17-v2 as the final operational correction of the frozen v17 design. Any later scientific redesign should use fresh, untouched development blocks or nested development selection.",
+      "severity": "high"
+    },
+    {
+      "affects": [
+        "sim-to-evaluation-transfer",
+        "effectiveness"
+      ],
+      "evidence": {
+        "evaluation_sumo": "1.25.0",
+        "training_sumo": "Eclipse SUMO sumo 1.27.1"
+      },
+      "finding": "Training data were collected with SUMO 1.27.1, whereas remote development evaluation is locked to SUMO/libsumo 1.25.0.",
+      "id": "sumo-runtime-version-shift",
+      "remediation": "Before any formal confirmation, preregister a paired version-sensitivity audit on fresh development cells. Do not change the frozen v17-v2 runtime.",
+      "severity": "medium-high"
+    },
+    {
+      "affects": [
+        "convergence-uncertainty",
+        "generalization"
+      ],
+      "evidence": {
+        "episodes": 240,
+        "independent_environment_cells": 30,
+        "policies_per_environment_cell": 8.0,
+        "rows": 3284718
+      },
+      "finding": "The dataset has millions of AEC-token transitions but only 30 independent exogenous environment cells, each reused by eight behavior policies.",
+      "id": "transition-count-overstates-independent-sample-size",
+      "remediation": "Report uncertainty by exogenous block/episode rather than transition; future training data should prioritize additional independent cells over denser tokens.",
+      "severity": "medium"
+    },
+    {
+      "affects": [
+        "offline-action-support",
+        "tail-overlay-validity"
+      ],
+      "evidence": {
+        "dataset_exact_zero_action_rate": 0.8022457331192511,
+        "guard_hold_at_least_30_seconds_fraction": 0.03692082499591239,
+        "v17_guard_fraction": 0.03910137795695095
+      },
+      "finding": "Most offline actions are exact zero and only a minority of guard states contain behavior holds at the v17 floor magnitudes.",
+      "id": "sparse-positive-action-support",
+      "remediation": "Keep v17 as a bounded physical overlay rather than claiming learned support. A future learned completion controller needs explicit tail-state/action coverage.",
+      "severity": "medium"
+    },
+    {
+      "affects": [
+        "domain-shift-diagnosis"
+      ],
+      "evidence": {
+        "training_joint_auc": {
+          "count": 5,
+          "mean": 0.947674560546875,
+          "q0": 0.9369659423828125,
+          "q01": 0.9371893310546875,
+          "q05": 0.9380828857421875,
+          "q100": 0.9580230712890625,
+          "q50": 0.9470672607421875,
+          "q95": 0.957171630859375,
+          "q99": 0.957852783203125
+        },
+        "validation_joint_auc": {
+          "count": 5,
+          "mean": 0.4519561767578125,
+          "q0": 0.436614990234375,
+          "q01": 0.4367291259765625,
+          "q05": 0.4371856689453125,
+          "q100": 0.47467041015625,
+          "q50": 0.4442596435546875,
+          "q95": 0.4726898193359375,
+          "q99": 0.4742742919921875
+        },
+        "validation_raw_ess_fraction": {
+          "count": 5,
+          "mean": 0.06149220447987318,
+          "q0": 0.010002708993852139,
+          "q01": 0.010507725775241852,
+          "q05": 0.012527792900800704,
+          "q100": 0.15299871563911438,
+          "q50": 0.04954978823661804,
+          "q95": 0.13685530871152876,
+          "q99": 0.14977003425359725
+        }
+      },
+      "finding": "The ratio classifier separates training batches but generalizes near chance, with low raw validation ESS. Unit weights prevented this diagnostic failure from directly perturbing the sealed v14 optimizer.",
+      "id": "ratio-diagnostic-generalization",
+      "remediation": "Do not enable learned ratio weights post hoc. If revisited, use block-held-out validation and calibration gates before optimizer use.",
+      "severity": "medium"
+    },
+    {
+      "affects": [
+        "state-aliasing",
+        "tail-state-resolution"
+      ],
+      "evidence": {
+        "backward_headway_ratio_above_5": {
+          "fraction": 0.0004764488153929805,
+          "rows": 1565
+        },
+        "demand_capacity_ratio_above_2": {
+          "fraction": 0.0,
+          "rows": 0
+        },
+        "forward_headway_ratio_above_5": {
+          "fraction": 0.0,
+          "rows": 0
+        },
+        "onboard_capacity_ratio_above_1": {
+          "fraction": 0.0,
+          "rows": 0
+        },
+        "queue_capacity_ratio_above_2": {
+          "fraction": 0.0,
+          "rows": 0
+        },
+        "system_in_vehicle_above_scale_cap": {
+          "fraction": 0.0,
+          "rows": 0
+        },
+        "system_waiting_above_scale_cap": {
+          "fraction": 0.0,
+          "rows": 0
+        }
+      },
+      "finding": "Physical values beyond canonical caps are aliased. The measured exposure below determines whether this is negligible or material.",
+      "id": "canonical-feature-clipping",
+      "remediation": "Retain current frozen normalization for v17-v2. For future training, inspect clipped tails by environment block before changing scales.",
+      "severity": "low-to-medium"
+    }
+  ],
+  "schema_version": "transit-h2oplus-v17-data-environment-convergence-audit-v1",
+  "scope": "training data, sealed parent training, and development runtime only",
+  "sealed_parent_training": {
+    "all_event_caps_or_registered_batch_underfill_exact": true,
+    "all_total_updates_exact": true,
+    "event_accounting": [
+      {
+        "blocked_final_simultaneous_batch_size": 0,
+        "completed_events": 25000,
+        "registered_underfill": 0,
+        "seed": 6201
+      },
+      {
+        "blocked_final_simultaneous_batch_size": 2,
+        "completed_events": 24999,
+        "registered_underfill": 1,
+        "seed": 6202
+      },
+      {
+        "blocked_final_simultaneous_batch_size": 0,
+        "completed_events": 25000,
+        "registered_underfill": 0,
+        "seed": 6203
+      },
+      {
+        "blocked_final_simultaneous_batch_size": 0,
+        "completed_events": 25000,
+        "registered_underfill": 0,
+        "seed": 6204
+      },
+      {
+        "blocked_final_simultaneous_batch_size": 2,
+        "completed_events": 24999,
+        "registered_underfill": 1,
+        "seed": 6205
+      }
+    ],
+    "evidence": [
+      {
+        "bytes": 9901,
+        "path": "reproducibility/h2oplus_v14_terminal_taper_results/branches_v1/h2oplus_v14_terminal_quarter_seed6201/summary.json",
+        "sha256": "ba386ca821aa6f175731194b8abf1d8cc0ebda1f9c0d1129542b04c9af2925d0"
+      },
+      {
+        "bytes": 9891,
+        "path": "reproducibility/h2oplus_v14_terminal_taper_results/branches_v1/h2oplus_v14_terminal_quarter_seed6202/summary.json",
+        "sha256": "2205e72e115ad08d746b12d4e4f7b097f0462cf2125070236f526b73c2320754"
+      },
+      {
+        "bytes": 9890,
+        "path": "reproducibility/h2oplus_v14_terminal_taper_results/branches_v1/h2oplus_v14_terminal_quarter_seed6203/summary.json",
+        "sha256": "c8bc3e42a9ba2232f2b5f56a541effe743cb6cca747f61e495155c7fbeb696f1"
+      },
+      {
+        "bytes": 9892,
+        "path": "reproducibility/h2oplus_v14_terminal_taper_results/branches_v1/h2oplus_v14_terminal_quarter_seed6204/summary.json",
+        "sha256": "d3ee3dd80e4a5035d4ae39acefc145907bfb2a6e94c1ab280bee56c7f0836631"
+      },
+      {
+        "bytes": 9893,
+        "path": "reproducibility/h2oplus_v14_terminal_taper_results/branches_v1/h2oplus_v14_terminal_quarter_seed6205/summary.json",
+        "sha256": "0d3ff7054d0df2dc040360e70e67fc5c0f252b1649163853e69e812222c23810"
+      }
+    ],
+    "new_training_runs": 0,
+    "ratio_classifier_training_joint_auc": {
+      "count": 5,
+      "mean": 0.947674560546875,
+      "q0": 0.9369659423828125,
+      "q01": 0.9371893310546875,
+      "q05": 0.9380828857421875,
+      "q100": 0.9580230712890625,
+      "q50": 0.9470672607421875,
+      "q95": 0.957171630859375,
+      "q99": 0.957852783203125
+    },
+    "ratio_classifier_validation_joint_auc": {
+      "count": 5,
+      "mean": 0.4519561767578125,
+      "q0": 0.436614990234375,
+      "q01": 0.4367291259765625,
+      "q05": 0.4371856689453125,
+      "q100": 0.47467041015625,
+      "q50": 0.4442596435546875,
+      "q95": 0.4726898193359375,
+      "q99": 0.4742742919921875
+    },
+    "ratio_classifier_validation_raw_ess_fraction": {
+      "count": 5,
+      "mean": 0.06149220447987318,
+      "q0": 0.010002708993852139,
+      "q01": 0.010507725775241852,
+      "q05": 0.012527792900800704,
+      "q100": 0.15299871563911438,
+      "q50": 0.04954978823661804,
+      "q95": 0.13685530871152876,
+      "q99": 0.14977003425359725
+    },
+    "ratio_weights_used_by_v14": "unit weights; ratio classifiers remained diagnostic",
+    "seeds": [
+      6201,
+      6202,
+      6203,
+      6204,
+      6205
+    ],
+    "status": "sealed-parent-training-complete"
+  },
+  "study_stage": "development",
+  "v17_incident_numeric_outcomes_inspected": false
+}

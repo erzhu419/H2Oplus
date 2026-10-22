@@ -1,0 +1,294 @@
+{
+  "actions": {
+    "exact_zero_rate": 0.4895367296868235,
+    "max_hold_seconds": 60.0,
+    "mean_hold_seconds": 4.77384186382847,
+    "p50_hold_seconds": 0.2499997615814209,
+    "p95_hold_seconds": 20.75
+  },
+  "contract": {
+    "discount_gamma_per_minute": 0.99,
+    "episode_seconds": 24000.0,
+    "in_vehicle_time_value": 1.0,
+    "max_base_dwell_seconds": 130.0,
+    "max_demand_capacity_ratio": 2.0,
+    "max_headway_ratio": 5.0,
+    "max_hold_seconds": 60.0,
+    "max_queue_capacity_ratio": 2.0,
+    "max_scheduled_headway_seconds": 720.0,
+    "nominal_bus_capacity": 50.0,
+    "reward_unit_passenger_seconds": 60.0,
+    "waiting_time_value": 2.0
+  },
+  "contract_schema": "transit-smdp-v4",
+  "created_utc": "2026-08-03T15:57:40.501249+00:00",
+  "episode": {
+    "configured_seconds": 24000,
+    "discarded_pending": 389,
+    "events": 13858,
+    "max_events": 0,
+    "observed_end_time_seconds": 24000.0,
+    "station_wraparounds": 0,
+    "transitions": 13469
+  },
+  "headway": {
+    "backward_ratio": {
+      "max": 2.3526666259765623,
+      "mean": 0.993237455615505,
+      "min": 0.2773333231608073,
+      "n": 13406,
+      "p50": 1.0,
+      "p90": 1.0886363636363636,
+      "p95": 1.1375,
+      "std": 0.09560168975463523
+    },
+    "bunching_rate": 0.0005970149253731343,
+    "forward_ratio": {
+      "max": 2.355333251953125,
+      "mean": 1.0037722237540405,
+      "min": 0.2773333231608073,
+      "n": 13400,
+      "p50": 0.9994444444444445,
+      "p90": 1.125,
+      "p95": 1.1790947145404238,
+      "std": 0.11438143880251307
+    },
+    "large_gap_rate": 0.0029850746268656717,
+    "normalized_absolute_error": {
+      "max": 1.355333251953125,
+      "mean": 0.0671463993955079,
+      "min": 0.0,
+      "n": 26806,
+      "p50": 0.04761904761904767,
+      "p90": 0.15605821962709782,
+      "p95": 0.1993332926432292,
+      "std": 0.08143537787733675
+    }
+  },
+  "job_signature": "8945dd5b4158a4e674ae1e7ce2b78362ce2aabde53e3a1183d780b34ddd5b2a4",
+  "objective": {
+    "cumulative_holding_cost": 18749.17578125,
+    "cumulative_total_cost": 19752.33984375,
+    "cumulative_waiting_cost": 1003.1627807617188,
+    "holding_cost": {
+      "max": 50.0,
+      "mean": 1.3920243187853205,
+      "min": 0.0,
+      "n": 13469,
+      "p50": 0.0,
+      "p90": 4.125,
+      "p95": 7.291665554046631,
+      "std": 3.6428448808244616
+    },
+    "total_cost": {
+      "max": 52.17166519165039,
+      "mean": 1.4665036975099632,
+      "min": 0.0,
+      "n": 13469,
+      "p50": 0.11100991815328598,
+      "p90": 4.267443084716803,
+      "p95": 7.402805137634275,
+      "std": 3.6976844956442414
+    },
+    "units": "generalized passenger-minutes",
+    "waiting_cost": {
+      "max": 13.485800743103027,
+      "mean": 0.07447937878020768,
+      "min": 0.0,
+      "n": 13469,
+      "p50": 0.01355555560439825,
+      "p90": 0.16217428147792837,
+      "p95": 0.2972639024257646,
+      "std": 0.28753224130575594
+    }
+  },
+  "passenger_welfare": {
+    "accrued_generalized_passenger_seconds": 36080867.0,
+    "accrued_generalized_seconds_per_departed_passenger": 2392.7891106837324,
+    "in_vehicle_time_value": 1.0,
+    "waiting_time_value": 2.0
+  },
+  "passengers": {
+    "accrued_in_vehicle_seconds_per_departed_passenger": 1138.0029842827773,
+    "accrued_in_vehicle_seconds_total": 17159947.0,
+    "accrued_wait_plus_in_vehicle_seconds_per_departed_passenger": 1765.396047483255,
+    "accrued_wait_plus_in_vehicle_seconds_total": 26620407.0,
+    "accrued_wait_seconds_per_departed_passenger": 627.3930632004775,
+    "accrued_wait_seconds_total": 9460460.0,
+    "completed_journey_seconds": {
+      "max": 7774.98,
+      "mean": 1650.8167407761032,
+      "min": 47.48999999999978,
+      "n": 14663,
+      "p50": 1468.3199999999997,
+      "p90": 3070.89,
+      "p95": 3520.647,
+      "std": 1051.0165230136283
+    },
+    "completed_leg_in_vehicle_seconds": {
+      "max": 4142.0,
+      "mean": 1143.5390510462482,
+      "min": 19.0,
+      "n": 15006,
+      "p50": 970.0,
+      "p90": 2362.0,
+      "p95": 2737.0,
+      "std": 816.5300610882935
+    },
+    "completed_leg_total_seconds": {
+      "max": 7757.0,
+      "mean": 1571.3392642942822,
+      "min": 47.0,
+      "n": 15006,
+      "p50": 1361.5,
+      "p90": 2982.5,
+      "p95": 3445.5,
+      "std": 1019.1733976686826
+    },
+    "completed_leg_wait_seconds": {
+      "max": 5590.0,
+      "mean": 427.80021324803414,
+      "min": 10.0,
+      "n": 15006,
+      "p50": 290.0,
+      "p90": 810.0,
+      "p95": 1370.0,
+      "std": 554.5881982571144
+    },
+    "completed_legs": 15006,
+    "completed_passengers": 14663,
+    "completion_rate": 0.9724119636580675,
+    "departed_passengers": 15079,
+    "invalid_leg_records": 0,
+    "ongoing_legs": 416,
+    "state_counts_at_horizon": {
+      "Stop": 416
+    },
+    "unfinished_passengers": 416
+  },
+  "policy": {
+    "gain": 0.5,
+    "hold_seconds": "clip(gain*((H_b-T_b)-(H_f-T_f))/2, 0, 60)",
+    "type": "schedule-adjusted-headway-balance"
+  },
+  "policy_name": "headway-gain-0.5",
+  "policy_seed": 20311913,
+  "raw_state_names": [
+    "line_id",
+    "station_index",
+    "sim_time_seconds",
+    "forward_headway_seconds",
+    "backward_headway_seconds",
+    "target_forward_headway_seconds",
+    "target_backward_headway_seconds",
+    "eligible_stranded_passengers",
+    "onboard_passengers",
+    "eligible_arrival_rate_per_second",
+    "base_dwell_seconds",
+    "forward_bus_present",
+    "backward_bus_present",
+    "bus_capacity"
+  ],
+  "runtime": {
+    "sumo_backend": "libsumo",
+    "sumo_version": "Eclipse SUMO sumo 1.27.1",
+    "wall_time_seconds": 705.984796744
+  },
+  "scenario": {
+    "created_utc": "2026-08-03T09:10:41.589722+00:00",
+    "demand_scale": 1.0,
+    "manifest": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/manifest.json",
+    "manifest_sha256": "3a87e327cabce2cf09dc9564a6c3bc06db46b0349d72efa044fb07d9ac7194eb",
+    "passenger_objects": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passenger_objects.add.xml",
+    "passenger_routes": [
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_direct.rou.xml",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_transfer.rou.xml"
+    ],
+    "runtime_input_sha256": {
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passenger_objects.add.xml": "2d21cfbecf043c3a66877256f3b368d51b2951509111c29a5a00551c28783223",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_direct.rou.xml": "8e0c532f26abbd110890be362421041a85edff4f3aba65a13e670b190d2fd7bc",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_transfer.rou.xml": "8c8b99f15a951ebc92d97ac5009e4c0eca5b9659f85d273c3cbf6a1d5c608d8b",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/scenario.sumocfg": "c7f2381c6689aa044e8da2e5eae7892685e563b0da2ac87fcd5de24d9c982582",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/b_network/3_bus_station.add.xml": "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/b_network/5g_changsha_bus_network_with_signal_d.net.xml": "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/c_social_vehicle_rou/5_design_social_vehicle.rou.xml": "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml": "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/d_bus_rou/2_bus_timetable.rou.xml": "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+    },
+    "scaled_person_counts": [
+      14211,
+      868
+    ],
+    "scaled_total_persons": 15079,
+    "scenario_sha256": {
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passenger_objects.add.xml": "2d21cfbecf043c3a66877256f3b368d51b2951509111c29a5a00551c28783223",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_direct.rou.xml": "8e0c532f26abbd110890be362421041a85edff4f3aba65a13e670b190d2fd7bc",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_transfer.rou.xml": "8c8b99f15a951ebc92d97ac5009e4c0eca5b9659f85d273c3cbf6a1d5c608d8b",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/scenario.sumocfg": "c7f2381c6689aa044e8da2e5eae7892685e563b0da2ac87fcd5de24d9c982582"
+    },
+    "schema_version": "transit-passenger-demand-v1",
+    "scope": "passengers only; social traffic and bus timetable are unchanged",
+    "selection_seed": 20260803,
+    "source_person_counts": [
+      14211,
+      868
+    ],
+    "source_sha256": {
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml": "ed15a19b482a2b8e31180ce42cce86f9daa496597de1e596dca9dc72146b859d",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml": "053498bc893e6d79da7efd5eaae96bdf747dcccf865eb5515983d9c8f05c50a0",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/control_sim_traci_period.sumocfg": "49b2b97e0e6ea41af100cfe5cc169f75f98eca5a7d6540a9b77e62c434c07023",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_passenger.add.xml": "405b6e0d8dd00fe5b03aecd4d67d58076bf33d0c68bc05b1a807ff4aa76fd3ef"
+    },
+    "source_total_persons": 15079,
+    "sumo_config": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/scenario.sumocfg"
+  },
+  "schema_version": "transit-smdp-v4-shard-v1",
+  "service": {
+    "active_trips_at_horizon": 0,
+    "completed_trip_duration_seconds": {
+      "max": 4352.0,
+      "mean": 2901.0925449871465,
+      "min": 1745.0,
+      "n": 389,
+      "p50": 3066.0,
+      "p90": 3734.2,
+      "p95": 3831.2,
+      "std": 707.5953519738531
+    },
+    "completed_trips": 389,
+    "completion_rate": 1.0,
+    "departed_trips": 389
+  },
+  "shard": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1110.npz",
+  "shard_sha256": "0e5ff591e7011f49ffee19a1051115803212c88254d0f1df2ea69cb2b46a582a",
+  "source_sha256": {
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/evaluation.py": "2419ebc3a56d95e0048f1a2b462ae4da3d5575ee295a8ef2e40de971769b573e",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/policies.py": "f1cf7a5dbdda7360ce17deb687f13591dd4457d1bd0436ac87b04a18c25767f6",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/common/data_utils.py": "ed1ec95396889cf5b0b589a8b8ccfdb4ab7b8b6d7d4f7d8dbaed22033b04c4b8",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/all_lines_sumo_env.py": "fcbaf16a9b08afb2e29f8af3c15b9fe3436f568b88e08e7dda9e9f08e031ccbc",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/sumo_gym_env.py": "986327641afc39ff95c8f14cc8b839d6b5ad2bd81c122a60d3d5d4bb7877ae16",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py": "162933ceb56003ad045b0d053e3bff040b65ad695cc62f65090eea7bad4c6839",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml": "7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/d_8_compute_running_time.py": "46ee8472607754ce7e99023f860ed5e5206b1803dfbc33292198e26e32afa709",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/e_8_gurobi_test_considerbusnum_V3.py": "973a6d099d1880c1d93acbdd9312d08633276f4dea554ed6701087a938b9897c",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py": "f4d5feefa32b5a2e787fcb01f33ba73e3dd77d49db729d5c60cfd57b77c66012",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py": "6c42129c9c014317d58a41ecc57759c4abc2dc88133a17514d171a27edcb2068",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_env.py": "3dbcda82e179bcc904b64d213816ea5ece681a0034564e17e87e00d03598bed5",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_provenance.py": "6237c36c226f22d7c51da416d67e4ecd428a66f3cc369ad6b38019e2ae29b151",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v4.py": "93653993801abd6e9054bc82c1f50e29ef471a99823dcd49f0275703aa2ec368",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml": "1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_lane.add.xml": "6d083e597fc8b19cfde874488a4c0921abee738ea3ea1ba1f154611f7f9ccc03",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_line.add.xml": "3436791192adf67e927873637a61718471dabe1afc03b1b679db4ba0327560aa",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_signal.add.xml": "4ee961a5d9263b9fc2c8e5ced272f7bb06c80636ffe15bf2b7fae0fa013a4240",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_stop.add.xml": "afd2d4099971465258e5acc86943ae34ef9191638b72665516b4888687c392b8",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/bus.py": "a088753355fb1a392a870add678346af0a709c0a5d7097e88ec37a801b43d29e",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/lane.py": "6320f73be0ef0efa8dafc7eaf7a8f951f04232210dda5d6b06681ccb264a8ab1",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/line.py": "1f4e8f15b8e225a8647326e163594d5b7fac286d39103a6ca3b124265359f0ff",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/passenger.py": "ea973ae4919dd30e0b1274dea5a128b3ee49d241313c9c65d15f01df91afaf06",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/signal.py": "f4257a80c31bc9fd6558ec432bd91d44a2a957fdaa7f1f753819a837cd6b9c1e",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/stop.py": "ec04c67bcc68a793dabc6553f68ac1012b9b77ddd1abb5152336b3c1da3033d8"
+  },
+  "split": "train",
+  "sumo_seed": 1110
+}

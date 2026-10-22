@@ -1,0 +1,64 @@
+{
+  "advance_gate": {
+    "completion_rate_noninferiority_margin": 0.005,
+    "mean_relative_improvement_at_least": 0.02,
+    "no_demand_scale_mean_relative_degradation_greater_than": 0.01,
+    "one_sided_paired_permutation_p_less_than": 0.05,
+    "training_seeds_with_lower_paired_mean_at_least": 4
+  },
+  "created_utc": "2026-08-13T22:25:43.553594+00:00",
+  "dataset": {
+    "bytes": 589504302,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5",
+    "sha256": "6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899"
+  },
+  "endpoint": {
+    "direction": "lower-is-better",
+    "name": "generalized_seconds_per_passenger",
+    "paired_unit": "training seed x development environment block"
+  },
+  "environment_design": {
+    "bytes": 11029,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_development_environment_stage_a_v1.json",
+    "sha256": "d4a40a900cf9f72043c1d7c2067d02d6c79f2081f856b38cb257ec2ad0d18f3c"
+  },
+  "execution_authorization": {
+    "bytes": 745,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_development_stage_a_execution_authorization_v1.json",
+    "sha256": "cebc1083ad6d94b6643f6343e862e022794e69c272d42d1e8be2cf0f911c5cf5"
+  },
+  "formal_held_out_outcomes_read": false,
+  "generator": {
+    "bytes": 27154,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/prepare_h2oplus_v8_development_stage_a.py",
+    "sha256": "68fb65fe0a942ec5d95a92ff13e99fffa2ab03fee120e2db76800d1df1e2ef46"
+  },
+  "matrix": {
+    "assignment": "sorted-portable-job-key-round-robin-v1 within each block",
+    "environment_cells": 15,
+    "jobs": 150,
+    "methods": 10,
+    "shard_count": 2,
+    "workers_per_host": 12
+  },
+  "methods_manifest": {
+    "bytes": 6690,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_policy_export_v1/evaluation_methods_v8_stage_a.json",
+    "sha256": "7fba8cc26f6854ac07963df69cf39451d92a6eed6cb0dfa9c52e13708f913a86"
+  },
+  "policy_export_manifest": {
+    "bytes": 13614,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_policy_export_v1/policy_export_manifest_v8_stage_a.json",
+    "sha256": "c6e5eb408629bfdc0c046bd025f64947ceaf66b337f47cc2abb4e07d749e7183"
+  },
+  "registration": {
+    "bytes": 9167,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_development_pilot_registration_v1.json",
+    "sha256": "d76dbde2d54b53c18b12770523f02a85221d0622839b3619c882362a2cc6a820"
+  },
+  "schema_version": "transit-h2oplus-v8-stage-a-freeze-v1",
+  "stage": "A-existing-policy-development-screen",
+  "stage_b_policy": "blocked unless every registered Stage A gate passes",
+  "status": "frozen-before-stage-A-outcomes",
+  "training": false
+}

@@ -1,0 +1,1233 @@
+{
+  "aggregate_speedup": null,
+  "aggregate_updates_per_second": null,
+  "benchmark_source_sha256": null,
+  "completed_utc": "2026-08-11T01:53:58.303546+00:00",
+  "created_utc": "2026-08-11T01:53:34.596684+00:00",
+  "critic_loss": "huber",
+  "cuda_visible_devices_for_workers": "0",
+  "dataset": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5",
+  "dataset_sha256": "6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899",
+  "decision": {
+    "checks": {
+      "all_worker_rates_available": false,
+      "all_workers_completed": false,
+      "identical_worker_source_hashes": false,
+      "minimum_aggregate_speedup": false,
+      "minimum_free_memory_headroom": true,
+      "minimum_worker_rate_fraction": false,
+      "no_unregistered_compute_process": true,
+      "registered_processes_overlapped": true,
+      "single_and_multi_process_source_hashes_match": false,
+      "stable_device_capacity": true
+    },
+    "expected_processes": 2,
+    "maximum_concurrent_registered_processes": 2,
+    "memory_total_bytes": 12884901888,
+    "minimum_free_memory_observed_bytes": 5993660416,
+    "minimum_free_memory_required_bytes": 1073741824,
+    "passed": false,
+    "peak_memory_used_bytes": 6891241472,
+    "policy": "admit the registered same-GPU process count only when every worker completes, all processes overlap, no external compute PID appears, and the full-data run retains the fixed memory headroom",
+    "successful_workers": 0,
+    "throughput": {
+      "aggregate_speedup": null,
+      "aggregate_updates_per_second": null,
+      "checks": {
+        "all_worker_rates_available": false,
+        "minimum_aggregate_speedup": false,
+        "minimum_worker_rate_fraction": false
+      },
+      "minimum_observed_worker_rate_fraction": null,
+      "passed": false,
+      "single_process_updates_per_second": 62.064337616353505,
+      "worker_updates_per_second": []
+    },
+    "throughput_policy": "admit concurrency only when aggregate update throughput reaches the registered single-process rate times 1.2 and every worker retains at least 0.55 of that reference rate",
+    "unexpected_compute_pids": []
+  },
+  "device_cache": "float32",
+  "gpu_identity": {
+    "driver_version": "535.309.01",
+    "memory_total_bytes": 12884901888,
+    "name": "NVIDIA GeForce RTX 3080 Ti",
+    "uuid": "GPU-844c419a-4a57-b9c6-4f8f-aebde336eb88"
+  },
+  "host_label": "jtl110gpu2",
+  "huber_delta": 1.0,
+  "max_offline_rows": 0,
+  "measured_updates": 5000,
+  "method": "rlpd",
+  "minimum_aggregate_speedup": 1.2,
+  "minimum_free_bytes": 1073741824,
+  "minimum_worker_rate_fraction": 0.55,
+  "observed_hostname": "erzhu419-Super-Server",
+  "online_rows": 120000,
+  "phase": "online",
+  "physical_gpu": "0",
+  "processes": 2,
+  "reward_scale": 0.0001,
+  "samples": [
+    {
+      "compute_pids": [],
+      "elapsed_seconds": 0.0,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 192937984,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 21.03
+    },
+    {
+      "compute_pids": [],
+      "compute_process_groups": {},
+      "elapsed_seconds": 0.1966191359970253,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 192937984,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 21.03,
+      "registered_compute_pids": [],
+      "registered_worker_process_groups": [],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [],
+      "compute_process_groups": {},
+      "elapsed_seconds": 0.7723480360000394,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 192937984,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 21.1,
+      "registered_compute_pids": [],
+      "registered_worker_process_groups": [],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [],
+      "compute_process_groups": {},
+      "elapsed_seconds": 1.3546825689991238,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 192937984,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 21.1,
+      "registered_compute_pids": [],
+      "registered_worker_process_groups": [],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [],
+      "compute_process_groups": {},
+      "elapsed_seconds": 1.9336506929976167,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 196083712,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 23.7,
+      "registered_compute_pids": [],
+      "registered_worker_process_groups": [],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [],
+      "compute_process_groups": {},
+      "elapsed_seconds": 2.513757237997197,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 196083712,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 25.18,
+      "registered_compute_pids": [],
+      "registered_worker_process_groups": [],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 3.1012971719974303,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 52.57,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 3.679542389996641,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 92.94,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 4.2640752519946545,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 92.94,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 4.846353039996757,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 98.99,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 5.427869186998578,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 98.99,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 6.008188549996703,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.14,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 6.597964959000819,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.14,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 7.17895743400004,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.18,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 7.759180869994452,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.28,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 8.341730195999844,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.28,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 8.922231600998202,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.36,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 9.506405946995073,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.36,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 10.087757335997594,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.41,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 10.667868316995737,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.4,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 11.251872704997368,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.4,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 11.83541213299759,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.37,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 12.41762374699465,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.37,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 13.00087294900004,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.52,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 13.58201733599708,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.52,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 14.163470545994642,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.57,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 14.745476436997706,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.73,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 15.327871741996205,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.73,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 15.909545843998785,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.94,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 16.492759447995923,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.94,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 17.0745892049963,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.95,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 17.652224290999584,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.96,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 18.2299866559988,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.92,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 18.814019207995443,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.92,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 19.394943488994613,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 99.72,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 19.979365702994983,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 98.8,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 20.55543331700028,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 98.8,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 21.132511489995522,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 62.13,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 21.710977659997297,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 62.13,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 22.289832041999034,
+      "gpu_utilization_percent": 0,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 722468864,
+      "memory_utilization_percent": 0,
+      "power_draw_watts": 23.77,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975,
+        1247976
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975,
+        "1247976": 1247976
+      },
+      "elapsed_seconds": 22.882831593997253,
+      "gpu_utilization_percent": 40,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 6741295104,
+      "memory_utilization_percent": 1,
+      "power_draw_watts": 24.92,
+      "registered_compute_pids": [
+        1247975,
+        1247976
+      ],
+      "registered_worker_process_groups": [
+        1247975,
+        1247976
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [
+        1247975
+      ],
+      "compute_process_groups": {
+        "1247975": 1247975
+      },
+      "elapsed_seconds": 23.465115473998594,
+      "gpu_utilization_percent": 54,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 6891241472,
+      "memory_utilization_percent": 2,
+      "power_draw_watts": 58.53,
+      "registered_compute_pids": [
+        1247975
+      ],
+      "registered_worker_process_groups": [
+        1247975
+      ],
+      "unregistered_compute_pids": []
+    },
+    {
+      "compute_pids": [],
+      "compute_process_groups": {},
+      "elapsed_seconds": 23.706065326994576,
+      "gpu_utilization_percent": 36,
+      "memory_total_bytes": 12884901888,
+      "memory_used_bytes": 192937984,
+      "memory_utilization_percent": 2,
+      "power_draw_watts": 70.68,
+      "registered_compute_pids": [],
+      "registered_worker_process_groups": [],
+      "unregistered_compute_pids": []
+    }
+  ],
+  "schema_version": "transit-v7-gpu-capacity-audit-v1",
+  "scientific_disclosure": "synthetic online rows exercise the registered update path; this audit does not produce policy-effectiveness evidence",
+  "single_process_reference": {
+    "benchmark_source_sha256": {
+      "SimpleSAC/train_transit_v3.py": "e259526c6b605a9f9e5644d44bb1426bd2397ea093c3ca2fa9f05281e586094b",
+      "SimpleSAC/transit_v3/domain_ratio.py": "bcc758635c0254461b3b725fdfc02597b1d7f5b144456969409798807ee44235",
+      "SimpleSAC/transit_v3/networks.py": "81def5e1652ec5d51d11b150040417dafabc5558b42d070284d5bbef4bde4753",
+      "SimpleSAC/transit_v3/protocols.py": "d9f83ef9570a0fec45d33de1016eafba2177dec9311e1333bea790b3db48b2e1",
+      "SimpleSAC/transit_v3/replay_buffer.py": "3c7fa81d3e614cf3cecb3424447b6b7f9e149373de52bc67e8bf01dca8627fe7",
+      "SimpleSAC/transit_v3/trainer.py": "eeaf077f8974ecd6b5ce49569f13a19b0bee07ab4e3a434fb34a7b80abacbf18",
+      "SimpleSAC/transit_v4/networks.py": "4441a8009f189a3c4bbe231c0991d9a4f9b9c82747a11937ea65a45b93c5172e",
+      "SimpleSAC/transit_v7/networks.py": "b3a0151d81840e248ff4e85e80debdde3a2e30fd82a689cf93bfe7eec9b8cb5b",
+      "SimpleSAC/transit_v7/replay_buffer.py": "ec0d96d1e8a0796d8ced6eb0aa162289a39ed00a6e0e24ae32feef7ea1ca7e29",
+      "SimpleSAC/transit_v7/sampler.py": "3bcd1ea6934e6457a16f071d978c8f674d89c944925b0f54c16ff1b2a998c708",
+      "SimpleSAC/transit_v7/trainer.py": "64d5a834911d91099a16b57bd1e8cd3b7aebdba40598d552ead25a1469c9b2e2",
+      "bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+      "bus_h2o/mdp_contract_v5.py": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a",
+      "bus_h2o/mdp_contract_v7.py": "459520496888ebf8b13eb456858fe0c6cab4e400e6af9fef22d07f738a6e2376",
+      "bus_h2o/passenger_time.py": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7",
+      "reproducibility/benchmark_training_kernel_v4.py": "b8b3345e5a225174f25c913d5d34034b07383d654534469919048c7852cdfca7"
+    },
+    "measured_updates": 5000,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/capacity_v7_formal_v2_v1/jtl110gpu2/single_process/result.json",
+    "runtime_host": {
+      "cc_environment": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+      "compiler": {
+        "configured": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+        "cpath": {
+          "entries": [
+            {
+              "crypt_h_sha256": "01023ab9ad67da6d459273369681d1a7279932f7b3f7cdd73a2967caac9651a7",
+              "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include"
+            }
+          ],
+          "value": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include"
+        },
+        "path": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc"
+      },
+      "cpath_environment": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+      "cpu_threads": 8,
+      "cuda_visible_devices": "0",
+      "device": "cuda:0",
+      "float32_matmul_precision": "high",
+      "gpu": "NVIDIA GeForce RTX 3080 Ti",
+      "libc": {
+        "name": "glibc",
+        "version": "2.39"
+      },
+      "nvidia_smi": "/usr/bin/nvidia-smi",
+      "platform": "Linux-6.17.0-40-generic-x86_64-with-glibc2.17",
+      "python_executable": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/python",
+      "torch_distribution_version": "2.4.1"
+    },
+    "sha256": "5b9de71eea90adc77ec8d613ac7d29809aff17aefb8a6273a14d900d3cd6f2a9",
+    "updates_per_second": 62.064337616353505,
+    "warmup_updates": 100
+  },
+  "source_sha256": {
+    "reproducibility/audit_gpu_capacity_v7.py": "80df56d92cf58c22e33d0597a36048aa573ff1ddfdfa745e0e2685124ac46115",
+    "reproducibility/benchmark_training_kernel_v4.py": "b8b3345e5a225174f25c913d5d34034b07383d654534469919048c7852cdfca7"
+  },
+  "study_stage": "performance-and-capacity-gate",
+  "target_entropy": 0.0,
+  "warmup_updates": 100,
+  "workers": [
+    {
+      "command": [
+        "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/python",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/benchmark_training_kernel_v4.py",
+        "--dataset",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5",
+        "--mdp-version",
+        "v7",
+        "--method",
+        "rlpd",
+        "--phase",
+        "online",
+        "--device",
+        "cuda:0",
+        "--seed",
+        "9501",
+        "--warmup-updates",
+        "100",
+        "--measured-updates",
+        "5000",
+        "--chunk-updates",
+        "100",
+        "--online-rows",
+        "120000",
+        "--cpu-threads",
+        "8",
+        "--max-offline-rows",
+        "0",
+        "--reward-scale",
+        "0.0001",
+        "--critic-loss",
+        "huber",
+        "--huber-delta",
+        "1.0",
+        "--target-entropy",
+        "0.0",
+        "--device-cache",
+        "float32",
+        "--compile-networks",
+        "--compile-mode",
+        "default",
+        "--max-canonical-processes-per-gpu",
+        "2",
+        "--output",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/capacity_v7_formal_v2_v1/jtl110gpu2/two_process_t8/worker_0.json"
+      ],
+      "log": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/capacity_v7_formal_v2_v1/jtl110gpu2/two_process_t8/worker_0.log",
+      "output": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/capacity_v7_formal_v2_v1/jtl110gpu2/two_process_t8/worker_0.json",
+      "pid": 1247975,
+      "report_validation_failures": [
+        "worker report is missing"
+      ],
+      "returncode": -15,
+      "seed": 9501,
+      "worker": 0
+    },
+    {
+      "command": [
+        "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/python",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/benchmark_training_kernel_v4.py",
+        "--dataset",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5",
+        "--mdp-version",
+        "v7",
+        "--method",
+        "rlpd",
+        "--phase",
+        "online",
+        "--device",
+        "cuda:0",
+        "--seed",
+        "9502",
+        "--warmup-updates",
+        "100",
+        "--measured-updates",
+        "5000",
+        "--chunk-updates",
+        "100",
+        "--online-rows",
+        "120000",
+        "--cpu-threads",
+        "8",
+        "--max-offline-rows",
+        "0",
+        "--reward-scale",
+        "0.0001",
+        "--critic-loss",
+        "huber",
+        "--huber-delta",
+        "1.0",
+        "--target-entropy",
+        "0.0",
+        "--device-cache",
+        "float32",
+        "--compile-networks",
+        "--compile-mode",
+        "default",
+        "--max-canonical-processes-per-gpu",
+        "2",
+        "--output",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/capacity_v7_formal_v2_v1/jtl110gpu2/two_process_t8/worker_1.json"
+      ],
+      "log": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/capacity_v7_formal_v2_v1/jtl110gpu2/two_process_t8/worker_1.log",
+      "output": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/capacity_v7_formal_v2_v1/jtl110gpu2/two_process_t8/worker_1.json",
+      "pid": 1247976,
+      "report_validation_failures": [
+        "worker report is missing"
+      ],
+      "returncode": 1,
+      "seed": 9502,
+      "worker": 1
+    }
+  ]
+}

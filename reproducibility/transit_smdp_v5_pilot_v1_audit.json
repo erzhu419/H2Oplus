@@ -1,0 +1,1015 @@
+{
+  "actions": {
+    "exact_max_hold_rate": 0.0003402559962386246,
+    "exact_no_hold_rate": 0.7431129093124973,
+    "hold_seconds": {
+      "finite": 161643,
+      "mean": 2.3038024801500048,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 60.0,
+        "25": 0.0,
+        "5": 0.0,
+        "50": 0.0,
+        "75": 0.09999990463256836,
+        "95": 16.14971675872801,
+        "99": 34.47696006774899
+      },
+      "std": 6.6108934571169025
+    }
+  },
+  "attributes": {
+    "action_dim": 1,
+    "action_semantics": "mixed measure: a=-1 is an exact zero-hold atom; -1<a<=1 maps linearly to (0,60] holding seconds; speed ratio is fixed at 1",
+    "build_provenance": "{\"builder\": {\"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/build_transit_v5_dataset.py\", \"sha256\": \"5065805232a8c1cfbe716f21c32448a65e16070cbb40618e789e7274629fb40f\"}, \"derivation_signature\": \"99159e77c46d1419beee5ba60fe5bd78a569d98f1d8d5430b971bc959177cd13\", \"mdp_contract\": {\"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py\", \"sha256\": \"712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a\"}, \"measurement_resolution_correction\": {\"fields\": {\"next_observations.backward_headway_seconds\": {\"corrected_values\": 3, \"minimum_source_seconds\": -0.5}, \"next_observations.forward_headway_seconds\": {\"corrected_values\": 2, \"minimum_source_seconds\": -0.5}, \"observations.backward_headway_seconds\": {\"corrected_values\": 3, \"minimum_source_seconds\": -0.5}, \"observations.forward_headway_seconds\": {\"corrected_values\": 2, \"minimum_source_seconds\": -0.5}}, \"rule\": \"negative headways within the SUMO one-second measurement resolution are simultaneous events and are mapped to zero; lower values fail\", \"tolerance_seconds\": 1.0, \"total_corrected_values\": 10}, \"passenger_time\": {\"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py\", \"sha256\": \"433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7\"}, \"runtime\": {\"h5py\": \"3.16.0\", \"numpy\": \"2.2.6\", \"python\": \"3.10.12\"}, \"source_shard_sha256\": [\"0a4c91163c4e16f9b7670d3210e34119c6c6c18e3ef1507572215b5f6cc4f17e\", \"97b38b9f0d69a910f3754c0a1065ee31ffa86e08aecbf1e5bfcaaec61eff7de8\", \"a1762852cc23f85bc97334337f77255650cd2a5a6a6b888543e456e8c7e6fff4\", \"b40f88d3ccd26524ac8f5aed5addf88efc1b80f246511cef5da1cd4e01d0c062\", \"5d43c604c1946efec0fd96b7ef018a2f57c7d7ba867e06c61e46020ffbf80acf\", \"c2b1869c7096ff616ba05ce7de4a08bd06c3e51afd948851a81428e190064ff4\", \"50cfe9730d3a3cc2cca45910fd6c74370ae0849ba030de33f42760c7718695ee\", \"6f5325035d0bb01e8217a36b0112e86e858ec0c45d0805f09c5d0e1a57ef0c21\", \"488b9a90a940f54bdafd8d86c4c8c0f36d9e34177015a2dab299d45070d42d16\", \"faca6d39203ffec0b22f723aaf5d5dff0ef1ce6e0b41e5de1ce00e18cf0aac16\", \"7a45b5f89602f768293c9ad2481a9298a4c8ffc29c97d0ab18b53eacd861fd69\", \"8bcefd3d781292db595c84b8f8975b08852b3cb8a978ce34b2553bccf0cb0788\"], \"transform_version\": \"transit-smdp-v5-derived-transform-v1\"}",
+    "collection_matrix": "{\"collector_sha256\": \"fb52479d1095048dcc604cf2b6733230ae0fa9fbfca35d53e9da8dcad9d2a136\", \"environment_design\": \"paired\", \"independent_environment_blocks\": 3, \"jobs\": 12, \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/matrix_manifest.json\", \"policies\": [\"headway-gain-0.1\", \"myopic-welfare-v2\", \"random-hurdle-p0.5-beta1-3\", \"zero\"], \"runner_sha256\": \"dabc4ec440e16b3a7e4b0dd66d128e882476e9cfabd02e62f6afef4bae945601\", \"sha256\": \"f99cc13dbd4ca1eaa05050f9175544184662d26c51f888b60f2c5403368a44d2\", \"source_sha256\": {\"/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/evaluation.py\": \"2419ebc3a56d95e0048f1a2b462ae4da3d5575ee295a8ef2e40de971769b573e\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/policies.py\": \"f1cf7a5dbdda7360ce17deb687f13591dd4457d1bd0436ac87b04a18c25767f6\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/common/data_utils.py\": \"ed1ec95396889cf5b0b589a8b8ccfdb4ab7b8b6d7d4f7d8dbaed22033b04c4b8\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/all_lines_sumo_env.py\": \"fcbaf16a9b08afb2e29f8af3c15b9fe3436f568b88e08e7dda9e9f08e031ccbc\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/sumo_gym_env.py\": \"53b855e4bf3e689c97549a4bdc83300ffbf146d389fa4175ac9a8a10ff8b8d6a\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py\": \"467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py\": \"712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml\": \"7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py\": \"433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/d_8_compute_running_time.py\": \"46ee8472607754ce7e99023f860ed5e5206b1803dfbc33292198e26e32afa709\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/e_8_gurobi_test_considerbusnum_V3.py\": \"973a6d099d1880c1d93acbdd9312d08633276f4dea554ed6701087a938b9897c\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py\": \"f4d5feefa32b5a2e787fcb01f33ba73e3dd77d49db729d5c60cfd57b77c66012\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py\": \"71962b6a10836b38421fc3d4eb25f6e7cc5b5cc828a71f3d746352fa93760ef9\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_env.py\": \"3dbcda82e179bcc904b64d213816ea5ece681a0034564e17e87e00d03598bed5\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_provenance.py\": \"a07e01652e6dcb029f40a5b8996b02ad0c6fc2b05bcab7178440eb315e197daa\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v5.py\": \"fb52479d1095048dcc604cf2b6733230ae0fa9fbfca35d53e9da8dcad9d2a136\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml\": \"1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_lane.add.xml\": \"6d083e597fc8b19cfde874488a4c0921abee738ea3ea1ba1f154611f7f9ccc03\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_line.add.xml\": \"3436791192adf67e927873637a61718471dabe1afc03b1b679db4ba0327560aa\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_signal.add.xml\": \"4ee961a5d9263b9fc2c8e5ced272f7bb06c80636ffe15bf2b7fae0fa013a4240\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_stop.add.xml\": \"afd2d4099971465258e5acc86943ae34ef9191638b72665516b4888687c392b8\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/__init__.py\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/bus.py\": \"a088753355fb1a392a870add678346af0a709c0a5d7097e88ec37a801b43d29e\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/lane.py\": \"6320f73be0ef0efa8dafc7eaf7a8f951f04232210dda5d6b06681ccb264a8ab1\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/line.py\": \"1f4e8f15b8e225a8647326e163594d5b7fac286d39103a6ca3b124265359f0ff\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/passenger.py\": \"ea973ae4919dd30e0b1274dea5a128b3ee49d241313c9c65d15f01df91afaf06\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/signal.py\": \"f4257a80c31bc9fd6558ec432bd91d44a2a957fdaa7f1f753819a837cd6b9c1e\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/stop.py\": \"ec04c67bcc68a793dabc6553f68ac1012b9b77ddd1abb5152336b3c1da3033d8\"}, \"study_stage\": \"pilot\", \"sumo_version\": \"Eclipse SUMO sumo 1.27.1\"}",
+    "config": "{\"discount_gamma_per_minute\": 0.99, \"episode_seconds\": 24000.0, \"in_vehicle_time_value\": 1.0, \"max_base_dwell_seconds\": 130.0, \"max_demand_capacity_ratio\": 2.0, \"max_headway_ratio\": 5.0, \"max_hold_seconds\": 60.0, \"max_queue_capacity_ratio\": 2.0, \"max_scheduled_headway_seconds\": 720.0, \"max_system_capacity_fraction\": 1.25, \"nominal_bus_capacity\": 50.0, \"nominal_system_capacity\": 20000.0, \"reward_unit_passenger_seconds\": 100000.0, \"waiting_time_value\": 2.0}",
+    "content_signature": "514d0233b79e090fbfb80db33857fdbf63191fdb263b58d72af07d7d20744891",
+    "created_utc": "2026-08-03T18:54:28.678642+00:00",
+    "derivation_signature": "99159e77c46d1419beee5ba60fe5bd78a569d98f1d8d5430b971bc959177cd13",
+    "discount_semantics": "nonterminal: 0.99 ** (delta_t_seconds / 60); terminal: 0",
+    "n_transitions": 161643,
+    "policy_names": "{\"headway-gain-0.1\": 0, \"myopic-welfare-v2\": 1, \"random-hurdle-p0.5-beta1-3\": 2, \"zero\": 3}",
+    "raw_state_dim": 16,
+    "raw_state_names": "[\"line_id\", \"station_index\", \"sim_time_seconds\", \"forward_headway_seconds\", \"backward_headway_seconds\", \"target_forward_headway_seconds\", \"target_backward_headway_seconds\", \"eligible_stranded_passengers\", \"onboard_passengers\", \"eligible_arrival_rate_per_second\", \"base_dwell_seconds\", \"forward_bus_present\", \"backward_bus_present\", \"bus_capacity\", \"system_waiting_passengers\", \"system_in_vehicle_passengers\"]",
+    "reward_aggregation_warning": "agent-centric time intervals overlap; row costs must not be summed to estimate episode passenger welfare",
+    "reward_semantics": "negative system-wide generalized passenger time accrued between successive decision epochs of the same bus, divided by 100000 passenger-seconds",
+    "scenario_manifest_hashes": "{\"019449e45e1d111aeec9a0944d7fb1dc8051ab52991d6922a4fe84ff6a1c4a67\": 0, \"300674b8ff6d91d3824b6d9434f93b40fc9866040d50f686cb6bca01c511fa35\": 1, \"3f61eaa824d7a73d41da8e6ecc8f79899a11a0e0657827dc3694036243772335\": 2}",
+    "schema_version": "transit-smdp-v5",
+    "source_shards": "[{\"job_signature\": \"bdc88571a9b81ac2c3b80ec87c2be20bf23722f5da221dad65e062e200050ce0\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/headway-gain-0.1/demand_1_jitter120s_seed1201/sumo_seed1101.npz\", \"sha256\": \"0a4c91163c4e16f9b7670d3210e34119c6c6c18e3ef1507572215b5f6cc4f17e\"}, {\"job_signature\": \"04cb417ab626d7a41a775efb13e61f8c44f76d60e383e7bd2f97bc3b8bf469c7\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/headway-gain-0.1/demand_1_jitter120s_seed1202/sumo_seed1102.npz\", \"sha256\": \"97b38b9f0d69a910f3754c0a1065ee31ffa86e08aecbf1e5bfcaaec61eff7de8\"}, {\"job_signature\": \"d86403a6866a850c0907f4f71180d68c787c9fc03fed890d76882473d715f37e\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/headway-gain-0.1/demand_1_jitter120s_seed1203/sumo_seed1103.npz\", \"sha256\": \"a1762852cc23f85bc97334337f77255650cd2a5a6a6b888543e456e8c7e6fff4\"}, {\"job_signature\": \"ee35ddbc600c55de561731b4e541d829c3034ccdd51016f8d49298144fbb19c6\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/myopic-welfare-v2/demand_1_jitter120s_seed1201/sumo_seed1101.npz\", \"sha256\": \"b40f88d3ccd26524ac8f5aed5addf88efc1b80f246511cef5da1cd4e01d0c062\"}, {\"job_signature\": \"a694d6da2af8be762f6689f7dc5e7be97adef74c5ec8bb08c1c444f5a05f16e4\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/myopic-welfare-v2/demand_1_jitter120s_seed1202/sumo_seed1102.npz\", \"sha256\": \"5d43c604c1946efec0fd96b7ef018a2f57c7d7ba867e06c61e46020ffbf80acf\"}, {\"job_signature\": \"73b0f93a708148673142ff6890e4a99440c641cdbe141fb547f415a95183dc81\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/myopic-welfare-v2/demand_1_jitter120s_seed1203/sumo_seed1103.npz\", \"sha256\": \"c2b1869c7096ff616ba05ce7de4a08bd06c3e51afd948851a81428e190064ff4\"}, {\"job_signature\": \"18219013e2bed74a04320d75b2c3ada1daabb52030ff16e2ea87cb41e80e521a\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/random-hurdle-p0.5-beta1-3/demand_1_jitter120s_seed1201/sumo_seed1101.npz\", \"sha256\": \"50cfe9730d3a3cc2cca45910fd6c74370ae0849ba030de33f42760c7718695ee\"}, {\"job_signature\": \"da1250290ee3771ebb123f03f2ccf4a44fdcc1950a15423972ad9d1def7263f9\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/random-hurdle-p0.5-beta1-3/demand_1_jitter120s_seed1202/sumo_seed1102.npz\", \"sha256\": \"6f5325035d0bb01e8217a36b0112e86e858ec0c45d0805f09c5d0e1a57ef0c21\"}, {\"job_signature\": \"5d8aee22770ed3eb012f70ad91677d10e7b2c902d7b6877d6e2d320f5f78a2e1\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/random-hurdle-p0.5-beta1-3/demand_1_jitter120s_seed1203/sumo_seed1103.npz\", \"sha256\": \"488b9a90a940f54bdafd8d86c4c8c0f36d9e34177015a2dab299d45070d42d16\"}, {\"job_signature\": \"5c3f97523c52951173f490faf1e8a584889056ef7b8c08c83d479126c4b31e61\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz\", \"sha256\": \"faca6d39203ffec0b22f723aaf5d5dff0ef1ce6e0b41e5de1ce00e18cf0aac16\"}, {\"job_signature\": \"2444f78ff46e49d4ce0675eb8b722fbacbc210181e1c7d65fd979eb6284b069c\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/zero/demand_1_jitter120s_seed1202/sumo_seed1102.npz\", \"sha256\": \"7a45b5f89602f768293c9ad2481a9298a4c8ffc29c97d0ab18b53eacd861fd69\"}, {\"job_signature\": \"488b839ba2d9a2f0b0ef347e4968610f261e96b49532f26e19a66ba94493866c\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/zero/demand_1_jitter120s_seed1203/sumo_seed1103.npz\", \"sha256\": \"8bcefd3d781292db595c84b8f8975b08852b3cb8a978ce34b2553bccf0cb0788\"}]",
+    "split_names": "{\"test\": 2, \"train\": 0, \"validation\": 1}",
+    "state_dim": 15,
+    "state_names": "[\"line_id\", \"station_progress\", \"episode_progress\", \"forward_headway_ratio\", \"backward_headway_ratio\", \"target_forward_headway_fraction\", \"target_backward_headway_fraction\", \"eligible_stranded_fraction\", \"onboard_fraction\", \"eligible_demand_per_headway_fraction\", \"base_dwell_fraction\", \"forward_bus_present\", \"backward_bus_present\", \"system_waiting_fraction\", \"system_in_vehicle_fraction\"]",
+    "station_max_by_line": "[39.0, 37.0, 34.0, 35.0, 41.0, 42.0, 38.0, 39.0, 46.0, 47.0, 25.0, 24.0]",
+    "transition_semantics": "same bus at its next downstream decision; terminal rows end at the route terminal or fixed evaluation horizon"
+  },
+  "by_policy": {
+    "headway-gain-0.1": {
+      "episodes": 3,
+      "exact_no_hold_rate": 0.4898286673579223,
+      "hold_seconds": {
+        "finite": 40506,
+        "mean": 1.4972325497831245,
+        "n": 40506,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 21.309999465942383,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.04999995231628418,
+          "75": 2.2699995040893555,
+          "95": 6.400001049041748,
+          "99": 10.714752864837632
+        },
+        "std": 2.4175339876308573
+      },
+      "in_vehicle_passenger_seconds": {
+        "finite": 40506,
+        "mean": 78496.27909445514,
+        "n": 40506,
+        "percentiles": {
+          "0": 0.0,
+          "1": 307.1,
+          "100": 16366821.0,
+          "25": 35755.25,
+          "5": 4259.25,
+          "50": 64539.5,
+          "75": 95430.5,
+          "95": 164200.25,
+          "99": 275391.9999999996
+        },
+        "std": 282406.120338376
+      },
+      "reward": {
+        "finite": 40506,
+        "mean": -1.5350916548165703,
+        "n": 40506,
+        "percentiles": {
+          "0": -356.15859,
+          "1": -5.4280595,
+          "100": -0.0004,
+          "25": -1.8618024999999998,
+          "5": -3.31285,
+          "50": -1.1999749999999998,
+          "75": -0.6314125,
+          "95": -0.13577,
+          "99": -0.07040100000000006
+        },
+        "std": 6.360033410195356
+      },
+      "rows": 40506,
+      "wait_passenger_seconds": {
+        "finite": 40506,
+        "mean": 37506.44319360095,
+        "n": 40506,
+        "percentiles": {
+          "0": 20.0,
+          "1": 2430.0,
+          "100": 9624519.0,
+          "25": 12975.25,
+          "5": 4546.5,
+          "50": 27071.0,
+          "75": 45384.0,
+          "95": 86219.0,
+          "99": 140820.6499999992
+        },
+        "std": 177665.79438314194
+      }
+    },
+    "myopic-welfare-v2": {
+      "episodes": 3,
+      "exact_no_hold_rate": 0.9842948797344497,
+      "hold_seconds": {
+        "finite": 40369,
+        "mean": 0.25199534464911266,
+        "n": 40369,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 60.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 0.0,
+          "95": 0.0,
+          "99": 3.0000007152557373
+        },
+        "std": 3.0643791694684994
+      },
+      "in_vehicle_passenger_seconds": {
+        "finite": 40369,
+        "mean": 78614.66982090217,
+        "n": 40369,
+        "percentiles": {
+          "0": 0.0,
+          "1": 330.68,
+          "100": 16214140.0,
+          "25": 34277.0,
+          "5": 4247.200000000001,
+          "50": 62307.0,
+          "75": 92869.0,
+          "95": 162237.8,
+          "99": 283375.12
+        },
+        "std": 309832.489238207
+      },
+      "reward": {
+        "finite": 40369,
+        "mean": -1.5611277108672497,
+        "n": 40369,
+        "percentiles": {
+          "0": -354.09875999999997,
+          "1": -5.5371776,
+          "100": -0.0004,
+          "25": -1.82694,
+          "5": -3.309788,
+          "50": -1.16892,
+          "75": -0.61127,
+          "95": -0.13655200000000003,
+          "99": -0.07055680000000002
+        },
+        "std": 7.158932624366708
+      },
+      "rows": 40369,
+      "wait_passenger_seconds": {
+        "finite": 40369,
+        "mean": 38749.05063291139,
+        "n": 40369,
+        "percentiles": {
+          "0": 20.0,
+          "1": 2361.0,
+          "100": 9611032.0,
+          "25": 12845.0,
+          "5": 4568.8,
+          "50": 26613.0,
+          "75": 44875.0,
+          "95": 86113.0,
+          "99": 146039.59999999998
+        },
+        "std": 204282.84580125575
+      }
+    },
+    "random-hurdle-p0.5-beta1-3": {
+      "episodes": 3,
+      "exact_no_hold_rate": 0.4999010929231987,
+      "hold_seconds": {
+        "finite": 40442,
+        "mean": 7.456946802067949,
+        "n": 40442,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 57.51179122924805,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0032088160514831543,
+          "75": 12.268038988113403,
+          "95": 31.98876104354856,
+          "99": 43.60800949096675
+        },
+        "std": 11.079363764934504
+      },
+      "in_vehicle_passenger_seconds": {
+        "finite": 40442,
+        "mean": 91428.65931457396,
+        "n": 40442,
+        "percentiles": {
+          "0": 0.0,
+          "1": 441.41,
+          "100": 17013548.0,
+          "25": 42497.0,
+          "5": 5040.1,
+          "50": 73126.0,
+          "75": 108972.0,
+          "95": 187401.0,
+          "99": 303686.1099999995
+        },
+        "std": 355244.7384960885
+      },
+      "reward": {
+        "finite": 40442,
+        "mean": -1.7295676054596707,
+        "n": 40442,
+        "percentiles": {
+          "0": -352.92962,
+          "1": -5.698366699999999,
+          "100": -0.0004,
+          "25": -2.0383424999999997,
+          "5": -3.5708935,
+          "50": -1.325555,
+          "75": -0.727125,
+          "95": -0.16762450000000026,
+          "99": -0.08184100000000034
+        },
+        "std": 7.639042220721733
+      },
+      "rows": 40442,
+      "wait_passenger_seconds": {
+        "finite": 40442,
+        "mean": 40764.05061569656,
+        "n": 40442,
+        "percentiles": {
+          "0": 20.0,
+          "1": 2919.05,
+          "100": 9139707.0,
+          "25": 14812.0,
+          "5": 5485.0,
+          "50": 28634.0,
+          "75": 47228.5,
+          "95": 88861.1999999999,
+          "99": 143170.79999999958
+        },
+        "std": 205143.03749448736
+      }
+    },
+    "zero": {
+      "episodes": 3,
+      "exact_no_hold_rate": 1.0,
+      "hold_seconds": {
+        "finite": 40326,
+        "mean": 0.0,
+        "n": 40326,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 0.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "std": 0.0
+      },
+      "in_vehicle_passenger_seconds": {
+        "finite": 40326,
+        "mean": 77860.1273867976,
+        "n": 40326,
+        "percentiles": {
+          "0": 0.0,
+          "1": 304.5,
+          "100": 15350867.0,
+          "25": 33904.0,
+          "5": 4141.25,
+          "50": 62162.0,
+          "75": 92815.25,
+          "95": 162580.5,
+          "99": 277806.75
+        },
+        "std": 291107.6815911552
+      },
+      "reward": {
+        "finite": 40326,
+        "mean": -1.5520138067251896,
+        "n": 40326,
+        "percentiles": {
+          "0": -339.87467000000004,
+          "1": -5.49442,
+          "100": -0.0004,
+          "25": -1.8310825,
+          "5": -3.3285625000000003,
+          "50": -1.17011,
+          "75": -0.609285,
+          "95": -0.13243249999999998,
+          "99": -0.0695925
+        },
+        "std": 6.840950562369972
+      },
+      "rows": 40326,
+      "wait_passenger_seconds": {
+        "finite": 40326,
+        "mean": 38670.62664286068,
+        "n": 40326,
+        "percentiles": {
+          "0": 20.0,
+          "1": 2353.0,
+          "100": 9318300.0,
+          "25": 12729.25,
+          "5": 4464.0,
+          "50": 26680.5,
+          "75": 45113.5,
+          "95": 87078.5,
+          "99": 144202.0
+        },
+        "std": 197847.84414570776
+      }
+    }
+  },
+  "dataset": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/transit_smdp_v5_pilot_v1.h5",
+  "dataset_sha256": "2d1962a43ea16656070520283ed0bfec61f53ce9c4fe9d31f621ad9fbb2bae17",
+  "datasets": {
+    "actions": {
+      "dtype": "float32",
+      "shape": [
+        161643,
+        1
+      ]
+    },
+    "delta_t_seconds": {
+      "dtype": "float32",
+      "shape": [
+        161643
+      ]
+    },
+    "demand_scale": {
+      "dtype": "float32",
+      "shape": [
+        161643
+      ]
+    },
+    "discounts": {
+      "dtype": "float32",
+      "shape": [
+        161643
+      ]
+    },
+    "episode_id": {
+      "dtype": "int64",
+      "shape": [
+        161643
+      ]
+    },
+    "in_vehicle_cost": {
+      "dtype": "float64",
+      "shape": [
+        161643
+      ]
+    },
+    "in_vehicle_passenger_seconds": {
+      "dtype": "float64",
+      "shape": [
+        161643
+      ]
+    },
+    "next_observations": {
+      "dtype": "float32",
+      "shape": [
+        161643,
+        15
+      ]
+    },
+    "observations": {
+      "dtype": "float32",
+      "shape": [
+        161643,
+        15
+      ]
+    },
+    "policy_id": {
+      "dtype": "int8",
+      "shape": [
+        161643
+      ]
+    },
+    "policy_seed": {
+      "dtype": "int32",
+      "shape": [
+        161643
+      ]
+    },
+    "raw_next_observations": {
+      "dtype": "float32",
+      "shape": [
+        161643,
+        16
+      ]
+    },
+    "raw_observations": {
+      "dtype": "float32",
+      "shape": [
+        161643,
+        16
+      ]
+    },
+    "rewards": {
+      "dtype": "float64",
+      "shape": [
+        161643
+      ]
+    },
+    "scenario_id": {
+      "dtype": "int16",
+      "shape": [
+        161643
+      ]
+    },
+    "source_shard_id": {
+      "dtype": "int16",
+      "shape": [
+        161643
+      ]
+    },
+    "split_id": {
+      "dtype": "uint8",
+      "shape": [
+        161643
+      ]
+    },
+    "sumo_seed": {
+      "dtype": "int32",
+      "shape": [
+        161643
+      ]
+    },
+    "terminals": {
+      "dtype": "uint8",
+      "shape": [
+        161643
+      ]
+    },
+    "trajectory_id": {
+      "dtype": "int64",
+      "shape": [
+        161643
+      ]
+    },
+    "wait_passenger_seconds": {
+      "dtype": "float64",
+      "shape": [
+        161643
+      ]
+    },
+    "waiting_cost": {
+      "dtype": "float64",
+      "shape": [
+        161643
+      ]
+    }
+  },
+  "delta_t_seconds": {
+    "finite": 161643,
+    "mean": 88.0880829977172,
+    "n": 161643,
+    "percentiles": {
+      "0": 26.0,
+      "1": 32.0,
+      "100": 20307.0,
+      "25": 51.0,
+      "5": 40.0,
+      "50": 68.0,
+      "75": 93.0,
+      "95": 158.0,
+      "99": 270.0
+    },
+    "std": 360.8350675742533
+  },
+  "disclosures": [
+    "Agent-centric reward intervals overlap across buses; transition rewards must not be summed to estimate episode passenger welfare.",
+    "The dataset is training-only; selection and testing require disjoint demand realizations and SUMO seeds."
+  ],
+  "episodes": 12,
+  "errors": [],
+  "in_vehicle_passenger_seconds": {
+    "finite": 161643,
+    "mean": 81602.73704397964,
+    "n": 161643,
+    "percentiles": {
+      "0": 0.0,
+      "1": 350.0,
+      "100": 17013548.0,
+      "25": 36450.0,
+      "5": 4365.0,
+      "50": 65212.0,
+      "75": 97775.0,
+      "95": 170306.9,
+      "99": 287831.15999999613
+    },
+    "std": 310978.1975821498
+  },
+  "logical_content_signature": "514d0233b79e090fbfb80db33857fdbf63191fdb263b58d72af07d7d20744891",
+  "logical_content_signature_matches": true,
+  "matrix": {
+    "policies": 4,
+    "scenarios": 3,
+    "splits": [
+      0
+    ],
+    "sumo_seeds": [
+      1101,
+      1102,
+      1103
+    ]
+  },
+  "passed": true,
+  "reconstruction_max_absolute_error": {
+    "delta_t_seconds": 0.0,
+    "discounts": 0.0,
+    "in_vehicle_cost": 0.0,
+    "next_observations": 0.0,
+    "observations": 0.0,
+    "reward_identity": 0.0,
+    "waiting_cost": 0.0
+  },
+  "rewards": {
+    "finite": 161643,
+    "mean": -1.5944721948986347,
+    "n": 161643,
+    "percentiles": {
+      "0": -356.15859,
+      "1": -5.545051,
+      "100": -0.0004,
+      "25": -1.890745,
+      "5": -3.390233,
+      "50": -1.21315,
+      "75": -0.64485,
+      "95": -0.1427,
+      "99": -0.07268840000000026
+    },
+    "std": 7.01548277611249
+  },
+  "rows": 161643,
+  "schema_version": "transit-smdp-v5-audit-v1",
+  "source_integrity": {
+    "all_ledger_errors_within_tolerance": true,
+    "content_mismatches": [],
+    "declared_shards": 12,
+    "duplicate_matrix_cells": 0,
+    "episode_welfare_by_policy": {
+      "headway-gain-0.1": {
+        "finite": 3,
+        "mean": 2384.394610606362,
+        "n": 3,
+        "percentiles": {
+          "0": 2363.3795344518867,
+          "1": 2363.999628622588,
+          "100": 2395.420054380264,
+          "25": 2378.881888719411,
+          "5": 2366.4800053053914,
+          "50": 2394.3842429869355,
+          "75": 2394.9021486836,
+          "95": 2395.316473240931,
+          "99": 2395.3993381523974
+        },
+        "std": 14.865918418638817
+      },
+      "myopic-welfare-v2": {
+        "finite": 3,
+        "mean": 2376.30187678228,
+        "n": 3,
+        "percentiles": {
+          "0": 2358.4071888056237,
+          "1": 2358.87123549307,
+          "100": 2388.888918363287,
+          "25": 2370.0083559917766,
+          "5": 2360.727422242854,
+          "50": 2381.6095231779295,
+          "75": 2385.249220770608,
+          "95": 2388.1609788447513,
+          "99": 2388.7433304595797
+        },
+        "std": 12.997750879865508
+      },
+      "random-hurdle-p0.5-beta1-3": {
+        "finite": 3,
+        "mean": 2408.063664699251,
+        "n": 3,
+        "percentiles": {
+          "0": 2385.907818820877,
+          "1": 2386.5259128589432,
+          "100": 2421.470654552689,
+          "25": 2401.3601697725317,
+          "5": 2388.998289011208,
+          "50": 2416.812520724186,
+          "75": 2419.1415876384376,
+          "95": 2421.004841169839,
+          "99": 2421.377491876119
+        },
+        "std": 15.781543706299304
+      },
+      "zero": {
+        "finite": 3,
+        "mean": 2385.506687004001,
+        "n": 3,
+        "percentiles": {
+          "0": 2380.385967239207,
+          "1": 2380.4115246369124,
+          "100": 2394.470256648319,
+          "25": 2381.024902181842,
+          "5": 2380.513754227734,
+          "50": 2381.6638371244776,
+          "75": 2388.067046886398,
+          "95": 2393.189614695935,
+          "99": 2394.214128257842
+        },
+        "std": 6.359634341549376
+      }
+    },
+    "hash_mismatches": [],
+    "ledger_errors": [
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/headway-gain-0.1/demand_1_jitter120s_seed1201/sumo_seed1101.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/headway-gain-0.1/demand_1_jitter120s_seed1202/sumo_seed1102.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/headway-gain-0.1/demand_1_jitter120s_seed1203/sumo_seed1103.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/myopic-welfare-v2/demand_1_jitter120s_seed1201/sumo_seed1101.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/myopic-welfare-v2/demand_1_jitter120s_seed1202/sumo_seed1102.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/myopic-welfare-v2/demand_1_jitter120s_seed1203/sumo_seed1103.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/random-hurdle-p0.5-beta1-3/demand_1_jitter120s_seed1201/sumo_seed1101.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/random-hurdle-p0.5-beta1-3/demand_1_jitter120s_seed1202/sumo_seed1102.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/random-hurdle-p0.5-beta1-3/demand_1_jitter120s_seed1203/sumo_seed1103.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/zero/demand_1_jitter120s_seed1202/sumo_seed1102.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      },
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v5/shards_pilot_v1/zero/demand_1_jitter120s_seed1203/sumo_seed1103.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      }
+    ],
+    "metadata_mismatches": [],
+    "missing": [],
+    "unique_matrix_cells": 12,
+    "verified": true
+  },
+  "state": {
+    "backward_bus_present": {
+      "exact_zero_rate": 0.03262745680295466,
+      "finite": 161643,
+      "mean": 0.9673725431970454,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 1.0,
+        "25": 1.0,
+        "5": 1.0,
+        "50": 1.0,
+        "75": 1.0,
+        "95": 1.0,
+        "99": 1.0
+      },
+      "std": 0.17765952230467688
+    },
+    "backward_headway_ratio": {
+      "exact_zero_rate": 0.001101192133281367,
+      "finite": 161643,
+      "mean": 0.9864934277120736,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.3566666543483734,
+        "100": 3.922222137451172,
+        "25": 0.9403029680252075,
+        "5": 0.6783333420753479,
+        "50": 1.0,
+        "75": 1.0425000190734863,
+        "95": 1.2473334074020386,
+        "99": 1.4926666021347046
+      },
+      "std": 0.1810311755112153
+    },
+    "base_dwell_fraction": {
+      "exact_zero_rate": 0.0,
+      "finite": 161643,
+      "mean": 0.043405810668893055,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.03076923079788685,
+        "1": 0.03076923079788685,
+        "100": 0.22692307829856873,
+        "25": 0.03076923079788685,
+        "5": 0.03076923079788685,
+        "50": 0.03999999910593033,
+        "75": 0.04923076927661896,
+        "95": 0.07692307978868484,
+        "99": 0.10000000149011612
+      },
+      "std": 0.01688803711099697
+    },
+    "eligible_demand_per_headway_fraction": {
+      "exact_zero_rate": 0.15044264211874317,
+      "finite": 161643,
+      "mean": 0.022709750405648498,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.2368333488702774,
+        "25": 0.004000000189989805,
+        "5": 0.0,
+        "50": 0.014372608624398708,
+        "75": 0.03333333507180214,
+        "95": 0.07256578654050827,
+        "99": 0.10400000214576721
+      },
+      "std": 0.02477177428681657
+    },
+    "eligible_stranded_fraction": {
+      "exact_zero_rate": 0.8661927828609961,
+      "finite": 161643,
+      "mean": 0.00821885257012343,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.6000000238418579,
+        "25": 0.0,
+        "5": 0.0,
+        "50": 0.0,
+        "75": 0.0,
+        "95": 0.03999999910593033,
+        "99": 0.1599999964237213
+      },
+      "std": 0.03351672995604079
+    },
+    "episode_progress": {
+      "exact_zero_rate": 0.0,
+      "finite": 161643,
+      "mean": 0.439874570267159,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0006249999860301614,
+        "1": 0.07604166865348816,
+        "100": 0.9114583134651184,
+        "25": 0.26741665601730347,
+        "5": 0.13587500154972076,
+        "50": 0.42404165863990784,
+        "75": 0.612458348274231,
+        "95": 0.7740833163261414,
+        "99": 0.8320833444595337
+      },
+      "std": 0.20503303980105916
+    },
+    "forward_bus_present": {
+      "exact_zero_rate": 0.032936780435898864,
+      "finite": 161643,
+      "mean": 0.9670632195641011,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 1.0,
+        "25": 1.0,
+        "5": 1.0,
+        "50": 1.0,
+        "75": 1.0,
+        "95": 1.0,
+        "99": 1.0
+      },
+      "std": 0.17847114313080492
+    },
+    "forward_headway_ratio": {
+      "exact_zero_rate": 0.0009403438441503807,
+      "finite": 161643,
+      "mean": 0.9978914663205111,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.30180666685104374,
+        "100": 3.922222137451172,
+        "25": 0.9061111211776733,
+        "5": 0.6347619295120239,
+        "50": 1.0,
+        "75": 1.0909091234207153,
+        "95": 1.3250000476837158,
+        "99": 1.5476818156242356
+      },
+      "std": 0.21930051422830613
+    },
+    "line_id": {
+      "exact_zero_rate": 0.09774008153770965,
+      "finite": 161643,
+      "mean": 5.45121038337571,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 11.0,
+        "25": 2.0,
+        "5": 0.0,
+        "50": 5.0,
+        "75": 9.0,
+        "95": 11.0,
+        "99": 11.0
+      },
+      "std": 3.529431001941966
+    },
+    "onboard_fraction": {
+      "exact_zero_rate": 0.06204413429594848,
+      "finite": 161643,
+      "mean": 0.30777750999248626,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 1.0,
+        "25": 0.07999999821186066,
+        "5": 0.0,
+        "50": 0.2199999988079071,
+        "75": 0.46000000834465027,
+        "95": 0.9800000190734863,
+        "99": 1.0
+      },
+      "std": 0.28964752468019694
+    },
+    "station_progress": {
+      "exact_zero_rate": 0.028080399398674856,
+      "finite": 161643,
+      "mean": 0.48520538724242523,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.978723406791687,
+        "25": 0.23529411852359772,
+        "5": 0.03999999910593033,
+        "50": 0.48571428656578064,
+        "75": 0.739130437374115,
+        "95": 0.936170220375061,
+        "99": 0.9743589758872986
+      },
+      "std": 0.28995273510940733
+    },
+    "system_in_vehicle_fraction": {
+      "at_configured_cap": 0,
+      "exact_zero_rate": 0.0012187351138001645,
+      "finite": 161643,
+      "mean": 0.04604262450584699,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0002500000118743628,
+        "100": 0.07490000128746033,
+        "25": 0.03009999915957451,
+        "5": 0.003650000086054206,
+        "50": 0.05575000122189522,
+        "75": 0.06440000236034393,
+        "95": 0.06904999911785126,
+        "99": 0.07249999791383743
+      },
+      "std": 0.021568367404967273
+    },
+    "system_waiting_fraction": {
+      "at_configured_cap": 0,
+      "exact_zero_rate": 0.000148475343813218,
+      "finite": 161643,
+      "mean": 0.021212218626540037,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.002400000113993883,
+        "100": 0.05139999836683273,
+        "25": 0.008550000376999378,
+        "5": 0.0038499999791383743,
+        "50": 0.02085000090301037,
+        "75": 0.029600000008940697,
+        "95": 0.04625000059604645,
+        "99": 0.04895000159740448
+      },
+      "std": 0.012802804562354666
+    },
+    "target_backward_headway_fraction": {
+      "exact_zero_rate": 0.0,
+      "finite": 161643,
+      "mean": 0.7435413210916483,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.25,
+        "1": 0.25,
+        "100": 2.5,
+        "25": 0.5,
+        "5": 0.4166666567325592,
+        "50": 0.6666666865348816,
+        "75": 0.9166666865348816,
+        "95": 1.25,
+        "99": 1.5833333730697632
+      },
+      "std": 0.28868473933980343
+    },
+    "target_forward_headway_fraction": {
+      "exact_zero_rate": 0.0,
+      "finite": 161643,
+      "mean": 0.7434124362887758,
+      "n": 161643,
+      "percentiles": {
+        "0": 0.25,
+        "1": 0.25,
+        "100": 2.5,
+        "25": 0.5,
+        "5": 0.4166666567325592,
+        "50": 0.6666666865348816,
+        "75": 0.9166666865348816,
+        "95": 1.25,
+        "99": 1.5833333730697632
+      },
+      "std": 0.2892098039064399
+    }
+  },
+  "trajectories": 4668,
+  "trajectory_group_conflicts": 0,
+  "trajectory_terminal_count_errors": 0,
+  "wait_passenger_seconds": {
+    "finite": 161643,
+    "mean": 38922.24122294191,
+    "n": 161643,
+    "percentiles": {
+      "0": 20.0,
+      "1": 2471.42,
+      "100": 9624519.0,
+      "25": 13356.0,
+      "5": 4758.200000000001,
+      "50": 27257.0,
+      "75": 45653.0,
+      "95": 87032.9,
+      "99": 143309.3199999993
+    },
+    "std": 196539.61742414313
+  }
+}

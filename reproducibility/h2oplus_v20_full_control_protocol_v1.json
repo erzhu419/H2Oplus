@@ -1,0 +1,148 @@
+{
+  "analysis": {
+    "aulc_claim_forbidden": true,
+    "candidate": "h2oplus-v19-completion-safety-quarter-load-sixty",
+    "candidate_replacement_forbidden": true,
+    "comparison_controls": [
+      "h2oplus-v14-terminal-quarter",
+      "h2oplus",
+      "sac-online",
+      "h2oplus-v10-delayed-actor",
+      "h2oplus-v11-actor-hold",
+      "h2oplus-v12-actor-ramp",
+      "h2oplus-v13-proximal-strong"
+    ],
+    "direct_behavior_parent": "h2oplus-v19-completion-safety-baseline",
+    "endpoint_only": true,
+    "formal_confirmation_submission_authorized": false,
+    "passing_creates_formal_confirmation_eligibility_only": true,
+    "sac_robustness_control": "sac-online"
+  },
+  "analysis_gates": {
+    "all_405_results_valid": true,
+    "all_three_135_job_matrix_manifests_complete": true,
+    "candidate_completion_noninferiority_margin_per_control": 0.003,
+    "candidate_mean_completion_gain_over_direct_parent_at_least": 0.003,
+    "candidate_mean_primary_increase_over_direct_parent_at_most_seconds": 3.0,
+    "candidate_mean_primary_lower_than_every_comparison_control": true,
+    "candidate_positive_completion_gain_demand_scale_count_at_least": 3,
+    "candidate_positive_completion_gain_training_seed_count_at_least": 4,
+    "candidate_primary_demand_scale_degradation_vs_sac_at_most_fraction": 0.01,
+    "candidate_primary_seed_wins_per_comparison_control_at_least": 4,
+    "parent_artifact_integrity_passed": true,
+    "parent_training_stability_passed": true
+  },
+  "authorization": {
+    "bytes": 1106,
+    "path": "reproducibility/h2oplus_v20_full_control_authorization_v1.json",
+    "sha256": "ab535766ffad546c07e4291bfd2f0519d7cfa0e83f4cb3f4022c369d4cb19a06"
+  },
+  "created_utc": "2026-08-26T00:24:36.185146+00:00",
+  "data_environment_evidence": {
+    "data_environment_audit": {
+      "bytes": 17446,
+      "path": "reproducibility/h2oplus_v17_data_environment_convergence_audit_v1.json",
+      "sha256": "ff5210e82913c456314ba1e47a1f3400e0e5bdb58fce2f14d8e9bc1cdd0c95e9"
+    },
+    "data_environment_verification": {
+      "bytes": 955,
+      "path": "reproducibility/h2oplus_v17_data_environment_convergence_verification_v1.json",
+      "sha256": "925fa9ace1af907bd50042718ba9d7492a892a8e8a2a863b567091540af62390"
+    }
+  },
+  "environment": {
+    "bytes": 10017,
+    "path": "reproducibility/h2oplus_v20_full_control_environment_v1.json",
+    "sha256": "7210826548c94aaa8fbbbb73b62eec5450fec131f2ae3dd1d1dbc93922dff2ba"
+  },
+  "evaluation": {
+    "cpu_cores": 12,
+    "demand_realization_seeds": [
+      7601,
+      7602,
+      7603
+    ],
+    "demand_scales": [
+      0.85,
+      1.0,
+      1.15
+    ],
+    "development_blocks": [
+      "v20-full-control-development-01",
+      "v20-full-control-development-02",
+      "v20-full-control-development-03"
+    ],
+    "gpu_count": 0,
+    "host": "jtl110gpu",
+    "jobs_per_block": 135,
+    "new_remote_sumo_episodes": 405,
+    "physical_methods": 45,
+    "ram_mb": 32768,
+    "sumo_seeds": [
+      7501,
+      7502,
+      7503
+    ],
+    "training_seeds": [
+      6201,
+      6202,
+      6203,
+      6204,
+      6205
+    ],
+    "workers": 12
+  },
+  "formal_held_out_outcomes_read": false,
+  "matrix_type": "full-development-control-matrix",
+  "parent_v19_closeout": {
+    "bytes": 12617,
+    "path": "reproducibility/h2oplus_v19_completion_safety_results/evaluation_closeout_v2.json",
+    "sha256": "3e95e4cf964983257fd3fabc5cab2987e1a249b5b9a25d3ae455f081932b3f74"
+  },
+  "parent_v19_evidence": {
+    "v19_analysis": {
+      "bytes": 64173,
+      "path": "reproducibility/h2oplus_v19_completion_safety_results/completion_safety_analysis_v2.json",
+      "sha256": "78a2fc88b81d3f171af5812c36bcf3e7b5cdab5d8660f4a8f1f151d00565565f"
+    },
+    "v19_audit": {
+      "bytes": 62536,
+      "path": "reproducibility/h2oplus_v19_completion_safety_results/evaluation_audit_v2.json",
+      "sha256": "267370a31bed2bc8053842dc28e9223ae76c517ef3877603b3c9c81588b8636b"
+    },
+    "v19_closeout": {
+      "bytes": 12617,
+      "path": "reproducibility/h2oplus_v19_completion_safety_results/evaluation_closeout_v2.json",
+      "sha256": "3e95e4cf964983257fd3fabc5cab2987e1a249b5b9a25d3ae455f081932b3f74"
+    },
+    "v19_closeout_verification": {
+      "bytes": 1690,
+      "path": "reproducibility/h2oplus_v19_completion_safety_results/evaluation_closeout_verification_v2.json",
+      "sha256": "ec44263eebc8ba61049973f34aadf5154d0b07f5ccc096d3659662002b95f9ab"
+    },
+    "v19_manifest_verification": {
+      "bytes": 985,
+      "path": "reproducibility/h2oplus_v19_completion_safety_results/evaluation_file_manifest_verification_v2.json",
+      "sha256": "867a110f72010f51e35f55d237ecd1b58a35a8ed6bedc1d326960775d3abb70e"
+    },
+    "v19_methods": {
+      "bytes": 71089,
+      "path": "reproducibility/h2oplus_v19_completion_safety_evaluation_methods_v1.json",
+      "sha256": "6d63b7dccf261859db7040d52b93482e17c8360d6db53b902de3f3f569729bb8"
+    }
+  },
+  "rationale": {
+    "bytes": 4077,
+    "path": "reproducibility/h2oplus_v20_full_control_rationale_v1.json",
+    "sha256": "e93a4114760e8755d27dcd7042ca666f4aefdf17e03d3bb55990068cf552998c"
+  },
+  "registration": {
+    "bytes": 2125,
+    "path": "reproducibility/h2oplus_v20_full_control_registration_v1.json",
+    "sha256": "f930a3612720097d4f5e5b635501405245f04ffd54445f389a23800d06f7f7d8"
+  },
+  "schema_version": "transit-h2oplus-v20-full-control-protocol-v1",
+  "status": "frozen-before-any-v20-development-outcome",
+  "study_stage": "development",
+  "v20_development_evaluation_outcomes_read": false
+}

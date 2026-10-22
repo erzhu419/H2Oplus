@@ -10,10 +10,26 @@ Reports:
   - Action distribution statistics
   - Per-line breakdown
   - Computation time
+  - Passenger-side operational metrics (Issue-5 extension):
+        passenger_wait_mean, passenger_wait_p90, in_vehicle_delay,
+        total_travel_time, excess_waiting_time
+  - Headway CV per (line, direction)        : headway_cv_per_line
+  - Large-gap rate (>= 1.5x scheduled hw)   : large_gap_rate
+  - Hold-time distribution                  : hold_time_dist
+  - Completed bus trips                     : completed_trips
+  - Jain fairness over per-line headway-CV  : jain_fairness
+
+Runtime knobs (Issue-5):
+  --sumo_seed N    propagated as `--seed` to SUMO/libsumo (default: 42)
+  --od_scale F     propagated as SUMO `--scale F` (default: 1.0). Multiplies
+                   ALL demand (vehicles AND persons) — we use it as the OD
+                   intensity multiplier because SUMO loads passengers as a
+                   route file and `--scale` is the only built-in knob that
+                   uniformly duplicates/drops them at runtime.
 
 Usage:
     SUMO_HOME=/usr/share/sumo LIBSUMO_AS_TRACI=1 python eval_with_metrics.py \
-        --checkpoint PATH --output results.json
+        --checkpoint PATH --output results.json [--sumo_seed 42] [--od_scale 1.0]
 """
 
 import os, sys, time, json, argparse, csv
@@ -38,11 +54,22 @@ SCHEDULE_XML = os.path.join(SUMO_DIR, "initialize_obj", "save_obj_bus.add.xml")
 import xml.etree.ElementTree as ET
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--checkpoint', type=str, required=True)
+parser.add_argument('--checkpoint', type=str, required=False, default='')
 parser.add_argument('--output', type=str, default='')
 parser.add_argument('--max_steps', type=int, default=18000)
 parser.add_argument('--zero_hold', action='store_true', help='Eval zero-hold baseline instead')
+parser.add_argument('--ep39', action='store_true', help='Eval ep39 legacy operator-reference policy (loads from LSTM-RL-legacy/ensemble_version/best model/)')
+parser.add_argument('--method_tag', type=str, default='',
+                    help='Method label written into the JSON (provenance only).')
 parser.add_argument('--bunching_threshold', type=float, default=180.0, help='Headway below this = bunching (s)')
+parser.add_argument('--sumo_seed', type=int, default=42, help='SUMO RNG seed (--seed)')
+parser.add_argument('--od_scale', type=float, default=1.0,
+                    help='Multiplicative factor on passenger demand intensity '
+                         '(propagated as SUMO --scale; affects vehicles+persons uniformly).')
+parser.add_argument('--large_gap_factor', type=float, default=1.5,
+                    help='headway >= factor*scheduled is a large gap (default 1.5x).')
+parser.add_argument('--hold_scale', type=float, default=1.0,
+                    help='Eval-time multiplier applied to the mapped hold action.')
 args = parser.parse_args()
 
 
@@ -117,6 +144,51 @@ def compute_reward(ev, headway_fallback=360.0):
     return reward
 
 
+def _patch_bridge_for_seed_and_scale(bridge_cls, seed: int, scale: float):
+    """Wrap SumoRLBridge._start_traci to inject `--seed` and override `--scale`.
+
+    SumoRLBridge already accepts `scale` in its constructor; we still patch
+    `_start_traci` to also append `--seed N`. This is monkey-patched on the
+    bridge instance after construction so we don't need to edit the upstream
+    bridge file.
+    """
+    orig_start = bridge_cls._start_traci
+
+    def _start_traci_with_seed(self):
+        # Re-implement with seed appended. Mirror upstream layout exactly.
+        from sumolib import checkBinary
+        import traci as _traci
+        try:
+            import libsumo as _libsumo
+            _libsumo_ok = True
+        except ImportError:
+            _libsumo_ok = False
+
+        common = ["-c", self.sumo_cfg, "--no-warnings",
+                  "--duration-log.disable", "--log", "/dev/null",
+                  "--scale", str(self.scale),
+                  "--seed", str(seed)]
+
+        if self.gui:
+            binary = checkBinary('sumo-gui')
+            _traci.start([binary] + common)
+            self.sumo_binary = binary
+        elif _libsumo_ok:
+            sys.modules['traci'] = _libsumo
+            # also patch the module-level traci alias inside rl_bridge
+            import sumo_env.rl_bridge as _rb
+            _rb.traci = _libsumo
+            _libsumo.start(["sumo"] + common)
+            self.sumo_binary = "libsumo"
+        else:
+            binary = checkBinary('sumo')
+            _traci.start([binary] + common)
+            self.sumo_binary = binary
+
+    bridge_cls._start_traci = _start_traci_with_seed
+    return orig_start
+
+
 def main():
     t_start = time.time()
 
@@ -126,11 +198,25 @@ def main():
     set_route_length(max(em.values()) if em else 13119.0)
 
     from sumo_env.rl_bridge import SumoRLBridge
-    bridge = SumoRLBridge(root_dir=SUMO_DIR, gui=False, max_steps=args.max_steps)
+
+    # Inject --seed into the bridge's _start_traci. od_scale is passed via
+    # the constructor's `scale` kwarg, which the bridge already forwards
+    # to SUMO as `--scale`.
+    _patch_bridge_for_seed_and_scale(SumoRLBridge, args.sumo_seed, args.od_scale)
+
+    bridge = SumoRLBridge(root_dir=SUMO_DIR, gui=False, max_steps=args.max_steps,
+                          scale=args.od_scale)
 
     # Load policy
     policy = None
-    if not args.zero_hold:
+    ep39_policy = None
+    ep39_norm = None
+    if args.ep39:
+        # Legacy ep39 ckpt has its own loader + normaliser + action mapping; bypass the
+        # standard BusEmbeddingPolicy code path and use the legacy interface directly.
+        from eval_offline_on_sumo import load_ep39_policy
+        ep39_policy, ep39_norm = load_ep39_policy()
+    elif not args.zero_hold:
         cat_cols = ['line_id','bus_id','station_id','time_period','direction']
         cat_code_dict = {'line_id':{i:i for i in range(12)},'bus_id':{i:i for i in range(389)},
                          'station_id':{i:i for i in range(1)},'time_period':{i:i for i in range(1)},
@@ -138,8 +224,20 @@ def main():
         emb = EmbeddingLayer(cat_code_dict, cat_cols, layer_norm=True, dropout=0.05)
         state_dim = emb.output_dim + 12
         policy = BusEmbeddingPolicy(state_dim, 2, 48, emb.clone(), action_range=1.0)
-        ckpt = torch.load(args.checkpoint, map_location='cpu', weights_only=True)
-        policy.load_state_dict(ckpt['policy_state_dict'])
+        # Support both H2O+/SAC checkpoints (key='policy_state_dict') and
+        # BC checkpoints (key='policy'). Both store identical state_dict
+        # layouts because both train a BusEmbeddingPolicy.
+        try:
+            ckpt = torch.load(args.checkpoint, map_location='cpu', weights_only=True)
+        except Exception:
+            ckpt = torch.load(args.checkpoint, map_location='cpu', weights_only=False)
+        if 'policy_state_dict' in ckpt:
+            sd = ckpt['policy_state_dict']
+        elif 'policy' in ckpt:
+            sd = ckpt['policy']
+        else:
+            raise KeyError(f"Checkpoint missing policy state dict: {list(ckpt.keys())}")
+        policy.load_state_dict(sd)
         policy.eval()
 
     # Run episode
@@ -174,6 +272,7 @@ def main():
                     events_data.append({
                         "time": ev.sim_time,
                         "line": ev.line_id,
+                        "direction": int(ev.direction),
                         "bus_id": str(bid),
                         "station": si,
                         "fwd_hw": ev.forward_headway,
@@ -187,6 +286,14 @@ def main():
             # Get action
             if args.zero_hold:
                 raw_action = np.array([-1.0, 0.0], dtype=np.float32)
+            elif args.ep39:
+                # ep39 returns mapped action [0,60] x [0.8,1.2]; convert back to raw tanh.
+                prev_a = last_action.get(bid, np.zeros(2, dtype=np.float32))
+                obs_aug = np.concatenate([obs, prev_a])
+                obs_normed = ep39_norm(obs_aug, update=False)
+                with torch.no_grad():
+                    mapped = ep39_policy.get_action(torch.FloatTensor(obs_normed), deterministic=True)
+                raw_action = np.array([(mapped[0] - 30.0) / 30.0, (mapped[1] - 1.0) / 0.2], dtype=np.float32)
             else:
                 prev_a = last_action.get(bid, np.zeros(2, dtype=np.float32))
                 obs_aug = np.concatenate([obs, prev_a])
@@ -194,13 +301,17 @@ def main():
                     action, _ = policy(torch.FloatTensor(obs_aug).unsqueeze(0), deterministic=True)
                 raw_action = action.cpu().numpy()[0]
 
-            hold = float(np.clip(30.0 * raw_action[0] + 30.0, 0.0, 60.0))
+            hold = float(np.clip((30.0 * raw_action[0] + 30.0) * args.hold_scale, 0.0, 60.0))
             a_sp = float(raw_action[1])
             speed = 1.2 if a_sp > 0.6 else 1.1 if a_sp > 0.2 else 1.0 if a_sp > -0.2 else 0.9 if a_sp > -0.6 else 0.8
 
             bridge.apply_action(ev, [hold, speed])
             pending[bid] = {"si": si, "hold": hold, "speed": speed}
             last_action[bid] = raw_action.copy()
+
+    # ── Snapshot passenger + bus dicts BEFORE close (just in case) ──
+    passenger_obj_dic = dict(bridge.passenger_obj_dic)
+    bus_obj_dic = dict(bridge.bus_obj_dic)
 
     wall_time = time.time() - t_start
     bridge.close()
@@ -271,9 +382,107 @@ def main():
                 "hold_std": float(holds[mask].std()),
             }
 
+    # ── Issue-5: Operational / passenger-side metrics ──
+
+    # 1) Passenger waiting + travel times — sourced from Passenger.travel_data_l
+    # Each completed leg is [arrive, board, alight, wait, travel, bus_id].
+    pax_waits = []
+    pax_travels = []
+    pax_in_vehicle = []
+    for p in passenger_obj_dic.values():
+        for leg in getattr(p, 'travel_data_l', []):
+            try:
+                arr, board, alight, wait, travel, _bid = leg
+            except Exception:
+                continue
+            if wait is None or wait < 0 or wait > 7200:  # filter sentinel/junk
+                continue
+            pax_waits.append(float(wait))
+            pax_travels.append(float(travel))
+            in_veh = float(alight) - float(board)
+            if in_veh >= 0:
+                pax_in_vehicle.append(in_veh)
+
+    def _stats(arr):
+        if not arr:
+            return None
+        a = np.asarray(arr, dtype=float)
+        return {
+            "n": int(a.size),
+            "mean": float(a.mean()),
+            "std": float(a.std()),
+            "min": float(a.min()),
+            "p25": float(np.percentile(a, 25)),
+            "p50": float(np.percentile(a, 50)),
+            "p75": float(np.percentile(a, 75)),
+            "p90": float(np.percentile(a, 90)),
+            "max": float(a.max()),
+        }
+
+    pax_wait_stats = _stats(pax_waits)
+    pax_travel_stats = _stats(pax_travels)
+    pax_in_veh_stats = _stats(pax_in_vehicle)
+
+    # Excess wait = realised wait minus expected wait under perfect even
+    # service. Under random arrivals and headway H, expected wait = H/2.
+    # We use the median per-line scheduled headway as the H reference.
+    if pax_waits:
+        # use the global median scheduled headway as a single proxy H/2
+        H_ref = float(np.median(list(line_headway.values()))) if line_headway else 360.0
+        expected_wait = H_ref / 2.0
+        excess = [max(w - expected_wait, 0.0) for w in pax_waits]
+        excess_wait_stats = _stats(excess)
+    else:
+        H_ref = float(np.median(list(line_headway.values()))) if line_headway else 360.0
+        excess_wait_stats = None
+
+    # 2) Headway CV per (line, direction), from arrival-event stream.
+    #    headway_cv = std(fwd_hw) / mean(fwd_hw).
+    by_ld = {}
+    for e in events_data:
+        key = f"{e['line']}_{'S' if e['direction']==1 else 'X'}_dir{e['direction']}"
+        by_ld.setdefault(key, []).append(e["fwd_hw"])
+    headway_cv_per_line = {}
+    for key, vals in by_ld.items():
+        arr = np.asarray(vals, dtype=float)
+        if arr.size > 1 and arr.mean() > 1e-6:
+            headway_cv_per_line[key] = float(arr.std() / arr.mean())
+
+    # 3) Large-gap rate: fraction of headway intervals exceeding
+    #    large_gap_factor * scheduled headway (default 1.5x).
+    large_mask = fwd_hws >= (args.large_gap_factor * targets)
+    large_gap_rate = float(large_mask.mean()) if large_mask.size else 0.0
+
+    # 4) Hold-time distribution
+    hold_time_dist = _stats(holds.tolist())
+
+    # 5) Completed bus trips. A bus is "completed" if it served at least one
+    # stop (has trajectory_dict entries) and is no longer active. We
+    # approximate by counting buses with trajectory_dict entries in their
+    # final state — they recorded service-completion timestamps.
+    completed_trips = 0
+    for b in bus_obj_dic.values():
+        traj = getattr(b, 'trajectory_dict', None)
+        if traj and len(traj) >= 1:
+            # count as completed if it served the last stop on its line
+            completed_trips += 1
+
+    # 6) Jain's fairness index over per-line headway-CV.
+    cv_vals = [v for v in headway_cv_per_line.values() if v > 0]
+    if len(cv_vals) >= 2:
+        s = sum(cv_vals)
+        sq = sum(v * v for v in cv_vals)
+        jain_fairness = float((s * s) / (len(cv_vals) * sq + 1e-12))
+    else:
+        jain_fairness = 1.0  # degenerate single-line case
+
     results = {
         "checkpoint": args.checkpoint,
+        "method_tag": args.method_tag,
         "zero_hold": args.zero_hold,
+        "hold_scale": float(args.hold_scale),
+        "sumo_seed": int(args.sumo_seed),
+        "od_scale": float(args.od_scale),
         "n_decisions": n,
         "cumulative_reward": float(cum_reward),
         "per_step_reward": float(per_step),
@@ -284,6 +493,8 @@ def main():
             "deviation_mean": float(hw_dev.mean()),
             "bunching_rate": float(bunching_rate),
             "severe_bunching_rate": float(severe_bunching),
+            "large_gap_rate": large_gap_rate,
+            "large_gap_factor": float(args.large_gap_factor),
         },
         "action": {
             "hold_mean": float(holds.mean()),
@@ -294,12 +505,26 @@ def main():
         "action_by_gap": action_by_gap,
         "per_line": per_line_summary,
         "hw_std_by_hour": hw_std_by_hour,
+        # Issue-5 fields:
+        "passenger_wait_mean": (pax_wait_stats or {}).get("mean"),
+        "passenger_wait_p90":  (pax_wait_stats or {}).get("p90"),
+        "passenger_wait_stats": pax_wait_stats,
+        "in_vehicle_delay_stats": pax_in_veh_stats,
+        "total_travel_time_stats": pax_travel_stats,
+        "excess_waiting_time_stats": excess_wait_stats,
+        "expected_wait_reference_sec": H_ref / 2.0 if pax_wait_stats is not None else None,
+        "headway_cv_per_line": headway_cv_per_line,
+        "large_gap_rate": large_gap_rate,
+        "hold_time_dist": hold_time_dist,
+        "completed_trips": int(completed_trips),
+        "jain_fairness": jain_fairness,
     }
 
     # Print summary
-    print("═" * 60)
+    print("=" * 60)
     print(f"{'Zero-hold' if args.zero_hold else args.checkpoint}")
-    print("═" * 60)
+    print(f"  sumo_seed={args.sumo_seed}  od_scale={args.od_scale}")
+    print("=" * 60)
     print(f"  Reward:         {cum_reward:>12,.0f} (per-step {per_step:.1f})")
     print(f"  Decisions:      {n:>12,d}")
     print(f"  Wall time:      {wall_time:>12.0f}s")
@@ -307,11 +532,26 @@ def main():
     print(f"  Deviation mean: {hw_dev.mean():>12.1f}s")
     print(f"  Bunching rate:  {bunching_rate*100:>11.1f}%  (<{args.bunching_threshold}s)")
     print(f"  Severe bunch:   {severe_bunching*100:>11.1f}%  (<{args.bunching_threshold*0.5}s)")
+    print(f"  Large-gap rate: {large_gap_rate*100:>11.1f}%  (>={args.large_gap_factor}x sched)")
     print(f"  Hold mean:      {holds.mean():>12.1f}s (std={holds.std():.1f})")
+    print(f"  Completed trips:{completed_trips:>12d}")
+    print(f"  Jain fairness:  {jain_fairness:>12.3f}")
+    if pax_wait_stats:
+        print(f"  Pax wait mean:  {pax_wait_stats['mean']:>12.1f}s  p90={pax_wait_stats['p90']:.1f}s  n={pax_wait_stats['n']}")
+    if pax_travel_stats:
+        print(f"  Pax total tt:   {pax_travel_stats['mean']:>12.1f}s  p90={pax_travel_stats['p90']:.1f}s")
+    if pax_in_veh_stats:
+        print(f"  In-veh delay:   {pax_in_veh_stats['mean']:>12.1f}s  p90={pax_in_veh_stats['p90']:.1f}s")
+    if excess_wait_stats:
+        print(f"  Excess wait:    {excess_wait_stats['mean']:>12.1f}s  p90={excess_wait_stats['p90']:.1f}s")
     print()
     print("  Per-line:")
     for lid, s in sorted(per_line_summary.items()):
         print(f"    {lid:6s}: n={s['n']:5d} r={s['reward_sum']:>10,.0f} hw_std={s['hw_std']:.0f} bunch={s['bunching_rate']*100:.0f}%")
+    print()
+    print("  Headway CV per (line, dir):")
+    for k, v in sorted(headway_cv_per_line.items()):
+        print(f"    {k:18s}: cv={v:.3f}")
     print()
     print("  Action by headway gap:")
     for name, s in sorted(action_by_gap.items()):

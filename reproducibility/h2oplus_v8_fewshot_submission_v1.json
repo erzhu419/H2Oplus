@@ -1,0 +1,128 @@
+{
+  "schema_version": "transit-h2oplus-v8-fewshot-submission-v1",
+  "submitted_utc": "2026-08-14T11:40:28Z",
+  "study_stage": "development",
+  "status": "submitted-training-only",
+  "formal_held_out_outcomes_read": false,
+  "local_training_or_sumo_run": false,
+  "formal_confirmation_stage_authorized_or_submitted": false,
+  "registration_sha256": "fb632f92998d82cfb87b2cd1a534058925d4e410be17ecea9070b7a50db7c115",
+  "authorization_sha256": "0bc8b342cf7618c3a0d0b6f0beff15ee021ca26dbaf78cca8005eaeffdcc5e3c",
+  "environment_design_sha256": "4ca7ac74ea9a4f327b03f88a1f7d8a32591852905fdf01142454737fa2dc71cd",
+  "training_plan_sha256": "4781130658c809473d5c200b91504f88c4a7ce54c87d5a6242e9b2dbe1861a39",
+  "protocol_sha256": "26d4f5c4ca9f337c11886855658127ef93a35954ca58eb43710aa70350610294",
+  "freeze_sha256": "2fb2b581591bb382cabe045eaebb5c1236825e818a26443339d33b1b9342b204",
+  "launcher_manifest_sha256": "19a48e8b1a0ed6670f36c4830c024bd0e4aadbc7fb568b2f7621ee426e9c5486",
+  "launcher_aggregate_sha256": "a0052ec477be1d698b933cac798eab4142051e9671a6318b7fb6eee735a21e7a",
+  "frozen_v7_training_deployment_manifest_sha256": "db1bc95b9763a202cb3398abc550aa62b49d7c548eac034021c1ba21697f89cd",
+  "scheduler_contract": {
+    "scheduler_root": "/home/erzhu419/mine_code/scheduleurm",
+    "project": "h2oplus-v8-development",
+    "resource_family": "h2oplus-v8-fewshot-worker-v1",
+    "cpu_cores_per_task": 6,
+    "ram_mb_per_task": 32768,
+    "vram_mb_per_task": 8192,
+    "resume_flag": "--resume",
+    "resume_checkpoint_glob": "latest.pt",
+    "duplicate_override_used": false,
+    "skip_launch_staging_after_two_host_hash_verification": true
+  },
+  "pre_submission_incidents": [
+    {
+      "kind": "scheduler-static-resume-contract-refusal",
+      "task_created": false,
+      "reason": "The bounded source scanner did not recognize a from-package import as delegation to the frozen v7 trainer.",
+      "resolution": "Changed the semantically equivalent import form so the scanner verifies start_epoch, model, optimizer, replay, RNG and total-update restoration; no gate was bypassed.",
+      "allow_no_resume_used": false
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "t82338",
+      "run_name": "h2oplus_seed6201",
+      "method": "h2oplus",
+      "seed": 6201,
+      "require_node": "jtl110gpu",
+      "run_signature": "f962e74285e9ea83d5cfcc8d857cb431a1164d8731414a262600e84b468f766f"
+    },
+    {
+      "task_id": "t82339",
+      "run_name": "h2oplus_seed6202",
+      "method": "h2oplus",
+      "seed": 6202,
+      "require_node": "jtl110gpu2",
+      "run_signature": "1e5b5ea7bd6562d2f14b6c4fbb45809ec0d06bd1c089528da01f0671b1c9bf6e"
+    },
+    {
+      "task_id": "t82340",
+      "run_name": "h2oplus_seed6203",
+      "method": "h2oplus",
+      "seed": 6203,
+      "require_node": "jtl110gpu",
+      "run_signature": "fd1ed039123ce63925d891d33b82c2465d8455e243353f0c25325e435dbc52e7"
+    },
+    {
+      "task_id": "t82341",
+      "run_name": "h2oplus_seed6204",
+      "method": "h2oplus",
+      "seed": 6204,
+      "require_node": "jtl110gpu2",
+      "run_signature": "99fc464d5b2d996ad53f98b0eb1fa83878b8eda807efa94f3366e63e0b9a5c3b"
+    },
+    {
+      "task_id": "t82342",
+      "run_name": "h2oplus_seed6205",
+      "method": "h2oplus",
+      "seed": 6205,
+      "require_node": "jtl110gpu",
+      "run_signature": "71bb3727ef9f5b09682d70acce85bbfc08ae297a24c1435dbb8aad85dcffd7bd"
+    },
+    {
+      "task_id": "t82343",
+      "run_name": "sac-online_seed6201",
+      "method": "sac-online",
+      "seed": 6201,
+      "require_node": "jtl110gpu",
+      "run_signature": "e741eb9ac78d191ce1c22c60feeddcf10bd6c72668bda7380fe2aca31fec93da"
+    },
+    {
+      "task_id": "t82344",
+      "run_name": "sac-online_seed6202",
+      "method": "sac-online",
+      "seed": 6202,
+      "require_node": "jtl110gpu2",
+      "run_signature": "19073e9bc2b44bed25891a4824c0958c62f96ea537681e515e0f489bcb4ae5f4"
+    },
+    {
+      "task_id": "t82345",
+      "run_name": "sac-online_seed6203",
+      "method": "sac-online",
+      "seed": 6203,
+      "require_node": "jtl110gpu",
+      "run_signature": "86e211295307c11400beba3fe36e05b5385ca447128e37677e4bb97b38c9aec2"
+    },
+    {
+      "task_id": "t82346",
+      "run_name": "sac-online_seed6204",
+      "method": "sac-online",
+      "seed": 6204,
+      "require_node": "jtl110gpu2",
+      "run_signature": "651baea010801376d95c480fd28f51eb96b732db26f03ddd122d911e76a9425e"
+    },
+    {
+      "task_id": "t82347",
+      "run_name": "sac-online_seed6205",
+      "method": "sac-online",
+      "seed": 6205,
+      "require_node": "jtl110gpu",
+      "run_signature": "39436707eb90bcd207b943a6260bb4e3ad2c8e046de56a0c7df664a246be3ad0"
+    }
+  ],
+  "next_stage": {
+    "training_must_close_before_evaluation_deployment": true,
+    "expected_training_runs": 10,
+    "expected_unique_evaluation_policies": 70,
+    "expected_development_sumo_episodes": 630,
+    "evaluation_submitted": false
+  }
+}

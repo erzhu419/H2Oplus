@@ -1,0 +1,47 @@
+{
+  "created_utc": "2026-08-13T03:55:00+00:00",
+  "estimator": "median complete-run timing sum by host and closest registered H2O+ protocol",
+  "hosts": {
+    "jtl110gpu": {
+      "methods": {
+        "h2oplus": 4715.424774,
+        "h2oplus-lambda0": 4715.424774,
+        "h2oplus-lambda0p2": 4715.424774,
+        "h2oplus-lambda0p5": 4715.424774,
+        "h2oplus-lambda1": 4715.424774,
+        "h2oplus-no-ratio": 4715.424774,
+        "h2oplus-no-warmstart": 4810.154827143778,
+        "h2oplus-source": 4992.312556
+      }
+    },
+    "jtl110gpu2": {
+      "methods": {
+        "h2oplus": 6707.484912,
+        "h2oplus-lambda0": 6707.484912,
+        "h2oplus-lambda0p2": 6707.484912,
+        "h2oplus-lambda0p5": 6707.484912,
+        "h2oplus-lambda1": 6707.484912,
+        "h2oplus-no-ratio": 6707.484912,
+        "h2oplus-no-warmstart": 7020.394237055844,
+        "h2oplus-source": 7283.857595
+      }
+    }
+  },
+  "notes": {
+    "h2oplus_no_ratio": "uses the observed H2O+ median; omitted ratio pretraining was less than 32 seconds",
+    "h2oplus_no_warmstart": "scales the observed source-policy online protocol from 198 to 190 epochs and adds the observed ratio-pretraining allowance",
+    "lambda_variants": "share the registered H2O+ update, epoch, ensemble, cache, and batch contract"
+  },
+  "provenance": {
+    "core_manifest_sha256": "349d01bdf496a9e58df3ad9dbf8364a6f1305e4a500beb8a50ee141aa6f51968",
+    "timing_root": "../formal_results_v7_v7r1/h2oplus_core",
+    "timing_statistic": {
+      "jtl110gpu_h2oplus_median_seconds": 4715.424774,
+      "jtl110gpu_h2oplus_source_median_seconds": 4992.312556,
+      "jtl110gpu2_h2oplus_median_seconds": 6707.484912,
+      "jtl110gpu2_h2oplus_source_median_seconds": 7283.857595
+    }
+  },
+  "schema_version": "transit-training-runtime-profile-v1",
+  "unit": "seconds"
+}

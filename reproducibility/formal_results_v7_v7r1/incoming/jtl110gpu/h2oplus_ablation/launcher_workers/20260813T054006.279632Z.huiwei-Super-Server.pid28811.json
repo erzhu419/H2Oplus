@@ -1,0 +1,211 @@
+{
+  "completed_utc": "2026-08-13T08:50:44.733364+00:00",
+  "created_utc": "2026-08-13T05:40:06.279904+00:00",
+  "jobs": [
+    {
+      "allow_external_gpu_processes": false,
+      "allow_shared_gpu": false,
+      "arguments": {
+        "batch_size": 256,
+        "checkpoint_every": 5,
+        "compile_mode": "default",
+        "compile_networks": true,
+        "cpu_threads": 6,
+        "critic_loss": "huber",
+        "device_cache_observation_dtype": "float32",
+        "ensemble_size": 2,
+        "epochs": 190,
+        "events_per_epoch": 500,
+        "huber_delta": 1.0,
+        "initial_temperature": 1.0,
+        "interaction_chunk_events": 16,
+        "iql_advantage_temperature": 3.0,
+        "log_every": 250,
+        "max_offline_rows": 0,
+        "offline_checkpoint_every": 10000,
+        "offline_cql_alpha": 0.0,
+        "offline_updates": 50000,
+        "online_capacity": 120000,
+        "online_fraction": 0.5,
+        "ratio_pretrain_updates": 0,
+        "ratio_update_interval": 4,
+        "resource_interval": 5,
+        "reward_scale": 0.0001,
+        "sim_demand_scales": [
+          0.75,
+          1.0,
+          1.25
+        ],
+        "target_entropy": 0.0,
+        "updates_per_epoch": 500,
+        "utd_ratio": 1,
+        "warmup_events": 5000
+      },
+      "max_canonical_processes_per_gpu": 1,
+      "mdp_version": "v7",
+      "method": "h2oplus-no-ratio",
+      "name": "h2oplus-no-ratio_seed5102",
+      "offline_initializer_dependency": {
+        "path": "../../experiment_output_smdp_v7/formal_v7/server/h2oplus_core/h2oplus_seed5102/checkpoints/offline_initializer.pt",
+        "schema_version": "transit-offline-initializer-dependency-v7-v1",
+        "source_job_name": "h2oplus_seed5102",
+        "source_plan": "training_plan_v7_formal_core_server_h2oplus_v7.json",
+        "source_plan_sha256": "c9330e6a2a8c36b8507772dd37e32a509aab8460a8c61ba51bd30ef8e383594b",
+        "source_run_signature": "02e86029322bf2c4d6e6e67c858085df6549938b66239d4cb6a897ae9085f827"
+      },
+      "required_environment": {
+        "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+        "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+        "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4",
+        "TMPDIR": "/home/erzhu419/.cache/h2oplus-v7/tmp"
+      },
+      "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/h2oplus-no-ratio_seed5102",
+      "seed": 5102,
+      "signature": "05e56221a5ac1814c00b76999f57a27baee15a6b532fd6a617dc2e2ad643cd7e"
+    },
+    {
+      "allow_external_gpu_processes": false,
+      "allow_shared_gpu": false,
+      "arguments": {
+        "batch_size": 256,
+        "checkpoint_every": 5,
+        "compile_mode": "default",
+        "compile_networks": true,
+        "cpu_threads": 6,
+        "critic_loss": "huber",
+        "device_cache_observation_dtype": "float32",
+        "ensemble_size": 2,
+        "epochs": 190,
+        "events_per_epoch": 500,
+        "huber_delta": 1.0,
+        "initial_temperature": 1.0,
+        "interaction_chunk_events": 16,
+        "iql_advantage_temperature": 3.0,
+        "log_every": 250,
+        "max_offline_rows": 0,
+        "offline_checkpoint_every": 10000,
+        "offline_cql_alpha": 0.0,
+        "offline_updates": 0,
+        "online_capacity": 120000,
+        "online_fraction": 0.5,
+        "ratio_pretrain_updates": 1000,
+        "ratio_update_interval": 4,
+        "resource_interval": 5,
+        "reward_scale": 0.0001,
+        "sim_demand_scales": [
+          0.75,
+          1.0,
+          1.25
+        ],
+        "target_entropy": 0.0,
+        "updates_per_epoch": 500,
+        "utd_ratio": 1,
+        "warmup_events": 5000
+      },
+      "max_canonical_processes_per_gpu": 1,
+      "mdp_version": "v7",
+      "method": "h2oplus-no-warmstart",
+      "name": "h2oplus-no-warmstart_seed5101",
+      "offline_initializer_dependency": null,
+      "required_environment": {
+        "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+        "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+        "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4",
+        "TMPDIR": "/home/erzhu419/.cache/h2oplus-v7/tmp"
+      },
+      "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/h2oplus-no-warmstart_seed5101",
+      "seed": 5101,
+      "signature": "c4b3dd26669e21669cbb3bd8835d447f08ea696ef89f9b46fdb1580f2faa9cbf"
+    },
+    {
+      "allow_external_gpu_processes": false,
+      "allow_shared_gpu": false,
+      "arguments": {
+        "batch_size": 256,
+        "checkpoint_every": 5,
+        "compile_mode": "default",
+        "compile_networks": true,
+        "cpu_threads": 6,
+        "critic_loss": "huber",
+        "device_cache_observation_dtype": "float32",
+        "ensemble_size": 2,
+        "epochs": 190,
+        "events_per_epoch": 500,
+        "huber_delta": 1.0,
+        "initial_temperature": 1.0,
+        "interaction_chunk_events": 16,
+        "iql_advantage_temperature": 3.0,
+        "log_every": 250,
+        "max_offline_rows": 0,
+        "offline_checkpoint_every": 10000,
+        "offline_cql_alpha": 0.0,
+        "offline_updates": 0,
+        "online_capacity": 120000,
+        "online_fraction": 0.5,
+        "ratio_pretrain_updates": 1000,
+        "ratio_update_interval": 4,
+        "resource_interval": 5,
+        "reward_scale": 0.0001,
+        "sim_demand_scales": [
+          0.75,
+          1.0,
+          1.25
+        ],
+        "target_entropy": 0.0,
+        "updates_per_epoch": 500,
+        "utd_ratio": 1,
+        "warmup_events": 5000
+      },
+      "max_canonical_processes_per_gpu": 1,
+      "mdp_version": "v7",
+      "method": "h2oplus-no-warmstart",
+      "name": "h2oplus-no-warmstart_seed5105",
+      "offline_initializer_dependency": null,
+      "required_environment": {
+        "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+        "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+        "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4",
+        "TMPDIR": "/home/erzhu419/.cache/h2oplus-v7/tmp"
+      },
+      "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/h2oplus-no-warmstart_seed5105",
+      "seed": 5105,
+      "signature": "4deaf362a609728df92a93a1e02faf9dd0a8c5b27f936ff32a4cbb7559ed1da2"
+    }
+  ],
+  "launcher": {
+    "cuda_visible_devices": "1",
+    "hostname": "huiwei-Super-Server",
+    "pid": 28811
+  },
+  "output_root": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation",
+  "plan": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/training_plans_v7_formal_v2_v7r1/training_plan_v7_formal_ablation_server_h2oplus_v7.json",
+  "plan_sha256": "cb6decd975231c038babadc2f1acd890c85ee8a10698c66f35093363af83c4dd",
+  "results": {
+    "h2oplus-no-ratio_seed5102": {
+      "archived_incomplete_run": null,
+      "log": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/launcher_logs/h2oplus-no-ratio_seed5102.log",
+      "reused_existing_run": false,
+      "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/h2oplus-no-ratio_seed5102",
+      "status": "completed",
+      "updated_utc": "2026-08-13T06:38:07.354769+00:00"
+    },
+    "h2oplus-no-warmstart_seed5101": {
+      "archived_incomplete_run": null,
+      "log": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/launcher_logs/h2oplus-no-warmstart_seed5101.log",
+      "reused_existing_run": false,
+      "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/h2oplus-no-warmstart_seed5101",
+      "status": "completed",
+      "updated_utc": "2026-08-13T07:44:06.978634+00:00"
+    },
+    "h2oplus-no-warmstart_seed5105": {
+      "archived_incomplete_run": null,
+      "log": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/launcher_logs/h2oplus-no-warmstart_seed5105.log",
+      "reused_existing_run": false,
+      "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_ablation/h2oplus-no-warmstart_seed5105",
+      "status": "completed",
+      "updated_utc": "2026-08-13T08:50:44.732506+00:00"
+    }
+  },
+  "schema_version": "transit-training-worker-v1",
+  "status": "completed"
+}

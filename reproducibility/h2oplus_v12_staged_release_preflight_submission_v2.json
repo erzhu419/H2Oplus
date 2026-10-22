@@ -1,0 +1,82 @@
+{
+  "deployment_correction": {
+    "bytes": 4032,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/workspace/reproducibility/h2oplus_v12_control_v2/deployment_correction.json",
+    "sha256": "40dabd0dddab6ce7fd8f08ac025f8cc96a5545d1c36ff24730ce885b5eb67b25"
+  },
+  "deployment_manifest": {
+    "bytes": 14340,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/workspace/deployment_manifest_v12_v2.json",
+    "sha256": "07789d5c36fae1273ee34ae49d606c1fcec29270d09181222403804dd4990cb9"
+  },
+  "formal_held_out_outcomes_read": false,
+  "protocol": {
+    "bytes": 322459,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/workspace/reproducibility/h2oplus_v12_control_v2/protocol.json",
+    "sha256": "ed6cd5e32f4719a0ef8925272688fdb3393e5c5056027ae9d6430b1ba20d5f1c"
+  },
+  "purpose": "scheduler-assigned-cuda-and-full-launcher-import-preflight-only",
+  "remote_deployment_verification": {
+    "bytes": 7910,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v12_staged_release_deployment_verification_v2_remote.json",
+    "sha256": "ddccb0b092515edb6774544c74a8156234f2f11e287c2d4809fb76aa931db6c9"
+  },
+  "remote_result_root_absence": [
+    {
+      "node": "jtl110gpu",
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/preflight_results_v2/jtl110gpu",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "node": "jtl110gpu2",
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/preflight_results_v2/jtl110gpu2",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "required_environment": {
+    "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+    "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+    "H2OPLUS_V12_BASE_DEPLOYMENT_MANIFEST": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/workspace/deployment_manifest.json",
+    "H2OPLUS_V12_BASE_DEPLOYMENT_MANIFEST_SHA256": "db1bc95b9763a202cb3398abc550aa62b49d7c548eac034021c1ba21697f89cd",
+    "H2OPLUS_V12_PROTOCOL": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/workspace/reproducibility/h2oplus_v12_control_v2/protocol.json",
+    "H2OPLUS_V12_PROTOCOL_SHA256": "ed6cd5e32f4719a0ef8925272688fdb3393e5c5056027ae9d6430b1ba20d5f1c",
+    "H2OPLUS_V12_WORKSPACE_ROOT": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/workspace",
+    "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4",
+    "PATH": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin:/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/workspace",
+    "TMPDIR": "/home/erzhu419/.cache/h2oplus-v7/tmp"
+  },
+  "scheduler_managed_environment": {
+    "CUDA_VISIBLE_DEVICES": "exactly one physical GPU assigned by scheduleurm"
+  },
+  "schema_version": "transit-h2oplus-v12-staged-release-preflight-submission-v2",
+  "status": "partial-failure",
+  "study_stage": "development",
+  "submitted_utc": "2026-08-21T01:55:10.790146+00:00",
+  "sumo_simulation_executed": false,
+  "tasks": [
+    {
+      "node": "jtl110gpu",
+      "result_root": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/preflight_results_v2/jtl110gpu",
+      "returncode": 2,
+      "run_name": "h2oplus_v12a2_shared_prefix_seed6201",
+      "run_signature": "c344446c8099b972d7c390f3e2411baf1d72ca06fe061f3ae3ad690d3b2febcc",
+      "scheduler_output": "REFUSED: cmd looks like training but --ckpt-dir is not set.\n  cmd: /home/erzhu419/anaconda3/envs/LSTM-RL/bin/python -c '\nimport hashlib\nimport json\nimport os\nimport sys\nfrom pathlib impor\n  Without ckpt-dir, eviction/crash loses ALL progress (relaunches start at step 0).\n  Either:\n    (a) submit with --ckpt-dir <abs-path-on-target> and --resume-flag '--resume_from'  (recommended)\n    (b) pass --allow-no-ckpt  (override; OK for short debug runs / one-shot evals)",
+      "seed": 6201,
+      "signature": "H2Oplus/v12/development/staged-release-v2/preflight/jtl110gpu/07789d5c36fae127",
+      "task_id": null,
+      "verification_output": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/preflight_results_v2/jtl110gpu/cuda_preflight.json"
+    }
+  ],
+  "training_executed": false,
+  "training_plan": {
+    "bytes": 315446,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/workspace/reproducibility/h2oplus_v12_control_v2/training_plan.json",
+    "sha256": "1bb58d5ec2dca0b49a04e10be6d2f0705511b49aaf24e6ce69b4e4b70a688ffa"
+  }
+}

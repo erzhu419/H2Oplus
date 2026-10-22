@@ -1,0 +1,669 @@
+{
+  "blocks": [
+    {
+      "demand_realization_seed": 3101,
+      "name": "environment-01",
+      "scenario_manifests": [
+        "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3101/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3101/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3101/manifest_portable_v7.json"
+      ],
+      "sumo_seed": 2101
+    },
+    {
+      "demand_realization_seed": 3102,
+      "name": "environment-02",
+      "scenario_manifests": [
+        "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3102/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3102/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3102/manifest_portable_v7.json"
+      ],
+      "sumo_seed": 2102
+    },
+    {
+      "demand_realization_seed": 3103,
+      "name": "environment-03",
+      "scenario_manifests": [
+        "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3103/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3103/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3103/manifest_portable_v7.json"
+      ],
+      "sumo_seed": 2103
+    },
+    {
+      "demand_realization_seed": 3104,
+      "name": "environment-04",
+      "scenario_manifests": [
+        "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3104/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3104/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3104/manifest_portable_v7.json"
+      ],
+      "sumo_seed": 2104
+    },
+    {
+      "demand_realization_seed": 3105,
+      "name": "environment-05",
+      "scenario_manifests": [
+        "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3105/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3105/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3105/manifest_portable_v7.json"
+      ],
+      "sumo_seed": 2105
+    },
+    {
+      "demand_realization_seed": 3106,
+      "name": "environment-06",
+      "scenario_manifests": [
+        "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3106/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3106/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3106/manifest_portable_v7.json"
+      ],
+      "sumo_seed": 2106
+    },
+    {
+      "demand_realization_seed": 3107,
+      "name": "environment-07",
+      "scenario_manifests": [
+        "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3107/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3107/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3107/manifest_portable_v7.json"
+      ],
+      "sumo_seed": 2107
+    },
+    {
+      "demand_realization_seed": 3108,
+      "name": "environment-08",
+      "scenario_manifests": [
+        "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3108/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3108/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3108/manifest_portable_v7.json"
+      ],
+      "sumo_seed": 2108
+    },
+    {
+      "demand_realization_seed": 3109,
+      "name": "environment-09",
+      "scenario_manifests": [
+        "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3109/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3109/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3109/manifest_portable_v7.json"
+      ],
+      "sumo_seed": 2109
+    },
+    {
+      "demand_realization_seed": 3110,
+      "name": "environment-10",
+      "scenario_manifests": [
+        "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3110/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3110/manifest_portable_v7.json",
+        "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3110/manifest_portable_v7.json"
+      ],
+      "sumo_seed": 2110
+    }
+  ],
+  "created_utc": "2026-08-10T01:30:07.375570+00:00",
+  "demand_scales": [
+    0.75,
+    1.0,
+    1.25
+  ],
+  "depart_jitter_seconds": 120.0,
+  "design": "independent demand-realization and SUMO-seed blocks; all demand conditions remain paired within each block",
+  "environment_cells": 30,
+  "generator": "build_portable_evaluation_bundle_v7.py",
+  "generator_sha256": "560838cc9d2cc5cdcf156c88e2441168ac16ad9492832b80ee1f1b1279f98602",
+  "independent_realization_blocks": 10,
+  "mdp_version": "v7",
+  "path_semantics": "relative to the file that declares each path",
+  "physical_scenario_reuse": {
+    "path": "evaluation_environment_design_v7_formal_v1.json",
+    "reason": "only path serialization and SUMO config path syntax changed; network, traffic, timetable, passengers, seeds, and demand remain fixed",
+    "schema_version": "transit-evaluation-environment-design-v1",
+    "sha256": "327b1e1fa400c22e19bf21a2c29301fcb685946815334d6be984e64e5e6d66e5"
+  },
+  "role": "held-out policy evaluation in SUMO",
+  "scenario_descriptors": [
+    {
+      "demand_scale": 0.75,
+      "path": "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3101/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "92bd5837f14eeef177c2f1cfbbb489d9090db8d1eee59b574eb3abfff0764a45",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "d42a294fe32ade0ec6b2392cba4175c36dc57b587b7cdc4a0d41a64fd73c44cd",
+        "fcbeebb46f1071492fd9e4c3c7f49da9c34b874d54e2a7142d15be861080dd25"
+      ],
+      "sha256": "8ca9ebb4d66e443c3c50f9330a561fedfd938059937f96e94c1a3c1692fe4e46"
+    },
+    {
+      "demand_scale": 1.0,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3101/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "63590455d01761fc05691c9fbbe5aa391780f021fbd6dd4890e8631659787227",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "8a3741aa70cd7d499ce314ba1b9450f340bd02ffe0a049e4497b4c6d6e7e367e",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a4650cab863757d3a8e202cc3616d3079a1f280baf9898d4ae2fe00699a3b26d",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "1b24f7984ec7deccf6b2ca41222cbee3ffc8ec23ed38354182a0108e11ab8a0b"
+    },
+    {
+      "demand_scale": 1.25,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3101/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "178cb3479c47b3538aaaf0b75c86b0b882c21aa4a07cfcadb072b13620a5d414",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "62cd03e5a2ec6fc6e76838f5dfeb1122ef3212461abcaf718d0b128a6a9c3a29",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "ee8d37ea2f334ca2048be45856cba425ca1eb26bc06f65b743065aae578c3d0d"
+      ],
+      "sha256": "88a231e989c48dbd119145e6d237fcbba5c5c003242c3077122a4803fb1b8d4f"
+    },
+    {
+      "demand_scale": 0.75,
+      "path": "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3102/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "3f3c585a4137233b404d8109e9710f436dc6c9caa386e4aaf9de61b83dd5fda0",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "6ebaedd3a4f78716f093c86aa34b9ddc36c6ddd9df16e124c932697c1cdf7e64",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "b418fb59d53057b9576727749f67da4f07ac1db98b3157e84b7bd1a856628d7f",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "ed98a42f9f96868447328b3a71ec8923eb3c530be3186f0af8b321c589cd4905"
+    },
+    {
+      "demand_scale": 1.0,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3102/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "4acfd8ff52a8b5979c4bddc22848e2ac0ff246329e6034ce7a5212885e1cdac4",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "6bbfe4a91658b1ff2f1e5498983de2028e1e1ddcb562c934f3dcb26777702e72",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "794f3ba5daefde8374fa06959ed28c3b8fbf4529ef93adca2429fb9dd4acd63e",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "c2b185eb7dcf27ace04cbe837d4d58d77efb6566e5d742a2a059096195edba7c"
+    },
+    {
+      "demand_scale": 1.25,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3102/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "8d0d0f81869c8250e30595f1d7aaa59d607703173ea8a348672472888e601d4e",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a7e7d205a80c5bcebbc4e5e56fca924ac1eff560044c112bae5946ec33644a47",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "da201a401d7629a1133cce22863fc4d91eab0018646a3512e6adc9c2525c1f22"
+      ],
+      "sha256": "8e0484a48e57cd532c617bb07b05e4eaa10c671152dcee135bd5e620360aea26"
+    },
+    {
+      "demand_scale": 0.75,
+      "path": "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3103/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "42fb1307b941d1d46e4b53c91d11d65214ddcedd290454d9c587faf6b5af61cb",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "ed86c2102698b6cb22213f732c0e30f59ef7f620401843a9d9b3abce544ee7db",
+        "ef29dc69ff66768c643edb9270eb988386f005b71e19c6fa71df7ddf882d2512"
+      ],
+      "sha256": "c7ef679a613f61891740228bc8ddc4b0ba4a1c29a278a6d98ca96e3bee4a0832"
+    },
+    {
+      "demand_scale": 1.0,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3103/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "3ddfb5d67edc39760d69b223a3443157ee11e4497b240e2d8c2cdcd57ee2d667",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "7d61b272b94e687e1afba9d8238bbb9461cfc141feae2640542ea2fd8eda0617",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d2444c5855313052c31ad385dfa036dde5a236390150cb53ca1b78b09de3b296",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "8dea6fc2a7e5eaa976d8d5699ad18e3e196b4caa17a6fa8f00246b263a234106"
+    },
+    {
+      "demand_scale": 1.25,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3103/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "0446a4e2890ac6ca75f709e02047a683282e0fa499992fa4a8778573fee176a7",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "60888244814d7a8c6b8b5de90286a1cdb679e54a97b0e65559915f41809c3d3b",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "dfb10b0ae249517a95eb3a98a32d55a537f53ddeec1f91a8dcecb7a8eddfc855"
+      ],
+      "sha256": "4bf78679cbfaa7f90eaa206303917167166de8c933a09905125fe87e3861d459"
+    },
+    {
+      "demand_scale": 0.75,
+      "path": "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3104/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "0d883cc5e31e53913b2f7eb4c218d28ae76875e53b099f238119c9d2ed06fdd1",
+        "210260144012be3622ec84d5fc4bf7702c1014ea9fa834c768405e5c4468712a",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "b7c87a3fb32ff0f53e2ed361507cbb841d4023af22789f139ea02e7b75197b27",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "efb5499df9c45385a1374dfb851b25eb65c4ebf7e61dcc523602679779c9cd86"
+    },
+    {
+      "demand_scale": 1.0,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3104/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "09fa19c1fe6bf503149c7b5f29678311a20b263ba093bf7b5b779f25d2102245",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "923730cc9f1e85e1b9a49601d493262907bce1a294264b05a21c9e0aa72fbb68",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "fb32e5a1dea5a09c9ce493e607884f8daf93ee68a56729a5234910c6e3cb0a40"
+      ],
+      "sha256": "ffbcf379a886301d8dd2d6df2cf64b3f2fb02bfef072fc4b2ed8b4c2750bfcb8"
+    },
+    {
+      "demand_scale": 1.25,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3104/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "6ee9cf0ba34347b4eb9590d9bd23ff4f938172009282ed0219d8c43d7ced567c",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "c2eb7e6cb806490177138f4a875edbf223eed45c69f605805b6811cff332b7a0",
+        "c7d6a8efed250b6605296083eb54754524c16ae486c332f5cdfae2e9f88e0c1e",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "4eec84ecb3b3ce30bf820f75aa79ee5628e70cb99ce691f9d77b4491b233ce78"
+    },
+    {
+      "demand_scale": 0.75,
+      "path": "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3105/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "17824f670fc919a355910e4cda8328a669cb7a1d85b0d77007b8f82241789e67",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "6093dbaf116ad8cc44c3d2b00c7887b3cf9dcd2bab03f587c63151b1a25597cc",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "d859e7de476a284591090bbc1f56cee8014fd962de40a9267801e1082e3f4746"
+      ],
+      "sha256": "f4b3427a3a841d73e035a64e3c2c50e94a73fe6223aef1be32bf08bb7d0ac341"
+    },
+    {
+      "demand_scale": 1.0,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3105/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "2c61f6ba9a00ba54b0a625914d3a7263b9654b001370eb913abc2ba13978c2cb",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "530496b6f49e6d61f8cd455c0c4a6a12de41e52ff39341dd10fa539e5e91cb60",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "dabd6efb0509b3be6768f5af3ccb4b67129b92b1e7682dc0cea58a3f92608895"
+      ],
+      "sha256": "6635677c1c26b97a12f60f6cb99fee042afd82ce7633f6d113d41d9ee732f99a"
+    },
+    {
+      "demand_scale": 1.25,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3105/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "05cc3148b9504033623201e394dd47b6b1cfdbde526cf1fb395dc93ffd1ed309",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "9cc9ba2fa6e44082e047b095a449ed01e2521f83142a165c9af35982f59c07c1",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a1c27f97ea6eccc179aacb18f689be783869555f9c29a3cae86d9b3c6c1279b5",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "fc5013183a46c31c68c74f6d494876fc730427c0d81eeebfd1bb8cb3a4249a92"
+    },
+    {
+      "demand_scale": 0.75,
+      "path": "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3106/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "3925cd7da0e14fbabd5e2d3e65fed5e57a506130ae1c8e7fa523bd3308e17c3d",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "838dd7938385e8461b431fb0e15ee9238d1a118d3872144346ef9bf97b4e3d28",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "fc2fec23e713dfe93d4344aa90f793063c6c4c955500133104075fda38fe5e0a"
+      ],
+      "sha256": "ecf01a56c2aa17219445c8bdb73d20a0fa0ba6a662da39d5fabcc10a77bb82fe"
+    },
+    {
+      "demand_scale": 1.0,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3106/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "0cfd995b5ab5ca3b34c784d69258b655d58fbf5dcb191265483e305756b70581",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "9f19dd7816d0ca9df7e5857472b87d3f36e28a400486339d28ede0f05e425da0",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "fa3dcf3f439edb75e71b9ecef6e4aeaead8c23bc2e71f2cc954e33d4f6325318"
+      ],
+      "sha256": "0b66dc9eda611ece762b3a28bc459844d21ee60260377d93451e7d427bea3e22"
+    },
+    {
+      "demand_scale": 1.25,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3106/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "11836779db2dd473cab79a0ac46baec3ecf4aceac4b248783b752ee7f6c3559a",
+        "235effd1256747761fe225862b879c9d60d3210f1672af2db6d4359f3f429bfd",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "df6bdbc4e8f89f66878a928e17311e177ca2f83f03398c6e93492e733fee08d6"
+      ],
+      "sha256": "1d5d42899789fba584cb92caae42e73c3014588ab5d4503c22acdbe789efe986"
+    },
+    {
+      "demand_scale": 0.75,
+      "path": "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3107/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5402b15c49ccb75e7f88b636cf70a20922cd992deaeb6ca73ea6df09ec11e450",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "76b88310f2b568d017fb0ff945cb652a75415394e7cb28c6d5dfcad7fcff89c3",
+        "95261819e4625cbccfbbe505745628111e241b4a8c7e0775a78c7c84a5c529c6",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "f53df8545b665dfe54f002bb5d1888e56f9de0f93af7fa2a31a543fbb33d8f70"
+    },
+    {
+      "demand_scale": 1.0,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3107/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "d3eaf4f6d734dfd18969d039bbd94f5de5bdd663e2d25918b4fc4835e8ceddb4",
+        "d4d25dade57bdd061b4dcac74342d1ebf85a0d3334d6f386f4069765ecca3433",
+        "e28213084bc78fe94781f2b10021025ae28284739a6baa895f42065f1ddd2554"
+      ],
+      "sha256": "05b082c2c331edba2a0066cfd0165c25106531811844a8dcfeb7fe42cff0e6fa"
+    },
+    {
+      "demand_scale": 1.25,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3107/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "30097d734a7b4b065e46fb95deb8bd5de118a87434c75e60ea8b1aa84cd8bed6",
+        "409ceee94a91d7c8ca6431190eaec37c461d45ac5ad860f1217542a9eac0de95",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a2d9195f68c948bb77643f30131e520f1d758031c798a53dbcc4e60c8c3c1bd6",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "032db0efe086d1aac9b7d722b9dfb702ad63c2e5c81380c672a61c69f9d42fe7"
+    },
+    {
+      "demand_scale": 0.75,
+      "path": "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3108/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "116ec6e98ccf0b6d65bc6d5f7f8e7a53d342fc3320ecedb2b1973e776ba31676",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "4af90b1b9e38703c0843a439ad09665c0b267a4dc1b89ba55b2d6808d8cb8bc0",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "af9775ed8682ba8804c8e36ac02eef3ed7dc493f980d4457dbc375359f7e4b1b",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "88a5a27c34e316d65dbd46d71f637785ca2630a93235915f9f8d53ff5d978dad"
+    },
+    {
+      "demand_scale": 1.0,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3108/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "1b6864acf033893dbb969c0bd1f2189675518261417badbae9ab7b11a76efbbb",
+        "1d54bad9b56097f1d2840f1568288c591ac30fa71934593f30d1244e7b4d3522",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "aee7f752dc201b96170a62203ea53843e72858ee36e05a19a27ed3b123d18bda",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "1f2a80cb7b3bc52f60aad337751be8d6baee356c956411a8e1eb97cd1ffb189c"
+    },
+    {
+      "demand_scale": 1.25,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3108/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "35e5c666a9400f545b0e42416920b265e904d696300eaae8e9977171540fd1ea",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5bc1e7aa2f93cb922f3b078294c3a16f3c35fc979264593f6e338a3734b096fc",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "77d4cffe213f2fa7f0a74305ebf8e451a5877365368d99e46d2fdeaa76b530ba",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "d2b30beb50ebb5a510761df6470f4d52f3984006103ae35cd0d1549294822c65"
+    },
+    {
+      "demand_scale": 0.75,
+      "path": "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3109/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "83f5faf01e9408926e0c8fa68c433366aa084c07ea33773848a4be0c2afcfde3",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "fb2f3813dfa96d389fdde4a21d4e605599f6f91519755147db344f70d4107e78",
+        "fd4f45ea4e6fe6cd891f73c60a477375b012f5c9aaab884309692f7b2e0b3340"
+      ],
+      "sha256": "b2a3dfd41bbab89ce358029552cd67244622fde08748085d1cff0e42cf2c9c38"
+    },
+    {
+      "demand_scale": 1.0,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3109/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "84cea962eace8be0ef22e3c9f325ac6e2603ca1879fc0c4b01169242d1a91393",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "e08f5635aae30885319467659e873f86aa5ebcd1ba42313b9c7cd69f5418baae",
+        "e32ba1e5410c798ad7a2841cfde0de5d6de6cd79b3ff6a5a522ec39466b15574"
+      ],
+      "sha256": "3aecd2ba0210d2ef60f5058c1dffd35cfbf3d44696f692251c2ef6142de6090e"
+    },
+    {
+      "demand_scale": 1.25,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3109/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5171f5557276d65d16dfe5b1d3fd4a3c6b91d108602915c17e79020783a9461f",
+        "51f6186383428cac00f1ccc377dc493deaf3fd0eefeeaf2236f50c968f3bc13f",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680",
+        "f41283b7909ac8049de93e0cb92b71410c45df09b995410d9a9baf79d8a529cf"
+      ],
+      "sha256": "bcc7e025987cad6ea4362e35fe3786b6acad2b560ab951399c69d105c549285c"
+    },
+    {
+      "demand_scale": 0.75,
+      "path": "../bus_h2o/evaluation_scenarios/demand_0p75_jitter120s_seed3110/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "16db952e176fd61a4c8b9c9cbcaf155db9c05b8adb44e8f53442f912e1d9ffd8",
+        "2b25a914349b9efc00c263c38025513d133eb760f3598283d068f9d10d81bcbf",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "c9abcfa52dfdcf530aa74152b1e2b012238c4ab959176ec68931f23537d70b67",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "a0c8e854bb1c5ffeff66c485b3a67009a464eb900d10cdfb2f6a4ad1c15c177d"
+    },
+    {
+      "demand_scale": 1.0,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1_jitter120s_seed3110/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "6c6a21905990134bfba2594195a27077b45b133d94e96860af695ab12b2120fe",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "795e2021ac75f524f57856ec7f718189ed9ea90141038df16076a02a543ea070",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a29460e64ba7fbd3df88708bebff57a8b28e57c7ce689ca99ad3a1a7aeff2e1d",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "d5659b72856ba5ad175ecfc09c48c85a0ecd838d67b977af5d1f533d48460ee5"
+    },
+    {
+      "demand_scale": 1.25,
+      "path": "../bus_h2o/evaluation_scenarios/demand_1p25_jitter120s_seed3110/manifest_portable_v7.json",
+      "runtime_content_sha256": [
+        "3ee8a85e57f045a1777b2902b9895cceaae29c52a849bbb09215a3b7abeb32ff",
+        "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+        "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+        "5f516d004077cceec0f132135f8bbfd2b0ed0c6de4209b670368169315aad372",
+        "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+        "a00e2dcb3cb406a41a6efe14cd7cbbacca2a20a24ac7a73bedf4c38689989c31",
+        "a61c5a7ebbdfe290434b58b6a20535f43a2bf559fb6ab31a4cd3c1daa5dfb6cb",
+        "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+        "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+      ],
+      "sha256": "42b5ad2d8471910b83ec8a0b8a9a26f06086a46ef0e079b2a8be5278dfeb2813"
+    }
+  ],
+  "schema_version": "transit-evaluation-environment-design-v1",
+  "source_generator_sha256": "5f1ee2d73f1f94881a118ef4ce48c1f7913727b463d8b5d3564db6fe8c143555",
+  "study_stage": "formal",
+  "training_disjointness": {
+    "evaluation_demand_realization_seeds": [
+      3101,
+      3102,
+      3103,
+      3104,
+      3105,
+      3106,
+      3107,
+      3108,
+      3109,
+      3110
+    ],
+    "evaluation_sumo_seeds": [
+      2101,
+      2102,
+      2103,
+      2104,
+      2105,
+      2106,
+      2107,
+      2108,
+      2109,
+      2110
+    ],
+    "runtime_identity": "sorted SHA-256 multiset; host paths excluded",
+    "scenario_manifest_hash_overlap": [],
+    "scenario_runtime_hash_overlap": [],
+    "training_demand_realization_seeds": [
+      1201,
+      1202,
+      1203,
+      1204,
+      1205,
+      1206,
+      1207,
+      1208,
+      1209,
+      1210
+    ],
+    "training_design": {
+      "path": "training_environment_design_v7_formal_v1.json",
+      "schema_version": "transit-v7-training-environment-design-v1",
+      "sha256": "12a26b1edfe9a3435153bf8dd9355e1cd5c39f1ae3653803e59b4f1f03bfb880"
+    },
+    "training_sumo_seeds": [
+      1101,
+      1102,
+      1103,
+      1104,
+      1105,
+      1106,
+      1107,
+      1108,
+      1109,
+      1110
+    ],
+    "verified_disjoint": true
+  }
+}

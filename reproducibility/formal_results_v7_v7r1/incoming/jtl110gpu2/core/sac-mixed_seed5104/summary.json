@@ -1,0 +1,183 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/core/sac-mixed_seed5104/checkpoints/latest.pt",
+    "sha256": "e47cb9766ebf12358edc42a0da598280e376ee3afde5707c2bf101511fcfd971"
+  },
+  "completed_epochs": 190,
+  "completed_utc": "2026-08-12T10:47:16.497174+00:00",
+  "final_blocked_simultaneous_batch_size": 0,
+  "final_policy": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/core/sac-mixed_seed5104/checkpoints/final_actor.pt",
+    "sha256": "2cf3f9596c7e5e7ebe36dacb2014e8a31e5764a118c24f8e527a1516912ee553",
+    "source_training_checkpoint_sha256": "e47cb9766ebf12358edc42a0da598280e376ee3afde5707c2bf101511fcfd971"
+  },
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 6165.2763671875,
+  "max_rss_mb": 9191.08203125,
+  "maximum_simultaneous_decisions": 7,
+  "mdp_version": "v7",
+  "method": "sac-mixed",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "cql_penalty_subset_replacement": false,
+    "cql_penalty_subset_size": null,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "critic_loss": "mse",
+    "default_offline_updates": 0,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 5000,
+    "description": "randomly initialized SAC matched to the transit H2O+ actor and critic architecture, with balanced target/simulator replay",
+    "ensemble_size": 2,
+    "gradient_clip_norm": null,
+    "huber_delta": 1.0,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.0,
+    "offline_initializer": null,
+    "offline_objective": "none",
+    "offline_temperature_action_samples": 1,
+    "offline_update_order": "critic-before-actor",
+    "online_backup": "sac",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "online_update_order": "critic-before-actor",
+    "ratio_update_interval": 4,
+    "reference": "https://proceedings.mlr.press/v80/haarnoja18b.html",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_replacement": false,
+    "target_subset_size": 2,
+    "temperature_state_source": "actor",
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003,
+    "warmup_action_mode": "uniform-box"
+  },
+  "method_protocol": "randomly initialized SAC matched to the transit H2O+ actor and critic architecture, with balanced target/simulator replay",
+  "offline_initializer_consumed": null,
+  "offline_initializer_produced": null,
+  "offline_metrics": {},
+  "online_buffer_size": 99999,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "critic_loss": {
+        "effective": "huber",
+        "profile": "mse"
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "huber_delta": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "online_fraction": {
+        "effective": 0.5,
+        "profile": 0.5
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": 0.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 500,
+        "profile": 500
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 5000,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/core/sac-mixed_seed5104",
+  "run_signature": "a1b98e2c0f104f9297693a718e5b90ba0f7716ebea621bee6f085a1abe800ae9",
+  "schema_version": "transit-training-summary-v8",
+  "seed": 5104,
+  "simulator_decision_event_cap": 100000,
+  "simulator_decision_event_underfill": 0,
+  "simulator_decision_events": 100000,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 72.25935201297398,
+    "data_load": 17.635338452004362,
+    "device_cache": 0.7853133220341988,
+    "model_init": 2.194004857999971,
+    "online_rollout": 751.258572196326,
+    "online_training": 2513.5082572900283,
+    "online_warmup_rollout": 17.88811535498826,
+    "provenance_audit": 0.8224813640117645,
+    "simulator_init": 4.033085530012613
+  },
+  "total_updates": 95000,
+  "warmup_metrics": {
+    "action_mode": "uniform-box",
+    "blocked_simultaneous_batch_size": 0,
+    "current_demand_scale": 0.75,
+    "demand_scale_episode_starts": {
+      "0.75": 1,
+      "1": 0,
+      "1.25": 0
+    },
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 5002,
+    "hard_event_cap_reached": false,
+    "maximum_simultaneous_decisions": 6,
+    "mean_delta_t": 1.6100779844031194,
+    "mean_hold_seconds": 29.962582758085716,
+    "mean_reward": -895.7608478304339,
+    "online_buffer_size": 5001,
+    "transitions": 5001,
+    "trip_boundaries_total": 0
+  }
+}

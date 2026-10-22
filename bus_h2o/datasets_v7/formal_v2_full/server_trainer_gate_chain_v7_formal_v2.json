@@ -1,0 +1,98 @@
+{
+  "created_utc": "2026-08-10T07:30:43.886350+00:00",
+  "dependency_order": [
+    "reward_loss",
+    "hybrid_entropy",
+    "device_precision"
+  ],
+  "execution_boundary": "registered GPU server; H2O+ trainer admission only",
+  "execution_host": {
+    "hostname": "erzhu419-Super-Server",
+    "scheduler_label": "jtl110gpu2"
+  },
+  "inputs": {
+    "formal_dataset": {
+      "bytes": 589504302,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_server_trainer_gate_v4/workspace/bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5",
+      "sha256": "6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899"
+    },
+    "pilot_dataset": {
+      "bytes": 117486949,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_server_trainer_gate_v4/workspace/bus_h2o/datasets_v7/formal_v2_pilot_r2/transit_smdp_v7_pilot_r2.h5",
+      "sha256": "79be101afdc2d13180b4f9cc296fa5a03c4e368680443b17756b6b604bdc39a9"
+    },
+    "pilot_dataset_audit": {
+      "bytes": 23481,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_server_trainer_gate_v4/workspace/bus_h2o/datasets_v7/formal_v2_pilot_r2/transit_smdp_v7_pilot_r2.audit.json",
+      "sha256": "dda0062d55573d9abb2a5d81098722e3fedd2d7f519164980bc79fa2b76d249e"
+    },
+    "reward_audit": {
+      "bytes": 25789,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_server_trainer_gate_v4/workspace/bus_h2o/datasets_v7/formal_v2_pilot_r2/reward_conditioning_v7_pilot_r2.json",
+      "sha256": "a72861695ce83e1b0b22261d0124ddfb4dd20f3b8ffd2674a8b5304882406661"
+    }
+  },
+  "outputs": {
+    "device_precision": {
+      "bytes": 17423,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_server_trainer_gate_v4/workspace/bus_h2o/datasets_v7/formal_v2_full/device_cache_precision_v7_formal_v2.json",
+      "sha256": "856056b00495544ff02ed1c7a21ec5e0966a3919513e99de619e1965ca4eac31"
+    },
+    "hybrid_entropy": {
+      "bytes": 256667,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_server_trainer_gate_v4/workspace/bus_h2o/datasets_v7/formal_v2_pilot_r2/hybrid_entropy_pilot_v7_formal_gate_v2.json",
+      "sha256": "0def73826f1296432f3047b66646a0870b3b93e9e66ea63d23726d4e399e0825"
+    },
+    "reward_loss": {
+      "bytes": 591211,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_server_trainer_gate_v4/workspace/bus_h2o/datasets_v7/formal_v2_pilot_r2/reward_loss_pilot_v7_formal_gate_v2.json",
+      "sha256": "8935df9d67b1801e17514edc1023f036d2e4236307f8a40377ceee142dcf733d"
+    }
+  },
+  "runner": {
+    "bytes": 14271,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_server_trainer_gate_v4/workspace/reproducibility/run_local_trainer_gates_v7.py",
+    "sha256": "69188f2ebfe348f498a081b179430bc03f2dc35de8490ffb6c193899e52235b6"
+  },
+  "schema_version": "transit-v7-server-trainer-gate-chain-v1",
+  "selected_arguments": {
+    "critic_loss": "huber",
+    "device_cache_observation_dtype": "float32",
+    "huber_delta": 1.0,
+    "reward_scale": 0.0001,
+    "target_entropy": 0.0
+  },
+  "training_runtime_lock": {
+    "compiler": {
+      "cpath": {
+        "entries": [
+          {
+            "crypt_h_sha256": "01023ab9ad67da6d459273369681d1a7279932f7b3f7cdd73a2967caac9651a7"
+          }
+        ]
+      },
+      "sha256": "c742442e35732bc1536aea1ef4e840e7e5e54e47df2bf65932ef5fc09c03972d",
+      "version": "x86_64-conda-linux-gnu-gcc (conda-forge gcc 12.1.0-17) 12.1.0"
+    },
+    "packages": {
+      "gymnasium": "1.1.1",
+      "h5py": "3.11.0",
+      "matplotlib": "3.7.2",
+      "numpy": "1.24.3",
+      "openpyxl": "3.1.5",
+      "pandas": "2.0.3",
+      "psutil": "6.0.0",
+      "pytest": "8.3.3",
+      "torch": "2.4.1"
+    },
+    "python_cache_tag": "cpython-38",
+    "python_executable_sha256": "0657b5af2f76586b5aefb65765723a7d853d6032bf43886f8543741b7b871499",
+    "python_implementation": "CPython",
+    "python_version": "3.8.20",
+    "torch_binary_sha256": {
+      "cuda_library": "836bb3a9e65b2ba67e5da1625ae2ff02199f419a449d7f7c331737f13a5d48d4",
+      "python_extension": "96dad22703f0b4d6f37e97463e9eb0a8e9c691ad8dd2699215c946ff577f46ef"
+    },
+    "torch_cuda_version": "12.4"
+  }
+}

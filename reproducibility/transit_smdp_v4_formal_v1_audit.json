@@ -1,0 +1,1144 @@
+{
+  "actions": {
+    "exact_max_hold_rate": 0.0003489087322629223,
+    "exact_no_hold_rate": 0.6349385963051731,
+    "hold_seconds": {
+      "finite": 942940,
+      "mean": 2.579334342004861,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 60.0,
+        "25": 0.0,
+        "5": 0.0,
+        "50": 0.0,
+        "75": 1.820000410079956,
+        "95": 15.190339660644497,
+        "99": 31.410782928466773
+      },
+      "std": 6.219731197444776
+    }
+  },
+  "attributes": {
+    "action_dim": 1,
+    "action_semantics": "mixed measure: a=-1 is an exact zero-hold atom; -1<a<=1 maps to hold_seconds=30*(a+1); speed_ratio is fixed at 1",
+    "build_provenance": "{\"builder\": {\"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/build_transit_v4_dataset.py\", \"sha256\": \"6f8622b8b5128ce03e9bcceffbfb1edb3ce95b6bac6ae321725d6f7a2f4de2f2\"}, \"derivation_signature\": \"b733d0ebe9a3865191b08935121dc6cfd186b51340637e53b06793ef056aee0c\", \"mdp_contract\": {\"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py\", \"sha256\": \"467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07\"}, \"measurement_resolution_correction\": {\"fields\": {\"next_observations.backward_headway_seconds\": {\"corrected_values\": 6, \"minimum_source_seconds\": -0.800000011920929}, \"next_observations.forward_headway_seconds\": {\"corrected_values\": 7, \"minimum_source_seconds\": -0.800000011920929}, \"observations.backward_headway_seconds\": {\"corrected_values\": 6, \"minimum_source_seconds\": -0.800000011920929}, \"observations.forward_headway_seconds\": {\"corrected_values\": 7, \"minimum_source_seconds\": -0.800000011920929}}, \"rule\": \"negative headways within the SUMO one-second measurement resolution are simultaneous events and are mapped to zero; lower values fail\", \"tolerance_seconds\": 1.0, \"total_corrected_values\": 26}, \"runtime\": {\"h5py\": \"3.16.0\", \"numpy\": \"2.2.6\", \"python\": \"3.10.12\"}, \"source_shard_sha256\": [\"9e49a741ab67f175fd72af9381a53c724319a2c0de8d3d0de5b63aadbc822b06\", \"711be637a8180b937b15507c3aeae28250a84f7b49c5c9c9aee7fb54f0501d20\", \"bc2fde72ef37b8fc7f3a840f5080b6d6411b367e8178ccec43bda61c9e8eba28\", \"680f52902a307bbd4914d71d71acb246611138129f09dcc9378f0616544966af\", \"47b3426323750dca1732ecd9b9bda219e82427e73be6a0f6782342a3fa24d83b\", \"b8b75d421655d396c13fcf036b196004fbd292b3809595780f940db879d22e3f\", \"3cfde9c0ea9df4cd9042c40524c84fd24130ac360a8f4938e65060a20a6fbd81\", \"690e60e2794764227d6a6ddb6755d40e11812a0ec3f538a9d21025dce7349aac\", \"b13ae04f3c869e4a7d819d7704f99aaf856c7453d41a0e05a3218500f3e0d0dd\", \"246069b541a5d977c75a6e96116d571a32ee6f7115a4ad29f7ef30c9517ad114\", \"1d0f61595004709509ba3cfef413f99030605c3499c6895997ef1a3dbfa50233\", \"45dc72a8dcd02db0de56996ab62d3a98a86c30688ce4904010931a2e0cd0e064\", \"67c2f9f291c2f6460005a6772aa5f66498c8320f102713ddebe47a5573bc6729\", \"f3557058f76ef22ac98eb24775245dae0c1dfb93f94517372e6f3e47658ecb50\", \"af4b65750d566d534c373046245a3066c243f03b8b0e4597e77fc27ca3e852c3\", \"6680b9e45ac6b793a515a48a0cbc2ce3b7a6ad6a06a72ef89b517de084c4aab6\", \"a1a16d470cca44deca6b21e3d27b848b1f875be71cd92429151131e390aab126\", \"eb6db7b61cd4f01ba1d3d9c23bd2f6b5e1d3a17d827956f1d711703cb580f903\", \"ea5fff9b7722b43639c21e9bae1c1448e867d8cea3cfd172baeb8c6168667877\", \"b8975541b20132e536ae40400f428b675d41e512d759b65f72ff53112bfd3c47\", \"0905724842e44736e690d56af2483ee8a33c9acc0d425cdf6858182ba60f887f\", \"e5e5a0106b82dfbeb44e03691ee506327aad65d62496b6c3c13dd4f1b706731c\", \"fbcb4e6021ffc1a14b6120c359eee45dc2681e04154ce769f99a4bc83f998957\", \"32201d222510107a5e476daced5ae3861d194f12df7d9dea8b4601f124b0f3e7\", \"23d1d728e5ffb7417c930d4a0cb0275c62e7000a8812ffadcfc47e88a41a36fc\", \"84f734f33ee2797081eb80eb50c194f373a8d6fceb1d5198fe98142e2b1da6d2\", \"ae259f2cae013defbb9214ed7fffb37a6cdf40dfa91c570c6006e51583dda251\", \"0746e721d770d7cea9c0ea961787123c456967f491748b476ad2a47c69778ff9\", \"60ee8e3d507bf18bbc3cce49243c84a56e94a0255c16ef8543e80f6bd4813bda\", \"30a3d835f1489741436f05deda546a165e38a6420870921032e61b7678ba3bc2\", \"9ab04a8c9be9600584f6a65257d51f8bb8c0999785ba940afc7ecf797856aa48\", \"14d2d5b05854bcc0e17963ad82d235a4fa7af16d16677e30be03930dc809470a\", \"765bd31d8cce25898e888598b7c731e5233a878c0776642da68cfbc7bccc3456\", \"f775f00cd466ee12360e7aba3cbb40eaeea1d70f0a49df69f3dca48ce01b196a\", \"8a5b9c2e66b4be1e4df95db37f3bfb392377038349a71801c70da91900be50bb\", \"02707dab1b0de17b3a2071de865a65077afa88dce02f05bbec7ee46da7e8018d\", \"55cdd74c1ead3926578672fa0e9a604d645c7399557356a6b56386c8df7a61a3\", \"3962fccf82e3b6a794d9e50d19b94d8c7153e72fab8fc8dd7b5a6cd0a87ad8cf\", \"4fd9605c31d87448a097a0e2469c4cda42430937b1ffa0ab19d43aa15d77b091\", \"0e5ff591e7011f49ffee19a1051115803212c88254d0f1df2ea69cb2b46a582a\", \"d8558a398dcadda3d386b3a68e7d90577f438c42077fc249f9a33d253762d3fb\", \"1db8884f529d3ce17e89e98b9593f49ac2b8c8a8b0331c0367797bdc0d4ba03e\", \"e941c9623e654f2af406c56b0d4a307156ad2a04564c26f400c8ffd09becc28d\", \"f956913dd1ccc8140ae44d20bd14ead54f32278be2d2f4f0da56c80bdcc5b5fc\", \"aa43f192cfe3063e69bd6bf21f8328d5537c7df8f3108842e109a8fdcc6486bf\", \"4f45714e82b83a9b78669b99d4336b648c0a2c9cafaa54e6e3c2a58e8e48cc35\", \"cfa4564015df2c59ead960481c8ec91b5998ba9c7ca82595a56d5a036626e68c\", \"209f175a53173493c738b116d18429a6bcc0b9aaed7b59728f9132629fac66c8\", \"38aaa7f7bb07d834c3a02ed2003e20dabcaa7da05b03d07029317508ea84d4be\", \"2b084f9b6e0839e9c7e15245ae2d1c6a68a9bcb0fa809e427d75d336ba863e7b\", \"8c0fb47187501705048ca302b0109e018638e428434ddda9861678b8b0a03271\", \"4a99b28411cba7710fef8a5ac6d566118796bae2cc180beb2680d327ed7cb2cc\", \"4ade4ae2184ebe724c4fdf9116b35c483fd97ead64464a7bc0b7a8439c8e43dc\", \"ccaa04c073d7de03289137db3a7c648120839208ed24390b5e6dee68c051fdf3\", \"cc064f87f348c6e948b795d2638bc81ce89b5936768e742ddf41df75f8bff057\", \"d24b88259ed946e0edfae01e59952a82856f98d05da38c294a54a9d708026861\", \"8430c8ea7a4bc68594f2f36b287e3bbbef7c6ab2d32339dca23a810f40b8ffc5\", \"689bff8938911e93bd309966685c4156f733720901f8aab4fd3a73eb00bef70b\", \"c196697c5fd1cee5bc212e80560946bb6fb7bf11f9781627d1d6ff3381bfdd94\", \"eb2fc4f8aa7aa9359b747ab0d3fc19dd8259de1f11afb1d86781153b6c824b9d\", \"f0a2393cbdabdbf053653aefe5786874cd80ecbfdf2efd8b298b0dac7bf8df89\", \"951eb79b324d791fc9117b48e6ec17b1b391aba4db41b38d8361f6603b76abb8\", \"ec8c1d55150f7d4bc513a52635fba26ad8d7259c856007a92b370108786945b4\", \"2d45b698a0bce1f01a214c6adaddd2299f2c15b58e7683557f46e5166ef52716\", \"b8ddbce9b645c13b42317c233b16ee45a1371748aa7143244560f92f420e5cef\", \"7f073be518615d5517e9fe52e4a54070385d97d2fa2b65578d8288b5ada65507\", \"44e3435a492d87a718ca7d371a81ca749109e35304413eb74133226a2d65d828\", \"1dc15662fd35ff44b1c29b8cb93afb52658736869165ef4d9e0b1295ee9db8a0\", \"e9a08254563f884adc9d9530a5e451075a97a648014ef297d144a59d986cb963\", \"2563310286515635025b8a5d749b237df1ba0f54f62ca24eec781cc5f38e5f10\"], \"transform_version\": \"transit-smdp-v4-derived-transform-v2\"}",
+    "collection_matrix": "{\"collector_sha256\": \"93653993801abd6e9054bc82c1f50e29ef471a99823dcd49f0275703aa2ec368\", \"jobs\": 70, \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/matrix_manifest.json\", \"runner_sha256\": \"bc07370d4f7b1e53fc67e773919e82e7b986b59145e24a12529f045d5a7e7260\", \"sha256\": \"edacc01b691960d48c21996b2959c4706f93371120ab2796c038901cf255441d\", \"source_sha256\": {\"/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/evaluation.py\": \"2419ebc3a56d95e0048f1a2b462ae4da3d5575ee295a8ef2e40de971769b573e\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/policies.py\": \"f1cf7a5dbdda7360ce17deb687f13591dd4457d1bd0436ac87b04a18c25767f6\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/common/data_utils.py\": \"ed1ec95396889cf5b0b589a8b8ccfdb4ab7b8b6d7d4f7d8dbaed22033b04c4b8\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/all_lines_sumo_env.py\": \"fcbaf16a9b08afb2e29f8af3c15b9fe3436f568b88e08e7dda9e9f08e031ccbc\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/sumo_gym_env.py\": \"986327641afc39ff95c8f14cc8b839d6b5ad2bd81c122a60d3d5d4bb7877ae16\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py\": \"162933ceb56003ad045b0d053e3bff040b65ad695cc62f65090eea7bad4c6839\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml\": \"7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/d_8_compute_running_time.py\": \"46ee8472607754ce7e99023f860ed5e5206b1803dfbc33292198e26e32afa709\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/e_8_gurobi_test_considerbusnum_V3.py\": \"973a6d099d1880c1d93acbdd9312d08633276f4dea554ed6701087a938b9897c\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py\": \"f4d5feefa32b5a2e787fcb01f33ba73e3dd77d49db729d5c60cfd57b77c66012\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py\": \"6c42129c9c014317d58a41ecc57759c4abc2dc88133a17514d171a27edcb2068\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_env.py\": \"3dbcda82e179bcc904b64d213816ea5ece681a0034564e17e87e00d03598bed5\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_provenance.py\": \"6237c36c226f22d7c51da416d67e4ecd428a66f3cc369ad6b38019e2ae29b151\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v4.py\": \"93653993801abd6e9054bc82c1f50e29ef471a99823dcd49f0275703aa2ec368\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml\": \"1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_lane.add.xml\": \"6d083e597fc8b19cfde874488a4c0921abee738ea3ea1ba1f154611f7f9ccc03\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_line.add.xml\": \"3436791192adf67e927873637a61718471dabe1afc03b1b679db4ba0327560aa\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_signal.add.xml\": \"4ee961a5d9263b9fc2c8e5ced272f7bb06c80636ffe15bf2b7fae0fa013a4240\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_stop.add.xml\": \"afd2d4099971465258e5acc86943ae34ef9191638b72665516b4888687c392b8\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/__init__.py\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/bus.py\": \"a088753355fb1a392a870add678346af0a709c0a5d7097e88ec37a801b43d29e\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/lane.py\": \"6320f73be0ef0efa8dafc7eaf7a8f951f04232210dda5d6b06681ccb264a8ab1\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/line.py\": \"1f4e8f15b8e225a8647326e163594d5b7fac286d39103a6ca3b124265359f0ff\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/passenger.py\": \"ea973ae4919dd30e0b1274dea5a128b3ee49d241313c9c65d15f01df91afaf06\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/signal.py\": \"f4257a80c31bc9fd6558ec432bd91d44a2a957fdaa7f1f753819a837cd6b9c1e\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/stop.py\": \"ec04c67bcc68a793dabc6553f68ac1012b9b77ddd1abb5152336b3c1da3033d8\"}, \"sumo_version\": \"Eclipse SUMO sumo 1.27.1\"}",
+    "config": "{\"discount_gamma_per_minute\": 0.99, \"episode_seconds\": 24000.0, \"in_vehicle_time_value\": 1.0, \"max_base_dwell_seconds\": 130.0, \"max_demand_capacity_ratio\": 2.0, \"max_headway_ratio\": 5.0, \"max_hold_seconds\": 60.0, \"max_queue_capacity_ratio\": 2.0, \"max_scheduled_headway_seconds\": 720.0, \"nominal_bus_capacity\": 50.0, \"reward_unit_passenger_seconds\": 60.0, \"waiting_time_value\": 2.0}",
+    "content_signature": "fc5a208cc9cbd966543ba095278c82c585303ba3af0b6a5053dbd53ecfa88979",
+    "created_utc": "2026-08-03T16:15:51.077515+00:00",
+    "derivation_signature": "b733d0ebe9a3865191b08935121dc6cfd186b51340637e53b06793ef056aee0c",
+    "discount_semantics": "0.99 ** (delta_t_seconds / 60)",
+    "n_transitions": 942940,
+    "policy_names": "{\"headway-gain-0.05\": 0, \"headway-gain-0.1\": 1, \"headway-gain-0.25\": 2, \"headway-gain-0.5\": 3, \"myopic-welfare-v2\": 4, \"random-hurdle-p0.5-beta1-3\": 5, \"zero\": 6}",
+    "raw_state_dim": 14,
+    "raw_state_names": "[\"line_id\", \"station_index\", \"sim_time_seconds\", \"forward_headway_seconds\", \"backward_headway_seconds\", \"target_forward_headway_seconds\", \"target_backward_headway_seconds\", \"eligible_stranded_passengers\", \"onboard_passengers\", \"eligible_arrival_rate_per_second\", \"base_dwell_seconds\", \"forward_bus_present\", \"backward_bus_present\", \"bus_capacity\"]",
+    "reward_semantics": "negative generalized passenger-minutes; waiting and holding terms are stored separately, preserve physical cross-line welfare weights, and are computed exactly once from raw endpoints",
+    "scenario_manifest_hashes": "{\"3a87e327cabce2cf09dc9564a6c3bc06db46b0349d72efa044fb07d9ac7194eb\": 0}",
+    "schema_version": "transit-smdp-v4",
+    "source_shards": "[{\"job_signature\": \"256bf2641147fc950122d33fadd0e0ec290963d1d4bed3ddb7dc478727e0b3f1\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.05/demand_1_seed20260803/sumo_seed1101.npz\", \"sha256\": \"9e49a741ab67f175fd72af9381a53c724319a2c0de8d3d0de5b63aadbc822b06\"}, {\"job_signature\": \"f13c265284514d6ece79eeda38cb464b4f65b4e587d7cd1a08867c8a29c9ee25\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.05/demand_1_seed20260803/sumo_seed1102.npz\", \"sha256\": \"711be637a8180b937b15507c3aeae28250a84f7b49c5c9c9aee7fb54f0501d20\"}, {\"job_signature\": \"fe833c22bf90c9402c324f9e87312be9c541b69a7e1a660b4433c817bd6957bc\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.05/demand_1_seed20260803/sumo_seed1103.npz\", \"sha256\": \"bc2fde72ef37b8fc7f3a840f5080b6d6411b367e8178ccec43bda61c9e8eba28\"}, {\"job_signature\": \"fd298f42218b0708abcb43a4c1846fd869803d572502e370a25b83fbcbaecdf3\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.05/demand_1_seed20260803/sumo_seed1104.npz\", \"sha256\": \"680f52902a307bbd4914d71d71acb246611138129f09dcc9378f0616544966af\"}, {\"job_signature\": \"1ee4b48757f9f245a7907135b3a79058b80d364068a2dbe67edc329c87832c92\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.05/demand_1_seed20260803/sumo_seed1105.npz\", \"sha256\": \"47b3426323750dca1732ecd9b9bda219e82427e73be6a0f6782342a3fa24d83b\"}, {\"job_signature\": \"561f891e997ff45e6cf1ba285bb1de940a448ec5ac6a13b3e1f4066bb2dcfbb6\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.05/demand_1_seed20260803/sumo_seed1106.npz\", \"sha256\": \"b8b75d421655d396c13fcf036b196004fbd292b3809595780f940db879d22e3f\"}, {\"job_signature\": \"bd66f995d45e6807bf612801d32ebc70ba0b77877ca3bfb56700847267069627\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.05/demand_1_seed20260803/sumo_seed1107.npz\", \"sha256\": \"3cfde9c0ea9df4cd9042c40524c84fd24130ac360a8f4938e65060a20a6fbd81\"}, {\"job_signature\": \"4a61fd415d2d07146a6e2af22389489ffff57b10497316acaeb6930b1c352773\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.05/demand_1_seed20260803/sumo_seed1108.npz\", \"sha256\": \"690e60e2794764227d6a6ddb6755d40e11812a0ec3f538a9d21025dce7349aac\"}, {\"job_signature\": \"554ed15aa3288ef609f5ec176eed97878b8d9401bd5abfcca2e3da7939549dbd\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.05/demand_1_seed20260803/sumo_seed1109.npz\", \"sha256\": \"b13ae04f3c869e4a7d819d7704f99aaf856c7453d41a0e05a3218500f3e0d0dd\"}, {\"job_signature\": \"45a3eb857b03f6ccf68be94bed1d35cc79b7d41141efb79ae0655071b8675706\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.05/demand_1_seed20260803/sumo_seed1110.npz\", \"sha256\": \"246069b541a5d977c75a6e96116d571a32ee6f7115a4ad29f7ef30c9517ad114\"}, {\"job_signature\": \"7eabbe35f07083e44026279a20113df47761a0d1d3c44559283183947c883239\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.1/demand_1_seed20260803/sumo_seed1101.npz\", \"sha256\": \"1d0f61595004709509ba3cfef413f99030605c3499c6895997ef1a3dbfa50233\"}, {\"job_signature\": \"61c933d9945f054000194ee252ce3cb42fbe060a53bb249c7c14626bf86982f1\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.1/demand_1_seed20260803/sumo_seed1102.npz\", \"sha256\": \"45dc72a8dcd02db0de56996ab62d3a98a86c30688ce4904010931a2e0cd0e064\"}, {\"job_signature\": \"53766df1ae6298e7b04c630948d6fa37b71f61194d8bd01b8842496f6d9cdf5a\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.1/demand_1_seed20260803/sumo_seed1103.npz\", \"sha256\": \"67c2f9f291c2f6460005a6772aa5f66498c8320f102713ddebe47a5573bc6729\"}, {\"job_signature\": \"750e4ab73e5c63e7ce8fb77acb6907015ce06a69c1313790a425ad359f742d64\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.1/demand_1_seed20260803/sumo_seed1104.npz\", \"sha256\": \"f3557058f76ef22ac98eb24775245dae0c1dfb93f94517372e6f3e47658ecb50\"}, {\"job_signature\": \"7329286a6fc2ad3ad27897cfb4ba4331a1f2bb2e961f5516e8dbc4a0d87c6535\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.1/demand_1_seed20260803/sumo_seed1105.npz\", \"sha256\": \"af4b65750d566d534c373046245a3066c243f03b8b0e4597e77fc27ca3e852c3\"}, {\"job_signature\": \"e6229467ed135c0d0f2c76b0046e9accb4ddaf90945a9c0a38f3c5ead4752a63\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.1/demand_1_seed20260803/sumo_seed1106.npz\", \"sha256\": \"6680b9e45ac6b793a515a48a0cbc2ce3b7a6ad6a06a72ef89b517de084c4aab6\"}, {\"job_signature\": \"6478284247aebaa7b8e29fcdb0859ff2d4c09ad54dce3053256a0929a0ad6298\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.1/demand_1_seed20260803/sumo_seed1107.npz\", \"sha256\": \"a1a16d470cca44deca6b21e3d27b848b1f875be71cd92429151131e390aab126\"}, {\"job_signature\": \"6301920143774190807ea35283af449234f80be6e9a2b00d95599f3fa44adc9d\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.1/demand_1_seed20260803/sumo_seed1108.npz\", \"sha256\": \"eb6db7b61cd4f01ba1d3d9c23bd2f6b5e1d3a17d827956f1d711703cb580f903\"}, {\"job_signature\": \"a63b7037765de2ef21cb448a7c5d8b8b4d802639ceb1bed8a36cbe334fbbcb0a\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.1/demand_1_seed20260803/sumo_seed1109.npz\", \"sha256\": \"ea5fff9b7722b43639c21e9bae1c1448e867d8cea3cfd172baeb8c6168667877\"}, {\"job_signature\": \"6ed84a5d33efc325b4ba00f01758a181464c0c859f1002c66e11fbf93d607e96\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.1/demand_1_seed20260803/sumo_seed1110.npz\", \"sha256\": \"b8975541b20132e536ae40400f428b675d41e512d759b65f72ff53112bfd3c47\"}, {\"job_signature\": \"3a33dca991535a9433bc93c29d6813a69f51d2eb5dec84de4576325d578d9de6\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.25/demand_1_seed20260803/sumo_seed1101.npz\", \"sha256\": \"0905724842e44736e690d56af2483ee8a33c9acc0d425cdf6858182ba60f887f\"}, {\"job_signature\": \"3b053fc07b21bc733560c84f30abe6392995b44bd4c272c2f6c5db9b3f5fa8e6\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.25/demand_1_seed20260803/sumo_seed1102.npz\", \"sha256\": \"e5e5a0106b82dfbeb44e03691ee506327aad65d62496b6c3c13dd4f1b706731c\"}, {\"job_signature\": \"e567b7a426245f8b7ab3d48e9a933a8a645bcb48cef1b01f789631ba27e1ab74\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.25/demand_1_seed20260803/sumo_seed1103.npz\", \"sha256\": \"fbcb4e6021ffc1a14b6120c359eee45dc2681e04154ce769f99a4bc83f998957\"}, {\"job_signature\": \"6a2203052bc1e8514f97e93a6ae784dc4d4bf5bcbaa3db872589c6b2fc06a672\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.25/demand_1_seed20260803/sumo_seed1104.npz\", \"sha256\": \"32201d222510107a5e476daced5ae3861d194f12df7d9dea8b4601f124b0f3e7\"}, {\"job_signature\": \"9e2948a95f5041f3d918306fe1c5c706f949cacc72025f7de573b86c66aa6ae8\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.25/demand_1_seed20260803/sumo_seed1105.npz\", \"sha256\": \"23d1d728e5ffb7417c930d4a0cb0275c62e7000a8812ffadcfc47e88a41a36fc\"}, {\"job_signature\": \"f17ae57e198e3d5a137a79ad99d89e8078b9725ac1966cf2e6fcfbbb70ae7260\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.25/demand_1_seed20260803/sumo_seed1106.npz\", \"sha256\": \"84f734f33ee2797081eb80eb50c194f373a8d6fceb1d5198fe98142e2b1da6d2\"}, {\"job_signature\": \"11f82c94fadccb466c9be6294b4f8a9397328dae18852622497c5babafb45549\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.25/demand_1_seed20260803/sumo_seed1107.npz\", \"sha256\": \"ae259f2cae013defbb9214ed7fffb37a6cdf40dfa91c570c6006e51583dda251\"}, {\"job_signature\": \"23bb49d53e17faf3e78239bf95feb19d912b9fb6811bd86064196d3f3beec7a1\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.25/demand_1_seed20260803/sumo_seed1108.npz\", \"sha256\": \"0746e721d770d7cea9c0ea961787123c456967f491748b476ad2a47c69778ff9\"}, {\"job_signature\": \"a7228893b0b0fecd8fcde1ad7d2e4f8b7906c698dc52325fed4e0fa365d551b5\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.25/demand_1_seed20260803/sumo_seed1109.npz\", \"sha256\": \"60ee8e3d507bf18bbc3cce49243c84a56e94a0255c16ef8543e80f6bd4813bda\"}, {\"job_signature\": \"b2995fd5e88fb5f73002ce21ba4d718315c684f9b6163e71eb557ad4dc9a736d\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.25/demand_1_seed20260803/sumo_seed1110.npz\", \"sha256\": \"30a3d835f1489741436f05deda546a165e38a6420870921032e61b7678ba3bc2\"}, {\"job_signature\": \"162d4caf770c400e6e8a751bc6591be1972c27fb1bb44deb99b8751f36b42827\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1101.npz\", \"sha256\": \"9ab04a8c9be9600584f6a65257d51f8bb8c0999785ba940afc7ecf797856aa48\"}, {\"job_signature\": \"c458c57bec03ab7c3c58d1c8cf7c2617cec252c686c126e998a88dbcaada37b8\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1102.npz\", \"sha256\": \"14d2d5b05854bcc0e17963ad82d235a4fa7af16d16677e30be03930dc809470a\"}, {\"job_signature\": \"696cd8d2f0f3b74fd078cc643e0362961f5107777816214130fe33c5193ccb45\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1103.npz\", \"sha256\": \"765bd31d8cce25898e888598b7c731e5233a878c0776642da68cfbc7bccc3456\"}, {\"job_signature\": \"6d36b781ac6516f37222427dffe421df346c65283d7a07f635f32b618d548c26\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1104.npz\", \"sha256\": \"f775f00cd466ee12360e7aba3cbb40eaeea1d70f0a49df69f3dca48ce01b196a\"}, {\"job_signature\": \"4054e79011f8a69271edec6a6eebb6e475c60da4ff7c4615c09ba186084e8183\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1105.npz\", \"sha256\": \"8a5b9c2e66b4be1e4df95db37f3bfb392377038349a71801c70da91900be50bb\"}, {\"job_signature\": \"3063954676048cbb1a8b2fffc8f85a1852d7915c3c4b1007aecfb3b06d9726cc\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1106.npz\", \"sha256\": \"02707dab1b0de17b3a2071de865a65077afa88dce02f05bbec7ee46da7e8018d\"}, {\"job_signature\": \"53c2eefec50ca6ac50e8f5a4fb1e42691abe08b33a6570c87efa664679c1346c\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1107.npz\", \"sha256\": \"55cdd74c1ead3926578672fa0e9a604d645c7399557356a6b56386c8df7a61a3\"}, {\"job_signature\": \"5338de5309d8f6dd1dfabdae2b8f5c4d65a836a317a774e1c9abefe069c6e7f2\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1108.npz\", \"sha256\": \"3962fccf82e3b6a794d9e50d19b94d8c7153e72fab8fc8dd7b5a6cd0a87ad8cf\"}, {\"job_signature\": \"868ac2e51afa9e3272b0bd5bca63c74b013afd2c8e1c8783c535571db4197c79\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1109.npz\", \"sha256\": \"4fd9605c31d87448a097a0e2469c4cda42430937b1ffa0ab19d43aa15d77b091\"}, {\"job_signature\": \"8945dd5b4158a4e674ae1e7ce2b78362ce2aabde53e3a1183d780b34ddd5b2a4\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/headway-gain-0.5/demand_1_seed20260803/sumo_seed1110.npz\", \"sha256\": \"0e5ff591e7011f49ffee19a1051115803212c88254d0f1df2ea69cb2b46a582a\"}, {\"job_signature\": \"e40246cd59ed9d767fc4bd0b875869718aa1dd596caf92ed916a2e06642ded14\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/myopic-welfare-v2/demand_1_seed20260803/sumo_seed1101.npz\", \"sha256\": \"d8558a398dcadda3d386b3a68e7d90577f438c42077fc249f9a33d253762d3fb\"}, {\"job_signature\": \"0eab8dd33f888c224aee7b2051e23e6227c505aee299a5c18e98927b6edf8d61\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/myopic-welfare-v2/demand_1_seed20260803/sumo_seed1102.npz\", \"sha256\": \"1db8884f529d3ce17e89e98b9593f49ac2b8c8a8b0331c0367797bdc0d4ba03e\"}, {\"job_signature\": \"818616694bb4c5ed025ae1bbc11598d0df69c46cfc3bd13d54e0cfa341558b6f\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/myopic-welfare-v2/demand_1_seed20260803/sumo_seed1103.npz\", \"sha256\": \"e941c9623e654f2af406c56b0d4a307156ad2a04564c26f400c8ffd09becc28d\"}, {\"job_signature\": \"0c5d19b4f67f256118b9ee37472b3a7cbb83a85a682342e19ba1363bd500eaed\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/myopic-welfare-v2/demand_1_seed20260803/sumo_seed1104.npz\", \"sha256\": \"f956913dd1ccc8140ae44d20bd14ead54f32278be2d2f4f0da56c80bdcc5b5fc\"}, {\"job_signature\": \"718b59180af7962e56831d1a4d25df5998f476993bd9745f73a0e576e6edf1fd\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/myopic-welfare-v2/demand_1_seed20260803/sumo_seed1105.npz\", \"sha256\": \"aa43f192cfe3063e69bd6bf21f8328d5537c7df8f3108842e109a8fdcc6486bf\"}, {\"job_signature\": \"e269a178f43d49df6f0ecef1b1015980d183d0d9025ee114e7b78911e3c8b8cc\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/myopic-welfare-v2/demand_1_seed20260803/sumo_seed1106.npz\", \"sha256\": \"4f45714e82b83a9b78669b99d4336b648c0a2c9cafaa54e6e3c2a58e8e48cc35\"}, {\"job_signature\": \"5bdd4baabc7575f5d63fa96663f1afb8ab3daf40827c1699c0c1d41ed532fa21\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/myopic-welfare-v2/demand_1_seed20260803/sumo_seed1107.npz\", \"sha256\": \"cfa4564015df2c59ead960481c8ec91b5998ba9c7ca82595a56d5a036626e68c\"}, {\"job_signature\": \"59c16779c8e9929dd92fdcc5721d382baecb2a4506bb45c7b2287c8704efa219\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/myopic-welfare-v2/demand_1_seed20260803/sumo_seed1108.npz\", \"sha256\": \"209f175a53173493c738b116d18429a6bcc0b9aaed7b59728f9132629fac66c8\"}, {\"job_signature\": \"071ec24c7abb2d786a126e9692bce4316acd1bceb0346dffbb95203c3b7cf520\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/myopic-welfare-v2/demand_1_seed20260803/sumo_seed1109.npz\", \"sha256\": \"38aaa7f7bb07d834c3a02ed2003e20dabcaa7da05b03d07029317508ea84d4be\"}, {\"job_signature\": \"7b71b1bd95576cbee6b1931039350dad6e5be83fdf25fe72a4b74331e159105d\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/myopic-welfare-v2/demand_1_seed20260803/sumo_seed1110.npz\", \"sha256\": \"2b084f9b6e0839e9c7e15245ae2d1c6a68a9bcb0fa809e427d75d336ba863e7b\"}, {\"job_signature\": \"f358151da1548bc02a69e80ddff8d1b75bb1eea01ce8443ad88ce4cfd903dec8\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/random-hurdle-p0.5-beta1-3/demand_1_seed20260803/sumo_seed1101.npz\", \"sha256\": \"8c0fb47187501705048ca302b0109e018638e428434ddda9861678b8b0a03271\"}, {\"job_signature\": \"2a6dc06ffdf305096897e06c11bfceb0035710305a5332019fd53f89f5d49d36\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/random-hurdle-p0.5-beta1-3/demand_1_seed20260803/sumo_seed1102.npz\", \"sha256\": \"4a99b28411cba7710fef8a5ac6d566118796bae2cc180beb2680d327ed7cb2cc\"}, {\"job_signature\": \"12c4a5ad6c352d6fc896439921fd309f90364c367116f395b1622c842edf3644\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/random-hurdle-p0.5-beta1-3/demand_1_seed20260803/sumo_seed1103.npz\", \"sha256\": \"4ade4ae2184ebe724c4fdf9116b35c483fd97ead64464a7bc0b7a8439c8e43dc\"}, {\"job_signature\": \"40be96e743d6d5be8f5230ee8f661f555acd6b53a9aee5b49f3caf84adc958f3\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/random-hurdle-p0.5-beta1-3/demand_1_seed20260803/sumo_seed1104.npz\", \"sha256\": \"ccaa04c073d7de03289137db3a7c648120839208ed24390b5e6dee68c051fdf3\"}, {\"job_signature\": \"3df7b1d170585978cd15ce52656b017c566bdf48d63d5f7dc037129cba59cb00\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/random-hurdle-p0.5-beta1-3/demand_1_seed20260803/sumo_seed1105.npz\", \"sha256\": \"cc064f87f348c6e948b795d2638bc81ce89b5936768e742ddf41df75f8bff057\"}, {\"job_signature\": \"16141c59d66547c1e74e766deaa7dcabb537f437cde556b6c83eda30f05d1418\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/random-hurdle-p0.5-beta1-3/demand_1_seed20260803/sumo_seed1106.npz\", \"sha256\": \"d24b88259ed946e0edfae01e59952a82856f98d05da38c294a54a9d708026861\"}, {\"job_signature\": \"9c282a6da9f29df0df76a337ff25d750ffaa8e4640470c22e2f041bf9008069b\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/random-hurdle-p0.5-beta1-3/demand_1_seed20260803/sumo_seed1107.npz\", \"sha256\": \"8430c8ea7a4bc68594f2f36b287e3bbbef7c6ab2d32339dca23a810f40b8ffc5\"}, {\"job_signature\": \"48bf35c8ea10c2c2cb2099c116b0ab16600bc37a248026ec481d9d6f7a8888b3\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/random-hurdle-p0.5-beta1-3/demand_1_seed20260803/sumo_seed1108.npz\", \"sha256\": \"689bff8938911e93bd309966685c4156f733720901f8aab4fd3a73eb00bef70b\"}, {\"job_signature\": \"8b31bcf589f22bc7aa9bd1170f7cff2b8113f94f1f237be7e2f6e6a11d243903\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/random-hurdle-p0.5-beta1-3/demand_1_seed20260803/sumo_seed1109.npz\", \"sha256\": \"c196697c5fd1cee5bc212e80560946bb6fb7bf11f9781627d1d6ff3381bfdd94\"}, {\"job_signature\": \"bc2a567c032b9f5516d58048210f2e202b2818229a0174e303cebbede213817e\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/random-hurdle-p0.5-beta1-3/demand_1_seed20260803/sumo_seed1110.npz\", \"sha256\": \"eb2fc4f8aa7aa9359b747ab0d3fc19dd8259de1f11afb1d86781153b6c824b9d\"}, {\"job_signature\": \"e255dc4892835356f9abf636fc9c167b8eb3da7c0a5562b03d02465eaddd637b\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/zero/demand_1_seed20260803/sumo_seed1101.npz\", \"sha256\": \"f0a2393cbdabdbf053653aefe5786874cd80ecbfdf2efd8b298b0dac7bf8df89\"}, {\"job_signature\": \"29260cd2948dd86c5e514ae8d333c6ef7e5bd67a3f1984f964592b15a9e385c4\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/zero/demand_1_seed20260803/sumo_seed1102.npz\", \"sha256\": \"951eb79b324d791fc9117b48e6ec17b1b391aba4db41b38d8361f6603b76abb8\"}, {\"job_signature\": \"876059b2c6727cb762cbeb4592a1cf1749ddf01f506cdd574b40902b920b7aec\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/zero/demand_1_seed20260803/sumo_seed1103.npz\", \"sha256\": \"ec8c1d55150f7d4bc513a52635fba26ad8d7259c856007a92b370108786945b4\"}, {\"job_signature\": \"6aafe9c46c617f03a27fe9a3edaf3c2c3f3665c0db0f54ca3dafadfa9001475c\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/zero/demand_1_seed20260803/sumo_seed1104.npz\", \"sha256\": \"2d45b698a0bce1f01a214c6adaddd2299f2c15b58e7683557f46e5166ef52716\"}, {\"job_signature\": \"5b2a25267901e64ba19ce769f8e4ba2d8b10551b75092dacb7c5392cee551aad\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/zero/demand_1_seed20260803/sumo_seed1105.npz\", \"sha256\": \"b8ddbce9b645c13b42317c233b16ee45a1371748aa7143244560f92f420e5cef\"}, {\"job_signature\": \"710f273a55b203e024288764cdc218d957f91ef702689f21f22cdcb24f4cd676\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/zero/demand_1_seed20260803/sumo_seed1106.npz\", \"sha256\": \"7f073be518615d5517e9fe52e4a54070385d97d2fa2b65578d8288b5ada65507\"}, {\"job_signature\": \"28efa4e5e28c1dca7303adcfb50c2a03c8949507e8c95c5b7b914facdcdd334f\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/zero/demand_1_seed20260803/sumo_seed1107.npz\", \"sha256\": \"44e3435a492d87a718ca7d371a81ca749109e35304413eb74133226a2d65d828\"}, {\"job_signature\": \"16c35a2a8d2c1457d2da5deaa98d69bf1b7fa170e2642a91fbd4d36c628f4a36\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/zero/demand_1_seed20260803/sumo_seed1108.npz\", \"sha256\": \"1dc15662fd35ff44b1c29b8cb93afb52658736869165ef4d9e0b1295ee9db8a0\"}, {\"job_signature\": \"a31cb7d8ee622414d08e1f10ca8e5dc7c8f00fb1c07dfc5a51818a1666ab4f72\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/zero/demand_1_seed20260803/sumo_seed1109.npz\", \"sha256\": \"e9a08254563f884adc9d9530a5e451075a97a648014ef297d144a59d986cb963\"}, {\"job_signature\": \"3087898eede542ed9bc2d391c1ced8fa4bc8682517d500c09852d1cd0cada865\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/shards_formal_v1/zero/demand_1_seed20260803/sumo_seed1110.npz\", \"sha256\": \"2563310286515635025b8a5d749b237df1ba0f54f62ca24eec781cc5f38e5f10\"}]",
+    "split_names": "{\"test\": 2, \"train\": 0, \"validation\": 1}",
+    "state_dim": 13,
+    "state_names": "[\"line_id\", \"station_progress\", \"episode_progress\", \"forward_headway_ratio\", \"backward_headway_ratio\", \"target_forward_headway_fraction\", \"target_backward_headway_fraction\", \"eligible_stranded_fraction\", \"onboard_fraction\", \"eligible_demand_per_headway_fraction\", \"base_dwell_fraction\", \"forward_bus_present\", \"backward_bus_present\"]",
+    "station_max_by_line": "[39.0, 37.0, 34.0, 35.0, 41.0, 42.0, 38.0, 39.0, 46.0, 47.0, 25.0, 24.0]",
+    "transition_semantics": "same SUMO trip at its next strictly downstream station decision event"
+  },
+  "by_policy": {
+    "headway-gain-0.05": {
+      "episodes": 10,
+      "exact_no_hold_rate": 0.49999628994798506,
+      "hold_seconds": {
+        "finite": 134769,
+        "mean": 0.9143782466366291,
+        "n": 134769,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 16.655000686645508,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.002499818801879883,
+          "75": 1.27250075340271,
+          "95": 4.357499122619629,
+          "99": 7.425000190734863
+        },
+        "std": 1.6081034236231095
+      },
+      "holding_cost": {
+        "finite": 134769,
+        "mean": 0.2584110566130339,
+        "n": 134769,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 10.447916984558105,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 0.17116665840148926,
+          "95": 1.4186499118804927,
+          "99": 3.541866540908818
+        },
+        "std": 0.6944858597669128
+      },
+      "reward": {
+        "finite": 134769,
+        "mean": -0.41424810476918866,
+        "n": 134769,
+        "percentiles": {
+          "0": -34.339149475097656,
+          "1": -4.7441317749023435,
+          "100": 0.0,
+          "25": -0.36416664719581604,
+          "5": -1.9603580713272095,
+          "50": -0.08294408023357391,
+          "75": -0.01079095434397459,
+          "95": -0.0,
+          "99": 0.0
+        },
+        "std": 0.9710489546226477
+      },
+      "rows": 134769,
+      "sumo_seeds": [
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1109,
+        1110
+      ],
+      "waiting_cost": {
+        "finite": 134769,
+        "mean": 0.15583704809825735,
+        "n": 134769,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 34.339149475097656,
+          "25": 0.0006908319774083793,
+          "5": 0.0,
+          "50": 0.026018518954515457,
+          "75": 0.11467592418193817,
+          "95": 0.6927983880043018,
+          "99": 1.9807233047485353
+        },
+        "std": 0.5447403334904908
+      }
+    },
+    "headway-gain-0.1": {
+      "episodes": 10,
+      "exact_no_hold_rate": 0.48636886005560703,
+      "hold_seconds": {
+        "finite": 134875,
+        "mean": 1.5695772780417512,
+        "n": 134875,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 37.70000076293945,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.04999995231628418,
+          "75": 2.3249995708465576,
+          "95": 6.960000038146973,
+          "99": 11.359999198913574
+        },
+        "std": 2.5913676067880558
+      },
+      "holding_cost": {
+        "finite": 134875,
+        "mean": 0.459889531661008,
+        "n": 134875,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 30.788333892822266,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 0.33249978721141815,
+          "95": 2.511000227928162,
+          "99": 6.000650138855004
+        },
+        "std": 1.2082023137160631
+      },
+      "reward": {
+        "finite": 134875,
+        "mean": -0.598274163389882,
+        "n": 134875,
+        "percentiles": {
+          "0": -53.80960464477539,
+          "1": -6.920600137710571,
+          "100": 0.0,
+          "25": -0.5042013227939606,
+          "5": -2.91344358921051,
+          "50": -0.09982291609048843,
+          "75": -0.011970636434853077,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "std": 1.4545885497212205
+      },
+      "rows": 134875,
+      "sumo_seeds": [
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1109,
+        1110
+      ],
+      "waiting_cost": {
+        "finite": 134875,
+        "mean": 0.13838463161071402,
+        "n": 134875,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 53.80960464477539,
+          "25": 0.0006805555894970894,
+          "5": 0.0,
+          "50": 0.02239120379090309,
+          "75": 0.09916843473911285,
+          "95": 0.5433179914951324,
+          "99": 1.7737092971801809
+        },
+        "std": 0.613068180772854
+      }
+    },
+    "headway-gain-0.25": {
+      "episodes": 10,
+      "exact_no_hold_rate": 0.4879682516133818,
+      "hold_seconds": {
+        "finite": 134810,
+        "mean": 2.966137261581159,
+        "n": 134810,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 60.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.12499988079071045,
+          "75": 4.374999523162842,
+          "95": 12.812500953674316,
+          "99": 20.0625
+        },
+        "std": 4.786568921209808
+      },
+      "holding_cost": {
+        "finite": 134810,
+        "mean": 0.854220339787357,
+        "n": 134810,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 50.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 0.635416567325592,
+          "95": 4.636105632781968,
+          "99": 10.514583158493043
+        },
+        "std": 2.1947755839824867
+      },
+      "reward": {
+        "finite": 134810,
+        "mean": -0.950766749123628,
+        "n": 134810,
+        "percentiles": {
+          "0": -61.775970458984375,
+          "1": -10.948961896896362,
+          "100": 0.0,
+          "25": -0.7509503215551376,
+          "5": -4.899285936355589,
+          "50": -0.10923927277326584,
+          "75": -0.011284597218036652,
+          "95": -0.0,
+          "99": -0.0
+        },
+        "std": 2.307173265870553
+      },
+      "rows": 134810,
+      "sumo_seeds": [
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1109,
+        1110
+      ],
+      "waiting_cost": {
+        "finite": 134810,
+        "mean": 0.09654640955660752,
+        "n": 134810,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 35.51189422607422,
+          "25": 0.0006280257803155109,
+          "5": 0.0,
+          "50": 0.017355727963149548,
+          "75": 0.07373437285423279,
+          "95": 0.36576317250728585,
+          "99": 1.1508530390262681
+        },
+        "std": 0.4362624863792863
+      }
+    },
+    "headway-gain-0.5": {
+      "episodes": 10,
+      "exact_no_hold_rate": 0.489761396011396,
+      "hold_seconds": {
+        "finite": 134784,
+        "mean": 4.802973484494861,
+        "n": 134784,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 60.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.2499997615814209,
+          "75": 7.375,
+          "95": 20.975006103515625,
+          "99": 32.500000648498535
+        },
+        "std": 7.6495796797002065
+      },
+      "holding_cost": {
+        "finite": 134784,
+        "mean": 1.3844930798101165,
+        "n": 134784,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 50.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 1.100000023841858,
+          "95": 7.5,
+          "99": 16.97916603088379
+        },
+        "std": 3.4392271574760955
+      },
+      "reward": {
+        "finite": 134784,
+        "mean": -1.4582439371375746,
+        "n": 134784,
+        "percentiles": {
+          "0": -53.564754486083984,
+          "1": -17.291761684417725,
+          "100": 0.0,
+          "25": -1.1884543299674988,
+          "5": -7.657138419151305,
+          "50": -0.11417482793331146,
+          "75": -0.009931911015883088,
+          "95": -0.0,
+          "99": 0.0
+        },
+        "std": 3.4931791807605572
+      },
+      "rows": 134784,
+      "sumo_seeds": [
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1109,
+        1110
+      ],
+      "waiting_cost": {
+        "finite": 134784,
+        "mean": 0.07375085764735725,
+        "n": 134784,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 18.55564308166504,
+          "25": 0.0005568544584093615,
+          "5": 0.0,
+          "50": 0.013950904831290245,
+          "75": 0.05715161934494972,
+          "95": 0.2844434097409248,
+          "99": 0.8840225046873146
+        },
+        "std": 0.30011441239300674
+      }
+    },
+    "myopic-welfare-v2": {
+      "episodes": 10,
+      "exact_no_hold_rate": 0.9825113207968056,
+      "hold_seconds": {
+        "finite": 134487,
+        "mean": 0.2809736264345251,
+        "n": 134487,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 60.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 0.0,
+          "95": 0.0,
+          "99": 5.000000476837158
+        },
+        "std": 3.2734296609221323
+      },
+      "holding_cost": {
+        "finite": 134487,
+        "mean": 0.0,
+        "n": 134487,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 0.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "std": 0.0
+      },
+      "reward": {
+        "finite": 134487,
+        "mean": -0.22308208852604544,
+        "n": 134487,
+        "percentiles": {
+          "0": -28.952770233154297,
+          "1": -2.773128309249878,
+          "100": 0.0,
+          "25": -0.17904069274663925,
+          "5": -1.0088087320327759,
+          "50": -0.03780423104763031,
+          "75": -0.0009772179182618856,
+          "95": -0.0,
+          "99": 0.0
+        },
+        "std": 0.647130795705999
+      },
+      "rows": 134487,
+      "sumo_seeds": [
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1109,
+        1110
+      ],
+      "waiting_cost": {
+        "finite": 134487,
+        "mean": 0.22308208852604544,
+        "n": 134487,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 28.952770233154297,
+          "25": 0.0009772179182618856,
+          "5": 0.0,
+          "50": 0.03780423104763031,
+          "75": 0.17904069274663925,
+          "95": 1.0088087320327754,
+          "99": 2.773128309249877
+        },
+        "std": 0.647130795705999
+      }
+    },
+    "random-hurdle-p0.5-beta1-3": {
+      "episodes": 10,
+      "exact_no_hold_rate": 0.4994208580211164,
+      "hold_seconds": {
+        "finite": 134682,
+        "mean": 7.515590091378204,
+        "n": 134682,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 59.63507080078125,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.026198923587799072,
+          "75": 12.39729905128479,
+          "95": 32.12452526092529,
+          "99": 43.767987747192386
+        },
+        "std": 11.142590073039221
+      },
+      "holding_cost": {
+        "finite": 134682,
+        "mean": 1.9271481773088441,
+        "n": 134682,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 46.368995666503906,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 1.717546671628952,
+          "95": 10.538166427612301,
+          "99": 21.697255058288576
+        },
+        "std": 4.309161824005805
+      },
+      "reward": {
+        "finite": 134682,
+        "mean": -2.2499363832325354,
+        "n": 134682,
+        "percentiles": {
+          "0": -55.92925262451172,
+          "1": -22.549276523590088,
+          "100": 0.0,
+          "25": -2.2047353386878967,
+          "5": -11.202401971817016,
+          "50": -0.43515293300151825,
+          "75": -0.05033074598759413,
+          "95": -0.0,
+          "99": 0.0
+        },
+        "std": 4.474046408786802
+      },
+      "rows": 134682,
+      "sumo_seeds": [
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1109,
+        1110
+      ],
+      "waiting_cost": {
+        "finite": 134682,
+        "mean": 0.32278820559420823,
+        "n": 134682,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 35.984798431396484,
+          "25": 0.004148148465901613,
+          "5": 0.0,
+          "50": 0.08294161781668663,
+          "75": 0.3325252905488014,
+          "95": 1.4310743749141688,
+          "99": 3.204220516681672
+        },
+        "std": 0.7264581054068
+      }
+    },
+    "zero": {
+      "episodes": 10,
+      "exact_no_hold_rate": 1.0,
+      "hold_seconds": {
+        "finite": 134533,
+        "mean": 0.0,
+        "n": 134533,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 0.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "std": 0.0
+      },
+      "holding_cost": {
+        "finite": 134533,
+        "mean": 0.0,
+        "n": 134533,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 0.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "std": 0.0
+      },
+      "reward": {
+        "finite": 134533,
+        "mean": -0.23424960454928165,
+        "n": 134533,
+        "percentiles": {
+          "0": -38.71260070800781,
+          "1": -3.05769455909729,
+          "100": 0.0,
+          "25": -0.17886582016944885,
+          "5": -1.0632222175598143,
+          "50": -0.03698842599987984,
+          "75": -0.0010381944011896849,
+          "95": 0.0,
+          "99": -0.0
+        },
+        "std": 0.7084611126220552
+      },
+      "rows": 134533,
+      "sumo_seeds": [
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1109,
+        1110
+      ],
+      "waiting_cost": {
+        "finite": 134533,
+        "mean": 0.23424960454928165,
+        "n": 134533,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 38.71260070800781,
+          "25": 0.0010381944011896849,
+          "5": 0.0,
+          "50": 0.03698842599987984,
+          "75": 0.17886582016944885,
+          "95": 1.0632222175598125,
+          "99": 3.0576945590972873
+        },
+        "std": 0.7084611126220552
+      }
+    }
+  },
+  "dataset": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/transit_smdp_v4_formal_v1.h5",
+  "dataset_sha256": "4edbeea63f57c00fcd90f81ed2c159e00652415bcc9ce8b6f3919f2d7889f11b",
+  "datasets": {
+    "actions": {
+      "dtype": "float32",
+      "shape": [
+        942940,
+        1
+      ]
+    },
+    "delta_t_seconds": {
+      "dtype": "float32",
+      "shape": [
+        942940
+      ]
+    },
+    "demand_scale": {
+      "dtype": "float32",
+      "shape": [
+        942940
+      ]
+    },
+    "discounts": {
+      "dtype": "float32",
+      "shape": [
+        942940
+      ]
+    },
+    "episode_id": {
+      "dtype": "int64",
+      "shape": [
+        942940
+      ]
+    },
+    "holding_cost": {
+      "dtype": "float32",
+      "shape": [
+        942940
+      ]
+    },
+    "next_observations": {
+      "dtype": "float32",
+      "shape": [
+        942940,
+        13
+      ]
+    },
+    "observations": {
+      "dtype": "float32",
+      "shape": [
+        942940,
+        13
+      ]
+    },
+    "policy_id": {
+      "dtype": "int8",
+      "shape": [
+        942940
+      ]
+    },
+    "policy_seed": {
+      "dtype": "int32",
+      "shape": [
+        942940
+      ]
+    },
+    "raw_next_observations": {
+      "dtype": "float32",
+      "shape": [
+        942940,
+        14
+      ]
+    },
+    "raw_observations": {
+      "dtype": "float32",
+      "shape": [
+        942940,
+        14
+      ]
+    },
+    "rewards": {
+      "dtype": "float32",
+      "shape": [
+        942940
+      ]
+    },
+    "scenario_id": {
+      "dtype": "int16",
+      "shape": [
+        942940
+      ]
+    },
+    "source_shard_id": {
+      "dtype": "int16",
+      "shape": [
+        942940
+      ]
+    },
+    "split_id": {
+      "dtype": "uint8",
+      "shape": [
+        942940
+      ]
+    },
+    "sumo_seed": {
+      "dtype": "int32",
+      "shape": [
+        942940
+      ]
+    },
+    "terminals": {
+      "dtype": "uint8",
+      "shape": [
+        942940
+      ]
+    },
+    "trajectory_id": {
+      "dtype": "int64",
+      "shape": [
+        942940
+      ]
+    },
+    "waiting_cost": {
+      "dtype": "float32",
+      "shape": [
+        942940
+      ]
+    }
+  },
+  "delta_t_seconds": {
+    "finite": 942940,
+    "mean": 79.59058582730609,
+    "n": 942940,
+    "percentiles": {
+      "0": 25.0,
+      "1": 32.0,
+      "100": 953.0,
+      "25": 52.0,
+      "5": 40.0,
+      "50": 68.0,
+      "75": 93.0,
+      "95": 157.0,
+      "99": 260.0
+    },
+    "std": 44.87194166019069
+  },
+  "disclosures": [
+    "The offline dataset is training-only; model selection and final testing must use fresh, disjoint simulator and SUMO seeds.",
+    "The documented one-second measurement-resolution rule corrected 26 endpoint headway values from immutable source shards."
+  ],
+  "episodes": 70,
+  "errors": [],
+  "holding_cost": {
+    "finite": 942940,
+    "mean": 0.697998314170181,
+    "n": 942940,
+    "percentiles": {
+      "0": 0.0,
+      "1": 0.0,
+      "100": 50.0,
+      "25": 0.0,
+      "5": 0.0,
+      "50": 0.0,
+      "75": 0.1785908192396164,
+      "95": 3.960138595104197,
+      "99": 12.138163747787464
+    },
+    "std": 2.402238741456196
+  },
+  "logical_content_signature": "fc5a208cc9cbd966543ba095278c82c585303ba3af0b6a5053dbd53ecfa88979",
+  "logical_content_signature_matches": true,
+  "matrix": {
+    "policies": 7,
+    "scenarios": 1,
+    "splits": [
+      0
+    ],
+    "sumo_seeds": [
+      1101,
+      1102,
+      1103,
+      1104,
+      1105,
+      1106,
+      1107,
+      1108,
+      1109,
+      1110
+    ]
+  },
+  "passed": true,
+  "reconstruction_max_absolute_error": {
+    "delta_t_seconds": 0.0,
+    "discounts": 0.0,
+    "holding_cost": 0.0,
+    "next_observations": 0.0,
+    "observations": 0.0,
+    "reward_from_raw": 0.0,
+    "reward_identity": 0.0,
+    "waiting_cost": 0.0
+  },
+  "rewards": {
+    "finite": 942940,
+    "mean": -0.8757531992982703,
+    "n": 942940,
+    "percentiles": {
+      "0": -61.775970458984375,
+      "1": -12.799745912551879,
+      "100": 0.0,
+      "25": -0.5307249128818512,
+      "5": -4.458017039299011,
+      "50": -0.08857271447777748,
+      "75": -0.008146561216562986,
+      "95": 0.0,
+      "99": -0.0
+    },
+    "std": 2.5323902736041073
+  },
+  "rows": 942940,
+  "schema_version": "transit-smdp-v4-audit-v1",
+  "source_integrity": {
+    "declared_shards": 70,
+    "duplicate_matrix_cells": 0,
+    "hash_mismatches": [],
+    "measurement_correction_matches_sources": true,
+    "metadata_mismatches": [],
+    "missing": [],
+    "source_minimum_headways_seconds": {
+      "next_observations.backward_headway_seconds": -0.800000011920929,
+      "next_observations.forward_headway_seconds": -0.800000011920929,
+      "observations.backward_headway_seconds": -0.800000011920929,
+      "observations.forward_headway_seconds": -0.800000011920929
+    },
+    "source_negative_headway_counts": {
+      "next_observations.backward_headway_seconds": 6,
+      "next_observations.forward_headway_seconds": 7,
+      "observations.backward_headway_seconds": 6,
+      "observations.forward_headway_seconds": 7
+    },
+    "unique_matrix_cells": 70,
+    "verified": true,
+    "verified_shards": 70
+  },
+  "state": {
+    "backward_bus_present": {
+      "exact_zero_rate": 0.03264152544170361,
+      "finite": 942940,
+      "mean": 0.9673584745582964,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 1.0,
+        "25": 1.0,
+        "5": 1.0,
+        "50": 1.0,
+        "75": 1.0,
+        "95": 1.0,
+        "99": 1.0
+      },
+      "std": 0.177696528549497
+    },
+    "backward_headway_ratio": {
+      "at_configured_cap": 0,
+      "exact_zero_rate": 0.0007593272106390651,
+      "finite": 942940,
+      "mean": 0.9898746260191306,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.46000000834465027,
+        "100": 3.1288888454437256,
+        "25": 0.9483333826065063,
+        "5": 0.7470000386238098,
+        "50": 1.0,
+        "75": 1.033750057220459,
+        "95": 1.2133333683013916,
+        "99": 1.4352381229400635
+      },
+      "std": 0.15510110534300062
+    },
+    "base_dwell_fraction": {
+      "exact_zero_rate": 0.0,
+      "finite": 942940,
+      "mean": 0.04341729837114291,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.03076923079788685,
+        "1": 0.03076923079788685,
+        "100": 0.25,
+        "25": 0.03076923079788685,
+        "5": 0.03076923079788685,
+        "50": 0.03999999910593033,
+        "75": 0.04923076927661896,
+        "95": 0.07692307978868484,
+        "99": 0.10000000149011612
+      },
+      "std": 0.01684276671094512
+    },
+    "eligible_demand_per_headway_fraction": {
+      "exact_zero_rate": 0.15150804929263792,
+      "finite": 942940,
+      "mean": 0.02274591711107284,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.2368333488702774,
+        "25": 0.004000000189989805,
+        "5": 0.0,
+        "50": 0.014399999752640724,
+        "75": 0.03333333507180214,
+        "95": 0.07283332943916321,
+        "99": 0.10399999469518661
+      },
+      "std": 0.024784514141253332
+    },
+    "eligible_stranded_fraction": {
+      "exact_zero_rate": 0.8665524847816404,
+      "finite": 942940,
+      "mean": 0.008208517952724705,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.6000000238418579,
+        "25": 0.0,
+        "5": 0.0,
+        "50": 0.0,
+        "75": 0.0,
+        "95": 0.03999999910593033,
+        "99": 0.1599999964237213
+      },
+      "std": 0.033624278446146044
+    },
+    "episode_progress": {
+      "exact_zero_rate": 0.0,
+      "finite": 942940,
+      "mean": 0.4400899796800368,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0006249999860301614,
+        "1": 0.07587499916553497,
+        "100": 0.9070833325386047,
+        "25": 0.26745831966400146,
+        "5": 0.13566666841506958,
+        "50": 0.4244999885559082,
+        "75": 0.612541675567627,
+        "95": 0.7740833163261414,
+        "99": 0.8327500224113464
+      },
+      "std": 0.20510879762355688
+    },
+    "forward_bus_present": {
+      "exact_zero_rate": 0.032957558275181875,
+      "finite": 942940,
+      "mean": 0.9670424417248181,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 1.0,
+        "25": 1.0,
+        "5": 1.0,
+        "50": 1.0,
+        "75": 1.0,
+        "95": 1.0,
+        "99": 1.0
+      },
+      "std": 0.17852550973942038
+    },
+    "forward_headway_ratio": {
+      "at_configured_cap": 0,
+      "exact_zero_rate": 0.0006564574628290241,
+      "finite": 942940,
+      "mean": 1.0006743060328898,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.42222222685813904,
+        "100": 4.0,
+        "25": 0.9239583611488342,
+        "5": 0.7138888835906982,
+        "50": 1.0,
+        "75": 1.0758334398269653,
+        "95": 1.2795833349227905,
+        "99": 1.5146666765213013
+      },
+      "std": 0.18801722533985626
+    },
+    "line_id": {
+      "exact_zero_rate": 0.09787367170763782,
+      "finite": 942940,
+      "mean": 5.450016968205825,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 11.0,
+        "25": 2.0,
+        "5": 0.0,
+        "50": 5.0,
+        "75": 9.0,
+        "95": 11.0,
+        "99": 11.0
+      },
+      "std": 3.5286784983765203
+    },
+    "onboard_fraction": {
+      "exact_zero_rate": 0.06360001696820583,
+      "finite": 942940,
+      "mean": 0.30791766207856736,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 1.0,
+        "25": 0.07999999821186066,
+        "5": 0.0,
+        "50": 0.2199999988079071,
+        "75": 0.46000000834465027,
+        "95": 0.9800000190734863,
+        "99": 1.0
+      },
+      "std": 0.28882139813028196
+    },
+    "station_progress": {
+      "exact_zero_rate": 0.02806647294631684,
+      "finite": 942940,
+      "mean": 0.4851044619281015,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.978723406791687,
+        "25": 0.23529411852359772,
+        "5": 0.03999999910593033,
+        "50": 0.48571428656578064,
+        "75": 0.739130437374115,
+        "95": 0.936170220375061,
+        "99": 0.9743589758872986
+      },
+      "std": 0.28984023890723815
+    },
+    "target_backward_headway_fraction": {
+      "exact_zero_rate": 0.0,
+      "finite": 942940,
+      "mean": 0.7435747046166861,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.25,
+        "1": 0.25,
+        "100": 2.5,
+        "25": 0.5,
+        "5": 0.4166666567325592,
+        "50": 0.6666666865348816,
+        "75": 0.9166666865348816,
+        "95": 1.25,
+        "99": 1.5833333730697632
+      },
+      "std": 0.2887579544176675
+    },
+    "target_forward_headway_fraction": {
+      "exact_zero_rate": 0.0,
+      "finite": 942940,
+      "mean": 0.7434563248915963,
+      "n": 942940,
+      "percentiles": {
+        "0": 0.25,
+        "1": 0.25,
+        "100": 2.5,
+        "25": 0.5,
+        "5": 0.4166666567325592,
+        "50": 0.6666666865348816,
+        "75": 0.9166666865348816,
+        "95": 1.25,
+        "99": 1.5833333730697632
+      },
+      "std": 0.28918970335891053
+    }
+  },
+  "trajectories": 27230,
+  "trajectory_group_conflicts": 0,
+  "waiting_cost": {
+    "finite": 942940,
+    "mean": 0.17775488513308024,
+    "n": 942940,
+    "percentiles": {
+      "0": 0.0,
+      "1": 0.0,
+      "100": 53.80960464477539,
+      "25": 0.0008906249422580004,
+      "5": 0.0,
+      "50": 0.027172358706593513,
+      "75": 0.1300462931394577,
+      "95": 0.797771582007407,
+      "99": 2.3454710245132446
+    },
+    "std": 0.5911907417656359
+  }
+}

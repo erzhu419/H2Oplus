@@ -1,0 +1,191 @@
+{
+  "created_utc": "2026-08-13T03:58:53.526387+00:00",
+  "hosts": [
+    {
+      "gpus": [
+        {
+          "physical_gpu": "0",
+          "stages": [
+            {
+              "name": "runtime-balanced-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "rlpd_seed5101",
+                    "rlpd_seed5105",
+                    "wsrl_seed5105",
+                    "cql_seed5105",
+                    "iql_seed5104",
+                    "sac-mixed_seed5103",
+                    "sac-online_seed5102",
+                    "sac-online_seed5104",
+                    "bc_seed5105"
+                  ],
+                  "name": "jtl110gpu-gpu0-runtime-balanced"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "physical_gpu": "1",
+          "stages": [
+            {
+              "name": "runtime-balanced-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "rlpd_seed5102",
+                    "wsrl_seed5101",
+                    "wsrl_seed5102",
+                    "cql_seed5101",
+                    "cql_seed5104",
+                    "iql_seed5103",
+                    "iql_seed5105",
+                    "sac-online_seed5101",
+                    "sac-online_seed5103",
+                    "bc_seed5104"
+                  ],
+                  "name": "jtl110gpu-gpu1-runtime-balanced"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "hostname": "jtl110gpu",
+      "hostname_aliases": [
+        "huiwei-Super-Server"
+      ]
+    },
+    {
+      "gpus": [
+        {
+          "physical_gpu": "0",
+          "stages": [
+            {
+              "name": "runtime-balanced-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "rlpd_seed5103",
+                    "wsrl_seed5103",
+                    "cql_seed5102",
+                    "iql_seed5101",
+                    "sac-mixed_seed5101",
+                    "sac-mixed_seed5104",
+                    "sac-online_seed5105"
+                  ],
+                  "name": "jtl110gpu2-gpu0-runtime-balanced"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "physical_gpu": "1",
+          "stages": [
+            {
+              "name": "runtime-balanced-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "rlpd_seed5104",
+                    "wsrl_seed5104",
+                    "cql_seed5103",
+                    "iql_seed5102",
+                    "sac-mixed_seed5102",
+                    "sac-mixed_seed5105",
+                    "bc_seed5101",
+                    "bc_seed5102",
+                    "bc_seed5103"
+                  ],
+                  "name": "jtl110gpu2-gpu1-runtime-balanced"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "hostname": "jtl110gpu2",
+      "hostname_aliases": [
+        "erzhu419-Super-Server"
+      ]
+    }
+  ],
+  "job_set_sha256": "2644454e0afc4e9adf7086c9f4f9029e6fe8180448f820a29430ae41c47a474b",
+  "plan": {
+    "path": "../training_plans_v7_formal_v2_v7r1/training_plan_v7_formal_core_server_baselines_v7.json",
+    "sha256": "d653f0958d52173400628739664e38dc55e5c634ef536525510e3e6867438025"
+  },
+  "plan_id": "v7-formal-core-server-baselines-v7",
+  "policy": {
+    "baseline_assignment": "each method spans all four GPUs; its fifth seed alternates between the two faster-server GPUs",
+    "capacity_admission": "no method in this plan shares a physical GPU",
+    "other_methods": "one serial worker per physical GPU",
+    "rlpd": "four seeds execute concurrently with one process on each physical GPU; the fifth seed follows serially on the first lane",
+    "runtime_balancing": "execution-only longest-processing-time sharding; signed plan, job signatures, and one process per physical GPU are unchanged",
+    "runtime_comparison": "wall-clock timings are resource observations and are not used for cross-method efficiency claims"
+  },
+  "runtime_balancing": {
+    "algorithm": "unrelated-machine-greedy-earliest-finish-v1",
+    "allow_cross_host": true,
+    "balanced_estimated_makespan_seconds": 77377.811752,
+    "balanced_lane_loads": [
+      {
+        "estimated_seconds": 77354.519851,
+        "hostname": "jtl110gpu",
+        "physical_gpu": "0"
+      },
+      {
+        "estimated_seconds": 77350.677334,
+        "hostname": "jtl110gpu",
+        "physical_gpu": "1"
+      },
+      {
+        "estimated_seconds": 77377.811752,
+        "hostname": "jtl110gpu2",
+        "physical_gpu": "0"
+      },
+      {
+        "estimated_seconds": 77142.763381,
+        "hostname": "jtl110gpu2",
+        "physical_gpu": "1"
+      }
+    ],
+    "estimated_reduction_fraction": 0.185927368,
+    "original_estimated_makespan_seconds": 95050.255559,
+    "original_lane_loads": [
+      {
+        "estimated_seconds": 95050.255559,
+        "hostname": "jtl110gpu",
+        "physical_gpu": "0"
+      },
+      {
+        "estimated_seconds": 63261.582316,
+        "hostname": "jtl110gpu",
+        "physical_gpu": "1"
+      },
+      {
+        "estimated_seconds": 74960.445987,
+        "hostname": "jtl110gpu2",
+        "physical_gpu": "0"
+      },
+      {
+        "estimated_seconds": 74960.445987,
+        "hostname": "jtl110gpu2",
+        "physical_gpu": "1"
+      }
+    ],
+    "runtime_profile": {
+      "path": "../runtime_profiles_v7_formal_v2_v7r1/baseline_observed_runtime_profile.json",
+      "sha256": "3e9850f83f0101502c90cb0fe5a1315820c1b8eff5496d6bad93623b1680fa8f"
+    },
+    "source_dispatch": {
+      "path": "../training_dispatches_v7_formal_v2_v7r1/training_dispatch_v7_core_server_baselines_v7.json",
+      "sha256": "d8565c0d01d357e950aa664e7883089ff8b4a784151d2ecae78ab374b2cd069e"
+    }
+  },
+  "schema_version": "transit-training-dispatch-v1",
+  "status": "runtime-balanced-before-launch"
+}

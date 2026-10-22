@@ -1,0 +1,262 @@
+\section{Experiments and Results}
+\label{sec:experiments}
+
+The experiment has three evidence layers: offline data and simulator
+acceptance, adaptive development, and formal confirmation. Only the last layer
+is used for the confirmatory effect claim.
+
+\subsection{Target benchmark and offline data}
+\label{sec:exp:benchmark}
+
+The target benchmark uses SUMO on the 12 directional services in
+\Cref{fig:network_topology}. Each 24,000-s episode contains the same timetable,
+vehicle capacities, road network, and 389 scheduled vehicle trips. Passenger
+demand is evaluated at multipliers 0.75, 1.00, and 1.25. Within an environment
+block, the three demand levels share one demand-realization seed and one SUMO
+seed; departure times receive stable-uniform perturbations of at most 120 s.
+
+The immutable offline file contains 3,284,718 chronological rows from 240
+complete episodes. Ten independent environment blocks crossed with three
+demand levels and eight behavior policies give 30 exogenous cells and 240
+trajectories. Behaviors are zero hold, two random hurdle policies, four
+fixed-gain schedule-adjusted headway policies, and a closed-form myopic-welfare
+policy. They provide action coverage and are not labelled experts. Data
+collection used SUMO 1.27.1 and Python 3.10.12.
+
+The calibrated online simulator shares the timetable, capacity, journey,
+state, action, and reward contracts. In a preregistered zero-policy audit over
+30 audited cells, every 95\% bootstrap interval stayed within its threshold.
+The registered relative tolerances were 3\% for passenger demand, 5\% for
+decision count, 15\% for generalized and waiting time, 10\% for in-vehicle
+time, and 5\% for completed vehicle-trip duration; completion used an absolute
+0.03 tolerance.
+The largest point gaps were 4.61\% for generalized passenger time, 8.75\% for
+waiting time, 1.66\% for in-vehicle time, 0.43 percentage points for
+completion, and 1.04\% for completed vehicle-trip duration. A second audit
+crossed the same cells with seven nonzero interventions. The largest absolute
+95\% endpoint was 0.00574 for completion, 0.0390 for normalized generalized
+passenger-time response, 0.0498 for waiting response, 0.0200 for in-vehicle
+response, 0.2078 for relative mean hold, and 0.0117 for vehicle-trip duration;
+all were below their preregistered limits. Intervention-response tolerances
+were 0.03 for absolute completion response, 0.10 for normalized generalized,
+waiting, and in-vehicle responses, and 0.05 for decision and trip-duration
+responses. Policy-level mean hold and exact-zero-action rate used relative
+0.35 and absolute 0.10 limits, respectively. Both audits used 10,000 bootstrap
+resamples of episode-level quantities within each demand level, resampling
+SUMO and simulator samples separately. Intervention outcomes were first
+differenced against the same environment's zero-hold outcome; time and count
+responses were normalized by the corresponding SUMO zero-hold mean. These
+acceptance audits precede the independent formal test below.
+
+\subsection{Formal confirmation matrix}
+\label{sec:exp:formal_design}
+
+Formal evaluation was endpoint-only: no area under a learning curve (AULC) was
+computed or claimed. The sole candidate was the reserve-augmented policy in
+\Cref{eq:completion_reserve}. Its direct behavior parent was
+\Cref{eq:direct_parent} with the final 60-s reserve disabled. Five
+seed-matched actor tensors were fixed before evaluation.
+
+Seven supportive controls were also frozen: the raw v14 terminal-quarter
+actor, the base H2O+ endpoint, online-only SAC, delayed-actor v10, actor-hold
+v11, actor-ramp v12, and proximal-strong v13. Together with the candidate and
+direct parent, nine algorithm labels crossed with five training seeds to form
+45 physical behaviors. These controls provide lineage context; they do not
+expand the confirmatory claim beyond candidate versus direct parent.
+
+Ten fresh formal environment blocks used SUMO seeds 8101--8110 and demand
+realization seeds 8201--8210. None appeared in training or adaptive
+development. Crossing 10 blocks, three demand levels, and 45 behaviors produced
+1,350 new SUMO episodes and 30 fresh environment cells. Formal execution used
+SUMO/libsumo 1.25.0 under Python 3.8.20. All policies in a cell shared the same
+exogenous realization.
+
+\subsection{Endpoints and preregistered inference}
+\label{sec:exp:statistics}
+
+The primary endpoint is $Y$, accrued generalized passenger seconds per departed
+passenger; lower is better. The service endpoint is $R_{\mathrm{cmp}}$, and
+unfinished passenger count $U$ is reported descriptively, all as defined in
+\Cref{eq:completion_rate}. The independent analysis unit is the formal environment block.
+For each candidate--parent comparison, the five training seeds and three demand
+levels yield 15 paired observations per block; these are averaged before any
+sign test. Let $\beta\in\{1,\ldots,10\}$ index formal blocks,
+$\xi\in\{1,\ldots,5\}$ index training seeds, and
+$d\in\mathcal{D}_{\mathrm{dem}}=\{0.75,1.00,1.25\}$ denote the demand
+multiplier. Superscripts $\mathrm{safe}$ and $\mathrm{par}$ identify the
+candidate and parent, respectively. Their primary block difference is
+\begin{equation}
+\Delta Y_{\beta}=\frac{1}{15}
+\sum_{\xi=1}^{5}\sum_{d\in\mathcal{D}_{\mathrm{dem}}}
+\left(Y^{\mathrm{safe}}_{\beta,\xi,d}
+-Y^{\mathrm{par}}_{\beta,\xi,d}\right).
+\label{eq:block_difference}
+\end{equation}
+The same averaging in \Cref{eq:block_difference} defines
+$\Delta R_{\mathrm{cmp},\beta}$ and $\Delta U_{\beta}$. In the tables,
+$\Delta Y$, $\Delta R_{\mathrm{cmp}}$, and $\Delta U$ denote mean paired
+differences over all cells or the stated demand or seed subset.
+
+Primary superiority uses a one-sided exact paired sign test. Completion uses
+the same test after shifting each block difference by the noninferiority margin
+$\varepsilon_{\mathrm{NI}}=0.003$: a block is a win when
+$\Delta R_{\mathrm{cmp},\beta}>-\varepsilon_{\mathrm{NI}}$.
+A primary win requires $\Delta Y_{\beta}<0$. Ties are nonwins. For a win
+count $w\in\{0,\ldots,10\}$, the one-sided sign-test probability is
+\begin{equation}
+p_{\mathrm{sign}}(w)=2^{-10}\sum_{\upsilon=w}^{10}
+\binom{10}{\upsilon},
+\label{eq:sign_probability}
+\end{equation}
+where $\upsilon$ is the summation index for possible win counts and
+$\binom{10}{\upsilon}$ is the binomial coefficient. At
+one-sided significance level $\alpha_{\mathrm{sig}}=0.025$, at least 9 of
+10 wins are required by \Cref{eq:sign_probability}
+($p_{\mathrm{sign}}(9)=0.010742$). The confirmatory intersection--union test passes
+only if both primary superiority and completion noninferiority pass. Mean
+direction, demand-stratum direction, result completeness, and parent artifact
+and training stability were additional preregistered gates.
+
+\subsection{Confirmed candidate--parent effect}
+\label{sec:exp:primary_results}
+
+All 1,350 results and all ten 135-job block manifests passed independent
+validation. \Cref{tab:formal_primary} reports the endpoint means. The candidate
+reduced the primary endpoint by 92.12 s per departed passenger, a descriptive
+relative reduction of 3.71\%. Completion increased by 0.00466 (0.466
+percentage points), and unfinished passengers decreased by 77.22 (11.78\%).
+
+\begin{table}[t]
+\centering
+\small
+\caption{Formal endpoint means for the preregistered candidate and its direct
+behavior parent. The difference is candidate minus parent.}
+\label{tab:formal_primary}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Policy & Gen. passenger s/departed & Completion & Unfinished \\
+\midrule
+Direct parent & 2,484.86 & 0.96185 & 655.42 \\
+Reserve-augmented candidate & \textbf{2,392.73} & \textbf{0.96650} & \textbf{578.20} \\
+Difference & $-92.12$ & $+0.00466$ & $-77.22$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+The primary difference was negative in all ten blocks, giving 10 of 10 wins
+and a one-sided exact sign-test value of $p_{\mathrm{sign}}(10)=0.0009766$. Completion differences
+were positive in every block, so completion noninferiority also achieved 10 of
+10 wins and $p_{\mathrm{sign}}(10)=0.0009766$ after the margin shift. The intersection--union test
+therefore passed. All preregistered artifact, parent-stability, mean,
+demand-stratum, and result-completeness gates passed as well.
+
+The effect was directionally consistent across demand levels
+(\Cref{tab:demand_effect}). Its magnitude increased with demand: the primary
+reduction ranged from 40.29 s at demand 0.75 to 148.46 s at demand 1.25, while
+completion improved at every level. It was also directionally consistent for
+each of the five training seeds: primary differences ranged from $-87.25$ to
+$-97.44$ s and completion differences from $+0.00444$ to $+0.00485$
+(\Cref{app:seed_effect,tab:seed_effect}).
+
+\begin{table}[t]
+\centering
+\small
+\caption{Candidate-minus-parent formal differences by demand multiplier.
+Negative generalized time and unfinished counts are favorable; positive
+completion is favorable.}
+\label{tab:demand_effect}
+\begin{tabular}{lrrr}
+\toprule
+Demand & $\Delta Y$ (s/departed) & $\Delta R_{\mathrm{cmp}}$ & $\Delta U$ (passengers) \\
+\midrule
+0.75 & $-40.29$ & $+0.00185$ & $-21.00$ \\
+1.00 & $-87.61$ & $+0.00470$ & $-70.92$ \\
+1.25 & $-148.46$ & $+0.00741$ & $-139.74$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Supportive lineage controls}
+\label{sec:exp:controls}
+
+\Cref{tab:formal_controls} gives descriptive means for all fixed algorithm
+labels. The reserve-augmented candidate had lower generalized passenger time and
+higher completion than every listed control, including online-only SAC. Its
+primary block difference versus each control was favorable in all ten blocks.
+These comparisons were prespecified robustness gates, but the controls do not
+share the candidate's exact behavior parent and are not part of the
+intersection--union confirmatory claim.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Descriptive formal means for the fixed candidate, direct parent, raw
+actor, and lineage controls. Bold denotes the best displayed mean.}
+\label{tab:formal_controls}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Algorithm label & Gen. passenger s/departed & Completion & Unfinished passengers \\
+\midrule
+Reserve-augmented candidate & \textbf{2,392.73} & \textbf{0.96650} & \textbf{578.20} \\
+Direct behavior parent & 2,484.86 & 0.96185 & 655.42 \\
+Raw v14 terminal-quarter actor & 2,623.19 & 0.96453 & 610.03 \\
+Base H2O+ & 2,696.98 & 0.96288 & 637.41 \\
+Online-only SAC & 2,593.85 & 0.96232 & 648.31 \\
+Delayed actor (v10) & 2,532.20 & 0.95894 & 702.57 \\
+Actor hold (v11) & 2,569.68 & 0.96023 & 681.31 \\
+Actor ramp (v12) & 2,585.56 & 0.96194 & 653.26 \\
+Proximal strong (v13) & 2,581.26 & 0.96053 & 676.66 \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}
+
+\subsection{Data and environment diagnostics}
+\label{sec:exp:validity}
+
+The artifact checks found no nonfinite rows, no passenger-ledger reconstruction
+error, and 240 terminal rows for 240 trajectories. Nevertheless, four factors
+qualify algorithmic interpretation. \Cref{app:support} provides the support
+counts and dataset-integrity details.
+
+First, the 3.28 million serialized transitions arise from only 30 independent
+exogenous cells, each reused by eight behavior policies. Statistical evidence
+must therefore be organized by environment block rather than transition.
+Second, 80.2246\% of offline actions are exact zero. The final low-load guard
+appears in 3.91\% of offline rows, and only 3.69\% of those guard-state actions
+are at least 30 s. The 60-s reserve should consequently be interpreted as a
+bounded operational overlay, not a behavior learned from dense action support.
+
+Third, the ratio diagnostic generalized poorly. Mean joint classifier area
+under the receiver-operating-characteristic curve (AUC) was 0.9477 on training data
+and 0.4520 on trajectory-held-out validation data; mean raw validation
+effective sample size (ESS) fraction was 0.0615. \Cref{app:ratio,tab:ratio_diag}
+reports the across-seed diagnostic summary. Unit simulator weights prevented
+this failure from changing the sealed optimizer, but no dynamics-correction
+effect is established. Fourth, offline collection used SUMO 1.27.1 whereas
+formal evaluation used SUMO/libsumo 1.25.0. The fresh formal result therefore
+remains favorable in the evaluation runtime, but a paired version-sensitivity
+experiment was not conducted. Canonical feature clipping was
+otherwise limited: only 1,565 rows (0.0476\%) exceeded the backward-headway
+cap, and the other audited caps had zero exposure.
+
+\subsection{Execution and reproducibility}
+\label{sec:exp:reproducibility}
+
+Each formal result binds the method identity, training seed, actor tensor,
+checkpoint, target dataset, evaluator source, scenario, and runtime. Ten matrix
+manifests account for all 1,350 files. A frozen analysis produced the reported
+statistics, and a separate implementation independently recomputed the result
+count, means, block wins, sign-test value, and all preregistered gates. The
+closeout also verified that no local SUMO execution occurred during analysis
+and that formal result files were not modified.
+
+Only result JavaScript Object Notation (JSON) files, matrix manifests, compact logs, and verification
+metadata were synchronized from the evaluation server. Checkpoints, datasets,
+optimizer state, replay buffers, and remote workspaces were not duplicated in
+the paper artifact. This preserves a minimal reproducibility package while the
+frozen deployment manifest records the larger server-side dependencies.
+\Cref{app:evidence} identifies the compact analysis and verification files.

@@ -1,0 +1,391 @@
+{
+  "benchmark_deployment": {
+    "aggregate_sha256": "50af7face48eafd1021cad3e6ab4341eeab0bf8bb4ce2f7c21f02f1d208260ae",
+    "entry_count": 418,
+    "manifest_sha256": "35e02166f5652339f5f2d2b3e36376d6fa1d5182a71ed07c2c60988e142a6492",
+    "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/deployments/cpu_eval_v5"
+  },
+  "created_utc": "2026-08-10T02:39:32.658794+00:00",
+  "data": {
+    "sha256": "6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899",
+    "snapshot_data_used": false
+  },
+  "decision": {
+    "automatic_single_process_cpu_fraction": "2/3",
+    "automatic_worker_cap_on_96_physical_cores": 64,
+    "do_not_use_workers": 80,
+    "formal_dispatch": "use more deterministic shards than nodes and assign the next shard to the next available eligible node; merge only after every shard manifest passes",
+    "reason": "80 workers was slower and consumed substantially more CPU time than 64; equal six-node sharding exposed a node006 straggler, so dynamic shard assignment is required",
+    "shared_cluster_workers_per_node": 16
+  },
+  "formal_result_eligible": false,
+  "implemented_deployment": {
+    "aggregate_sha256": "4755e943f6e8052ae1296d196cd1a2040ce563dac52a31325bc6c2ffb5c676bd",
+    "entry_count": 418,
+    "manifest_sha256": "b89ec29ca0471bfcbbaa06896994c67ac3a100900e13f8e287066e03ad5c03d7",
+    "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/deployments/cpu_eval_v6"
+  },
+  "isolation": {
+    "background_load_present": true,
+    "exclusive_node": false,
+    "interpretation": "operational shared-cluster gate, not an isolated hardware benchmark"
+  },
+  "replicated_matrix_multinode": {
+    "aggregate_jobs_per_barrier_second": 1.437297879985627,
+    "barrier_wall_seconds": 83.49,
+    "method_counts": {
+      "zero-hold-throughput-replica-01": 30,
+      "zero-hold-throughput-replica-02": 30,
+      "zero-hold-throughput-replica-03": 30,
+      "zero-hold-throughput-replica-04": 30
+    },
+    "nodes": {
+      "node001": {
+        "cpu_percent": 883.0,
+        "elapsed_wall_seconds": 51.87,
+        "involuntary_context_switches": 8629,
+        "jobs_per_wall_second": 0.38557933294775404,
+        "major_page_faults": 0,
+        "matrix_manifest": {
+          "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/multinode_6x16/matrix_manifest.shard-0000-of-0006.json",
+          "sha256": "c3bdb97e8af3f3453d53b81e80faa6313c784d2445b46f8b64f525dae36c408b"
+        },
+        "maximum_resident_set_kbytes": 485500,
+        "minor_page_faults": 9309641,
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/time_multinode_node001.txt",
+        "selected_jobs": 20,
+        "sha256": "8fdb9d0eea425fe05e188d85b140f2a6f0248a2dac4a9eb4162b137de5e948f0",
+        "shard_index": 0,
+        "swaps": 0,
+        "system_cpu_seconds": 19.54,
+        "user_cpu_seconds": 438.68,
+        "voluntary_context_switches": 79475
+      },
+      "node002": {
+        "cpu_percent": 858.0,
+        "elapsed_wall_seconds": 45.11,
+        "involuntary_context_switches": 8176,
+        "jobs_per_wall_second": 0.44336067390822437,
+        "major_page_faults": 50,
+        "matrix_manifest": {
+          "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/multinode_6x16/matrix_manifest.shard-0001-of-0006.json",
+          "sha256": "e8f0aec2278dd3a4d9c08c9898976fa8312786c8ec4c51c96e23e140911b0ae8"
+        },
+        "maximum_resident_set_kbytes": 485500,
+        "minor_page_faults": 8368189,
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/time_multinode_node002.txt",
+        "selected_jobs": 20,
+        "sha256": "18304104c842a78ca20f817374b045d4357c8b86c0933011906eb0b9c51ce427",
+        "shard_index": 1,
+        "swaps": 0,
+        "system_cpu_seconds": 18.08,
+        "user_cpu_seconds": 369.14,
+        "voluntary_context_switches": 96516
+      },
+      "node003": {
+        "cpu_percent": 842.0,
+        "elapsed_wall_seconds": 48.52,
+        "involuntary_context_switches": 7452,
+        "jobs_per_wall_second": 0.4122011541632316,
+        "major_page_faults": 49,
+        "matrix_manifest": {
+          "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/multinode_6x16/matrix_manifest.shard-0002-of-0006.json",
+          "sha256": "b979d6c8902f3e997a7f71bad0c9d0ba54a58e9188467a4f8afa32e23f8c75cb"
+        },
+        "maximum_resident_set_kbytes": 488084,
+        "minor_page_faults": 8314003,
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/time_multinode_node003.txt",
+        "selected_jobs": 20,
+        "sha256": "c6e5590626a856ff306f96e8338d72fb95daac74632f82977fbd83e48e5704eb",
+        "shard_index": 2,
+        "swaps": 0,
+        "system_cpu_seconds": 18.37,
+        "user_cpu_seconds": 390.48,
+        "voluntary_context_switches": 81297
+      },
+      "node004": {
+        "cpu_percent": 930.0,
+        "elapsed_wall_seconds": 47.96,
+        "involuntary_context_switches": 8376,
+        "jobs_per_wall_second": 0.4170141784820684,
+        "major_page_faults": 49,
+        "matrix_manifest": {
+          "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/multinode_6x16/matrix_manifest.shard-0003-of-0006.json",
+          "sha256": "2c54b1f1b42639a4d73406ec900c7fd882fdb04005b7a6ded89c7fb9b6a1735f"
+        },
+        "maximum_resident_set_kbytes": 485472,
+        "minor_page_faults": 9473929,
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/time_multinode_node004.txt",
+        "selected_jobs": 20,
+        "sha256": "8fb9f71d9880de99134457642237c6e64fb7ffd531f49deb2a734f35ebaa83ea",
+        "shard_index": 3,
+        "swaps": 0,
+        "system_cpu_seconds": 19.92,
+        "user_cpu_seconds": 426.32,
+        "voluntary_context_switches": 80214
+      },
+      "node005": {
+        "cpu_percent": 904.0,
+        "elapsed_wall_seconds": 49.63,
+        "involuntary_context_switches": 7620,
+        "jobs_per_wall_second": 0.40298206729800523,
+        "major_page_faults": 0,
+        "matrix_manifest": {
+          "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/multinode_6x16/matrix_manifest.shard-0004-of-0006.json",
+          "sha256": "39ff28fe7d143e7f1e8272b5854584755d2d853f4805679f6ab1bf9abd4dee87"
+        },
+        "maximum_resident_set_kbytes": 485500,
+        "minor_page_faults": 9990287,
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/time_multinode_node005.txt",
+        "selected_jobs": 20,
+        "sha256": "560b1dcead7483acc39752ebabe409c1e9629d9034c7415b521e7bd5bc00642a",
+        "shard_index": 4,
+        "swaps": 0,
+        "system_cpu_seconds": 20.37,
+        "user_cpu_seconds": 428.53,
+        "voluntary_context_switches": 65689
+      },
+      "node006": {
+        "cpu_percent": 904.0,
+        "elapsed_wall_seconds": 83.49,
+        "involuntary_context_switches": 15519,
+        "jobs_per_wall_second": 0.2395496466642712,
+        "major_page_faults": 50,
+        "matrix_manifest": {
+          "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/multinode_6x16/matrix_manifest.shard-0005-of-0006.json",
+          "sha256": "f0301d31b67f77a6f8a5905c13d5b391154d7f0898034528307d05f016762b59"
+        },
+        "maximum_resident_set_kbytes": 485460,
+        "minor_page_faults": 12731555,
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/time_multinode_node006.txt",
+        "selected_jobs": 20,
+        "sha256": "09874e5b27577087fc58ac5be2703ecce5fadd5968a264558ef797dc7c259787",
+        "shard_index": 5,
+        "swaps": 0,
+        "system_cpu_seconds": 34.25,
+        "user_cpu_seconds": 720.68,
+        "voluntary_context_switches": 81197
+      }
+    },
+    "shard_count": 6,
+    "transition_max": 45,
+    "transition_min": 42,
+    "transition_sum": 5320,
+    "unique_job_signatures": 120,
+    "validated_results": 120,
+    "workers_per_node": 16
+  },
+  "replicated_matrix_single_node": {
+    "32": {
+      "cpu_percent": 2497.0,
+      "elapsed_wall_seconds": 93.22999999999999,
+      "involuntary_context_switches": 43317,
+      "jobs_per_wall_second": 1.2871393328327794,
+      "major_page_faults": 0,
+      "matrix_manifest": {
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/workers32/matrix_manifest.json",
+        "sha256": "df70c9e4d1100b00f377cde5952d63a94ca9a67f8ad2e6915b54b6a2810b6a03"
+      },
+      "maximum_resident_set_kbytes": 500020,
+      "method_counts": {
+        "zero-hold-throughput-replica-01": 30,
+        "zero-hold-throughput-replica-02": 30,
+        "zero-hold-throughput-replica-03": 30,
+        "zero-hold-throughput-replica-04": 30
+      },
+      "minor_page_faults": 46883870,
+      "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/time_workers32.txt",
+      "sha256": "530bdd62e02472d6c44bed1eeacee41f51ba8f6953681b6740246ffc8ce8ae32",
+      "swaps": 0,
+      "system_cpu_seconds": 101.26,
+      "transition_max": 45,
+      "transition_min": 42,
+      "transition_sum": 5320,
+      "unique_job_signatures": 120,
+      "user_cpu_seconds": 2227.45,
+      "validated_results": 120,
+      "voluntary_context_switches": 315562
+    },
+    "48": {
+      "cpu_percent": 3525.0,
+      "elapsed_wall_seconds": 107.66,
+      "involuntary_context_switches": 78149,
+      "jobs_per_wall_second": 1.1146201003158092,
+      "major_page_faults": 0,
+      "matrix_manifest": {
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/workers48/matrix_manifest.json",
+        "sha256": "5350e6ab9f963b1b9d555aff9085bc77cab54452f73344ab21a1f22e873eafdd"
+      },
+      "maximum_resident_set_kbytes": 500036,
+      "method_counts": {
+        "zero-hold-throughput-replica-01": 30,
+        "zero-hold-throughput-replica-02": 30,
+        "zero-hold-throughput-replica-03": 30,
+        "zero-hold-throughput-replica-04": 30
+      },
+      "minor_page_faults": 66029061,
+      "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/time_workers48.txt",
+      "sha256": "72b41e5231b42000e1fba0f7272746f801b4ca29c9629d9390176711c90adb59",
+      "swaps": 0,
+      "system_cpu_seconds": 144.72,
+      "transition_max": 45,
+      "transition_min": 42,
+      "transition_sum": 5320,
+      "unique_job_signatures": 120,
+      "user_cpu_seconds": 3651.41,
+      "validated_results": 120,
+      "voluntary_context_switches": 398477
+    },
+    "64": {
+      "cpu_percent": 4231.0,
+      "elapsed_wall_seconds": 63.99,
+      "involuntary_context_switches": 54564,
+      "jobs_per_wall_second": 1.8752930145335207,
+      "major_page_faults": 0,
+      "matrix_manifest": {
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/workers64/matrix_manifest.json",
+        "sha256": "d53281bfa040095fad874e9b934c4598fd37581401da773dab9ef8f71e78bcd9"
+      },
+      "maximum_resident_set_kbytes": 500036,
+      "method_counts": {
+        "zero-hold-throughput-replica-01": 30,
+        "zero-hold-throughput-replica-02": 30,
+        "zero-hold-throughput-replica-03": 30,
+        "zero-hold-throughput-replica-04": 30
+      },
+      "minor_page_faults": 50222834,
+      "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/time_workers64.txt",
+      "sha256": "b5335289eee924581ee8c1ab7b3aa1ea8303beef21b8fe63e0f4e571e8ab7cdb",
+      "swaps": 0,
+      "system_cpu_seconds": 115.64,
+      "transition_max": 45,
+      "transition_min": 42,
+      "transition_sum": 5320,
+      "unique_job_signatures": 120,
+      "user_cpu_seconds": 2592.53,
+      "validated_results": 120,
+      "voluntary_context_switches": 478392
+    },
+    "80": {
+      "cpu_percent": 4844.0,
+      "elapsed_wall_seconds": 86.76,
+      "involuntary_context_switches": 92168,
+      "jobs_per_wall_second": 1.3831258644536653,
+      "major_page_faults": 0,
+      "matrix_manifest": {
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/workers80/matrix_manifest.json",
+        "sha256": "5414460d39d8f9ed080c08fa3df0323568d8f9032a612768683a2fb3c9359d1d"
+      },
+      "maximum_resident_set_kbytes": 500000,
+      "method_counts": {
+        "zero-hold-throughput-replica-01": 30,
+        "zero-hold-throughput-replica-02": 30,
+        "zero-hold-throughput-replica-03": 30,
+        "zero-hold-throughput-replica-04": 30
+      },
+      "minor_page_faults": 66538657,
+      "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v2/time_workers80.txt",
+      "sha256": "518ac6e72d2e0a4d1f0643b81a372cb4129a85cbfb2170e9b27ee124053057b5",
+      "swaps": 0,
+      "system_cpu_seconds": 162.03,
+      "transition_max": 45,
+      "transition_min": 42,
+      "transition_sum": 5320,
+      "unique_job_signatures": 120,
+      "user_cpu_seconds": 4041.3,
+      "validated_results": 120,
+      "voluntary_context_switches": 531985
+    }
+  },
+  "schema_version": "transit-v7-cpu-evaluation-throughput-audit-v1",
+  "small_matrix_single_node": {
+    "16": {
+      "cpu_percent": 1081.0,
+      "elapsed_wall_seconds": 51.95,
+      "involuntary_context_switches": 10638,
+      "jobs_per_wall_second": 0.5774783445620789,
+      "major_page_faults": 0,
+      "matrix_manifest": {
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v1/workers16/matrix_manifest.json",
+        "sha256": "06bb7ef16d087797c0c509525a1797530aa01bed33d55277c6ca3ee84f950469"
+      },
+      "maximum_resident_set_kbytes": 488072,
+      "method_counts": {
+        "zero-hold-server-runtime-smoke": 30
+      },
+      "minor_page_faults": 11785174,
+      "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v1/time_workers16.txt",
+      "sha256": "2d04a6b102bc1a1f7267c94e5b0c78d2368a758ade8f6b49ed4945d96d375083",
+      "swaps": 0,
+      "system_cpu_seconds": 25.36,
+      "transition_max": 45,
+      "transition_min": 42,
+      "transition_sum": 1330,
+      "unique_job_signatures": 30,
+      "user_cpu_seconds": 536.6,
+      "validated_results": 30,
+      "voluntary_context_switches": 91048
+    },
+    "30": {
+      "cpu_percent": 1721.0,
+      "elapsed_wall_seconds": 35.75,
+      "involuntary_context_switches": 12302,
+      "jobs_per_wall_second": 0.8391608391608392,
+      "major_page_faults": 0,
+      "matrix_manifest": {
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v1/workers30/matrix_manifest.json",
+        "sha256": "da6023be7afb6d90e93cb0cbef30f1478ee5a6b87e69de36e9010b9b93f9e0c0"
+      },
+      "maximum_resident_set_kbytes": 500020,
+      "method_counts": {
+        "zero-hold-server-runtime-smoke": 30
+      },
+      "minor_page_faults": 12633898,
+      "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v1/time_workers30.txt",
+      "sha256": "ad1e6c06917bc053620d274bfbc649b599d9d2fb6eabe3f65cd887362e01bdf3",
+      "swaps": 0,
+      "system_cpu_seconds": 28.15,
+      "transition_max": 45,
+      "transition_min": 42,
+      "transition_sum": 1330,
+      "unique_job_signatures": 30,
+      "user_cpu_seconds": 587.25,
+      "validated_results": 30,
+      "voluntary_context_switches": 126978
+    },
+    "8": {
+      "cpu_percent": 634.0,
+      "elapsed_wall_seconds": 83.97,
+      "involuntary_context_switches": 9617,
+      "jobs_per_wall_second": 0.35727045373347627,
+      "major_page_faults": 1,
+      "matrix_manifest": {
+        "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v1/workers08/matrix_manifest.json",
+        "sha256": "ce670209cfa41df025b5fd5809d42f372ce55d5aed2d2a578715676a2b3e2ccd"
+      },
+      "maximum_resident_set_kbytes": 485476,
+      "method_counts": {
+        "zero-hold-server-runtime-smoke": 30
+      },
+      "minor_page_faults": 12443041,
+      "path": "/home/zhengliang01/scheduleurm_work/H2Oplus/v7_cpu_eval/results/throughput_gate_v1/time_workers08.txt",
+      "sha256": "f3cdf1f766b31632c5f5830d95e465716a704edfae75b68d8d67ad2bd2c4fc40",
+      "swaps": 0,
+      "system_cpu_seconds": 27.17,
+      "transition_max": 45,
+      "transition_min": 42,
+      "transition_sum": 1330,
+      "unique_job_signatures": 30,
+      "user_cpu_seconds": 505.83,
+      "validated_results": 30,
+      "voluntary_context_switches": 78648
+    }
+  },
+  "study_stage": "diagnostic",
+  "sumo_runtime": {
+    "backend": "libsumo",
+    "portable_signature": "1dff3f98dc13d6e33a23a4333346624fc1b2162c96c89192496ce20da5eca78f",
+    "version": "1.25.0"
+  },
+  "warning": "Replicated zero-hold jobs measure execution throughput only and must never be used as policy-effectiveness evidence."
+}

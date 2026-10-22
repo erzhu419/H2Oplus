@@ -1,0 +1,250 @@
+\section{Method}
+\label{sec:method}
+
+The final controller has two components: a frozen transit-adapted H2O+ actor
+and a deterministic physical-action transform. Learning supplies a continuous
+state-dependent holding proposal; the transform calibrates its magnitude and
+applies a bounded service-completion reserve. No parameter is updated during
+target-SUMO evaluation.
+
+\subsection{Structured hurdle actor}
+\label{sec:method:architecture}
+
+The actor, critics, and value function use separate structured state encoders
+with the same topology. A shared slot network encodes each of the 16 possible
+event slots. Five pooled views---the current event, active-slot mean,
+active-slot maximum, previously selected-slot mean, and future-slot
+mean---are concatenated with the five-value batch prefix and mapped to a
+256-dimensional representation. This preserves the ordered action prefix of a
+simultaneous batch while masking inactive padding.
+
+Because exact zero hold is frequent and operationally distinct from a small
+positive duration, the actor is a hurdle distribution. Let
+$p^+_{\phi}(s)=\sigmoid(g_{\phi}(s))$ be the positive-hold
+probability, where $g_{\phi}(s)$ is the gate logit and
+$\sigmoid(\zeta)=1/(1+\exp(-\zeta))$. Conditional on holding, the latent variable
+$\zeta\sim\mathcal{N}(\mu_{\phi}(s),\sigma_{\phi}^2(s))$ follows a normal
+distribution with mean $\mu_{\phi}(s)$ and positive standard deviation
+$\sigma_{\phi}(s)$. Its positive-branch action is
+$a^+=2\sigmoid(\zeta)-1\in(-1,1)$. The policy measure is
+\begin{equation}
+\pi_{\phi}(\mathrm{d}a\mid s)=
+\left(1-p^+_{\phi}(s)\right)\delta_{-1}(\mathrm{d}a)
++p^+_{\phi}(s)f_{\phi}(a\mid s)
+\mathbb{I}\{a\in(-1,1)\}\,\mathrm{d}a,
+\label{eq:hurdle_policy}
+\end{equation}
+where $\delta_{-1}$ is the unit point mass at the no-hold action,
+$f_{\phi}(a\mid s)$ is the conditional logistic-normal action density,
+$\mathbb{I}\{\cdot\}$ is one when its condition holds and zero otherwise,
+and $\mathrm{d}a$ denotes the continuous-action measure. For likelihoods and
+entropy, we use the density $\varpi_{\phi}(a\mid s)$ with respect to the common
+point-mass-plus-Lebesgue measure: it is $1-p^+_{\phi}(s)$ at $a=-1$ and
+$p^+_{\phi}(s)f_{\phi}(a\mid s)$ for $-1<a<1$.
+\Cref{prop:hurdle} in \Cref{app:properties:hurdle} derives the density and
+normalization, and shows that $2\sigmoid(\mu_{\phi}(s))-1$ is the positive
+branch's median, not generally its mean.
+
+Deterministic evaluation uses that median when $p^+_{\phi}(s)\geq0.5$ and
+otherwise returns $a=-1$. Physical holds are obtained through
+\Cref{eq:v7_action} and remain in $[0,60]$ s. The implementation keeps the
+continuous branch strictly inside $(-1,1)$ by clipping at floating-point
+precision; the operational transform can still apply the exact 60-s cap.
+
+The critic has two independently parameterized heads, with two target heads
+updated by Polyak averaging at rate 0.005. The actor, critic, and value heads
+each use two 256-unit hidden layers after the structured encoder. Further
+implementation values are given in \Cref{app:architecture,app:training}.
+
+\subsection{Offline initialization and simulator continuation}
+\label{sec:method:training}
+
+Five actors, with training seeds 6201--6205, were initialized by 50,000 IQL
+updates on the immutable target replay~\citep{kostrikov2022iql}. For target
+critic minimum $\bar Q_{\min}(s,a)=\min_{i\in\{1,2\}}Q_{\bar\theta_i}(s,a)$
+and value function $V_{\nu}(s)$, the advantage
+is $A(s,a)=\bar Q_{\min}(s,a)-V_{\nu}(s)$. Here $i$ indexes the two critic
+heads, $Q_{\theta_i}$ and $Q_{\bar\theta_i}$ are the online and target
+state--action value functions with parameter vectors $\theta_i$ and
+$\bar\theta_i$, and $\nu$ is the value-network parameter vector.
+All value functions use rewards
+scaled by $\kappa_r=10^{-4}$ inside the trainer, not physical passenger-seconds.
+The value uses expectile 0.7, and the
+actor uses the advantage weight
+\begin{equation}
+w_{\mathrm{IQL}}(s,a)=
+\min\left\{\exp\left(3A(s,a)\right),100\right\}.
+\label{eq:iql_weight}
+\end{equation}
+Here $w_{\mathrm{IQL}}$ is the capped regression weight. The mixed-measure
+log likelihood $\log\varpi_{\phi}(a\mid s)$ from \Cref{eq:hurdle_policy} is
+used for advantage-weighted actor regression.
+
+After a 5,000-event frozen-policy warmup, training continued in the calibrated
+online simulator with 50/50 target and simulator critic minibatches and a
+SAC-style actor objective~\citep{haarnoja2018soft,haarnoja2018applications}.
+Define the entropy-regularized target-state bootstrap by
+\begin{equation}
+B_{\mathrm{SAC}}(s')=
+\E_{a\sim\pi_{\phi}(\cdot\mid s')}
+\left[\bar Q_{\min}(s',a)-\eta_{\mathrm{ent}}
+\log\varpi_{\phi}(a\mid s')\right],
+\label{eq:sac_bootstrap}
+\end{equation}
+where $\eta_{\mathrm{ent}}>0$ is the learned entropy temperature and the
+expectation is over the hurdle policy. The discrete gate is summed exactly and
+the continuous branch uses one reparameterized sample per state. The online Bellman bootstrap
+mixed the fixed IQL value and entropy-regularized SAC bootstrap as
+\begin{equation}
+B_{\mathrm{mix}}(s')=0.1V_{\nu}(s')+0.9B_{\mathrm{SAC}}(s').
+\label{eq:mixed_backup}
+\end{equation}
+Here $B_{\mathrm{mix}}$ is the mixed target-state value and $V_{\nu}$ is
+fixed after IQL initialization. The critic target is
+\begin{equation}
+y_k=\kappa_r r_k+\Gamma_k B_{\mathrm{mix}}(s_{k+1}),
+\label{eq:critic_target}
+\end{equation}
+where $y_k$ denotes a training target, distinct from the physical evaluation
+endpoint $Y$. \Cref{eq:critic_target} uses no additional duration discount.
+Critics minimize a Huber loss with threshold 1.0 against this target.
+
+The actor and entropy temperature remain frozen through 10,000 simulator
+events while critics adapt after warmup. On release, actor and temperature
+updates use simulator states only. The actor learning-rate multiplier ramps
+from approximately 0.1 to 1 over events 10,000--15,000; the temperature resumes
+at its full registered rate. Each subsequent actor update is followed by
+parameter interpolation toward the seed-matched 10,000-event actor, with a
+fixed interpolation coefficient $5\times10^{-5}$.
+The final branches inherited an exact seed-matched optimizer and replay state
+at 10,000 simulator events and continued to 25,000 events. From event 15,000
+through the final actor update before event 25,000, the preregistered
+terminal-quarter branch linearly tapered the actor learning-rate multiplier
+from 1 to 0.25 while leaving the remaining update schedule unchanged.
+Each seed completed 70,000 learner updates in total. Only the 25,000-event
+endpoint was exported for the final policy; checkpoints were not selected by
+target-SUMO behavior.
+
+\subsection{Dynamics-ratio diagnostic}
+\label{sec:method:ratio}
+
+The implementation retains the H2O+ domain-classifier construction for
+diagnosing transition mismatch~\citep{eysenbach2021off,niu2025h2oplus}. A
+joint classifier uses $(s,a,s',\Delta t/T_{\mathrm{hor}})$ and a marginal
+classifier uses $(s,a)$. With balanced target and simulator classes, their
+logit difference estimates the logged-target-to-simulator ratio
+\begin{equation}
+F_{\psi_J}(s,a,s',\Delta t/T_{\mathrm{hor}})
+-G_{\psi_M}(s,a)
+\approx
+\log\frac{P_{\mathrm{log}}(s',\Delta t\mid s,a)}
+          {P_{\mathrm{sim}}(s',\Delta t\mid s,a)}.
+\label{eq:ratio_diagnostic}
+\end{equation}
+Here $F_{\psi_J}$ and $G_{\psi_M}$ are the joint and marginal target-class
+logits, with parameter vectors $\psi_J$ and $\psi_M$, respectively; the target
+class has label one and the simulator class label zero. The ratio concerns
+conditional densities under a common reference measure, and its estimation
+requires generalization to the states being evaluated. Because the positive
+examples come from $\mathcal{M}_{\mathrm{log}}$, this estimates the logged
+runtime's dynamics rather than directly estimating the formal-evaluation
+kernel $P_{\mathrm{tgt}}$.
+Whole trajectories, not randomly interleaved rows, define held-out validation.
+The five final training runs used unit simulator weights in the critic; the
+classifier output in \Cref{eq:ratio_diagnostic} remained diagnostic and never
+changed a Bellman residual. This matters for interpretation: the formal effect
+cannot be attributed to learned density-ratio weighting.
+
+\subsection{Physical action calibration}
+\label{sec:method:reserve}
+
+Let $h_{\phi}(s)\in[0,60]$ be the deterministic actor proposal in seconds,
+obtained from \Cref{eq:v7_action} before any operational transform, and let
+$\rho=t/T_{\mathrm{hor}}$ be the horizon fraction at physical time $t$.
+The first transform reduces
+aggressive learned holds while retaining a transparent headway response. Let
+$H_f,H_b$ be forward and backward headways, $H_f^*,H_b^*$ their targets, and
+$I_f,I_b\in\{0,1\}$ indicate whether the corresponding buses are present. The
+gain-one headway reserve is
+\begin{equation}
+h_{\mathrm{hb}}(s)=
+\operatorname{clip}\left(
+\tfrac{1}{2}\left[I_b(H_b-H_b^*)-I_f(H_f-H_f^*)\right],0,60
+\right).
+\label{eq:headway_reserve}
+\end{equation}
+Here $h_{\mathrm{hb}}$ is a headway-based hold in seconds, and
+$\clip(\cdot,0,60)$ truncates its scalar argument to
+the operational range. Headways and their targets are also measured in seconds.
+The calibrated learned action combines the headway response in
+\Cref{eq:headway_reserve} with the actor proposal:
+\begin{equation}
+h_{16}(s)=
+\begin{cases}
+\min\{h_{\phi}(s),\max[0.125h_{\phi}(s),h_{\mathrm{hb}}(s)]\},
+& \rho<0.75\ \text{and}\ h_{\phi}(s)>0,\\
+0.125h_{\phi}(s), & \text{otherwise}.
+\end{cases}
+\label{eq:v16_transform}
+\end{equation}
+Here $h_{16}$ denotes the inherited v16 calibrated holding proposal.
+
+The completion guard is defined from physical state, not critic value. Let
+$n_{\mathrm{on}}$ be onboard passengers, $c$ vehicle capacity, and
+$\lambda_{\mathrm{arr}}$ the eligible passenger-arrival rate in passengers
+per second. For horizon-fraction endpoints
+$0\leq\rho_{\mathrm{lo}}<\rho_{\mathrm{hi}}\leq1$,
+\begin{equation}
+\mathcal{G}_{[\rho_{\mathrm{lo}},\rho_{\mathrm{hi}})}(s)=
+\mathbb{I}\left\{
+\rho_{\mathrm{lo}}\leq\rho<\rho_{\mathrm{hi}},\ I_f=1,\ I_b=0,\lambda_{\mathrm{arr}}>0,
+\ c>0,\frac{n_{\mathrm{on}}}{c}\leq0.25
+\right\}.
+\label{eq:completion_guard}
+\end{equation}
+Thus the binary guard in \Cref{eq:completion_guard} identifies a low-load controlled bus with a vehicle ahead, no
+vehicle behind, and continuing eligible demand.
+
+Using the proposal in \Cref{eq:v16_transform}, the direct parent first applies an inherited 20-s tail-service floor only in
+the later part of the reserve window:
+\begin{equation}
+h_{\mathrm{par}}(s)=
+\begin{cases}
+\max\{h_{16}(s),20\}, & \mathcal{G}_{[0.50,0.75)}(s)=1,\\
+h_{16}(s), & \text{otherwise}.
+\end{cases}
+\label{eq:direct_parent}
+\end{equation}
+Here $h_{\mathrm{par}}$ is the direct parent's physical hold. The
+reserve-augmented candidate changes only the final line of the deployed
+behavior:
+\begin{equation}
+h_{\mathrm{safe}}(s)=
+\begin{cases}
+\max\{h_{\mathrm{par}}(s),60\}, &
+\mathcal{G}_{[0.15,0.75)}(s)=1,\\
+h_{\mathrm{par}}(s), & \text{otherwise}.
+\end{cases}
+\label{eq:completion_reserve}
+\end{equation}
+Here $h_{\mathrm{safe}}$ is the candidate's physical hold; the subscript names
+the registered completion-safety variant. Because 60 s is the physical cap, an active reserve sets the hold to exactly
+60 s. The candidate and direct parent share the same actor tensor, training
+seed, checkpoint, state, and inherited transforms. They differ only through
+\Cref{eq:completion_reserve}. The executed duration $\tau_k$ is
+$h_{\mathrm{safe}}(s_k)$ for the candidate and $h_{\mathrm{par}}(s_k)$ for
+its parent; the corresponding normalized action is obtained by inverting
+\Cref{eq:v7_action}.
+
+\subsection{Development and confirmation separation}
+\label{sec:method:separation}
+
+The transform was not derived from the formal outcomes. Successive
+preregistered development rounds from v14 through v20 used prior development
+results to diagnose actor drift, hold magnitude, headway reserve, and
+completion. Several rounds reused the same nine development cells, so these
+results are adaptive design evidence rather than confirmation. The 60-s
+quarter-load candidate, its direct parent, all actor tensors, formal
+environment blocks, primary endpoint, completion margin, and exact sign tests
+were frozen before formal outcome access. The formal stage introduced no new
+training run and permitted no candidate replacement.

@@ -17,6 +17,7 @@ Output merged_all_v2.h5 contains:
     seed               [N]       int32
     snap_file_id       [N]       uint8     ← NEW: index into file_manifest
     snap_row_id        [N]       uint32    ← NEW: row in original HDF5
+    snap_valid         [N]       uint8     ← 1 iff source row has reset snapshot
 
 Snapshots are NOT copied — they stay in the original files.
 SnapshotStore uses (snap_file_id, snap_row_id) for lazy on-demand loading.
@@ -56,6 +57,8 @@ def main():
     parser.add_argument("--output", default="../bus_h2o/datasets_v2/merged_all_v2.h5")
     parser.add_argument("--manifest", default="../bus_h2o/datasets_v2/file_manifest.json",
                         help="Output JSON manifest for SnapshotStore")
+    parser.add_argument("--snapshot_key", default="snapshot_T1",
+                        help="Per-file HDF5 dataset used for sim reset snapshots")
     args = parser.parse_args()
 
     files = sorted(glob.glob(os.path.join(args.input_dir, "sumo_*.h5")))
@@ -70,23 +73,27 @@ def main():
     # Pass 1: Count total transitions, build file manifest
     # ═══════════════════════════════════════════════════════════════════
     total_n = 0
-    file_info = []       # [(fpath, policy, seed, n_rows), ...]
+    file_info = []       # [(fpath, policy, seed, n_rows, has_snapshot), ...]
     file_manifest = []   # [(basename, n_rows), ...] — for SnapshotStore
 
     for fpath in files:
         policy, seed = parse_filename(fpath)
         with h5py.File(fpath, "r") as f:
             n = f["rewards"].shape[0]
-        file_info.append((fpath, policy, seed, n))
+            has_snapshot = args.snapshot_key in f
+        file_info.append((fpath, policy, seed, n, has_snapshot))
         file_manifest.append((os.path.basename(fpath), n))
         total_n += n
         print(f"  [{len(file_info):2d}] {os.path.basename(fpath):45s}  "
-              f"policy={policy:20s}  seed={seed:5d}  n={n:,}")
+              f"policy={policy:20s}  seed={seed:5d}  n={n:,}  "
+              f"{args.snapshot_key}={'yes' if has_snapshot else 'NO'}")
 
     print(f"\nTotal transitions: {total_n:,}")
+    total_resettable = sum(n for _, _, _, n, has_snapshot in file_info if has_snapshot)
+    print(f"Resettable transitions ({args.snapshot_key} present): {total_resettable:,}")
 
     # Policy label encoding
-    all_policies = sorted(set(p for _, p, _, _ in file_info))
+    all_policies = sorted(set(p for _, p, _, _, _ in file_info))
     policy_map = {p: i for i, p in enumerate(all_policies)}
     print(f"Policy encoding: {policy_map}\n")
 
@@ -123,9 +130,13 @@ def main():
         # Lazy snapshot index fields
         ds_sfid     = out.create_dataset("snap_file_id",      shape=(total_n,),             dtype=np.uint8,   chunks=(CHUNK,),             **kw)
         ds_srid     = out.create_dataset("snap_row_id",       shape=(total_n,),             dtype=np.uint32,  chunks=(CHUNK,),             **kw)
+        ds_svalid   = out.create_dataset("snap_valid",        shape=(total_n,),             dtype=np.uint8,   chunks=(CHUNK,),             **kw)
 
         offset = 0
-        for file_id, (fpath, policy, seed_val, n) in enumerate(file_info):
+        if len(file_info) >= np.iinfo(np.uint8).max:
+            raise ValueError("snap_file_id uses uint8 with 255 as invalid sentinel; too many files")
+
+        for file_id, (fpath, policy, seed_val, n, has_snapshot) in enumerate(file_info):
             print(f"  [{file_id+1}/{len(file_info)}] Processing {os.path.basename(fpath)} "
                   f"({n:,} transitions)...", end="", flush=True)
 
@@ -205,9 +216,17 @@ def main():
             ds_pid[sl]      = policy_map[policy]
             ds_seed[sl]     = seed_val
 
-            # Lazy snapshot index
-            ds_sfid[sl] = file_id
-            ds_srid[sl] = np.arange(n, dtype=np.uint32)
+            # Lazy snapshot index. Some legacy files do not have snapshot_T1:
+            # keep their transitions for RL training, but exclude them from
+            # reset sampling by writing a sentinel file_id and snap_valid=0.
+            if has_snapshot:
+                ds_sfid[sl] = file_id
+                ds_srid[sl] = np.arange(n, dtype=np.uint32)
+                ds_svalid[sl] = 1
+            else:
+                ds_sfid[sl] = np.iinfo(np.uint8).max
+                ds_srid[sl] = 0
+                ds_svalid[sl] = 0
 
             offset += n
             print(f" done ({time.time()-t0:.0f}s elapsed)")
@@ -220,6 +239,8 @@ def main():
         out.attrs["action_dim"] = ACT_DIM
         out.attrs["z_dim"] = Z_DIM
         out.attrs["has_lazy_snapshot_index"] = True
+        out.attrs["snapshot_key"] = args.snapshot_key
+        out.attrs["n_resettable_transitions"] = total_resettable
 
     # ═══════════════════════════════════════════════════════════════════
     # Write file manifest JSON (for SnapshotStore)
@@ -237,10 +258,11 @@ def main():
     print(f"\n{'='*60}")
     print(f"Merged file: {args.output}")
     print(f"Total transitions: {total_n:,}")
+    print(f"Resettable transitions: {total_resettable:,}")
     print(f"File size: {final_size:.1f} MB")
     print(f"Time: {elapsed:.0f}s")
     print(f"Datasets: observations({OBS_DIM_AUG}), actions({ACT_DIM}), "
-          f"snap_file_id, snap_row_id + standard fields")
+          f"snap_file_id, snap_row_id, snap_valid + standard fields")
     print(f"{'='*60}")
 
 

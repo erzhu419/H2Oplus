@@ -1,0 +1,301 @@
+{
+  "claim_boundary": {
+    "core_implementation_verified_without_sumo": true,
+    "development_result_available": false,
+    "formal_confirmation_authorized": false,
+    "formal_confirmation_eligible": false,
+    "formal_effect_claim_supported": false
+  },
+  "created_utc": "2026-08-25T11:29:32.358527+00:00",
+  "current_problem": {
+    "existing_risk_ids": [
+      "adaptive-development-cell-reuse",
+      "canonical-feature-clipping",
+      "objective-constraint-mismatch",
+      "ratio-diagnostic-generalization",
+      "sparse-positive-action-support",
+      "sumo-runtime-version-shift",
+      "transition-count-overstates-independent-sample-size"
+    ],
+    "primary": "objective-constraint mismatch",
+    "secondary": [
+      "millions of transitions collapse to 30 independent exogenous cells",
+      "exact unfinished count includes journey states absent from the packed terminal count",
+      "positive large-hold action support is sparse",
+      "training SUMO 1.27.1 differs from development SUMO 1.25.0",
+      "v14-v18 outcomes adaptively informed successive designs"
+    ],
+    "v14_completion_delta_vs_h2oplus": -0.003203984054967135,
+    "v17_completion_delta_vs_h2oplus": -0.0038785184078677926,
+    "v18_candidate_completion_gain": 0.00017333357950768895,
+    "v18_diagnostic_completion_gain": 0.0003955748180052411
+  },
+  "dataset_audit": {
+    "descriptor": {
+      "bytes": 589504302,
+      "path": "bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5",
+      "sha256": "6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899"
+    },
+    "endpoint_label_gap": {
+      "gate_equivalent_passengers_at_mean_departures": 45.25,
+      "max_passengers": 39.0,
+      "mean_passengers": 14.666666666666666,
+      "meaning": "exact unfinished passengers minus packed terminal waiting and in-vehicle counts; the difference is other active journey state"
+    },
+    "episodes": 240,
+    "independent_environment_cells": 30,
+    "mean_rows_per_episode": 13686.325,
+    "rows": 3284718,
+    "terminal_rows": 240
+  },
+  "evaluator": {
+    "bytes": 12678,
+    "path": "SimpleSAC/evaluate_transit_v19_completion_safety_reserve.py",
+    "sha256": "3302c6815fdc470ba8ca30e8e872c23080727182ec6220ac30269f25d5dbeda9"
+  },
+  "fixed_successor_design": {
+    "activation_fraction": [
+      0.15,
+      0.75
+    ],
+    "candidate_floor_seconds": 60.0,
+    "checkpoint_selection_by_behavior": false,
+    "diagnostic": "quarter-load-fifty",
+    "diagnostic_floor_seconds": 50.0,
+    "fresh_development_cells_required": true,
+    "max_onboard_capacity_fraction": 0.25,
+    "new_training_runs": 0,
+    "paired_baseline": "baseline",
+    "paired_completion_gain_gate": 0.003,
+    "paired_primary_increase_gate_seconds": 3.0,
+    "parent": "sealed v17 twenty-second 25k behavior",
+    "predesignated_candidate": "quarter-load-sixty",
+    "requires_backward_bus_absent": true,
+    "requires_forward_bus_present": true,
+    "requires_positive_eligible_arrival_rate": true
+  },
+  "formal_held_out_outcomes_read": false,
+  "frozen_inputs": {
+    "data_environment_audit": {
+      "bytes": 17446,
+      "path": "reproducibility/h2oplus_v17_data_environment_convergence_audit_v1.json",
+      "sha256": "ff5210e82913c456314ba1e47a1f3400e0e5bdb58fce2f14d8e9bc1cdd0c95e9"
+    },
+    "data_environment_verification": {
+      "bytes": 955,
+      "path": "reproducibility/h2oplus_v17_data_environment_convergence_verification_v1.json",
+      "sha256": "925fa9ace1af907bd50042718ba9d7492a892a8e8a2a863b567091540af62390"
+    },
+    "v11_analysis": {
+      "bytes": 9512,
+      "path": "reproducibility/h2oplus_v11_actor_hold_results/actor_hold_analysis_v1.json",
+      "sha256": "e3f6df3d075774dec3e662cbf2b6ef848e5f361f57be45fff7cf159768fa04e1"
+    },
+    "v11_protocol": {
+      "bytes": 57601,
+      "path": "reproducibility/h2oplus_v11_actor_hold_protocol_v2.json",
+      "sha256": "c5b162541c6ce2476bb0f57f6dc936de13b85b5e1e6ede77b533a5cf9a4dfced"
+    },
+    "v14_analysis": {
+      "bytes": 16956,
+      "path": "reproducibility/h2oplus_v14_terminal_taper_results/terminal_taper_analysis_v1.json",
+      "sha256": "937a5300988311f80a84dc1220dfee3f0f96f2b6f83691d4e309c38d6bbe6856"
+    },
+    "v15_analysis": {
+      "bytes": 31340,
+      "path": "reproducibility/h2oplus_v15_hold_calibration_results/hold_calibration_analysis_v1.json",
+      "sha256": "d122aa79f6ee2cd5010e241607347921ed9bdc80bbed6ba41c3105e601ac9d9c"
+    },
+    "v16_analysis": {
+      "bytes": 32420,
+      "path": "reproducibility/h2oplus_v16_headway_reserve_results/headway_reserve_analysis_v1.json",
+      "sha256": "4a88f48946c2ec478ca47274df39e0ccdf3535c1c21ad41141142d529617f75e"
+    },
+    "v17_analysis": {
+      "bytes": 32572,
+      "path": "reproducibility/h2oplus_v17_tail_service_reserve_results/tail_service_reserve_analysis_v2.json",
+      "sha256": "84e80b7f08d16f6e356f09c56ff75d1bbdf322578641df4ede9e73f8d4ff4f78"
+    },
+    "v18_analysis": {
+      "bytes": 62417,
+      "path": "reproducibility/h2oplus_v18_empty_tail_reserve_results/empty_tail_reserve_analysis_v3.json",
+      "sha256": "0fa89711f239b4eb798ad34d10dea79e00fd77a3274314a73d7d2e2bff745287"
+    }
+  },
+  "implementation_verification": {
+    "runner": "python3 -m pytest -q -s",
+    "sumo_import_or_execution_required": false,
+    "test_source": {
+      "bytes": 4008,
+      "path": "reproducibility/test_h2oplus_v19_completion_safety.py",
+      "sha256": "6a79cec8f20b9856bd0227f34ccbf4b91e0c4841381d6fe94f0edae6bdde2fa2"
+    },
+    "tests_failed": 0,
+    "tests_passed": 5,
+    "training_required": false
+  },
+  "local_sumo_executed": false,
+  "local_training_executed": false,
+  "observed_paired_response": {
+    "v15_global_scale": {
+      "h2oplus-v15-hold-quarter": {
+        "matched_cells": 45,
+        "mean_added_hold_seconds_per_decision": 1.7490238795624231,
+        "mean_completion_gain": 0.0004417695827892211,
+        "mean_primary_change_seconds": 18.92412715224199,
+        "mean_unfinished_passenger_change": -6.911111111111111,
+        "ols_completion_gain_per_added_hold_second": 0.00026720771483077047,
+        "ols_primary_change_per_added_hold_second": 10.012068113293852,
+        "positive_completion_cells": 30
+      },
+      "h2oplus-v15-hold-three-eighths": {
+        "matched_cells": 45,
+        "mean_added_hold_seconds_per_decision": 3.5651435131214377,
+        "mean_completion_gain": 0.0009288532354099408,
+        "mean_primary_change_seconds": 32.36143025547321,
+        "mean_unfinished_passenger_change": -14.555555555555555,
+        "ols_completion_gain_per_added_hold_second": 0.0002740727252548876,
+        "ols_primary_change_per_added_hold_second": 8.498380201932939,
+        "positive_completion_cells": 38
+      }
+    },
+    "v17_targeted_floor": {
+      "h2oplus-v17-tail-service-reserve-forty": {
+        "matched_cells": 45,
+        "mean_added_hold_seconds_per_decision": 0.5887074556285644,
+        "mean_completion_gain": 0.0004321154040848195,
+        "mean_primary_change_seconds": 13.201942264438943,
+        "mean_unfinished_passenger_change": -6.311111111111111,
+        "ols_completion_gain_per_added_hold_second": 0.0007408985495321431,
+        "ols_primary_change_per_added_hold_second": 21.843508693870326,
+        "positive_completion_cells": 38
+      },
+      "h2oplus-v17-tail-service-reserve-thirty": {
+        "matched_cells": 45,
+        "mean_added_hold_seconds_per_decision": 0.30926638255632705,
+        "mean_completion_gain": 0.00027663595219094746,
+        "mean_primary_change_seconds": 5.204782513457824,
+        "mean_unfinished_passenger_change": -4.155555555555556,
+        "ols_completion_gain_per_added_hold_second": 0.000871438900369514,
+        "ols_primary_change_per_added_hold_second": 16.885494412586876,
+        "positive_completion_cells": 33
+      }
+    },
+    "v18_targeted_occupancy": {
+      "h2oplus-v18-empty-tail-reserve-empty-forty": {
+        "matched_cells": 45,
+        "mean_added_hold_seconds_per_decision": 0.23186238279135898,
+        "mean_completion_gain": 0.00017333357950768895,
+        "mean_primary_change_seconds": -8.26766015135699,
+        "mean_unfinished_passenger_change": -2.7777777777777777,
+        "ols_completion_gain_per_added_hold_second": 0.0006876738261289479,
+        "ols_primary_change_per_added_hold_second": -30.35583756086549,
+        "positive_completion_cells": 25
+      },
+      "h2oplus-v18-empty-tail-reserve-one-seat-forty": {
+        "matched_cells": 45,
+        "mean_added_hold_seconds_per_decision": 0.5353144484937052,
+        "mean_completion_gain": 0.0003955748180052411,
+        "mean_primary_change_seconds": -15.191642391532882,
+        "mean_unfinished_passenger_change": -6.6,
+        "ols_completion_gain_per_added_hold_second": 0.0006478301652219852,
+        "ols_primary_change_per_added_hold_second": -25.212228127622158,
+        "positive_completion_cells": 33
+      }
+    }
+  },
+  "offline_mechanism_reach": {
+    "five_actor_means": {
+      "candidate_increased_decision_fraction": 0.12273333333333333,
+      "candidate_mean_added_hold_seconds": 6.266221553883552,
+      "candidate_mean_hold_seconds": 9.292175548481145,
+      "diagnostic_mean_added_hold_seconds": 5.03888822055022,
+      "guard_fraction": 0.12273333333333333,
+      "parent_mean_hold_seconds": 3.025953994597594
+    },
+    "per_parent_actor": [
+      {
+        "candidate_increased_decision_fraction": 0.12273333333333333,
+        "candidate_mean_added_hold_seconds": 6.064392966326078,
+        "candidate_mean_hold_seconds": 9.965597304650148,
+        "diagnostic_mean_added_hold_seconds": 4.837059632992744,
+        "guard_fraction": 0.12273333333333333,
+        "parent_mean_hold_seconds": 3.90120433832407,
+        "training_seed": 6201
+      },
+      {
+        "candidate_increased_decision_fraction": 0.12273333333333333,
+        "candidate_mean_added_hold_seconds": 6.563181791122754,
+        "candidate_mean_hold_seconds": 7.508092416632175,
+        "diagnostic_mean_added_hold_seconds": 5.335848457789421,
+        "guard_fraction": 0.12273333333333333,
+        "parent_mean_hold_seconds": 0.9449106255094211,
+        "training_seed": 6202
+      },
+      {
+        "candidate_increased_decision_fraction": 0.12273333333333333,
+        "candidate_mean_added_hold_seconds": 6.39092653944095,
+        "candidate_mean_hold_seconds": 8.435497019922733,
+        "diagnostic_mean_added_hold_seconds": 5.163593206107617,
+        "guard_fraction": 0.12273333333333333,
+        "parent_mean_hold_seconds": 2.0445704804817835,
+        "training_seed": 6203
+      },
+      {
+        "candidate_increased_decision_fraction": 0.12273333333333333,
+        "candidate_mean_added_hold_seconds": 6.3658248889565465,
+        "candidate_mean_hold_seconds": 9.30987420947949,
+        "diagnostic_mean_added_hold_seconds": 5.138491555623213,
+        "guard_fraction": 0.12273333333333333,
+        "parent_mean_hold_seconds": 2.9440493205229443,
+        "training_seed": 6204
+      },
+      {
+        "candidate_increased_decision_fraction": 0.12273333333333333,
+        "candidate_mean_added_hold_seconds": 5.946781583571434,
+        "candidate_mean_hold_seconds": 11.241816791721185,
+        "diagnostic_mean_added_hold_seconds": 4.7194482502381,
+        "guard_fraction": 0.12273333333333333,
+        "parent_mean_hold_seconds": 5.295035208149751,
+        "training_seed": 6205
+      }
+    ],
+    "sample_rows": 30000,
+    "sample_seed": 20260825
+  },
+  "prior_v14_v15_v16_v17_v18_development_outcomes_used_for_design": true,
+  "reach_uncertainty": {
+    "conservative_global_response_projection": 0.0016743827420365436,
+    "interpretation": "mechanism reach is sufficient only under the observed targeted response regime; it is insufficient under the global-scale response regime, so a fresh paired development screen is necessary and success is not assumed",
+    "mean_added_hold_seconds_per_decision": 6.266221553883552,
+    "paired_completion_gain_gate": 0.003,
+    "targeted_response_projection": 0.004059447344569947
+  },
+  "schema_version": "transit-h2oplus-v19-completion-safety-design-audit-v1",
+  "study_stage": "development-design",
+  "why_gpt55_looked_better": {
+    "conclusion": "GPT-5.5 found a real training-trajectory repair for the welfare objective, but its v11 completion result relied on a 0.005 margin and would fail the current 0.003 margin. Later policies are better on primary welfare; the unresolved defect is completion safety, not a general loss of optimizer competence.",
+    "current_completion_margin": 0.003,
+    "later_primary_endpoint_examples": {
+      "v11": 2499.19459679419,
+      "v15_eighth": 2411.0406028351426,
+      "v16_three_quarter": 2408.7944811656685,
+      "v17_twenty": 2407.029112541763,
+      "v18_one_seat": 2398.0697336274047
+    },
+    "v11_completion_deltas": {
+      "h2oplus": -0.004506455018695732,
+      "h2oplus-v10-delayed-actor": -0.0036618442504327,
+      "sac-online": -0.004284494288506413
+    },
+    "v11_completion_margin": 0.005,
+    "v11_primary_relative_improvement": {
+      "h2oplus": 0.0360500501666746,
+      "h2oplus-v10-delayed-actor": 0.019280969812649144,
+      "sac-online": 0.027017150557159936
+    },
+    "v11_training_intervention": "freeze actor and temperature through 10k while critic, value and ratio updates continue, then use online-only states for actor updates",
+    "v11_would_pass_current_completion_margin": false,
+    "verified_model_context": "the earlier v11 development was produced in a GPT-5.5 session"
+  }
+}

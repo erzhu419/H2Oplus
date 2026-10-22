@@ -1,0 +1,101 @@
+{
+  "schema_version": "transit-training-plan-v4",
+  "dataset": "../bus_h2o/datasets_v4/transit_smdp_v4_formal_v1.h5",
+  "sim_env": "../bus_h2o/calibrated_env",
+  "output_root": "../experiment_output_v5/pilot1",
+  "device": "cuda:0",
+  "allow_shared_gpu": true,
+  "shared_arguments": {
+    "cpu_threads": 8,
+    "online_capacity": 50000,
+    "epochs": 5,
+    "events_per_epoch": 256,
+    "interaction_chunk_events": 16,
+    "offline_checkpoint_every": 1000,
+    "checkpoint_every": 1,
+    "log_every": 100,
+    "resource_interval": 1
+  },
+  "jobs": [
+    {
+      "name": "h2oplus_seed5101",
+      "method": "h2oplus",
+      "seed": 5101,
+      "arguments": {
+        "offline_updates": 2000,
+        "warmup_events": 500,
+        "ratio_pretrain_updates": 100
+      }
+    },
+    {
+      "name": "h2oplus-no-ratio_seed5101",
+      "method": "h2oplus-no-ratio",
+      "seed": 5101,
+      "arguments": {
+        "offline_updates": 2000,
+        "warmup_events": 500,
+        "ratio_pretrain_updates": 0
+      }
+    },
+    {
+      "name": "rlpd_seed5101",
+      "method": "rlpd",
+      "seed": 5101,
+      "arguments": {
+        "offline_updates": 0,
+        "warmup_events": 500,
+        "ratio_pretrain_updates": 0
+      }
+    },
+    {
+      "name": "wsrl_seed5101",
+      "method": "wsrl",
+      "seed": 5101,
+      "arguments": {
+        "offline_updates": 2000,
+        "warmup_events": 500,
+        "ratio_pretrain_updates": 0
+      }
+    },
+    {
+      "name": "sac-online_seed5101",
+      "method": "sac-online",
+      "seed": 5101,
+      "arguments": {
+        "offline_updates": 0,
+        "warmup_events": 500,
+        "ratio_pretrain_updates": 0
+      }
+    },
+    {
+      "name": "cql_seed5101",
+      "method": "cql",
+      "seed": 5101,
+      "arguments": {
+        "offline_updates": 2000,
+        "warmup_events": 0,
+        "ratio_pretrain_updates": 0
+      }
+    },
+    {
+      "name": "iql_seed5101",
+      "method": "iql",
+      "seed": 5101,
+      "arguments": {
+        "offline_updates": 2000,
+        "warmup_events": 0,
+        "ratio_pretrain_updates": 0
+      }
+    },
+    {
+      "name": "bc_seed5101",
+      "method": "bc",
+      "seed": 5101,
+      "arguments": {
+        "offline_updates": 2000,
+        "warmup_events": 0,
+        "ratio_pretrain_updates": 0
+      }
+    }
+  ]
+}

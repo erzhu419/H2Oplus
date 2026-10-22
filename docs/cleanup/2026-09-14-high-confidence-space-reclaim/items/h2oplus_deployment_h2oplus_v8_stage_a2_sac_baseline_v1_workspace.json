@@ -1,0 +1,52 @@
+{
+  "schema_version": "cleanup-item-v1",
+  "batch_id": "2026-09-14-high-confidence-space-reclaim",
+  "item_id": "h2oplus_deployment_h2oplus_v8_stage_a2_sac_baseline_v1_workspace",
+  "project_key": "h2oplus",
+  "project_root": "/home/erzhu419/mine_code/sumo-rl/H2Oplus",
+  "source_path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_stage_a2_sac_baseline_v1/workspace",
+  "source_kind": "directory",
+  "classification": "generated_deployment_staging_workspace",
+  "decision": "backup_then_delete_candidate",
+  "record_status": "completed",
+  "backup_status": "verified",
+  "deletion_status": "deleted",
+  "frozen_at": "2026-09-14T03:24:54+08:00",
+  "frozen_metadata": {
+    "allocated_bytes": 809840640,
+    "apparent_bytes": 808947040,
+    "entry_counts": {
+      "directories": 78,
+      "regular_files": 422,
+      "symlinks": 0,
+      "other_entries": 0
+    },
+    "source_lstat": {
+      "mode_octal": "0o755",
+      "uid": 1000,
+      "gid": 1000,
+      "mtime_ns": 1786680960399357078
+    }
+  },
+  "evidence": [
+    "workspace is an ignored/untracked deployment source/dependency staging copy",
+    "deployment manifests, closeouts, audits, and result directories outside workspace are excluded"
+  ],
+  "preserve": [
+    "all entries under /home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_stage_a2_sac_baseline_v1 except the exact workspace candidate"
+  ],
+  "backup": {
+    "host": "jtl311linux",
+    "remote_backup_root": "/home/erzhu419/wsl_cleanup_backup_before_delete_20260914",
+    "remote_project_snapshot_root": "/home/erzhu419/wsl_cleanup_backup_before_delete_20260914/home/erzhu419/mine_code/sumo-rl/H2Oplus",
+    "remote_item_path": "/home/erzhu419/wsl_cleanup_backup_before_delete_20260914/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v8_stage_a2_sac_baseline_v1/workspace",
+    "original_absolute_path_preserved": true,
+    "transfer": "single batch rsync -aHzR --partial --compress-level=1",
+    "verification": "per-workspace rsync -ani --delete; stdout must be empty; archive metadata semantics; no size-only",
+    "rsync_compress_level": 1,
+    "transfer_completed_at": "2026-09-14T07:12:59+08:00",
+    "verified_at": "2026-09-14T07:13:49+08:00",
+    "verification_receipt": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/docs/cleanup/2026-09-14-high-confidence-space-reclaim/receipts/h2oplus_deployment_h2oplus_v8_stage_a2_sac_baseline_v1_workspace.backup_verified.json"
+  },
+  "deleted_at": "2026-09-14T07:14:15+08:00"
+}

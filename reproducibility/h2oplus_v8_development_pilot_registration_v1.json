@@ -1,0 +1,258 @@
+{
+  "campaign": "H2O+ v8 disjoint-development improvement pilot",
+  "development_environment": {
+    "blocks": [
+      {
+        "demand_realization_seed": 4201,
+        "name": "v8-development-01",
+        "sumo_seed": 4101
+      },
+      {
+        "demand_realization_seed": 4202,
+        "name": "v8-development-02",
+        "sumo_seed": 4102
+      },
+      {
+        "demand_realization_seed": 4203,
+        "name": "v8-development-03",
+        "sumo_seed": 4103
+      },
+      {
+        "demand_realization_seed": 4204,
+        "name": "v8-development-04",
+        "sumo_seed": 4104
+      },
+      {
+        "demand_realization_seed": 4205,
+        "name": "v8-development-05",
+        "sumo_seed": 4105
+      }
+    ],
+    "demand_scales": [
+      0.85,
+      1.0,
+      1.15
+    ],
+    "depart_jitter_seconds": 60.0,
+    "environment_cells": 15,
+    "formal_held_out_may_be_read_for_selection": false,
+    "frozen_formal_held_out_demand_seeds": [
+      3101,
+      3102,
+      3103,
+      3104,
+      3105,
+      3106,
+      3107,
+      3108,
+      3109,
+      3110
+    ],
+    "frozen_formal_held_out_sumo_seeds": [
+      2101,
+      2102,
+      2103,
+      2104,
+      2105,
+      2106,
+      2107,
+      2108,
+      2109,
+      2110
+    ],
+    "frozen_v7_training_demand_seeds": [
+      1201,
+      1202,
+      1203,
+      1204,
+      1205,
+      1206,
+      1207,
+      1208,
+      1209,
+      1210
+    ],
+    "frozen_v7_training_sumo_seeds": [
+      1101,
+      1102,
+      1103,
+      1104,
+      1105,
+      1106,
+      1107,
+      1108,
+      1109,
+      1110
+    ],
+    "network": "same calibrated physical network; independent stochastic cells",
+    "required_pre_execution_gate": "materialize and hash all 15 manifests; prove zero manifest/runtime hash overlap and zero seed overlap with frozen training and held-out designs",
+    "status": "design-registered; manifests not yet materialized"
+  },
+  "evidence": {
+    "ablation_manifest": {
+      "bytes": 26732,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/ablation_manifest.json",
+      "sha256": "2bc17dcc0b82f01915dedfe5291471a3160235acc280d874c8e050d80c448e3e"
+    },
+    "ablation_manifest_verification": {
+      "bytes": 573,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/ablation_manifest_verification.json",
+      "sha256": "eeb871632072951ba77dc6dd3a8c05b550979c26c3c1815bcda5ccb83930c5e3"
+    },
+    "complete_v7_mechanism_analysis": {
+      "bytes": 115262,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/complete_h2oplus_mechanism_analysis.json",
+      "sha256": "a563b436b65798b93a522406ed1582772e05602a54a5e48afca32b86eb7e35f6"
+    },
+    "core_manifest": {
+      "bytes": 31564,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/manifest.json",
+      "sha256": "349d01bdf496a9e58df3ad9dbf8364a6f1305e4a500beb8a50ee141aa6f51968"
+    },
+    "frozen_held_out_environment_design": {
+      "bytes": 35501,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/evaluation_environment_design_v7_formal_v2.json",
+      "sha256": "cf403a343db26e09f017d69575dceb0f87e99bfb0d931569ed18500991e04fbd"
+    },
+    "sensitivity_manifest": {
+      "bytes": 46980,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/sensitivity_manifest.json",
+      "sha256": "7ab56445d3917557bfcb6bcc708f855e7203fc1705176c9802ff2fcd3b6c8a45"
+    },
+    "sensitivity_manifest_verification": {
+      "bytes": 631,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/sensitivity_manifest_verification.json",
+      "sha256": "c8b366a06cd3f49733e1ed3b1ebeaa3df15c51f54e06d0095452b3b6876bfd0e"
+    },
+    "sensitivity_stability_audit": {
+      "bytes": 45986,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/sensitivity_stability_audit.json",
+      "sha256": "325180456164b873a18273ff82e21a242140754d3e6eaa3eb268486a2d2fe2cf"
+    }
+  },
+  "execution_authorized": false,
+  "frozen_v7_code_modification_allowed": false,
+  "local_sumo_or_training_allowed": false,
+  "observed_training_internal_pattern": {
+    "candidate": "h2oplus-lambda0p5",
+    "interpretation": "candidate-generation evidence only; training simulator rewards cannot establish model effectiveness",
+    "paired_seed_deltas_vs_h2oplus": {
+      "5101": 22.533650000000307,
+      "5102": 88.06876055776911,
+      "5103": 191.77705000000014,
+      "5104": 78.46583493013941,
+      "5105": 26.899024120408285
+    },
+    "ratio_diagnostic": {
+      "flag_is_not_a_preregistered_scientific_gate": true,
+      "mean_validation_high_clip_fraction": 0.5489477962427746,
+      "mean_validation_raw_ess_fraction": 0.16902272935170742,
+      "post_hoc_engineering_flag": true
+    },
+    "seeds_with_higher_training_simulator_reward": 5,
+    "stability_failures": [],
+    "tail_reward_mean_delta_vs_h2oplus": 81.54886392166345,
+    "tail_reward_median_delta_vs_h2oplus": 78.46583493013941
+  },
+  "registered_utc": "2026-08-13T18:09:25.272751+00:00",
+  "scheduler_task_ids": [],
+  "schema_version": "transit-h2oplus-v8-development-pilot-registration-v1",
+  "scientific_scope": {
+    "purpose": "screen one evidence-motivated candidate on development scenarios before any single-use formal held-out confirmation",
+    "supports_current_formal_method_selection": false,
+    "supports_current_held_out_model_effect_claim": false
+  },
+  "stages": [
+    {
+      "advance_gate": {
+        "completion_rate_noninferiority_margin": 0.005,
+        "mean_relative_improvement_at_least": 0.02,
+        "no_demand_scale_mean_relative_degradation_greater_than": 0.01,
+        "one_sided_paired_permutation_p_less_than": 0.05,
+        "training_seeds_with_lower_paired_mean_at_least": 4
+      },
+      "name": "A-existing-policy-development-screen",
+      "paired_unit": "training seed x development environment block",
+      "policies": [
+        "h2oplus",
+        "h2oplus-lambda0p5"
+      ],
+      "primary_direction": "lower-is-better",
+      "primary_endpoint": "generalized_seconds_per_passenger",
+      "training": false,
+      "training_seeds": [
+        5101,
+        5102,
+        5103,
+        5104,
+        5105
+      ]
+    },
+    {
+      "advance_gate": {
+        "artifact_integrity": "all five seeds complete and independently audited",
+        "completion_rate_noninferiority_margin": 0.005,
+        "mean_relative_improvement_vs_strongest_stage_A_policy_at_least": 0.02,
+        "one_sided_paired_permutation_p_less_than": 0.05,
+        "scientific_stability_failures_allowed": 0,
+        "training_seeds_with_lower_paired_mean_at_least": 4
+      },
+      "blocked_by": "A-existing-policy-development-screen.advance_gate",
+      "candidate": "h2oplus-v8-lambda0p5-ess-tempered-ratio",
+      "implementation_contract": {
+        "mixed_backup_lambda": 0.5,
+        "new_namespace_and_checkpoint_schema_required": true,
+        "preserved_contracts": [
+          "gamma=1 terminal semantics",
+          "100000-decision-event hard cap",
+          "same canonical v7 dataset and state/action contract",
+          "one canonical process per physical GPU",
+          "all registered seeds retained"
+        ],
+        "ratio_log_weight_clip": [
+          -1.3862943611198906,
+          1.3862943611198906
+        ],
+        "ratio_temperature_beta_range": [
+          0.0,
+          1.0
+        ],
+        "ratio_temperature_rule": "choose the largest detached beta by deterministic bisection such that batch ESS fraction is at least 0.5",
+        "ratio_weight_normalization": "divide by detached batch mean",
+        "required_unit_gates": [
+          "finite positive normalized weights",
+          "deterministic beta and ESS bound",
+          "beta=1 when the untempered batch already passes",
+          "exact checkpoint/resume equivalence",
+          "v7 artifacts remain loadable only through the frozen v7 path"
+        ],
+        "target_batch_ess_fraction_minimum": 0.5
+      },
+      "name": "B-v8-ess-tempered-ratio-development",
+      "training": true,
+      "training_seeds": [
+        6101,
+        6102,
+        6103,
+        6104,
+        6105
+      ]
+    },
+    {
+      "blocked_by": "B-v8-ess-tempered-ratio-development.advance_gate",
+      "name": "C-single-use-formal-confirmation",
+      "post_confirmation_tuning_allowed": false,
+      "selection_lock": "freeze one candidate, code hash, checkpoints, endpoints and analysis before accessing the existing formal held-out SUMO environment",
+      "status": "not authorized"
+    }
+  ],
+  "status": "registered-not-submitted",
+  "stop_rules": [
+    "stop if any development scenario overlaps frozen training or held-out inputs",
+    "stop on nonfinite state, nonzero exit, or event/update contract failure",
+    "do not replace a failed seed or select an earlier checkpoint",
+    "do not proceed past a failed stage gate",
+    "do not submit any task from this registration artifact automatically"
+  ],
+  "submission_requires_explicit_user_approval": true
+}

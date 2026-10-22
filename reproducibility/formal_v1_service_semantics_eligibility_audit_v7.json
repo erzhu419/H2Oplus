@@ -1,0 +1,688 @@
+{
+  "created_utc": "2026-08-08T21:57:54.690916+00:00",
+  "eligibility_checks": {
+    "all_30_shards_have_passing_service_semantics_audits": false,
+    "all_447_simulator_segments_calibrated": false,
+    "collection_source_is_current": false,
+    "full_service_replay_completed_without_error": false,
+    "no_same_bus_station_gaps": false,
+    "runtime_calibration_coverage_passed": false
+  },
+  "failed_full_service_replay": {
+    "contains_incomplete_service_error": true,
+    "error_tail": "ValueError: trace trip 102S_11 is incomplete: arrivals=[], departures=[], service_completions=['7S03_102S03', '7S06_102S06', '7S07_102S07', '7S09_102S09', '7S11_102S11_705S18', '7S13_102S13_705S20', '7S15_102S15_705S22', '7S16_102S16_705S23', '7S18_102S18_705S25', '7S20_102S20', '7S22_102S22']",
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env/runtime_traces_v7/formal_v1/realization_00/demand_0p75_jitter120s_seed1201/sumo_seed1101.full_service.npz.log",
+    "sha256": "8d7006afeb58c7f3c8600b2226cc37cc6f5d6313348cd145c788074ef9367d9f",
+    "size_bytes": 1209
+  },
+  "failed_runtime_calibration": {
+    "coverage_gate": {
+      "below_minimum_segments": {},
+      "checks": {
+        "all_simulator_segments_calibrated": false,
+        "calibration_and_fidelity_blocks_disjoint": true,
+        "minimum_samples_per_segment_met": true,
+        "no_nonpositive_runtime_samples": true,
+        "no_same_bus_station_gaps": false,
+        "one_zero_hold_shard_per_calibration_cell": true
+      },
+      "expected_segments": 447,
+      "minimum_samples_per_segment": 10,
+      "missing_segments": {
+        "102S": [
+          "102S39->102S40"
+        ],
+        "102X": [
+          "102X37->102X38"
+        ],
+        "122S": [
+          "122S34->122S35"
+        ],
+        "122X": [
+          "122X35->122X36"
+        ],
+        "311S": [
+          "311S41->311S42"
+        ],
+        "311X": [
+          "311X42->311X43"
+        ],
+        "406S": [
+          "406S38->406S39"
+        ],
+        "406X": [
+          "406X39->406X40"
+        ],
+        "705S": [
+          "705S46->705S47"
+        ],
+        "705X": [
+          "705X47->705X48"
+        ],
+        "7S": [
+          "7S25->7S26"
+        ],
+        "7X": [
+          "7X24->7X25"
+        ]
+      },
+      "passed": false
+    },
+    "diagnostics": {
+      "adjacent_same_bus_event_pairs": 193130,
+      "calibrated_segments": 435,
+      "observed_bus_trajectories": 5835,
+      "rejected_nonpositive_samples": 0,
+      "runtime_samples": 188655,
+      "skipped_multisegment_transitions": 4475,
+      "zero_hold_shards": 15
+    },
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env/segment_runtime_calibration_v7.json",
+    "schema_version": "transit-simulator-runtime-calibration-v7",
+    "sha256": "40619c93b68f4e8fd04bcec09d2010928662bb7346ba8785bc5ab2ff3c2dd1b6",
+    "size_bytes": 9122625
+  },
+  "provenance": {
+    "auditor": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/audit_superseded_formal_v1_v7.py",
+      "sha256": "5f5d06e44fba92aeec15a7969e2205a3f8bf8a7cf9eab9153a6cb69575057e93",
+      "size_bytes": 8632
+    },
+    "frozen_zero_matrix_audit": {
+      "passed": true,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero_matrix_manifest.audit.json",
+      "schema_version": "transit-smdp-v7-frozen-zero-matrix-v1",
+      "sha256": "0cdd1b7fb56c1f0119218ad7d23ada190be4a5a4aca042f5486d586f6bd99fd3",
+      "size_bytes": 58988
+    },
+    "matrix": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero_matrix_manifest.json",
+      "sha256": "c9fd117fada56a4c9607b7d7b2b95b19b14547fd87ea8a32bd4cc84af6ed685d",
+      "size_bytes": 244357
+    }
+  },
+  "schema_version": "transit-smdp-v7-superseded-formal-v1-audit-v1",
+  "service_semantics_evidence": {
+    "audit_states": {
+      "missing": 30
+    },
+    "summaries": [
+      {
+        "block_id": 0,
+        "demand_scale": 0.75,
+        "job_signature": "f0dea8e53632734e4eb9b7539d97d4548d1027eba66e19829e235dba8e8096e8",
+        "realization_block_id": 0,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1201/sumo_seed1101.npz",
+          "sha256": "66458e15565ccbdaa5ebb14c540a6be49f4b15a810b9d615da4f622d02c21ef8",
+          "size_bytes": 941480
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1201/sumo_seed1101.npz.json",
+          "sha256": "945ee12a8674153d8d0d8b5b941a904c9840ae9195d91907b1ac2050d3da8bf9",
+          "size_bytes": 32134
+        },
+        "sumo_seed": 1101
+      },
+      {
+        "block_id": 1,
+        "demand_scale": 1.0,
+        "job_signature": "a41f67cfde3ab8109f33a9617b09d95c48ffbd141db69552ad6c593be4e9eca3",
+        "realization_block_id": 0,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz",
+          "sha256": "9acb4d6286cc798f5a711f3b2b9a0eac0e86461cc049193c4ec218ee25df0fa5",
+          "size_bytes": 963615
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz.json",
+          "sha256": "a36799f8c39187fc9b92356560c9c817855b882c0588439758f40f81295e5047",
+          "size_bytes": 32096
+        },
+        "sumo_seed": 1101
+      },
+      {
+        "block_id": 2,
+        "demand_scale": 1.25,
+        "job_signature": "30df968e3fbe0a40c560595e13154e1ea97bca0a2c1fcbd0092fdc5d1917f9bd",
+        "realization_block_id": 0,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1201/sumo_seed1101.npz",
+          "sha256": "702a889407f37567514736a31a6eddc22152cddf80a1afa3716e8386031db82c",
+          "size_bytes": 986076
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1201/sumo_seed1101.npz.json",
+          "sha256": "8be539dd0af33be5c0ed04cdf198f3898261962e8d28716b1e429f43ab37abe1",
+          "size_bytes": 32106
+        },
+        "sumo_seed": 1101
+      },
+      {
+        "block_id": 3,
+        "demand_scale": 0.75,
+        "job_signature": "1889675fe0898a101e578528fe8c732dae9aa21befd4c8c67da12bfdfd671aa9",
+        "realization_block_id": 1,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1202/sumo_seed1102.npz",
+          "sha256": "8b22c128deeba22eaba6f58eb9adc651ffe89481e9d519e386acc4ef843be397",
+          "size_bytes": 938016
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1202/sumo_seed1102.npz.json",
+          "sha256": "a7e86e0a4e9d032e853391d465edb4b3d92428f7443e260a9119dd2234bb384d",
+          "size_bytes": 32121
+        },
+        "sumo_seed": 1102
+      },
+      {
+        "block_id": 4,
+        "demand_scale": 1.0,
+        "job_signature": "c9cb4eb66e2e9c7a0ad4ecfe2ce5a899912d9a0d8a32df4c3a8817d44afaac4e",
+        "realization_block_id": 1,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1202/sumo_seed1102.npz",
+          "sha256": "5e085daecc4dbf736ef98e883b5fbd9a6da2130cc967b43c06581ea0519ee5d3",
+          "size_bytes": 962518
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1202/sumo_seed1102.npz.json",
+          "sha256": "fe05eaaa66bebb6dcb605e39598d92bfc68335281d71d749975286a75b4f6387",
+          "size_bytes": 32074
+        },
+        "sumo_seed": 1102
+      },
+      {
+        "block_id": 5,
+        "demand_scale": 1.25,
+        "job_signature": "65d4154908b9c16c9c91d9ee36b82efed0a52995a768084fbce92b9d6da32e32",
+        "realization_block_id": 1,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1202/sumo_seed1102.npz",
+          "sha256": "77a877ac195f087bfc5f75724fb685cf1463054640a4c9d4c195f9b36748920d",
+          "size_bytes": 983144
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1202/sumo_seed1102.npz.json",
+          "sha256": "a64953d9327f1961c895bc2ab30cedfee6feda3d70488c7a17d1acc4bab5ce22",
+          "size_bytes": 32169
+        },
+        "sumo_seed": 1102
+      },
+      {
+        "block_id": 6,
+        "demand_scale": 0.75,
+        "job_signature": "cce6556b1e0b130998aec3bde49a9fa2141860cf138e3511513bd14341647fd5",
+        "realization_block_id": 2,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1203/sumo_seed1103.npz",
+          "sha256": "f79ec61834cb14142592322e461c42b508f3c00a43593d522803a0e6f0801765",
+          "size_bytes": 939345
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1203/sumo_seed1103.npz.json",
+          "sha256": "28956b578e67b408d51c1a1185c79841c77a882d96c934519a76df47035133a4",
+          "size_bytes": 32136
+        },
+        "sumo_seed": 1103
+      },
+      {
+        "block_id": 7,
+        "demand_scale": 1.0,
+        "job_signature": "0341eb5b80e9bf8995d30877b7a37db55fe7bf90d574f23ebbc52c5ddbc57e43",
+        "realization_block_id": 2,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1203/sumo_seed1103.npz",
+          "sha256": "d09849963008848ea9143867189a389790bb06ae1a94a07360cf20173e96ba0b",
+          "size_bytes": 961745
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1203/sumo_seed1103.npz.json",
+          "sha256": "39b95b9f925237e804d6a40914d5cbee52d53b43bbfea2ec49df15bf2ca872f2",
+          "size_bytes": 32076
+        },
+        "sumo_seed": 1103
+      },
+      {
+        "block_id": 8,
+        "demand_scale": 1.25,
+        "job_signature": "5939b8c05efc09336f6dd7032ada16be135d1506c8806059a3a13b0e8a61a5b9",
+        "realization_block_id": 2,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1203/sumo_seed1103.npz",
+          "sha256": "072255d61865fed11c3867216f493235f623c9bf5c84bfc18e795da5da9f651f",
+          "size_bytes": 983222
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1203/sumo_seed1103.npz.json",
+          "sha256": "4d3f9651c0058dfa4ffafb55e93662178dc261d4d02a7dd009480d92e26c309a",
+          "size_bytes": 32149
+        },
+        "sumo_seed": 1103
+      },
+      {
+        "block_id": 9,
+        "demand_scale": 0.75,
+        "job_signature": "757dcddcaf61ac9541a0c92da6dcfb7675021130cb58519c538b6313e889f4e6",
+        "realization_block_id": 3,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1204/sumo_seed1104.npz",
+          "sha256": "b1117e821604c9e43a1fb316403868f72e5ffd91154ac886055744c51ea72d8a",
+          "size_bytes": 939974
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1204/sumo_seed1104.npz.json",
+          "sha256": "e1ae7ef662d868849ff8d30ac1efa2f7bc9a4135997fb5b9a3a1993305457e49",
+          "size_bytes": 32097
+        },
+        "sumo_seed": 1104
+      },
+      {
+        "block_id": 10,
+        "demand_scale": 1.0,
+        "job_signature": "48774c49fc573f397a7504d7b560b6c9e5622d2f507256255f26bcc736669b5b",
+        "realization_block_id": 3,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1204/sumo_seed1104.npz",
+          "sha256": "ca4665c43627329df46bfe5e09b99f5546f86112a42f247f399147f510ae2cbe",
+          "size_bytes": 964536
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1204/sumo_seed1104.npz.json",
+          "sha256": "a4db5e64d5f0b1bb9c31a61ed39811368180835f7963aecd7ffedeb1e0a3e56d",
+          "size_bytes": 32070
+        },
+        "sumo_seed": 1104
+      },
+      {
+        "block_id": 11,
+        "demand_scale": 1.25,
+        "job_signature": "3dfcfe18315977525e3596f1caa43068021cadb2cce72e6e8d817cd12ba45bb6",
+        "realization_block_id": 3,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1204/sumo_seed1104.npz",
+          "sha256": "779b20107a7effc7d3819568a23676fe3e3d90c05af4e015df2b4dae2ea4c3af",
+          "size_bytes": 983128
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1204/sumo_seed1104.npz.json",
+          "sha256": "d6760636afd76334e99bd30af0832bc934e9e896839543bf0249407c79b0ae26",
+          "size_bytes": 32160
+        },
+        "sumo_seed": 1104
+      },
+      {
+        "block_id": 12,
+        "demand_scale": 0.75,
+        "job_signature": "5f50ea33429babf6e6f146cc9554a7347307320d43ffccf789161f893b50e4d1",
+        "realization_block_id": 4,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1205/sumo_seed1105.npz",
+          "sha256": "0a781c072328b4dae566ce3b6fa3d9f96d8db0e83a0a685d2c60b63d0a444d62",
+          "size_bytes": 938990
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1205/sumo_seed1105.npz.json",
+          "sha256": "298745733736283eb447f47eaa1076b33308edf0f3850069a4070439e8f7a916",
+          "size_bytes": 32087
+        },
+        "sumo_seed": 1105
+      },
+      {
+        "block_id": 13,
+        "demand_scale": 1.0,
+        "job_signature": "16371c5701bf1948a8da49b281717631b6f598ca6913030d6937aaf33200068b",
+        "realization_block_id": 4,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1205/sumo_seed1105.npz",
+          "sha256": "03a1383dc855a0791d92d4df273ce36ee64db54c34a2274e4cce5117091b8421",
+          "size_bytes": 963405
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1205/sumo_seed1105.npz.json",
+          "sha256": "69cd13be14a516f8bafe3b6c8f61f72305547564d749cbdc940cb96cd9e59bb6",
+          "size_bytes": 32059
+        },
+        "sumo_seed": 1105
+      },
+      {
+        "block_id": 14,
+        "demand_scale": 1.25,
+        "job_signature": "b2a25af353bdd3b2bc2317652a085f4e28dd3cc9b5a4a286087e77b9ab9dab1f",
+        "realization_block_id": 4,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1205/sumo_seed1105.npz",
+          "sha256": "ef93a1ee67ea4c7ca1a2a1a930537f0e3f40781d7927512232810268edbc8aa3",
+          "size_bytes": 986333
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1205/sumo_seed1105.npz.json",
+          "sha256": "4dea0360e1040b1247f9596dcdeca73ef0e5bc0ad82ec343f56be43ddc4c9216",
+          "size_bytes": 32150
+        },
+        "sumo_seed": 1105
+      },
+      {
+        "block_id": 15,
+        "demand_scale": 0.75,
+        "job_signature": "b388a7457c356d23e9c7a6c665eb10caceedbd0d4bc60c82a8f59def6e69204f",
+        "realization_block_id": 5,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1206/sumo_seed1106.npz",
+          "sha256": "2c733f2ce4d7f99770c5d0b4f72f612c6599482740f8469131028f9211aeb74c",
+          "size_bytes": 941428
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1206/sumo_seed1106.npz.json",
+          "sha256": "6388628067db9e6572950f01633fa83efaa958e20aacc60caceec1b952f3e985",
+          "size_bytes": 32122
+        },
+        "sumo_seed": 1106
+      },
+      {
+        "block_id": 16,
+        "demand_scale": 1.0,
+        "job_signature": "c5ed45c764e58f5c5a00fe5a99191ddc7f3fe169b1f16177485a468da340b499",
+        "realization_block_id": 5,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1206/sumo_seed1106.npz",
+          "sha256": "d22933e72148d11496c397b15cae3b63dd73e80ec5979fcc394b563125bafd86",
+          "size_bytes": 963603
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1206/sumo_seed1106.npz.json",
+          "sha256": "a8bbe4548e9016f621cc4c5e405b2fafcaaf88003a0d0bb41619dd9c6847f057",
+          "size_bytes": 32108
+        },
+        "sumo_seed": 1106
+      },
+      {
+        "block_id": 17,
+        "demand_scale": 1.25,
+        "job_signature": "de9c416af8c5febc58b1b9441aaf0883dcb9e15d8bbd3aaa7b6c8dff51c0a464",
+        "realization_block_id": 5,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1206/sumo_seed1106.npz",
+          "sha256": "ebe4874cb00133cfa86eda21a4e2df2cc10a0c982d7fb95c52f0af4e6d90db69",
+          "size_bytes": 984261
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1206/sumo_seed1106.npz.json",
+          "sha256": "78a12057691c6f07aa252a0abf803d1d0a90bb39915e0028935c94eeb97cd1ae",
+          "size_bytes": 32141
+        },
+        "sumo_seed": 1106
+      },
+      {
+        "block_id": 18,
+        "demand_scale": 0.75,
+        "job_signature": "038bbec7d6eb6b3d221a06086b229b7b57546f24f8f56d6587625643ddd396b5",
+        "realization_block_id": 6,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1207/sumo_seed1107.npz",
+          "sha256": "19122b589a1d65d8fa5615dc6b7c6bd019a189d9787eb0cea4976eb7db1963e8",
+          "size_bytes": 938142
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1207/sumo_seed1107.npz.json",
+          "sha256": "21b6716ac4420c51c1a3182a720969909738397abcc369dd7dc7648771fa8e46",
+          "size_bytes": 32076
+        },
+        "sumo_seed": 1107
+      },
+      {
+        "block_id": 19,
+        "demand_scale": 1.0,
+        "job_signature": "5142858f63d82e703150b8f36144f0d98c4de87a491b179c28bf0b165c3147ed",
+        "realization_block_id": 6,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1207/sumo_seed1107.npz",
+          "sha256": "ca46309c9b120ddc2f5220ac0ba73de3d8edda74e858f81d9220dab0642cbf00",
+          "size_bytes": 956366
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1207/sumo_seed1107.npz.json",
+          "sha256": "7fc940bbffd755ab7cb43b4a756aba90205cf4d54f78072c0c722b5decc09c99",
+          "size_bytes": 32074
+        },
+        "sumo_seed": 1107
+      },
+      {
+        "block_id": 20,
+        "demand_scale": 1.25,
+        "job_signature": "595fe3a44b0597d2b74c52226638cb957d5debada8fe43af0afbbeb31d15843b",
+        "realization_block_id": 6,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1207/sumo_seed1107.npz",
+          "sha256": "2b6d30052adfc0d50b8feb57802e46bd6332e1e69c9bf025c310490a494a11a8",
+          "size_bytes": 982193
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1207/sumo_seed1107.npz.json",
+          "sha256": "fdd78c0be0f072de7b4eeb33bff5410531e6d3b0c240a63aa966328ce7ded310",
+          "size_bytes": 32101
+        },
+        "sumo_seed": 1107
+      },
+      {
+        "block_id": 21,
+        "demand_scale": 0.75,
+        "job_signature": "94444f98ac249d5f8668a2ba35bb89b0ea9936d7bf8217ef1d99148dfe5293a3",
+        "realization_block_id": 7,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1208/sumo_seed1108.npz",
+          "sha256": "24a2252864c85c360f9f6a3c698cf24f1b3555d25d5417ed0e714369fc48254e",
+          "size_bytes": 937431
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1208/sumo_seed1108.npz.json",
+          "sha256": "ed579d93a1ec251f50250375aafa0db4b138e652456e6897cd54082980038fac",
+          "size_bytes": 32132
+        },
+        "sumo_seed": 1108
+      },
+      {
+        "block_id": 22,
+        "demand_scale": 1.0,
+        "job_signature": "6cf910ac5b087e9893a2ca30c088397364b46e043f55e4f9e2f7df9654a4af37",
+        "realization_block_id": 7,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1208/sumo_seed1108.npz",
+          "sha256": "352d3cc2a2348ebb9e016f0f2fd8c0532cbdb733b9ac47cf8e8f30edde9841b2",
+          "size_bytes": 961563
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1208/sumo_seed1108.npz.json",
+          "sha256": "0bb9f32de9a7699f5a9d6a85303f29bff432676cbda13224135612c5f41a993d",
+          "size_bytes": 32071
+        },
+        "sumo_seed": 1108
+      },
+      {
+        "block_id": 23,
+        "demand_scale": 1.25,
+        "job_signature": "106dd71d2c3653d51f72801710224a4b3051d02bfff0b91e86340f1cd5a64c5c",
+        "realization_block_id": 7,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1208/sumo_seed1108.npz",
+          "sha256": "7c4a5330c7266d1ef861beb9ae8683bb8345a427a7b7a0274b4db7241a224d53",
+          "size_bytes": 984985
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1208/sumo_seed1108.npz.json",
+          "sha256": "246e18b42d4965274a95701122e999e231095f7835299e422798bf14af99ac99",
+          "size_bytes": 32147
+        },
+        "sumo_seed": 1108
+      },
+      {
+        "block_id": 24,
+        "demand_scale": 0.75,
+        "job_signature": "87fac793e05af1dddb7a48927b7e8f4df9a5c6e66898035a8b10f27adfb58455",
+        "realization_block_id": 8,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1209/sumo_seed1109.npz",
+          "sha256": "bf4209f10539d47cfa7cac153f0b985bc9dee9c8c206820541ba6d5740838104",
+          "size_bytes": 938352
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1209/sumo_seed1109.npz.json",
+          "sha256": "62b5d542dfffd7eb877789166ca0722a2780a878ce838d2dff42a3f393fc7f64",
+          "size_bytes": 32161
+        },
+        "sumo_seed": 1109
+      },
+      {
+        "block_id": 25,
+        "demand_scale": 1.0,
+        "job_signature": "c8ce06dc3fe32ace42b32be889b559a75619d42a36e58c3c69db479ee152353f",
+        "realization_block_id": 8,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1209/sumo_seed1109.npz",
+          "sha256": "8000b7a428edc7f0943b093da48df37295d175d790f05cd64be79710693b8d5e",
+          "size_bytes": 957546
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1209/sumo_seed1109.npz.json",
+          "sha256": "8f10d02387fff52a05bc300393c1df81cacc379bd6fdd5ef0391d46a07d81351",
+          "size_bytes": 32083
+        },
+        "sumo_seed": 1109
+      },
+      {
+        "block_id": 26,
+        "demand_scale": 1.25,
+        "job_signature": "71e91be8d446331bd455a043add8a2e1701685a257c2e35a8cbfe386836148a1",
+        "realization_block_id": 8,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1209/sumo_seed1109.npz",
+          "sha256": "2a1082ba97b3e3290c14e23a41f4b41829ff7e2deb9c7b878080a94cb98e1093",
+          "size_bytes": 984766
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1209/sumo_seed1109.npz.json",
+          "sha256": "275665fdc4f8c2848908ad0be3cb0e18954fc7748c29925effe0e8e1cce98def",
+          "size_bytes": 32104
+        },
+        "sumo_seed": 1109
+      },
+      {
+        "block_id": 27,
+        "demand_scale": 0.75,
+        "job_signature": "fb505b2abf846262422477a45d3702e11e84f5c9e62b21c41cbfcad314d048bf",
+        "realization_block_id": 9,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1210/sumo_seed1110.npz",
+          "sha256": "1703d151793591563584430d637fe427d152a9f6e8289a4c155b260ef088adb3",
+          "size_bytes": 940466
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_0p75_jitter120s_seed1210/sumo_seed1110.npz.json",
+          "sha256": "7b287cfcfd4efec7d4d598e37faa92df15c217465872e8ebc0261100c5195057",
+          "size_bytes": 32098
+        },
+        "sumo_seed": 1110
+      },
+      {
+        "block_id": 28,
+        "demand_scale": 1.0,
+        "job_signature": "ccdd1316c116632986ab6b2eee514fe7423620b806c78f8981bbdd466f6b48ee",
+        "realization_block_id": 9,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1210/sumo_seed1110.npz",
+          "sha256": "6d87597b786d156da7df1b494fa6e44d5dbd3e7a3c85251dea17a91570a04819",
+          "size_bytes": 963510
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1_jitter120s_seed1210/sumo_seed1110.npz.json",
+          "sha256": "f38aa1bf33c9703091a6471247c4fd975769187e360c9c7e6d65c287acad3f48",
+          "size_bytes": 32123
+        },
+        "sumo_seed": 1110
+      },
+      {
+        "block_id": 29,
+        "demand_scale": 1.25,
+        "job_signature": "9355ee8eada4bc90615ed626780d534175f085590fe6a5f04673e061f27d56f7",
+        "realization_block_id": 9,
+        "service_semantics_audit": "missing",
+        "shard": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1210/sumo_seed1110.npz",
+          "sha256": "c24a392b95c0a840c6d426d7a47d04fd29117ddd70b00a2f2fe1b96edfba363a",
+          "size_bytes": 980788
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v1/zero/demand_1p25_jitter120s_seed1210/sumo_seed1110.npz.json",
+          "sha256": "819e9a39ba677bf930aba6fcc3c404354c9a2d71250c8f69ce80ad24a9a8f995",
+          "size_bytes": 32144
+        },
+        "sumo_seed": 1110
+      }
+    ],
+    "summary_count": 30
+  },
+  "source_drift_after_semantics_repair": {
+    "changed_file_count": 4,
+    "changed_files": {
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/full_service_trace_v7.py": {
+        "current_sha256": "2a8837a3868ab799e02cec10353d6e8051646df3403732d028c88c671741e912",
+        "registered_sha256": null
+      },
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py": {
+        "current_sha256": "930580085dcd9131abd25d1a2f7e244b27a08df6d1a3f09013faa8b22d51b8ca",
+        "registered_sha256": "02386d8ca91d8a4100480a082d6d33761d65232f123a20f45ff7119e1b47bbf2"
+      },
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_provenance.py": {
+        "current_sha256": "e77774883c09cf9039b70206473eeb55162141549443dd45b7ca106ea3fef8ac",
+        "registered_sha256": "2df62454349c8649012170c5dbd90acae975c31b84b633fe48b75851511adf6d"
+      },
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v7.py": {
+        "current_sha256": "45215915d514468fbe3ce15d936c7d6ae301ce55435d8e899e0570b1f25411b6",
+        "registered_sha256": "8d8f4450f9394445c83b3c3bde0a3582adf94eaf1b253ddc053753cf9d0369e5"
+      }
+    }
+  },
+  "subject": "superseded formal-v1 exact-zero v7 collection matrix",
+  "verdict": {
+    "allowed_uses": [
+      "forensic evidence of the superseded pipeline"
+    ],
+    "eligible": false,
+    "prohibited_uses": [
+      "offline or online training",
+      "simulator runtime calibration",
+      "model selection or evaluation",
+      "paper tables, figures, or empirical claims"
+    ],
+    "reason": "the matrix predates the bus-service semantics audit, its event-only runtime calibration misses terminal segments and contains station gaps, and a complete-service replay exposed missing service-completion records"
+  }
+}

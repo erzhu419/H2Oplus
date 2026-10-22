@@ -143,10 +143,11 @@ class MixedReplayBuffer(ReplayBuffer):
             if timeouts is not None:
                 is_final_timestep = timeouts[idx, :]
             else:
-                is_final_timestep = np.zeros(done.shape)
+                # Build final-step mask on the FULL dataset, then subsample.
+                full_mask = np.zeros((total_num, 1), dtype=bool)
                 final_indices = np.arange(self.max_episode_steps - 1, total_num, self.max_episode_steps)
-                is_final_timestep[final_indices, 0] = True
-                is_final_timestep = is_final_timestep[idx, :]
+                full_mask[final_indices, 0] = True
+                is_final_timestep = full_mask[idx, :]
 
         # whether to bias the reward
         r = r * self.reward_scale + self.reward_bias

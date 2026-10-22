@@ -19,6 +19,7 @@ import datetime
 import json
 import logging
 import os
+import re
 import sys
 import pprint
 import time
@@ -70,6 +71,11 @@ try:
     import wandb
     HAS_WANDB = True
 except ImportError:
+    HAS_WANDB = False
+
+# Honour WANDB_MODE=disabled env var even though WandBLogger forces mode='online'.
+# Without this, jobs without a logged-in wandb account crash on init.
+if os.environ.get("WANDB_MODE", "").lower() in ("disabled", "offline"):
     HAS_WANDB = False
 
 
@@ -128,12 +134,27 @@ FLAGS_DEF = define_flags_with_default(
     use_ensemble_q=False,   # Use ensemble Q (RE-SAC style) instead of twin-Q + V
     ensemble_size=5,        # Number of Q-networks in ensemble
     ensemble_ckpt="",       # Path to ensemble offline RL checkpoint for initialization
+    eval_use_ema_policy=False, # Evaluate with RE-SAC EMA actor when available
     adaptive_sim_ratio=False, # Auto-scale sim_ratio by buffer sizes (prevents oversampling)
+    adaptive_sim_ratio_min=0.10,
+    adaptive_sim_ratio_max=0.50,
+    adaptive_sim_ratio_boost=8.0,
     disable_is_weighting=False, # Disable discriminator IS weighting (for zero-gap debugging)
-    use_cal_ql=False,          # Cal-QL: prevent sim Q-targets from dropping below offline baseline
+    use_cal_ql=False,          # Offline-Q floor: prevent sim Q-targets from dropping below offline baseline
+    cal_ql_mode="batch_mean",  # batch_mean | batch_quantile
+    cal_ql_quantile=0.25,
+    sim_reward_rescale=1.0,    # Sim-only reward multiplier applied BEFORE shared normalization (paper baseline)
+    ess_sim_loss_scale=False,  # Scale sim critic loss by normalized IS effective sample size
+    ess_min_scale=0.20,
+    max_offline_samples=0,     # 0 = full buffer; otherwise cap offline at N transitions (data-size ablation)
+    resume_from="",            # path to a full-state .pt checkpoint (saved via save_full_state); empty = start fresh
     use_dynamics_disc=False,  # Use DynamicsDiscriminator instead of TransitionDiscriminator
     dynamics_disc_temp=1.0,   # Temperature for dynamics-based IS weights
     use_contrastive_disc=False,  # Use ContrastiveDynamicsDiscriminator (best for SUMO/SIM)
+    contrastive_ratio_mode="nce",  # nce allows upweighting; cosine is legacy [0,1]
+    contrastive_ratio_temperature=0.2,
+    contrastive_min_weight=0.01,
+    contrastive_max_weight=20.0,
     h2o=H2OPlusBus.get_default_config(),
     logging=WandBLogger.get_default_config(),
 
@@ -149,6 +170,7 @@ FLAGS_DEF = define_flags_with_default(
     jtt_temperature_max=2.0,      # Reset sampling breadth (start of Phase 2)
     jtt_temperature_min=0.3,      # Reset sampling tightness (end of training)
     jtt_ema_decay=0.1,            # Priority score EMA smoothing
+    jtt_uniform_mix=0.0,          # Uniform reset probability after JTT warmup
 )
 
 
@@ -168,6 +190,8 @@ class StepLogger:
         "vf_loss", "vf_pred", "vf_error",
         "disc_loss", "alpha", "alpha_loss",
         "log_pi", "sqrt_IS_ratio",
+        "is_weight_mean", "is_weight_max", "is_weight_ess",
+        "sim_loss_scale", "batch_sim_ratio_actual",
         "mean_real_rewards", "mean_sim_rewards",
         "exploit_coeff",
         "jtt_updated", "jtt_td_error_mean",
@@ -242,9 +266,11 @@ def main(argv):
     set_random_seed(FLAGS.seed)
 
     # ── Create log directory ──────────────────────────────────────
+    run_label = re.sub(r"[^A-Za-z0-9_.-]+", "_", str(FLAGS.name_str)).strip("_")
+    run_label = run_label or "h2oplus_bus"
     log_dir = os.path.join(
         _H2O_ROOT, "experiment_output",
-        f"h2oplus_bus_seed{FLAGS.seed}_{FLAGS.current_time}",
+        f"{run_label}_seed{FLAGS.seed}_{FLAGS.current_time}_pid{os.getpid()}",
     )
     os.makedirs(log_dir, exist_ok=True)
 
@@ -305,6 +331,8 @@ def main(argv):
         reward_bias=FLAGS.reward_bias,
         action_scale=1.0,   # raw tanh [-1,1]: no rescaling needed
         action_bias=0.0,
+        max_offline_samples=FLAGS.max_offline_samples,
+        subsample_seed=FLAGS.seed,
     )
     log.info(
         f"Loaded {replay_buffer.fixed_dataset_size:,} offline transitions, "
@@ -340,6 +368,23 @@ def main(argv):
             )
     elif not FLAGS.use_snapshot_reset:
         log.info("Snapshot reset DISABLED (use_snapshot_reset=False)")
+
+    if FLAGS.use_snapshot_reset:
+        n_valid_snapshots = len(getattr(replay_buffer, '_valid_snap_indices', []))
+        has_lazy_index = getattr(replay_buffer, '_has_lazy_snap_index', False)
+        has_snapshot_store = getattr(replay_buffer, 'snapshot_store', None) is not None
+        if n_valid_snapshots <= 0 or (has_lazy_index and not has_snapshot_store):
+            raise RuntimeError(
+                "Snapshot reset requested but no usable snapshot source is available. "
+                "For merged datasets, rebuild merged_all_v2.h5 with "
+                "collect_policy/merge_v2_lazy.py so it contains snap_file_id/snap_row_id "
+                "and keep file_manifest.json next to it; otherwise pass "
+                "--nouse_snapshot_reset."
+            )
+        log.info(
+            f"Snapshot reset READY: valid snapshots={n_valid_snapshots:,}, "
+            f"lazy_index={has_lazy_index}, snapshot_store={has_snapshot_store}"
+        )
 
     # ── Create online env ────────────────────────────────────────
     if FLAGS.use_sumo_online:
@@ -404,8 +449,16 @@ def main(argv):
             action_dim=FLAGS.action_dim,
             embed_dim=16,
             hidden_dim=128,
+            ratio_mode=FLAGS.contrastive_ratio_mode,
+            ratio_temperature=FLAGS.contrastive_ratio_temperature,
+            min_weight=FLAGS.contrastive_min_weight,
+            max_weight=FLAGS.contrastive_max_weight,
         )
-        log.info("Using ContrastiveDynamicsDiscriminator (delta-based, action-invariant)")
+        log.info(
+            "Using ContrastiveDynamicsDiscriminator "
+            f"(ratio_mode={FLAGS.contrastive_ratio_mode}, "
+            f"temp={FLAGS.contrastive_ratio_temperature})"
+        )
     elif FLAGS.use_dynamics_disc:
         from common.data_utils import DynamicsDiscriminator
         discriminator = DynamicsDiscriminator(
@@ -428,6 +481,21 @@ def main(argv):
     if FLAGS.h2o.target_entropy >= 0.0:
         FLAGS.h2o.target_entropy = -float(FLAGS.action_dim)
 
+    h2o_config = dict(FLAGS.h2o)
+    h2o_config.update({
+        "adaptive_sim_ratio": FLAGS.adaptive_sim_ratio,
+        "adaptive_sim_ratio_min": FLAGS.adaptive_sim_ratio_min,
+        "adaptive_sim_ratio_max": FLAGS.adaptive_sim_ratio_max,
+        "adaptive_sim_ratio_boost": FLAGS.adaptive_sim_ratio_boost,
+        "disable_is_weighting": FLAGS.disable_is_weighting,
+        "use_cal_ql": FLAGS.use_cal_ql,
+        "cal_ql_mode": FLAGS.cal_ql_mode,
+        "cal_ql_quantile": FLAGS.cal_ql_quantile,
+        "sim_reward_rescale": FLAGS.sim_reward_rescale,
+        "ess_sim_loss_scale": FLAGS.ess_sim_loss_scale,
+        "ess_min_scale": FLAGS.ess_min_scale,
+    })
+
     if FLAGS.use_ensemble_q:
         # ── Ensemble Q (RE-SAC style) ────────────────────────────
         from model import BusEnsembleCritic
@@ -444,7 +512,9 @@ def main(argv):
 
         # Optionally load from ensemble offline RL checkpoint
         if FLAGS.ensemble_ckpt and os.path.exists(FLAGS.ensemble_ckpt):
-            ens_ckpt = torch.load(FLAGS.ensemble_ckpt, map_location=FLAGS.device, weights_only=True)
+            # Load on CPU first to avoid a transient CUDA allocation spike while
+            # other scheduler jobs are sharing the same GPU.
+            ens_ckpt = torch.load(FLAGS.ensemble_ckpt, map_location="cpu", weights_only=True)
             if 'policy' in ens_ckpt:
                 # train_offline_ensemble.py checkpoint format
                 log.info(f"Loading ensemble offline checkpoint: {FLAGS.ensemble_ckpt}")
@@ -462,11 +532,7 @@ def main(argv):
                     except Exception as e:
                         log.warning(f"  Q-function load failed: {e}")
 
-        h2o_config = dict(FLAGS.h2o)
         h2o_config['ensemble_size'] = E
-        h2o_config['adaptive_sim_ratio'] = FLAGS.adaptive_sim_ratio
-        h2o_config['disable_is_weighting'] = FLAGS.disable_is_weighting
-        h2o_config['use_cal_ql'] = FLAGS.use_cal_ql
         h2o_config['beta_bc'] = 0.0 if FLAGS.disable_is_weighting else h2o_config.get('beta_bc', 0.005)
         h2o = H2OPlusEnsemble(
             h2o_config, policy, qf, target_qf, replay_buffer,
@@ -490,7 +556,7 @@ def main(argv):
             embedding_layer=embedding_template.clone(),
         )
         h2o = H2OPlusBus(
-            FLAGS.h2o, policy, qf1, qf2, target_qf1, target_qf2, vf,
+            h2o_config, policy, qf1, qf2, target_qf1, target_qf2, vf,
             replay_buffer, discriminator=discriminator,
         )
         log.info("Using H2OPlusBus (twin-Q + V)")
@@ -498,6 +564,14 @@ def main(argv):
     h2o.torch_to_device(FLAGS.device)
 
     sampler_policy = BusSamplerPolicy(policy, FLAGS.device)
+    eval_base_policy = (
+        getattr(h2o, "ema_policy", policy)
+        if FLAGS.eval_use_ema_policy
+        else policy
+    )
+    eval_sampler_policy = BusSamplerPolicy(eval_base_policy, FLAGS.device)
+    if FLAGS.eval_use_ema_policy:
+        log.info("Evaluation policy: EMA actor")
 
     # ── Create samplers ───────────────────────────────────────────
     train_sampler = BusStepSampler(
@@ -508,6 +582,7 @@ def main(argv):
         h_rollout=FLAGS.h_rollout,
         w_threshold=FLAGS.w_threshold,
         warmup_episodes=FLAGS.warmup_episodes,
+        jtt_uniform_mix=FLAGS.jtt_uniform_mix,
     )
 
     eval_sampler = BusEvalSampler(
@@ -531,7 +606,8 @@ def main(argv):
             f"JTT PriorityIndex created: "
             f"n_offline={replay_buffer.fixed_dataset_size}, "
             f"warmup={FLAGS.jtt_warmup_epochs} epochs, "
-            f"T=[{FLAGS.jtt_temperature_max}->{FLAGS.jtt_temperature_min}]"
+            f"T=[{FLAGS.jtt_temperature_max}->{FLAGS.jtt_temperature_min}], "
+            f"uniform_mix={FLAGS.jtt_uniform_mix}"
         )
     else:
         log.info("JTT DISABLED (use_jtt=False)")
@@ -620,7 +696,23 @@ def main(argv):
     )
     viskit_metrics = {}
 
-    for epoch in trange(FLAGS.n_epochs, desc="H2O+ Bus Training"):
+    # ── Iter-level resume ─────────────────────────────────────────
+    start_epoch = 0
+    if FLAGS.resume_from and os.path.exists(FLAGS.resume_from):
+        if hasattr(h2o, 'load_full_state'):
+            log.info(f"Resuming from full-state checkpoint: {FLAGS.resume_from}")
+            state = torch.load(FLAGS.resume_from, map_location=FLAGS.device, weights_only=False)
+            resumed_epoch, _ = h2o.load_full_state(state, replay_buffer=replay_buffer,
+                                                    ckpt_path=FLAGS.resume_from)
+            start_epoch = resumed_epoch + 1
+            log.info(f"Resumed at epoch {start_epoch} / {FLAGS.n_epochs}, "
+                     f"_total_steps={h2o._total_steps}, "
+                     f"online_buffer_size={replay_buffer.online_size}")
+        else:
+            log.warning(f"resume_from set but trainer has no load_full_state method; ignoring.")
+
+    for epoch in trange(start_epoch, FLAGS.n_epochs, initial=start_epoch,
+                        total=FLAGS.n_epochs, desc="H2O+ Bus Training"):
         metrics = {"epoch": epoch}
 
         # ── JTT: Temperature annealing (only if enabled) ──────────
@@ -704,6 +796,10 @@ def main(argv):
         if epoch_train_metrics:
             last_m = epoch_train_metrics[-1]
             metrics.update(prefix_metrics(last_m, "h2o"))
+            if FLAGS.adaptive_sim_ratio:
+                metrics["batch_sim_ratio"] = metrics.get(
+                    "h2o/batch_sim_ratio_actual", -1
+                )
 
             # Also compute epoch averages for key metrics
             def _avg(key):
@@ -719,11 +815,12 @@ def main(argv):
         metrics["train_steps_actual"] = train_steps_actual
         metrics["train_steps_target"] = train_steps_this_epoch
         metrics["train_steps_skipped"] = (train_steps_actual == 0)
+        display_sim_ratio = metrics.get("batch_sim_ratio", sim_ratio)
 
         log.debug(
             f"[Epoch {epoch}] Train: "
             f"steps={train_steps_actual}/{train_steps_this_epoch}, "
-            f"sim_ratio={sim_ratio:.2f}, "
+            f"sim_ratio={display_sim_ratio:.2f}, "
             f"avg_ploss={metrics.get('h2o/epoch_avg_policy_loss', 'N/A')}, "
             f"avg_qloss={metrics.get('h2o/epoch_avg_real_qf1_loss', 'N/A')}, "
             f"avg_dloss={metrics.get('h2o/epoch_avg_disc_loss', 'N/A')}"
@@ -733,7 +830,7 @@ def main(argv):
         with Timer() as eval_timer:
             if epoch == 0 or (epoch + 1) % FLAGS.eval_period == 0:
                 trajs = eval_sampler.sample(
-                    sampler_policy, FLAGS.eval_n_trajs, deterministic=True
+                    eval_sampler_policy, FLAGS.eval_n_trajs, deterministic=True
                 )
                 avg_return = np.mean(
                     [np.sum(t["rewards"]) for t in trajs if t["rewards"]]
@@ -762,7 +859,7 @@ def main(argv):
                     f"avg_len={avg_length:.0f}, "
                     f"online_buf={replay_buffer.online_size}, "
                     f"train={train_steps_actual}/{train_steps_this_epoch}, "
-                    f"sim_ratio={sim_ratio:.2f}, "
+                    f"sim_ratio={display_sim_ratio:.2f}, "
                     f"disc_active={disc_active}, "
                     f"disc_acc(R/S)={disc_real_acc:.3f}/{disc_sim_acc:.3f}, "
                     f"phase={metrics.get('h2o/training_phase', '?')}, "
@@ -824,7 +921,23 @@ def main(argv):
 
         if (epoch + 1) % FLAGS.checkpoint_period == 0:
             ckpt_path = os.path.join(log_dir, f"checkpoint_epoch{epoch+1}.pt")
-            if hasattr(h2o, 'save_checkpoint'):
+            # Full-state checkpoint (resumable). Uses save_full_state if available.
+            if hasattr(h2o, 'save_full_state'):
+                h2o.save_full_state(ckpt_path, epoch,
+                                    train_step=h2o._total_steps,
+                                    variant=variant,
+                                    replay_buffer=replay_buffer)
+                log.info(f"Full-state checkpoint saved: {ckpt_path} (+ buffer side-car)")
+                # Maintain a 'latest' symlink for easy resume targeting
+                latest_link = os.path.join(log_dir, "checkpoint_latest.pt")
+                try:
+                    if os.path.islink(latest_link) or os.path.exists(latest_link):
+                        os.remove(latest_link)
+                    os.symlink(os.path.basename(ckpt_path), latest_link)
+                except OSError:
+                    pass
+                continue   # skip the legacy save below
+            elif hasattr(h2o, 'save_checkpoint'):
                 h2o.save_checkpoint(ckpt_path, epoch, variant)
             else:
                 torch.save(

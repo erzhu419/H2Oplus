@@ -1,0 +1,72 @@
+{
+  "schema": "h2oplus-synchronized-deployment-copy-cleanup-receipt-v1",
+  "completed_at_utc": "2026-08-28T00:55:05Z",
+  "reason": "Reclaim disk space by removing deployment-side run copies already covered by passed local synchronization evidence.",
+  "active_h2oplus_training_or_evaluation_processes_found": false,
+  "formal_held_out_outcomes_read": false,
+  "sumo_run_locally": false,
+  "deleted_synchronized_run_copies": [
+    {
+      "deployment_root": "reproducibility/deployments/h2oplus_v8_fewshot_training_v1/remote_results",
+      "run_directory_count": 10,
+      "local_sync_evidence": [
+        "reproducibility/h2oplus_v8_fewshot_results/evidence/source_sync_jtl110gpu.json",
+        "reproducibility/h2oplus_v8_fewshot_results/evidence/source_sync_jtl110gpu2.json"
+      ]
+    },
+    {
+      "deployment_root": "reproducibility/deployments/h2oplus_v9_adaptive_pilot_v2/remote_results",
+      "run_directory_count": 9,
+      "local_sync_evidence": [
+        "reproducibility/h2oplus_v9_adaptive_results/evidence_v2/source_sync_jtl110gpu_v9_training_v2.json",
+        "reproducibility/h2oplus_v9_adaptive_results/evidence_v2/source_sync_jtl110gpu2_v9_training_v2.json"
+      ]
+    },
+    {
+      "deployment_root": "reproducibility/deployments/h2oplus_v10_delayed_pilot_v4/remote_results",
+      "run_directory_count": 30,
+      "local_sync_evidence": [
+        "reproducibility/h2oplus_v10_delayed_results/evidence_branches_v4/source_sync_branches_v4.json",
+        "reproducibility/h2oplus_v10_delayed_results/evidence_prefix_v4/source_sync_prefix_v4.json"
+      ]
+    },
+    {
+      "deployment_root": "reproducibility/deployments/h2oplus_v12_staged_release_pilot_v2/remote_results",
+      "run_directory_count": 30,
+      "local_sync_evidence": [
+        "reproducibility/h2oplus_v12_staged_release_results/evidence_branches_v2/branch_sync_v2.json",
+        "reproducibility/h2oplus_v12_staged_release_results/evidence_prefix_v2/prefix_sync_v2.json"
+      ]
+    },
+    {
+      "deployment_root": "reproducibility/deployments/h2oplus_v13_proximal_release_pilot_v2/remote_results_v2",
+      "run_directory_count": 15,
+      "local_sync_evidence": [
+        "reproducibility/h2oplus_v13_proximal_release_results/evidence_branches_v2/branch_sync_v2.json"
+      ]
+    },
+    {
+      "deployment_root": "reproducibility/deployments/h2oplus_v14_terminal_taper_pilot_v1/remote_results_v1",
+      "run_directory_count": 15,
+      "local_sync_evidence": [
+        "reproducibility/h2oplus_v14_terminal_taper_results/evidence_branches_v1/branch_sync_v1.json"
+      ]
+    }
+  ],
+  "deleted_synchronized_run_directory_count": 109,
+  "deleted_synchronized_run_logical_bytes": 34729641847,
+  "deleted_rebuildable_cache_directories": 359,
+  "deleted_rebuildable_cache_logical_bytes": 25305766,
+  "deleted_generated_paper_preview_path": "paper/tmp",
+  "deleted_generated_paper_preview_logical_bytes": 62490637,
+  "filesystem_free_bytes_before": 71474688000,
+  "filesystem_free_bytes_after": 106302541824,
+  "filesystem_allocated_bytes_reclaimed": 34827853824,
+  "preserved": [
+    "all local synchronized result trees and their closeouts",
+    "all frozen scientific sources and registered evidence",
+    "all formal evidence and outcomes without inspection",
+    "the active v20 deployment workspace and local v20 result partition",
+    "any deployment file not explicitly bound by a passed local synchronization record"
+  ]
+}

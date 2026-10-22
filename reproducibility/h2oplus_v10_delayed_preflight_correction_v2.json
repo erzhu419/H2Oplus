@@ -1,0 +1,29 @@
+{
+  "schema_version": "transit-h2oplus-v10-delayed-preflight-correction-v2",
+  "created_utc": "2026-08-17T15:09:17Z",
+  "status": "failed-staging-sealed-fresh-verification-authorized",
+  "study_stage": "development",
+  "failed_task": {
+    "task_id": "t82612",
+    "scheduler_node": "jtl110gpu2",
+    "status": "failed",
+    "signature": "H2Oplus/v10/development/delayed-v1/preflight-v2/jtl110gpu2/b51b72af56f5029d",
+    "submitted_at": 1786978118.3366826,
+    "started_at": null,
+    "remote_pids": [],
+    "failure": "launch stage attempt 3/3: rsync rc=10 after repeated SSH broken pipe"
+  },
+  "failure_class": "scheduler-launch-staging-transport",
+  "failure_boundary": "the task never launched and no verifier, trainer, or SUMO process ran under t82612",
+  "resolution": "retain t82612 as incident evidence and submit one fresh jtl110gpu2 verification task with a new result root after a source-hash-complete scheduler run_on probe",
+  "prior_submission_path": "reproducibility/h2oplus_v10_delayed_preflight_submission_v2.json",
+  "prior_submission_sha256": "21416a0e018bac9fafaebaf701721d60e8d791225468293f737bf8d5cd04801d",
+  "staging_probe_path": "reproducibility/h2oplus_v10_delayed_preflight_staging_probe_jtl110gpu2_v1.json",
+  "staging_probe_sha256": "7910b3dab4307eee34999245db69c2ac79406e2dec5d62302341248d8617c4d3",
+  "deployment_manifest_sha256": "b51b72af56f5029dc8688c384512fef86ef2d10c10379e2653b332d584d3e70d",
+  "failed_task_must_never_be_requeued": true,
+  "fresh_task_must_use_skip_launch_staging": true,
+  "remote_training_or_sumo_executed": false,
+  "formal_held_out_outcomes_read": false,
+  "scientific_evidence_affected": false
+}

@@ -1,0 +1,170 @@
+{
+  "created_utc": "2026-08-08T15:43:35.896867+00:00",
+  "hosts": [
+    {
+      "gpus": [
+        {
+          "physical_gpu": "0",
+          "stages": [
+            {
+              "name": "rlpd-shared",
+              "workers": [
+                {
+                  "jobs": [
+                    "rlpd_seed5101"
+                  ],
+                  "name": "jtl110gpu-gpu0-rlpd-slot0"
+                },
+                {
+                  "jobs": [
+                    "rlpd_seed5102"
+                  ],
+                  "name": "jtl110gpu-gpu0-rlpd-slot1"
+                }
+              ]
+            },
+            {
+              "name": "baseline-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "wsrl_seed5101",
+                    "wsrl_seed5105",
+                    "cql_seed5104",
+                    "iql_seed5103",
+                    "iql_seed5105",
+                    "sac-mixed_seed5102",
+                    "sac-online_seed5101",
+                    "sac-online_seed5105",
+                    "bc_seed5104"
+                  ],
+                  "name": "jtl110gpu-gpu0-baseline"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "physical_gpu": "1",
+          "stages": [
+            {
+              "name": "rlpd-shared",
+              "workers": [
+                {
+                  "jobs": [
+                    "rlpd_seed5103"
+                  ],
+                  "name": "jtl110gpu-gpu1-rlpd-slot0"
+                },
+                {
+                  "jobs": [
+                    "rlpd_seed5104"
+                  ],
+                  "name": "jtl110gpu-gpu1-rlpd-slot1"
+                }
+              ]
+            },
+            {
+              "name": "baseline-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "wsrl_seed5102",
+                    "cql_seed5101",
+                    "cql_seed5105",
+                    "iql_seed5104",
+                    "sac-mixed_seed5103",
+                    "sac-mixed_seed5105",
+                    "sac-online_seed5102",
+                    "bc_seed5101",
+                    "bc_seed5105"
+                  ],
+                  "name": "jtl110gpu-gpu1-baseline"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "hostname": "jtl110gpu",
+      "hostname_aliases": [
+        "huiwei-Super-Server"
+      ]
+    },
+    {
+      "gpus": [
+        {
+          "physical_gpu": "0",
+          "stages": [
+            {
+              "name": "rlpd-single",
+              "workers": [
+                {
+                  "jobs": [
+                    "rlpd_seed5105"
+                  ],
+                  "name": "jtl110gpu2-gpu0-rlpd-slot0"
+                }
+              ]
+            },
+            {
+              "name": "baseline-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "wsrl_seed5103",
+                    "cql_seed5102",
+                    "iql_seed5101",
+                    "sac-mixed_seed5104",
+                    "sac-online_seed5103",
+                    "bc_seed5102"
+                  ],
+                  "name": "jtl110gpu2-gpu0-baseline"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "physical_gpu": "1",
+          "stages": [
+            {
+              "name": "baseline-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "wsrl_seed5104",
+                    "cql_seed5103",
+                    "iql_seed5102",
+                    "sac-mixed_seed5101",
+                    "sac-online_seed5104",
+                    "bc_seed5103"
+                  ],
+                  "name": "jtl110gpu2-gpu1-baseline"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "hostname": "jtl110gpu2",
+      "hostname_aliases": [
+        "erzhu419-Super-Server"
+      ]
+    }
+  ],
+  "job_set_sha256": "6178e5b2a32f938a8eef2e70d0c9efe26fcf521ece407a4b786d68cd0683fa8a",
+  "plan": {
+    "path": "training_plan_v6_formal_core_server_baselines_v1.json",
+    "sha256": "434aad14471a72a196c90c890f94d98452f86cd438aea4f944a07fc638f4e396"
+  },
+  "plan_id": "v6-formal-core-server-baselines-v1",
+  "policy": {
+    "baseline_assignment": "each method spans all four GPUs; its fifth seed alternates between the two faster-server GPUs",
+    "other_methods": "one serial worker per physical GPU",
+    "rlpd": "two processes per GPU only on jtl110gpu; the fifth seed uses one slot on jtl110gpu2 GPU 0",
+    "runtime_comparison": "RLPD wall-clock timings are resource observations and are not used for cross-method efficiency claims"
+  },
+  "schema_version": "transit-training-dispatch-v1",
+  "status": "frozen-before-formal-outcomes"
+}

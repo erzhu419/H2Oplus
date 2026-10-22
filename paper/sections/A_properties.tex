@@ -1,0 +1,87 @@
+\section{Accounting and action-distribution properties}
+\label{app:properties}
+
+\subsection{Chronological passenger-time accounting}
+\label{app:properties:ledger}
+
+The following identity justifies the reward accounting in
+\Cref{sec:problem:reward} and its relationship to the reported endpoint.
+
+\begin{proposition}[Nonduplicating AEC ledger]
+\label{prop:ledger}
+Let $t_0$ be the first controllable batch time, and suppose the positive-duration
+batch transitions partition $[t_0,T_{\mathrm{hor}}]$. Assume the passenger-count
+functions are integrable. With the serialization in \Cref{sec:problem:smdp}
+and costs in \Cref{eq:v7_cost},
+\begin{equation}
+\sum_{k=0}^{K-1}C_k
+=\omega_{\mathrm{w}}\int_{t_0}^{T_{\mathrm{hor}}}N_{\mathrm{w}}(u)\,\mathrm{d}u
++\omega_{\mathrm{v}}\int_{t_0}^{T_{\mathrm{hor}}}N_{\mathrm{v}}(u)\,\mathrm{d}u.
+\label{eq:ledger_identity}
+\end{equation}
+Define the pre-control cost
+\begin{equation}
+C_{\mathrm{pre}}=
+\omega_{\mathrm{w}}\int_0^{t_0}N_{\mathrm{w}}(u)\,\mathrm{d}u
++\omega_{\mathrm{v}}\int_0^{t_0}N_{\mathrm{v}}(u)\,\mathrm{d}u.
+\label{eq:precontrol_cost}
+\end{equation}
+For $N_{\mathrm{dep}}>0$, the primary endpoint satisfies
+\begin{equation}
+Y=\frac{C_{\mathrm{pre}}+\sum_{k=0}^{K-1}C_k}{N_{\mathrm{dep}}}.
+\label{eq:endpoint_ledger}
+\end{equation}
+For a fixed exogenous realization, $C_{\mathrm{pre}}$ and $N_{\mathrm{dep}}$
+are policy-invariant under the registered demand contract.
+\end{proposition}
+
+\begin{proof}
+Every nonfinal token in a simultaneous batch has $\Delta t_k=0$, so both
+integrals defining its cost vanish. The final token carries exactly the
+interval from that batch to the next physical batch or the horizon.
+These intervals do not overlap except at endpoints of zero measure. Finite
+additivity of the integrals therefore gives \Cref{eq:ledger_identity}.
+Adding the initial interval in \Cref{eq:precontrol_cost} gives the full-horizon
+integrals in \Cref{eq:completion_rate}, proving \Cref{eq:endpoint_ledger}.
+There is no control before $t_0$, and passenger departures are fixed by the
+exogenous demand realization, which proves the final statement.
+\end{proof}
+
+\newpage
+\subsection{Hurdle density and deterministic action}
+\label{app:properties:hurdle}
+
+\Cref{sec:method:architecture} uses the following distributional property to
+compute likelihoods and specify deterministic evaluation.
+
+\begin{proposition}[Normalized hurdle policy and positive-branch median]
+\label{prop:hurdle}
+For finite $g_{\phi}(s)$ and $\mu_{\phi}(s)$ and
+$\sigma_{\phi}(s)>0$, let $\mathfrak{n}_{\phi}(\cdot\mid s)$ denote the
+normal density with mean $\mu_{\phi}(s)$ and standard deviation
+$\sigma_{\phi}(s)$. The conditional positive-branch density is
+\begin{equation}
+f_{\phi}(a\mid s)=
+\frac{2\mathfrak{n}_{\phi}(\zeta(a)\mid s)}{1-a^2},
+\qquad
+\zeta(a)=\log\frac{1+a}{1-a},\quad -1<a<1,
+\label{eq:positive_density}
+\end{equation}
+where $\zeta(a)$ is the latent coordinate associated with action $a$.
+The policy in \Cref{eq:hurdle_policy} is a probability measure, and its
+conditional positive-branch median is $2\sigmoid(\mu_{\phi}(s))-1$.
+\end{proposition}
+
+\begin{proof}
+The map $a=2\sigmoid(\zeta)-1$ is a strictly increasing bijection from
+$\R$ to $(-1,1)$, with derivative
+$\mathrm{d}a/\mathrm{d}\zeta=(1-a^2)/2$. Change of variables gives
+\Cref{eq:positive_density} and
+$\int_{-1}^{1}f_{\phi}(a\mid s)\,\mathrm{d}a=1$.
+The continuous mass is therefore $p^+_{\phi}(s)$; adding the point mass
+$1-p^+_{\phi}(s)$ yields total mass one. The normal latent variable has median
+$\mu_{\phi}(s)$, and a strictly increasing transformation preserves its
+median. This proves the deterministic-action statement; nonlinear
+transformation does not generally preserve the conditional mean.
+\end{proof}
+

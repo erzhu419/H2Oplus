@@ -1,0 +1,3577 @@
+{
+  "created_utc": "2026-08-08T10:11:05.325096+00:00",
+  "demand_calibration": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env/simulator_demand_calibration.json",
+    "sha256": "4b0162580a384c8f6a75f232b80b84190ada77c1f4eafeb9bc9698a43243492f"
+  },
+  "design": {
+    "bootstrap_samples": 10000,
+    "demand_scales": [
+      0.75,
+      1.0,
+      1.25
+    ],
+    "episode_seconds": 24000.0,
+    "simulator_seeds": [
+      9901,
+      9902,
+      9903,
+      9904,
+      9905,
+      9906,
+      9907,
+      9908,
+      9909,
+      9910
+    ],
+    "sumo_blocks_per_scale": {
+      "0.75": 10,
+      "1": 10,
+      "1.25": 10
+    },
+    "thresholds": {
+      "completion_rate_absolute_gap": 0.03,
+      "decision_relative_gap": 0.05,
+      "demand_relative_error": 0.03,
+      "generalized_welfare_relative_gap": 0.15,
+      "in_vehicle_time_relative_gap": 0.1,
+      "trip_duration_relative_gap": 0.05,
+      "wait_time_relative_gap": 0.15
+    },
+    "zero_hold_policy": [
+      0.0,
+      1.0
+    ]
+  },
+  "passed": true,
+  "runtime_fingerprint": {
+    "host": {
+      "cc_environment": null,
+      "compiler": {
+        "configured": null,
+        "path": "/usr/bin/x86_64-linux-gnu-gcc-11"
+      },
+      "cpath_environment": null,
+      "cpu_threads": 16,
+      "cuda_visible_devices": null,
+      "device": "cpu",
+      "float32_matmul_precision": "highest",
+      "gpu": null,
+      "libc": {
+        "name": "glibc",
+        "version": "2.35"
+      },
+      "nvidia_smi": "/usr/lib/wsl/lib/nvidia-smi",
+      "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.17",
+      "python_executable": "/home/erzhu419/.conda/envs/h2oplus-v6/bin/python",
+      "torch_distribution_version": "2.4.1+cu121"
+    },
+    "required": {
+      "compiler": {
+        "sha256": "821af3c74506283c179ca413bb33e6b528805a4dd8a5c09df125e5ad560a9e89",
+        "version": "x86_64-linux-gnu-gcc-11 (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0"
+      },
+      "packages": {
+        "gymnasium": "1.1.1",
+        "h5py": "3.11.0",
+        "matplotlib": "3.7.5",
+        "numpy": "1.24.4",
+        "openpyxl": "3.1.5",
+        "pandas": "2.0.3",
+        "psutil": "6.0.0",
+        "pytest": "8.3.3",
+        "torch": "2.4.1+cu121"
+      },
+      "python_cache_tag": "cpython-38",
+      "python_implementation": "CPython",
+      "python_version": "3.8.20",
+      "torch_binary_sha256": {
+        "cuda_library": "bee5f6c2f6b5dbff9b6a84a0dd33ab67b4adc739401c49c5295b83f268293a8f",
+        "python_extension": "43f30e2f5a1f3da2d63d3dcd67aca919fb5dc9863f2f8f7c4a9434c4483c1b8e"
+      },
+      "torch_cuda_version": "12.1"
+    }
+  },
+  "schema_version": "transit-simulator-fidelity-audit-v6-formal-v3",
+  "simulator_episodes": [
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13213,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9365
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23665757.0,
+        "accrued_in_vehicle_seconds_total": 12601193.0,
+        "accrued_wait_seconds_total": 5532282.0,
+        "completed_journeys": 11122,
+        "completed_ride_legs": 11766,
+        "completion_rate": 0.9860803262700594,
+        "created_transfer_ride_legs": 644,
+        "generated_journeys": 11279,
+        "generated_ride_legs": 11923,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 11766,
+          "in_vehicle": 0,
+          "waiting": 157
+        },
+        "unfinished_journeys": 157,
+        "unfinished_ride_legs": 157,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 41.02144595400023
+      },
+      "seed": 9901,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4001.0,
+          "mean": 2691.912596401028,
+          "min": 1582.0,
+          "n": 389,
+          "p50": 2854.0,
+          "p90": 3472.8,
+          "p95": 3602.6,
+          "std": 658.866343289975
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13217,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9370
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23620239.0,
+        "accrued_in_vehicle_seconds_total": 12667023.0,
+        "accrued_wait_seconds_total": 5476608.0,
+        "completed_journeys": 11192,
+        "completed_ride_legs": 11818,
+        "completion_rate": 0.9863400017625804,
+        "created_transfer_ride_legs": 626,
+        "generated_journeys": 11347,
+        "generated_ride_legs": 11973,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 11818,
+          "in_vehicle": 0,
+          "waiting": 155
+        },
+        "unfinished_journeys": 155,
+        "unfinished_ride_legs": 155,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 41.02984985900184
+      },
+      "seed": 9902,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3820.0,
+          "mean": 2689.6272493573265,
+          "min": 1593.0,
+          "n": 389,
+          "p50": 2838.0,
+          "p90": 3472.0,
+          "p95": 3580.7999999999997,
+          "std": 663.459919141394
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13217,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9309
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23513396.0,
+        "accrued_in_vehicle_seconds_total": 12613810.0,
+        "accrued_wait_seconds_total": 5449793.0,
+        "completed_journeys": 11188,
+        "completed_ride_legs": 11828,
+        "completion_rate": 0.9878156454176231,
+        "created_transfer_ride_legs": 640,
+        "generated_journeys": 11326,
+        "generated_ride_legs": 11966,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 11828,
+          "in_vehicle": 0,
+          "waiting": 138
+        },
+        "unfinished_journeys": 138,
+        "unfinished_ride_legs": 138,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 39.81676156299727
+      },
+      "seed": 9903,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3911.0,
+          "mean": 2699.3033419023136,
+          "min": 1609.0,
+          "n": 389,
+          "p50": 2818.0,
+          "p90": 3482.0,
+          "p95": 3614.3999999999996,
+          "std": 663.3409857807958
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13215,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9296
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23539003.0,
+        "accrued_in_vehicle_seconds_total": 12687395.0,
+        "accrued_wait_seconds_total": 5425804.0,
+        "completed_journeys": 11249,
+        "completed_ride_legs": 11888,
+        "completion_rate": 0.987620719929763,
+        "created_transfer_ride_legs": 639,
+        "generated_journeys": 11390,
+        "generated_ride_legs": 12029,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 11888,
+          "in_vehicle": 0,
+          "waiting": 141
+        },
+        "unfinished_journeys": 141,
+        "unfinished_ride_legs": 141,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 38.66597813699991
+      },
+      "seed": 9904,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3997.0,
+          "mean": 2698.0282776349613,
+          "min": 1586.0,
+          "n": 389,
+          "p50": 2820.0,
+          "p90": 3512.2,
+          "p95": 3628.3999999999996,
+          "std": 667.5544278534658
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13209,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9323
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23037880.0,
+        "accrued_in_vehicle_seconds_total": 12524240.0,
+        "accrued_wait_seconds_total": 5256820.0,
+        "completed_journeys": 11062,
+        "completed_ride_legs": 11696,
+        "completion_rate": 0.9882962565889395,
+        "created_transfer_ride_legs": 634,
+        "generated_journeys": 11193,
+        "generated_ride_legs": 11827,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 11696,
+          "in_vehicle": 0,
+          "waiting": 131
+        },
+        "unfinished_journeys": 131,
+        "unfinished_ride_legs": 131,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 40.61554561899902
+      },
+      "seed": 9905,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3924.0,
+          "mean": 2689.7300771208224,
+          "min": 1589.0,
+          "n": 389,
+          "p50": 2831.0,
+          "p90": 3453.2,
+          "p95": 3621.7999999999997,
+          "std": 660.7209095017571
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13216,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9336
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23096842.0,
+        "accrued_in_vehicle_seconds_total": 12682742.0,
+        "accrued_wait_seconds_total": 5207050.0,
+        "completed_journeys": 11171,
+        "completed_ride_legs": 11832,
+        "completion_rate": 0.9898980948161276,
+        "created_transfer_ride_legs": 661,
+        "generated_journeys": 11285,
+        "generated_ride_legs": 11946,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 11832,
+          "in_vehicle": 0,
+          "waiting": 114
+        },
+        "unfinished_journeys": 114,
+        "unfinished_ride_legs": 114,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 40.32480986600058
+      },
+      "seed": 9906,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3985.0,
+          "mean": 2694.6709511568124,
+          "min": 1588.0,
+          "n": 389,
+          "p50": 2820.0,
+          "p90": 3499.2,
+          "p95": 3588.7999999999997,
+          "std": 668.9379254825034
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13213,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 5,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9333
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23693859.0,
+        "accrued_in_vehicle_seconds_total": 12725377.0,
+        "accrued_wait_seconds_total": 5484241.0,
+        "completed_journeys": 11085,
+        "completed_ride_legs": 11741,
+        "completion_rate": 0.9868245348526663,
+        "created_transfer_ride_legs": 656,
+        "generated_journeys": 11233,
+        "generated_ride_legs": 11889,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 11741,
+          "in_vehicle": 0,
+          "waiting": 148
+        },
+        "unfinished_journeys": 148,
+        "unfinished_ride_legs": 148,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 40.72524369600069
+      },
+      "seed": 9907,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4231.0,
+          "mean": 2701.0488431876606,
+          "min": 1595.0,
+          "n": 389,
+          "p50": 2842.0,
+          "p90": 3491.6,
+          "p95": 3602.7999999999997,
+          "std": 675.3562902218465
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13204,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9290
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23462432.0,
+        "accrued_in_vehicle_seconds_total": 12648330.0,
+        "accrued_wait_seconds_total": 5407051.0,
+        "completed_journeys": 11206,
+        "completed_ride_legs": 11838,
+        "completion_rate": 0.9876608496386392,
+        "created_transfer_ride_legs": 632,
+        "generated_journeys": 11346,
+        "generated_ride_legs": 11978,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 11838,
+          "in_vehicle": 0,
+          "waiting": 140
+        },
+        "unfinished_journeys": 140,
+        "unfinished_ride_legs": 140,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 40.51688827199905
+      },
+      "seed": 9908,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3851.0,
+          "mean": 2693.796915167095,
+          "min": 1589.0,
+          "n": 389,
+          "p50": 2847.0,
+          "p90": 3483.0,
+          "p95": 3596.0,
+          "std": 662.027063164032
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13219,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 5,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9288
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23397366.0,
+        "accrued_in_vehicle_seconds_total": 12725598.0,
+        "accrued_wait_seconds_total": 5335884.0,
+        "completed_journeys": 11190,
+        "completed_ride_legs": 11829,
+        "completion_rate": 0.9889527176314626,
+        "created_transfer_ride_legs": 639,
+        "generated_journeys": 11315,
+        "generated_ride_legs": 11954,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 11829,
+          "in_vehicle": 0,
+          "waiting": 125
+        },
+        "unfinished_journeys": 125,
+        "unfinished_ride_legs": 125,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 41.820920101999945
+      },
+      "seed": 9909,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3858.0,
+          "mean": 2696.383033419023,
+          "min": 1588.0,
+          "n": 389,
+          "p50": 2824.0,
+          "p90": 3484.0,
+          "p95": 3607.2,
+          "std": 661.6347333937682
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 0.75,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13212,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9329
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 23185893.0,
+        "accrued_in_vehicle_seconds_total": 12580507.0,
+        "accrued_wait_seconds_total": 5302693.0,
+        "completed_journeys": 11126,
+        "completed_ride_legs": 11783,
+        "completion_rate": 0.9892415755312528,
+        "created_transfer_ride_legs": 657,
+        "generated_journeys": 11247,
+        "generated_ride_legs": 11904,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 11783,
+          "in_vehicle": 0,
+          "waiting": 121
+        },
+        "unfinished_journeys": 121,
+        "unfinished_ride_legs": 121,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 42.106840207998175
+      },
+      "seed": 9910,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3852.0,
+          "mean": 2694.185089974293,
+          "min": 1579.0,
+          "n": 389,
+          "p50": 2828.0,
+          "p90": 3471.6,
+          "p95": 3641.9999999999995,
+          "std": 662.4952531896117
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13208,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9329
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 37672910.0,
+        "accrued_in_vehicle_seconds_total": 16665184.0,
+        "accrued_wait_seconds_total": 10503863.0,
+        "completed_journeys": 14595,
+        "completed_ride_legs": 15425,
+        "completion_rate": 0.9679023807944824,
+        "created_transfer_ride_legs": 830,
+        "generated_journeys": 15079,
+        "generated_ride_legs": 15909,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 15425,
+          "in_vehicle": 0,
+          "waiting": 484
+        },
+        "unfinished_journeys": 484,
+        "unfinished_ride_legs": 484,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 42.751482790998125
+      },
+      "seed": 9901,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3979.0,
+          "mean": 2719.8997429305914,
+          "min": 1599.0,
+          "n": 389,
+          "p50": 2856.0,
+          "p90": 3547.8,
+          "p95": 3671.0,
+          "std": 677.3075126755482
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13212,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9365
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 38051708.0,
+        "accrued_in_vehicle_seconds_total": 16642886.0,
+        "accrued_wait_seconds_total": 10704411.0,
+        "completed_journeys": 14588,
+        "completed_ride_legs": 15422,
+        "completion_rate": 0.9674381590291133,
+        "created_transfer_ride_legs": 834,
+        "generated_journeys": 15079,
+        "generated_ride_legs": 15913,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 15422,
+          "in_vehicle": 0,
+          "waiting": 491
+        },
+        "unfinished_journeys": 491,
+        "unfinished_ride_legs": 491,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 42.05715659799898
+      },
+      "seed": 9902,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3876.0,
+          "mean": 2720.8200514138816,
+          "min": 1614.0,
+          "n": 389,
+          "p50": 2864.0,
+          "p90": 3534.4,
+          "p95": 3642.5999999999995,
+          "std": 668.6259248106248
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13206,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9308
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 38082011.0,
+        "accrued_in_vehicle_seconds_total": 16676407.0,
+        "accrued_wait_seconds_total": 10702802.0,
+        "completed_journeys": 14582,
+        "completed_ride_legs": 15413,
+        "completion_rate": 0.967040254658797,
+        "created_transfer_ride_legs": 831,
+        "generated_journeys": 15079,
+        "generated_ride_legs": 15910,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 15413,
+          "in_vehicle": 0,
+          "waiting": 497
+        },
+        "unfinished_journeys": 497,
+        "unfinished_ride_legs": 497,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 43.21510017699984
+      },
+      "seed": 9903,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3929.0,
+          "mean": 2724.904884318766,
+          "min": 1595.0,
+          "n": 389,
+          "p50": 2873.0,
+          "p90": 3571.0,
+          "p95": 3655.3999999999996,
+          "std": 676.3507818469259
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13214,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9290
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 38015846.0,
+        "accrued_in_vehicle_seconds_total": 16757674.0,
+        "accrued_wait_seconds_total": 10629086.0,
+        "completed_journeys": 14599,
+        "completed_ride_legs": 15431,
+        "completion_rate": 0.9681676503746933,
+        "created_transfer_ride_legs": 832,
+        "generated_journeys": 15079,
+        "generated_ride_legs": 15911,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 15431,
+          "in_vehicle": 0,
+          "waiting": 480
+        },
+        "unfinished_journeys": 480,
+        "unfinished_ride_legs": 480,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 43.46714919999795
+      },
+      "seed": 9904,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3923.0,
+          "mean": 2726.210796915167,
+          "min": 1595.0,
+          "n": 389,
+          "p50": 2882.0,
+          "p90": 3574.6,
+          "p95": 3690.6,
+          "std": 681.5155199287428
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13208,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9339
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 37832247.0,
+        "accrued_in_vehicle_seconds_total": 16720619.0,
+        "accrued_wait_seconds_total": 10555814.0,
+        "completed_journeys": 14592,
+        "completed_ride_legs": 15426,
+        "completion_rate": 0.9677034286093242,
+        "created_transfer_ride_legs": 834,
+        "generated_journeys": 15079,
+        "generated_ride_legs": 15913,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 15426,
+          "in_vehicle": 0,
+          "waiting": 487
+        },
+        "unfinished_journeys": 487,
+        "unfinished_ride_legs": 487,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 43.45498795799722
+      },
+      "seed": 9905,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3898.0,
+          "mean": 2722.5912596401026,
+          "min": 1594.0,
+          "n": 389,
+          "p50": 2869.0,
+          "p90": 3552.0,
+          "p95": 3663.2,
+          "std": 678.4213900672125
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13202,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9375
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 37427198.0,
+        "accrued_in_vehicle_seconds_total": 16639230.0,
+        "accrued_wait_seconds_total": 10393984.0,
+        "completed_journeys": 14599,
+        "completed_ride_legs": 15436,
+        "completion_rate": 0.9681676503746933,
+        "created_transfer_ride_legs": 837,
+        "generated_journeys": 15079,
+        "generated_ride_legs": 15916,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 15436,
+          "in_vehicle": 0,
+          "waiting": 480
+        },
+        "unfinished_journeys": 480,
+        "unfinished_ride_legs": 480,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 45.38703244499993
+      },
+      "seed": 9906,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3967.0,
+          "mean": 2716.884318766067,
+          "min": 1598.0,
+          "n": 389,
+          "p50": 2864.0,
+          "p90": 3542.6,
+          "p95": 3632.2,
+          "std": 673.6564976228965
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13211,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9363
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 37905382.0,
+        "accrued_in_vehicle_seconds_total": 16695060.0,
+        "accrued_wait_seconds_total": 10605161.0,
+        "completed_journeys": 14588,
+        "completed_ride_legs": 15420,
+        "completion_rate": 0.9674381590291133,
+        "created_transfer_ride_legs": 832,
+        "generated_journeys": 15079,
+        "generated_ride_legs": 15911,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 15420,
+          "in_vehicle": 0,
+          "waiting": 491
+        },
+        "unfinished_journeys": 491,
+        "unfinished_ride_legs": 491,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 43.644904945002054
+      },
+      "seed": 9907,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3984.0,
+          "mean": 2719.025706940874,
+          "min": 1601.0,
+          "n": 389,
+          "p50": 2821.0,
+          "p90": 3553.6,
+          "p95": 3640.6,
+          "std": 680.3617286500445
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13206,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9353
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 37933529.0,
+        "accrued_in_vehicle_seconds_total": 16661731.0,
+        "accrued_wait_seconds_total": 10635899.0,
+        "completed_journeys": 14589,
+        "completed_ride_legs": 15420,
+        "completion_rate": 0.967504476424166,
+        "created_transfer_ride_legs": 831,
+        "generated_journeys": 15079,
+        "generated_ride_legs": 15910,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 15420,
+          "in_vehicle": 0,
+          "waiting": 490
+        },
+        "unfinished_journeys": 490,
+        "unfinished_ride_legs": 490,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 40.181534906001616
+      },
+      "seed": 9908,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3873.0,
+          "mean": 2718.9460154241647,
+          "min": 1585.0,
+          "n": 389,
+          "p50": 2856.0,
+          "p90": 3535.0,
+          "p95": 3687.2,
+          "std": 680.3983404722043
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13217,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9348
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 37890000.0,
+        "accrued_in_vehicle_seconds_total": 16708728.0,
+        "accrued_wait_seconds_total": 10590636.0,
+        "completed_journeys": 14603,
+        "completed_ride_legs": 15436,
+        "completion_rate": 0.9684329199549042,
+        "created_transfer_ride_legs": 833,
+        "generated_journeys": 15079,
+        "generated_ride_legs": 15912,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 15436,
+          "in_vehicle": 0,
+          "waiting": 476
+        },
+        "unfinished_journeys": 476,
+        "unfinished_ride_legs": 476,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 43.72361488000024
+      },
+      "seed": 9909,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4023.0,
+          "mean": 2728.0282776349613,
+          "min": 1588.0,
+          "n": 389,
+          "p50": 2853.0,
+          "p90": 3541.6,
+          "p95": 3666.2,
+          "std": 680.8808589200282
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.0,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13204,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9313
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 37705824.0,
+        "accrued_in_vehicle_seconds_total": 16675940.0,
+        "accrued_wait_seconds_total": 10514942.0,
+        "completed_journeys": 14603,
+        "completed_ride_legs": 15437,
+        "completion_rate": 0.9684329199549042,
+        "created_transfer_ride_legs": 834,
+        "generated_journeys": 15079,
+        "generated_ride_legs": 15913,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 15437,
+          "in_vehicle": 0,
+          "waiting": 476
+        },
+        "unfinished_journeys": 476,
+        "unfinished_ride_legs": 476,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 41.583363198998995
+      },
+      "seed": 9910,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4116.0,
+          "mean": 2716.676092544987,
+          "min": 1591.0,
+          "n": 389,
+          "p50": 2880.0,
+          "p90": 3545.2,
+          "p95": 3643.3999999999996,
+          "std": 676.1159907574205
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13207,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9277
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 63149271.0,
+        "accrued_in_vehicle_seconds_total": 19999135.0,
+        "accrued_wait_seconds_total": 21575068.0,
+        "completed_journeys": 17535,
+        "completed_ride_legs": 18540,
+        "completion_rate": 0.9240132792327554,
+        "created_transfer_ride_legs": 1005,
+        "generated_journeys": 18977,
+        "generated_ride_legs": 19982,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 18540,
+          "in_vehicle": 0,
+          "waiting": 1442
+        },
+        "unfinished_journeys": 1442,
+        "unfinished_ride_legs": 1442,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 42.11821585799771
+      },
+      "seed": 9901,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3930.0,
+          "mean": 2742.323907455013,
+          "min": 1600.0,
+          "n": 389,
+          "p50": 2907.0,
+          "p90": 3563.4,
+          "p95": 3642.7999999999997,
+          "std": 682.2556682618431
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13209,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9350
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 64055681.0,
+        "accrued_in_vehicle_seconds_total": 20029521.0,
+        "accrued_wait_seconds_total": 22013080.0,
+        "completed_journeys": 17428,
+        "completed_ride_legs": 18420,
+        "completion_rate": 0.9214825781208692,
+        "created_transfer_ride_legs": 992,
+        "generated_journeys": 18913,
+        "generated_ride_legs": 19905,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 18420,
+          "in_vehicle": 0,
+          "waiting": 1485
+        },
+        "unfinished_journeys": 1485,
+        "unfinished_ride_legs": 1485,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 43.571296808000625
+      },
+      "seed": 9902,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4045.0,
+          "mean": 2745.1979434447303,
+          "min": 1604.0,
+          "n": 389,
+          "p50": 2911.0,
+          "p90": 3583.6,
+          "p95": 3701.0,
+          "std": 694.9903132128369
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13203,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9280
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 62546688.0,
+        "accrued_in_vehicle_seconds_total": 19796698.0,
+        "accrued_wait_seconds_total": 21374995.0,
+        "completed_journeys": 17342,
+        "completed_ride_legs": 18325,
+        "completion_rate": 0.9237735045011453,
+        "created_transfer_ride_legs": 983,
+        "generated_journeys": 18773,
+        "generated_ride_legs": 19756,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 18325,
+          "in_vehicle": 0,
+          "waiting": 1431
+        },
+        "unfinished_journeys": 1431,
+        "unfinished_ride_legs": 1431,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 42.45088780399965
+      },
+      "seed": 9903,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3893.0,
+          "mean": 2740.3007712082263,
+          "min": 1574.0,
+          "n": 389,
+          "p50": 2887.0,
+          "p90": 3568.2,
+          "p95": 3663.2,
+          "std": 682.2182357275401
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13217,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 7,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9362
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 61890379.0,
+        "accrued_in_vehicle_seconds_total": 19923461.0,
+        "accrued_wait_seconds_total": 20983459.0,
+        "completed_journeys": 17450,
+        "completed_ride_legs": 18432,
+        "completion_rate": 0.9257294429708223,
+        "created_transfer_ride_legs": 982,
+        "generated_journeys": 18850,
+        "generated_ride_legs": 19832,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 18432,
+          "in_vehicle": 0,
+          "waiting": 1400
+        },
+        "unfinished_journeys": 1400,
+        "unfinished_ride_legs": 1400,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 41.54397792999953
+      },
+      "seed": 9904,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3883.0,
+          "mean": 2749.6143958868893,
+          "min": 1590.0,
+          "n": 389,
+          "p50": 2907.0,
+          "p90": 3612.4,
+          "p95": 3716.2,
+          "std": 686.5885188562462
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13205,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9349
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 63253256.0,
+        "accrued_in_vehicle_seconds_total": 19852816.0,
+        "accrued_wait_seconds_total": 21700220.0,
+        "completed_journeys": 17302,
+        "completed_ride_legs": 18277,
+        "completion_rate": 0.9222814498933902,
+        "created_transfer_ride_legs": 975,
+        "generated_journeys": 18760,
+        "generated_ride_legs": 19735,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 18277,
+          "in_vehicle": 0,
+          "waiting": 1458
+        },
+        "unfinished_journeys": 1458,
+        "unfinished_ride_legs": 1458,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 38.263660656000866
+      },
+      "seed": 9905,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3910.0,
+          "mean": 2751.017994858612,
+          "min": 1580.0,
+          "n": 389,
+          "p50": 2933.0,
+          "p90": 3580.6,
+          "p95": 3669.6,
+          "std": 682.0862079210921
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13215,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9316
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 63088601.0,
+        "accrued_in_vehicle_seconds_total": 19960321.0,
+        "accrued_wait_seconds_total": 21564140.0,
+        "completed_journeys": 17358,
+        "completed_ride_legs": 18382,
+        "completion_rate": 0.9221206969825755,
+        "created_transfer_ride_legs": 1024,
+        "generated_journeys": 18824,
+        "generated_ride_legs": 19848,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 18382,
+          "in_vehicle": 0,
+          "waiting": 1466
+        },
+        "unfinished_journeys": 1466,
+        "unfinished_ride_legs": 1466,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 38.921832866999466
+      },
+      "seed": 9906,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3955.0,
+          "mean": 2747.228791773779,
+          "min": 1579.0,
+          "n": 389,
+          "p50": 2908.0,
+          "p90": 3556.6,
+          "p95": 3653.6,
+          "std": 679.7858111683447
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13214,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9391
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 62310279.0,
+        "accrued_in_vehicle_seconds_total": 19804885.0,
+        "accrued_wait_seconds_total": 21252697.0,
+        "completed_journeys": 17383,
+        "completed_ride_legs": 18362,
+        "completion_rate": 0.924381813347514,
+        "created_transfer_ride_legs": 979,
+        "generated_journeys": 18805,
+        "generated_ride_legs": 19784,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 18362,
+          "in_vehicle": 0,
+          "waiting": 1422
+        },
+        "unfinished_journeys": 1422,
+        "unfinished_ride_legs": 1422,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 37.564753292001114
+      },
+      "seed": 9907,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3971.0,
+          "mean": 2737.0745501285346,
+          "min": 1593.0,
+          "n": 389,
+          "p50": 2905.0,
+          "p90": 3572.0,
+          "p95": 3638.7999999999997,
+          "std": 679.1992837955343
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13202,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9340
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 63837555.0,
+        "accrued_in_vehicle_seconds_total": 19788785.0,
+        "accrued_wait_seconds_total": 22024385.0,
+        "completed_journeys": 17278,
+        "completed_ride_legs": 18249,
+        "completion_rate": 0.9198743544694671,
+        "created_transfer_ride_legs": 971,
+        "generated_journeys": 18783,
+        "generated_ride_legs": 19754,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 18249,
+          "in_vehicle": 0,
+          "waiting": 1505
+        },
+        "unfinished_journeys": 1505,
+        "unfinished_ride_legs": 1505,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 36.991927314997156
+      },
+      "seed": 9908,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4078.0,
+          "mean": 2739.6143958868893,
+          "min": 1555.0,
+          "n": 389,
+          "p50": 2912.0,
+          "p90": 3565.2,
+          "p95": 3702.7999999999997,
+          "std": 689.7936344608725
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13221,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9282
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 64000830.0,
+        "accrued_in_vehicle_seconds_total": 19978874.0,
+        "accrued_wait_seconds_total": 22010978.0,
+        "completed_journeys": 17421,
+        "completed_ride_legs": 18401,
+        "completion_rate": 0.9222339862361038,
+        "created_transfer_ride_legs": 980,
+        "generated_journeys": 18890,
+        "generated_ride_legs": 19870,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 18401,
+          "in_vehicle": 0,
+          "waiting": 1469
+        },
+        "unfinished_journeys": 1469,
+        "unfinished_ride_legs": 1469,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 36.947574652000185
+      },
+      "seed": 9909,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 3927.0,
+          "mean": 2754.1696658097685,
+          "min": 1578.0,
+          "n": 389,
+          "p50": 2916.0,
+          "p90": 3580.8,
+          "p95": 3678.7999999999997,
+          "std": 686.104818271075
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    },
+    {
+      "demand_scale": 1.25,
+      "episode": {
+        "configured_seconds": 24000.0,
+        "control_decisions": 13209,
+        "ledger_end_time_seconds": 24000.0,
+        "maximum_simultaneous_decisions": 6,
+        "observed_end_time_seconds": 24000.0,
+        "simultaneous_batches": 9299
+      },
+      "passengers": {
+        "accrued_generalized_passenger_seconds": 63113986.0,
+        "accrued_in_vehicle_seconds_total": 19984038.0,
+        "accrued_wait_seconds_total": 21564974.0,
+        "completed_journeys": 17418,
+        "completed_ride_legs": 18406,
+        "completion_rate": 0.9222704648946309,
+        "created_transfer_ride_legs": 988,
+        "generated_journeys": 18886,
+        "generated_ride_legs": 19874,
+        "journey_state_balance_error": 0,
+        "ledger_count_errors": {
+          "in_vehicle": 0,
+          "waiting": 0
+        },
+        "state_counts_at_horizon": {
+          "between_transfer_legs": 0,
+          "completed_ride_legs": 18406,
+          "in_vehicle": 0,
+          "waiting": 1468
+        },
+        "unfinished_journeys": 1468,
+        "unfinished_ride_legs": 1468,
+        "unit": "causally ordered source-person journeys"
+      },
+      "runtime": {
+        "numpy": "1.24.4",
+        "python": "3.8.20",
+        "wall_time_seconds": 37.15559060700252
+      },
+      "seed": 9910,
+      "service": {
+        "completed_trip_duration_seconds": {
+          "max": 4139.0,
+          "mean": 2747.2390745501284,
+          "min": 1614.0,
+          "n": 389,
+          "p50": 2893.0,
+          "p90": 3591.2,
+          "p95": 3698.7999999999997,
+          "std": 690.293055139916
+        },
+        "completed_trips": 389,
+        "completion_rate": 1.0,
+        "departed_trips": 389
+      }
+    }
+  ],
+  "simulator_inputs": {
+    "aggregate_sha256": "793910a1327a3b178a9d426f673936983547bdc4fee38ab8b03fd1739973304e",
+    "calibration_report": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env/simulator_demand_calibration.json",
+      "sha256": "4b0162580a384c8f6a75f232b80b84190ada77c1f4eafeb9bc9698a43243492f",
+      "source_bus_objects_sha256": "1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd",
+      "source_manifest_sha256": "3a87e327cabce2cf09dc9564a6c3bc06db46b0349d72efa044fb07d9ac7194eb"
+    },
+    "line_ids": [
+      "102S",
+      "102X",
+      "122S",
+      "122X",
+      "311S",
+      "311X",
+      "406S",
+      "406X",
+      "705S",
+      "705X",
+      "7S",
+      "7X"
+    ],
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env",
+    "runtime_files_sha256": {
+      "config.json": "799a5372909960b52faef03433ba8d989471a878b39359095af5e2108a445dd5",
+      "data/102S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "5056ea747375e66467c6c5377b297d48adb77e9b22ee586ee45f52c03afc16cf",
+      "data/102S/route_news.xlsx:route_news.xlsx": "5b7772d04df0ba7998d401a2bbc20a911c607cbd721724d399b834e661827890",
+      "data/102S/stop_news.xlsx:stop_news.xlsx": "9118bac6bf65d93fafdc9ae87b5c7545fa893cd7ab50d1aba3be7c59c7898e3b",
+      "data/102S/time_table.xlsx:time_table_sumo.xlsx": "cbdbe665a9276cd58fc4a34c2bc0ae85689ae837d827b0f2b13878e842997832",
+      "data/102X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "133f434e0502f35c44b69a0d34f51548c5605eb92d36a1476e46fd6f66773d73",
+      "data/102X/route_news.xlsx:route_news.xlsx": "ed8d10b4fa3b179f4cf329668bb721608cf975cb6f2275e42ced2c8bc245d470",
+      "data/102X/stop_news.xlsx:stop_news.xlsx": "d48e81b47d57933062c16b9f71dc2f9a42916956cab17bc41fcd1382f0617caf",
+      "data/102X/time_table.xlsx:time_table_sumo.xlsx": "40d3b4fb70928754e7125ded5ae51578473005492ad9b5466cbc33b58d88d2b7",
+      "data/122S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "3210aa9e38800f51b5e02616069e54b7a4744ab7acb38b150abd51f639cffeb3",
+      "data/122S/route_news.xlsx:route_news.xlsx": "86ab7bc8302adf75af8f297b349995b2b8918a7b7f4ffa3b3c62b2a97d7b308f",
+      "data/122S/stop_news.xlsx:stop_news.xlsx": "63a81bdfaf2be9c746a6c6e0e5c72397f91c588e9a7d5b4185bf2315fc0b4502",
+      "data/122S/time_table.xlsx:time_table_sumo.xlsx": "d0adb5a5e032ce6b94402750596b163ca544fbc56589849f62927fb2fec6a19f",
+      "data/122X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "54b6b92bff35c05ebb21002bb8d510672ab839aba8b97a780c31ed6f39b40616",
+      "data/122X/route_news.xlsx:route_news.xlsx": "f0d71e267e9a5faeb6d0c20e397162c93806199d2330873d8464b1c7127612e1",
+      "data/122X/stop_news.xlsx:stop_news.xlsx": "2d13f33708ee54597826cdd58be38034d6663417ed0540f25de20eaae79f8236",
+      "data/122X/time_table.xlsx:time_table_sumo.xlsx": "2990b3023ce99df649db378580914bd6654a84e5c88a6cedd0af4cae6df0dc41",
+      "data/311S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "5aceb656e7546e20f70e9b61dc968998c507c76987401dc8f768228f8c84dcf8",
+      "data/311S/route_news.xlsx:route_news.xlsx": "d57f0a552d0e4afdb838f210bf0042bc28d6fc3501b2e05f30ccd1936a708a48",
+      "data/311S/stop_news.xlsx:stop_news.xlsx": "6925498e62b7de4b38a92078f6b9d23cb48a4d864fe29b221041cfd74d2a9415",
+      "data/311S/time_table.xlsx:time_table_sumo.xlsx": "824b6feeefa43072d7f8077fdec905ab2908f5df3c5d3de41f69628fd23ea218",
+      "data/311X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "cb5f57a86d47da1f8802d0dbb9a26c1b79289c5a0c634afb81e5250a38799f3f",
+      "data/311X/route_news.xlsx:route_news.xlsx": "81752b4974d12ab26d2257f6b11cdb3a3da6c5ef45f751b888ddf2ccc50f2a6b",
+      "data/311X/stop_news.xlsx:stop_news.xlsx": "b97079a37f2ffd1750d5826ce8d3e01b5eb5bae06bcb6ed43148b001d12b8ac2",
+      "data/311X/time_table.xlsx:time_table_sumo.xlsx": "7467c76fbe7831603a4e562710dc4072f4849b1eddb89c44e35963bd2c2bf42d",
+      "data/406S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "f722c6ad478fc66818bdff96842f656312816449ef816a5f4eae82d2f746522d",
+      "data/406S/route_news.xlsx:route_news.xlsx": "a1ada5087bd771e8c924d1a0b8257b6268ab819804b38e356cfef328f3dd638d",
+      "data/406S/stop_news.xlsx:stop_news.xlsx": "0110b0b59124eb06547a2f9d7d6a2743caaf05b27bd16062b07060eba864dc58",
+      "data/406S/time_table.xlsx:time_table_sumo.xlsx": "e69261d2c4e1ee93c4c4c3d795472951a60ff0d7bc3527b35f8019203d32af98",
+      "data/406X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "c332b2ff6a2c39aecc4e056d469792f82c8403ea224a40a5f537cb6a1edb885b",
+      "data/406X/route_news.xlsx:route_news.xlsx": "9179aef23690a6a430b9ec2480f5a5988d1f93ae57c8c7289743ed59a2b31614",
+      "data/406X/stop_news.xlsx:stop_news.xlsx": "96324ee727a3eb7ea40807a5234dd6784908ffe53fde9644676ee087d6823346",
+      "data/406X/time_table.xlsx:time_table_sumo.xlsx": "d6d969d5e7069af01895693feb07c3a9f93f2dbe6c0e5faaf6eacadb801a7323",
+      "data/705S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "ad7496f7df83e0aec92b7df2e7f3c53758239765daa8236558f802614b9f46b6",
+      "data/705S/route_news.xlsx:route_news.xlsx": "86095ad1ef31d6c3743d757d20a98dc94d6c4e730814978139ddf7e1e384ae0b",
+      "data/705S/stop_news.xlsx:stop_news.xlsx": "7ce640ac922a46cb749a5f92f837b94efe2f2f9c19060e6dc5e4c4319f0b562b",
+      "data/705S/time_table.xlsx:time_table_sumo.xlsx": "163ae5d1ae8d869f348329512bfb7e65283488ec336bdabe6ad7cd6020e0bbb6",
+      "data/705X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "e614176df1efb0c22766121a9d8f6d077ad523653cc91d60fb0d951eb5dc608e",
+      "data/705X/route_news.xlsx:route_news.xlsx": "ecc57d37a2331a6aab50291f162bec20855aae8a40896ffe13785310952efdd2",
+      "data/705X/stop_news.xlsx:stop_news.xlsx": "e54543d95ff784f5dbabcec0ae9ec9aeae1e059c7c24c1c02b274c184a7381d2",
+      "data/705X/time_table.xlsx:time_table_sumo.xlsx": "67c13438cd3f55ace802a11ffae3950e3f28ac7de5ddd01105b19d22078416c8",
+      "data/7S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "954ba5a24ca751480c335c944d127936d6c6d153aab644981c8878594dda4c7a",
+      "data/7S/route_news.xlsx:route_news.xlsx": "8884242230d3bd53f9c328a6675ae27e261e3364d83299648afaa57c037dadb9",
+      "data/7S/stop_news.xlsx:stop_news.xlsx": "3d5d9cdc9a136360475872c19fcb982d743887c154e52e5d7c49a28504ed9a0b",
+      "data/7S/time_table.xlsx:time_table_sumo.xlsx": "133c4f4651fa3146eb2447b1d4b37b28a2fb4da9c7efa8b86e3af14dd7eec034",
+      "data/7X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "c97c233a4ef620f307e652c61f18e6a8e2325cae128a27f9d15145fe268d5514",
+      "data/7X/route_news.xlsx:route_news.xlsx": "fcc10534c19c45a89e7a731095d68811c23cd17e910eb60911013101f19e9496",
+      "data/7X/stop_news.xlsx:stop_news.xlsx": "dc91b497e557d8cf819f006f45f24590a102e38c32c2ba29a4486be02ec67710",
+      "data/7X/time_table.xlsx:time_table_sumo.xlsx": "d2216c9b81361b3e893b5934bed121595e049f72cf58a713753911a35f1a722a",
+      "repository:bus_h2o/network_data/a_sorted_busline_edge.xml": "7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332",
+      "segment_runtime_calibration_v4.json": "4ba0aca950229c3a972c0a59b487435ff08c5d4d74f4275daa6f4feba9485219",
+      "simulator_journeys_v1.json": "1c98250932a41fb854a23736dd6e2f3be21a476751f052b3ba8e522824e4eb52"
+    },
+    "runtime_sha256": "c1f7bc434a1fd2c0aaf32b7efe0db47e3d9292f8a3b9cccaa9d0e9934664675a",
+    "schema_version": "transit-simulator-inputs-v1"
+  },
+  "source_sha256": {
+    "SimpleSAC/train_transit_v3.py": "72f18f4ff011768b67e009450e86b255c01d672803c8234c88e5c79d20d4e05b",
+    "SimpleSAC/train_transit_v6.py": "82295c71062c005dd7c4e3cd74de46623529a22e292098cf035fcd71621c67eb",
+    "SimpleSAC/transit_v3/domain_ratio.py": "d57dea4f747be2961316a8672d51bf161573c22aecf8599305265159db9de09b",
+    "SimpleSAC/transit_v3/networks.py": "82d07bb082e543ded1cb6d811b37eb783e098bbd9cc33ae341c7f9a47ed26b7b",
+    "SimpleSAC/transit_v3/protocols.py": "ce336f15075043e3c039ee0b21008523dbe989b3229263c61993f8e8d9104e98",
+    "SimpleSAC/transit_v3/replay_buffer.py": "3c7fa81d3e614cf3cecb3424447b6b7f9e149373de52bc67e8bf01dca8627fe7",
+    "SimpleSAC/transit_v3/sampler.py": "b2c603368488b3c4eb5e440facefc357e81bc9eb72eb6a87f36149b1bf8b32dc",
+    "SimpleSAC/transit_v3/trainer.py": "ea704177b3e4fddc2f442460021dd328a856df03c8ca66fc9497ee2de1de4755",
+    "SimpleSAC/transit_v4/networks.py": "4441a8009f189a3c4bbe231c0991d9a4f9b9c82747a11937ea65a45b93c5172e",
+    "SimpleSAC/transit_v6/networks.py": "4a7d2ecaafd9f769d536b683e96444533392a3be0045a104dd006d136458a26d",
+    "SimpleSAC/transit_v6/replay_buffer.py": "791e7d5a96ba40aba9e8eef2f58a3850a3c6bb221f9031ca6d9a294e3ea937eb",
+    "SimpleSAC/transit_v6/sampler.py": "c093fe36d02c6c2dc2b34672ce46cdb9a151c4be0b5f7b6afcc13c639597da60",
+    "SimpleSAC/transit_v6/trainer.py": "2260baceb57521fb1c6df46dc81caef3e04ffd350c7eefea3104c0188bfaccc7",
+    "bus_h2o/envs/all_lines_sim_env.py": "c7ca9cbbb25964606cbcf0386141204455aa70232eff3378b2cb3bfdefff3bba",
+    "bus_h2o/mdp_contract.py": "da6788ce23518d73d92b6b7bbdf6f602eec2b06bee22fe1e1963f90152a54fb8",
+    "bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+    "bus_h2o/mdp_contract_v5.py": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a",
+    "bus_h2o/mdp_contract_v6.py": "8dfc95373b039b2c239602ee7a4bda5acdde58d5760c04be3a20e425138fb4c1",
+    "bus_h2o/passenger_time.py": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7",
+    "bus_h2o/sim_core/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "bus_h2o/sim_core/bus.py": "6437d7038fcacf89dab8c28303b0afbcead29ba60d866d7a9f3b7f4922b9f973",
+    "bus_h2o/sim_core/co_line_scheduler.py": "07b9480fc53d96b80cd86c6a3f594c8ea4a13b01939715f9f106b9537546a69b",
+    "bus_h2o/sim_core/journey.py": "0036ff95d4a3dd9c3a7b0c75d4fd8b184b49123ab49ad34fc7fe3647336d02ed",
+    "bus_h2o/sim_core/passenger.py": "583ff63e20d6331709e456e10a354f77d96840a5a4bd9c9c43986ac92cd1e55c",
+    "bus_h2o/sim_core/route.py": "e5d4468c15205b4fdccc067ac312359ddf8d3e687b2751b6bd188a65f5c12223",
+    "bus_h2o/sim_core/sim.py": "e1f383f84f2777c7747ce752ab610be2b6a44dbdb861d76d0ec578fe6c7113d6",
+    "bus_h2o/sim_core/station.py": "4aff4c4d8cbfe6c39c3cbd93535956b6cb7a771ada3acbe38967997ef2996f82",
+    "bus_h2o/sim_core/timetable.py": "a2bc21860562149f1988820c62727baeb03312f8d2e933eecadfce025763dc9c",
+    "bus_h2o/sim_core/visualize.py": "c35f989d5c9ce37808d92fba1a7ddc9013dbdb24b0fcc735e4e4013cd3e0c34f",
+    "reproducibility/audit_simulator_fidelity_v6.py": "b6499fdf740310e1406fef42b7b2870d5aff755f6e6415d2b43756dbe973fe13",
+    "reproducibility/build_simulator_demand.py": "34670cbc6095e9a8d0bf9f4d67b39cb5b8298dd5d3c24067eda73c96251ed274",
+    "reproducibility/build_simulator_runtime_calibration_v4.py": "e18d57f437aee42cd37e3a91038bc758f0ffa505e8847d82e33ac924aea084f7"
+  },
+  "strata": {
+    "0.75": {
+      "comparison": {
+        "bootstrap_samples": 10000,
+        "checks": {
+          "all_gap_confidence_intervals": true,
+          "all_invariants": true,
+          "completion_rate": true,
+          "decisions": true,
+          "demand": true,
+          "generalized_welfare": true,
+          "in_vehicle_time": true,
+          "trip_duration": true,
+          "wait_time": true
+        },
+        "gap_bootstrap_95_ci": {
+          "completion_rate_absolute_gap": [
+            -0.0015133920836689573,
+            0.0003829554999057395
+          ],
+          "decision_relative_gap": [
+            -0.0189218693143421,
+            -0.017552073101694668
+          ],
+          "demand_relative_error": [
+            -0.005604888946973176,
+            0.0035206372985682973
+          ],
+          "generalized_welfare_relative_gap": [
+            0.02916476228494185,
+            0.043755879777162714
+          ],
+          "in_vehicle_time_relative_gap": [
+            0.010562324492605165,
+            0.019022701757103376
+          ],
+          "trip_duration_relative_gap": [
+            0.006623845846614515,
+            0.00971364794625248
+          ],
+          "wait_time_relative_gap": [
+            0.04643546759618057,
+            0.07961694153640689
+          ]
+        },
+        "gap_bootstrap_interval_checks": {
+          "completion_rate_absolute_gap": true,
+          "decision_relative_gap": true,
+          "demand_relative_error": true,
+          "generalized_welfare_relative_gap": true,
+          "in_vehicle_time_relative_gap": true,
+          "trip_duration_relative_gap": true,
+          "wait_time_relative_gap": true
+        },
+        "gaps": {
+          "completion_rate_absolute_gap": -0.0005440419870429425,
+          "decision_relative_gap": -0.018247876901130118,
+          "demand_relative_error": -0.0010611862293400305,
+          "generalized_welfare_relative_gap": 0.03622308939491409,
+          "in_vehicle_time_relative_gap": 0.014541646042311885,
+          "trip_duration_relative_gap": 0.008128080546854748,
+          "wait_time_relative_gap": 0.0628799734683485
+        },
+        "invariants": [
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9901
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9902
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9903
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9904
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9905
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9906
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9907
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9908
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9909
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9910
+          }
+        ],
+        "normalization": {
+          "disclosure": "sim-core and SUMO are both normalized by source-person journeys; later ride legs are created only after the preceding leg alights",
+          "expected_source_persons": 11309.25,
+          "formula": "simulator total / generated source-person journeys"
+        },
+        "passed": true,
+        "simulator": {
+          "completion_rate": {
+            "max": 0.9898980948161276,
+            "mean": 0.9878730722439112,
+            "min": 0.9860803262700594,
+            "n": 10,
+            "p50": 0.9877382475281311,
+            "p90": 0.9893072274597403,
+            "p95": 0.9896026611379339,
+            "std": 0.0012513960502636427
+          },
+          "control_decisions": {
+            "max": 13219.0,
+            "mean": 13213.5,
+            "min": 13204.0,
+            "n": 10,
+            "p50": 13214.0,
+            "p90": 13217.2,
+            "p95": 13218.1,
+            "std": 4.428443418528808
+          },
+          "created_ride_legs": {
+            "max": 12029.0,
+            "mean": 11938.9,
+            "min": 11827.0,
+            "n": 10,
+            "p50": 11950.0,
+            "p90": 11983.1,
+            "p95": 12006.05,
+            "std": 56.08020050685348
+          },
+          "generalized_seconds_per_person": {
+            "max": 2109.308199056352,
+            "mean": 2073.400826251765,
+            "min": 2046.685157288436,
+            "n": 10,
+            "p50": 2067.860936568074,
+            "p90": 2099.32352315947,
+            "p95": 2104.3158611079107,
+            "std": 18.77256222671271
+          },
+          "generated_journeys": {
+            "max": 11390.0,
+            "mean": 11296.1,
+            "min": 11193.0,
+            "n": 10,
+            "p50": 11300.0,
+            "p90": 11351.3,
+            "p95": 11370.65,
+            "std": 60.17280670424695
+          },
+          "in_vehicle_seconds_per_person": {
+            "max": 1132.8564942579899,
+            "mean": 1119.4833673454373,
+            "min": 1113.7038672081935,
+            "n": 10,
+            "p50": 1117.8958284571918,
+            "p90": 1125.4852252101562,
+            "p95": 1129.170859734073,
+            "std": 6.033299038924954
+          },
+          "trip_duration_seconds": {
+            "max": 2701.0488431876606,
+            "mean": 2694.8686375321336,
+            "min": 2689.6272493573265,
+            "n": 10,
+            "p50": 2694.4280205655527,
+            "p90": 2699.477892030848,
+            "p95": 2700.2633676092546,
+            "std": 3.864486505204323
+          },
+          "wait_seconds_per_person": {
+            "max": 490.4940154268995,
+            "mean": 476.95872945316387,
+            "min": 461.41338059370844,
+            "n": 10,
+            "p50": 476.462846567548,
+            "p90": 488.45266870195286,
+            "p95": 489.47334206442616,
+            "std": 8.912425701398904
+          }
+        },
+        "sumo": {
+          "completion_rate": {
+            "max": 0.9907645857383891,
+            "mean": 0.9884171142309544,
+            "min": 0.9870255957634598,
+            "n": 10,
+            "p50": 0.988047459250128,
+            "p90": 0.9892782642031538,
+            "p95": 0.9900214249707715,
+            "std": 0.0010347706553894772
+          },
+          "control_decisions": {
+            "max": 13479.0,
+            "mean": 13459.1,
+            "min": 13431.0,
+            "n": 10,
+            "p50": 13459.0,
+            "p90": 13475.4,
+            "p95": 13477.2,
+            "std": 15.480812496621603
+          },
+          "departed_persons": {
+            "max": 11425.0,
+            "mean": 11308.1,
+            "min": 11178.0,
+            "n": 10,
+            "p50": 11313.0,
+            "p90": 11345.8,
+            "p95": 11385.4,
+            "std": 63.068657473863794
+          },
+          "generalized_seconds_per_person": {
+            "max": 2029.6286849073256,
+            "mean": 2000.9212759990653,
+            "min": 1968.6217032235147,
+            "n": 10,
+            "p50": 2002.5212282134135,
+            "p90": 2011.5993793776152,
+            "p95": 2020.6140321424705,
+            "std": 16.080222133474912
+          },
+          "in_vehicle_seconds_per_person": {
+            "max": 1110.4578686493185,
+            "mean": 1103.4375687902996,
+            "min": 1092.6014300847457,
+            "n": 10,
+            "p50": 1103.217078248891,
+            "p90": 1108.600559975668,
+            "p95": 1109.5292143124932,
+            "std": 5.128010065879797
+          },
+          "trip_duration_seconds": {
+            "max": 2681.1696658097685,
+            "mean": 2673.1411311053985,
+            "min": 2661.7840616966582,
+            "n": 10,
+            "p50": 2672.6658097686377,
+            "p90": 2680.551928020566,
+            "p95": 2680.860796915167,
+            "std": 5.684751612525225
+          },
+          "wait_seconds_per_person": {
+            "max": 462.9548984995587,
+            "mean": 448.74185360438275,
+            "min": 430.1137554391262,
+            "n": 10,
+            "p50": 450.0308542373598,
+            "p90": 454.2220788330067,
+            "p95": 458.5884886662827,
+            "std": 8.463163534703346
+          }
+        },
+        "thresholds": {
+          "completion_rate_absolute_gap": 0.03,
+          "decision_relative_gap": 0.05,
+          "demand_relative_error": 0.03,
+          "generalized_welfare_relative_gap": 0.15,
+          "in_vehicle_time_relative_gap": 0.1,
+          "trip_duration_relative_gap": 0.05,
+          "wait_time_relative_gap": 0.15
+        }
+      },
+      "demand_scale": 0.75,
+      "simulator_seeds": [
+        9901,
+        9902,
+        9903,
+        9904,
+        9905,
+        9906,
+        9907,
+        9908,
+        9909,
+        9910
+      ],
+      "sumo_scaled_person_counts": {
+        "max": 11425.0,
+        "mean": 11308.1,
+        "min": 11178.0,
+        "n": 10,
+        "p50": 11313.0,
+        "p90": 11345.8,
+        "p95": 11385.4,
+        "std": 63.068657473863794
+      },
+      "sumo_sources": [
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11330,
+          "scenario_manifest_sha256": "8bb17334c730d1b188b07b192b802ad9788da2a098ce2829dead8b4de2abefbd",
+          "shard_sha256": "f0b5d56e7bd7539ca2490311ffa622338dcafa56f1356974fda220d3873f6f97",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1201/sumo_seed1101.npz.json",
+            "sha256": "3e345026abbb45bc71bba1242f5082f914f51199c8ffd017da1e3831cbedbfeb"
+          },
+          "sumo_seed": 1101
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11336,
+          "scenario_manifest_sha256": "cc62cc327201a2c121663078fbcec023927d798c058339ec99f1f82225851119",
+          "shard_sha256": "4592fcbc375730c757f625114d5a695edb076271c6902f8400a4aab574c003e0",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1202/sumo_seed1102.npz.json",
+            "sha256": "33307b5f121db32b463e68e0b7517770affccc9d4df44e828c1fcc0132484f01"
+          },
+          "sumo_seed": 1102
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11328,
+          "scenario_manifest_sha256": "924143d60fe47c2b926742190cb37ad858721e7c89f4edb918f27997c3be6428",
+          "shard_sha256": "470d764915231b28feb923a092a23a8a524e8f04e5d42427cfe0545f5988c85e",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1203/sumo_seed1103.npz.json",
+            "sha256": "864687c111e525a4e96cacd33a039f7823bbaaee87306c46d8148a078ad02fc1"
+          },
+          "sumo_seed": 1103
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11178,
+          "scenario_manifest_sha256": "bb4d852a181f9bc968a7839d9aa82edb834828e8810ff42329df7ef7fd6df848",
+          "shard_sha256": "c9022eafefb66a5af31aafb7d4ffc203334d900788ab7692d2752c7c24a2c871",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1204/sumo_seed1104.npz.json",
+            "sha256": "3b44fe3b3683c2d2b3a33f6df136f804769d0fde2c888168c559456f82cfd6c1"
+          },
+          "sumo_seed": 1104
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11337,
+          "scenario_manifest_sha256": "a2fe18dd6a5a7deb26bcbc40b71c7a1b7376a303804b63f67f40bf6e8788a0ea",
+          "shard_sha256": "1914e498250af32e41a5bb260502086570b2643eaa40deeedd1ad8bb6742e8b8",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1205/sumo_seed1105.npz.json",
+            "sha256": "fb3af2fcd9165d5a9829a4a6ade4d9308f6dc8330aff5baf4c5e28b5cfbda16a"
+          },
+          "sumo_seed": 1105
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11294,
+          "scenario_manifest_sha256": "af24d9b074d6587c7dec3f710e665a9c4e6c94e00b12b89c3437b3be07a2173c",
+          "shard_sha256": "ee02203e45804e9e9d0d7dbba70d150938f83c5eed8ccf8a27e5b2b1ba202782",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1206/sumo_seed1106.npz.json",
+            "sha256": "9bc72c36e7c3ea874dd8f0f309ba60b795df162e155ab5be4fd42a357e8bdb0e"
+          },
+          "sumo_seed": 1106
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11425,
+          "scenario_manifest_sha256": "279b580b32026fbee12d52c61c35ba6d0f6b64e8f6b36079858816e27eca05f9",
+          "shard_sha256": "0e7aad24c0ba7711c1999f7c3e856ffe3fe906dbd6cbd38b8ad1acd70eb758ee",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1207/sumo_seed1107.npz.json",
+            "sha256": "d218fe01e312eb78acd5cadca5f57f1c68108caebdd5fae4ea08fcbd0720d746"
+          },
+          "sumo_seed": 1107
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11298,
+          "scenario_manifest_sha256": "ab12db317b194090da552192e5cba44d6e044110a656e34ff4364dac848fd4ef",
+          "shard_sha256": "b0b22530ff2e355e16404df9d04f5d92c02092a6c6104acd26fa17859b8ecbc4",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1208/sumo_seed1108.npz.json",
+            "sha256": "2c993c48372f8206579d76045617b2cfb9d1c79a14b5786b86b508bb215ebbd7"
+          },
+          "sumo_seed": 1108
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11294,
+          "scenario_manifest_sha256": "f9bfc815af625fd01f1d9a75f09976127b6b5b71e7f5e7575e5087f4b80e65aa",
+          "shard_sha256": "68c4425a65c9196338cd13041963e1b355a4adbf8919e8ddd2e6867c2b9a2bbe",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1209/sumo_seed1109.npz.json",
+            "sha256": "4fde2edd49d17ae9fa756fdf29117793797ca96e199d7d97c8e2c61ca38e4e88"
+          },
+          "sumo_seed": 1109
+        },
+        {
+          "demand_scale": 0.75,
+          "scaled_total_persons": 11261,
+          "scenario_manifest_sha256": "677653e7b485f11299f50e70fd5a8432ce4b153f606108792cafbf2268816a3b",
+          "shard_sha256": "42d75c6c65b0bfa437849ee800c3ef376206980c3577f6e3e4d73da21ddc1817",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1210/sumo_seed1110.npz.json",
+            "sha256": "4e70d7628fa9eca0d5cd8fcf1d1061a236275b9835831f6ef8841a5cf203c3e0"
+          },
+          "sumo_seed": 1110
+        }
+      ]
+    },
+    "1": {
+      "comparison": {
+        "bootstrap_samples": 10000,
+        "checks": {
+          "all_gap_confidence_intervals": true,
+          "all_invariants": true,
+          "completion_rate": true,
+          "decisions": true,
+          "demand": true,
+          "generalized_welfare": true,
+          "in_vehicle_time": true,
+          "trip_duration": true,
+          "wait_time": true
+        },
+        "gap_bootstrap_95_ci": {
+          "completion_rate_absolute_gap": [
+            -0.004018834140194885,
+            -0.0032495523575836183
+          ],
+          "decision_relative_gap": [
+            -0.018116403280676735,
+            -0.01678375288120374
+          ],
+          "demand_relative_error": [
+            0.0,
+            0.0
+          ],
+          "generalized_welfare_relative_gap": [
+            0.04137051001830703,
+            0.05086373931430672
+          ],
+          "in_vehicle_time_relative_gap": [
+            -0.004315630793443922,
+            -3.0594456247969755e-05
+          ],
+          "trip_duration_relative_gap": [
+            -0.0018502783372243913,
+            0.0006895034593353726
+          ],
+          "wait_time_relative_gap": [
+            0.07913895727573957,
+            0.09688051452176898
+          ]
+        },
+        "gap_bootstrap_interval_checks": {
+          "completion_rate_absolute_gap": true,
+          "decision_relative_gap": true,
+          "demand_relative_error": true,
+          "generalized_welfare_relative_gap": true,
+          "in_vehicle_time_relative_gap": true,
+          "trip_duration_relative_gap": true,
+          "wait_time_relative_gap": true
+        },
+        "gaps": {
+          "completion_rate_absolute_gap": -0.0036275615093840363,
+          "decision_relative_gap": -0.017436324684599012,
+          "demand_relative_error": 0.0,
+          "generalized_welfare_relative_gap": 0.04607715431070807,
+          "in_vehicle_time_relative_gap": -0.0021899216513450947,
+          "trip_duration_relative_gap": -0.0005880592534134125,
+          "wait_time_relative_gap": 0.087543231464229
+        },
+        "invariants": [
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9901
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9902
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9903
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9904
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9905
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9906
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9907
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9908
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9909
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9910
+          }
+        ],
+        "normalization": {
+          "disclosure": "sim-core and SUMO are both normalized by source-person journeys; later ride legs are created only after the preceding leg alights",
+          "expected_source_persons": 15079.0,
+          "formula": "simulator total / generated source-person journeys"
+        },
+        "passed": true,
+        "simulator": {
+          "completion_rate": {
+            "max": 0.9684329199549042,
+            "mean": 0.967822799920419,
+            "min": 0.967040254658797,
+            "n": 10,
+            "p50": 0.9678029047019033,
+            "p90": 0.9684329199549042,
+            "p95": 0.9684329199549042,
+            "std": 0.00047287811153248093
+          },
+          "control_decisions": {
+            "max": 13217.0,
+            "mean": 13208.8,
+            "min": 13202.0,
+            "n": 10,
+            "p50": 13208.0,
+            "p90": 13214.3,
+            "p95": 13215.65,
+            "std": 4.661902329879224
+          },
+          "created_ride_legs": {
+            "max": 15916.0,
+            "mean": 15911.8,
+            "min": 15909.0,
+            "n": 10,
+            "p50": 15911.5,
+            "p90": 15913.3,
+            "p95": 15914.65,
+            "std": 2.043961295567452
+          },
+          "generalized_seconds_per_person": {
+            "max": 2525.4997678891173,
+            "mean": 2510.223854367,
+            "min": 2482.074275482459,
+            "n": 10,
+            "p50": 2513.2761456329995,
+            "p90": 2523.691113469063,
+            "p95": 2524.59544067909,
+            "std": 13.352724288385547
+          },
+          "generated_journeys": {
+            "max": 15079.0,
+            "mean": 15079.0,
+            "min": 15079.0,
+            "n": 10,
+            "p50": 15079.0,
+            "p90": 15079.0,
+            "p95": 15079.0,
+            "std": 0.0
+          },
+          "in_vehicle_seconds_per_person": {
+            "max": 1111.3252868227337,
+            "mean": 1106.462358246568,
+            "min": 1103.470389283109,
+            "n": 10,
+            "p50": 1105.9203859672393,
+            "p90": 1109.1136348564228,
+            "p95": 1110.2194608395782,
+            "std": 2.4385302758348537
+          },
+          "trip_duration_seconds": {
+            "max": 2728.0282776349613,
+            "mean": 2721.3987146529566,
+            "min": 2716.676092544987,
+            "n": 10,
+            "p50": 2720.3598971722367,
+            "p90": 2726.3925449871463,
+            "p95": 2727.210411311054,
+            "std": 3.912007534898658
+          },
+          "wait_seconds_per_person": {
+            "max": 709.8886530937065,
+            "mean": 701.8807480602162,
+            "min": 689.3019430996751,
+            "n": 10,
+            "p50": 702.8250215531534,
+            "p90": 709.7926188739306,
+            "p95": 709.8406359838185,
+            "std": 6.327091998886445
+          }
+        },
+        "sumo": {
+          "completion_rate": {
+            "max": 0.9722130114729094,
+            "mean": 0.9714503614298031,
+            "min": 0.9708203461768021,
+            "n": 10,
+            "p50": 0.9713840440347503,
+            "p90": 0.9719742688507196,
+            "p95": 0.9720936401618145,
+            "std": 0.00047745454089477194
+          },
+          "control_decisions": {
+            "max": 13472.0,
+            "mean": 13443.2,
+            "min": 13421.0,
+            "n": 10,
+            "p50": 13441.5,
+            "p90": 13455.8,
+            "p95": 13463.9,
+            "std": 14.748257900888197
+          },
+          "departed_persons": {
+            "max": 15079.0,
+            "mean": 15079.0,
+            "min": 15079.0,
+            "n": 10,
+            "p50": 15079.0,
+            "p90": 15079.0,
+            "p95": 15079.0,
+            "std": 0.0
+          },
+          "generalized_seconds_per_person": {
+            "max": 2417.4345115723854,
+            "mean": 2399.6545991113467,
+            "min": 2365.6638371244776,
+            "n": 10,
+            "p50": 2401.011705020227,
+            "p90": 2409.7954042045226,
+            "p95": 2413.6149578884542,
+            "std": 13.476345012335083
+          },
+          "in_vehicle_seconds_per_person": {
+            "max": 1115.013794018171,
+            "mean": 1108.8907420916507,
+            "min": 1103.771072352278,
+            "n": 10,
+            "p50": 1109.3335764971152,
+            "p90": 1111.7074474434644,
+            "p95": 1113.3606207308178,
+            "std": 3.284968245009839
+          },
+          "trip_duration_seconds": {
+            "max": 2729.974293059126,
+            "mean": 2723.0,
+            "min": 2716.218508997429,
+            "n": 10,
+            "p50": 2722.4897172236506,
+            "p90": 2729.0025706940874,
+            "p95": 2729.4884318766067,
+            "std": 4.317358416425649
+          },
+          "wait_seconds_per_person": {
+            "max": 653.0472179852775,
+            "mean": 645.3819285098482,
+            "min": 628.3115591219577,
+            "n": 10,
+            "p50": 646.4971483520127,
+            "p90": 650.2812056502421,
+            "p95": 651.6642118177598,
+            "std": 6.734434049475917
+          }
+        },
+        "thresholds": {
+          "completion_rate_absolute_gap": 0.03,
+          "decision_relative_gap": 0.05,
+          "demand_relative_error": 0.03,
+          "generalized_welfare_relative_gap": 0.15,
+          "in_vehicle_time_relative_gap": 0.1,
+          "trip_duration_relative_gap": 0.05,
+          "wait_time_relative_gap": 0.15
+        }
+      },
+      "demand_scale": 1.0,
+      "simulator_seeds": [
+        9901,
+        9902,
+        9903,
+        9904,
+        9905,
+        9906,
+        9907,
+        9908,
+        9909,
+        9910
+      ],
+      "sumo_scaled_person_counts": {
+        "max": 15079.0,
+        "mean": 15079.0,
+        "min": 15079.0,
+        "n": 10,
+        "p50": 15079.0,
+        "p90": 15079.0,
+        "p95": 15079.0,
+        "std": 0.0
+      },
+      "sumo_sources": [
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "7ebca4924b4e1249f5b97f8fb2a0f5f99b9e44ccb6a221bc9119bc61fa8b791e",
+          "shard_sha256": "2a4c5f40cd06b4bf33549826787e616b36427786d777856f779817333e3949b3",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz.json",
+            "sha256": "70a2da455d1e9f454cd5caa479942043081194da0d9ad90073d59a63c5521887"
+          },
+          "sumo_seed": 1101
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "c222ff4cbe6bb9b0db0e2b1c49fa03bc57481ba8b5ac3286ea547980aaf0c39f",
+          "shard_sha256": "bddfffa7d29c00e74c13d9bdb041868919b92b7abd8ec61a66fde3a760208b34",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1202/sumo_seed1102.npz.json",
+            "sha256": "1f241719db8d72c0911885c35e142887625f86b2c4fe302a1561d32d1703ad9c"
+          },
+          "sumo_seed": 1102
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "33da4f4407b630dea1312fe125527fa8830e2e16c3949feb108ca75845259cbf",
+          "shard_sha256": "b20868acb6b343fb45e370203a2fccbec646ea238fad51fbe37ac7dd8449947d",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1203/sumo_seed1103.npz.json",
+            "sha256": "6ec5b46b8bbf895a1c0d7abf79f45113c0448f0dc41d6b5227f34fee05b3055d"
+          },
+          "sumo_seed": 1103
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "cfff207a2a3a4f52d765410de0d47a8763eba91e5aa4b7b901bfb1f1c4df4479",
+          "shard_sha256": "fdabc40ba491ff882063a85fd7ad3fc2be9cbdcdaaeb40fe3017b1b8b3ce08ed",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1204/sumo_seed1104.npz.json",
+            "sha256": "d5c5b1c743af4eabe65dcf83cea9d218a206ab2edac02938b6cff1d6fb762fd6"
+          },
+          "sumo_seed": 1104
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "e18f23cec485e67f4677f6a2dd30473502cf2eccd7876dc69aafd83a19f103fb",
+          "shard_sha256": "2df16a256ec51b4953e78eb066039369048dc3295ed5f0c26a8a7cdee12b26e7",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1205/sumo_seed1105.npz.json",
+            "sha256": "38abb5f4d5eaf6f112c02c732eaf69a704c86b73295c160d98ee95ba366bd388"
+          },
+          "sumo_seed": 1105
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "fb885ce246dae7af95f0156a1f39cfcdcd72477f557e923de2e816739a1ebce2",
+          "shard_sha256": "d1d4bbf2e27be7235e9fac44e42dbcb7d9211377c036b6f88bd79699c8749429",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1206/sumo_seed1106.npz.json",
+            "sha256": "cbf4b51204f41187a67a5f87abc6619ff52ae109cde5c9ef971936466c79ceb1"
+          },
+          "sumo_seed": 1106
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "46e5e00006aaebad6f863f8fa11a6c9a9772488f1c8b2bcb036911f3944b9cac",
+          "shard_sha256": "9d033f862b56f2d2fc9614c100e0ebd1514d450e5bf9458a60a58ee6e187203c",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1207/sumo_seed1107.npz.json",
+            "sha256": "3a5a61615422a0cad218749f64f5aec5044bf5d2caf0cc638f9726eef39f6af6"
+          },
+          "sumo_seed": 1107
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "0c57ac5a1f4efa36dd489d1bc37a1d79adcf50a29e8fbaea164a3e9c830ee3c2",
+          "shard_sha256": "8044bb6a4937f18c9ed9dc3f579496466fb714edab05015aeca1b35eaabd6e5e",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1208/sumo_seed1108.npz.json",
+            "sha256": "99f27b30ad09d2bc3793e1c26ccf3a76a49ec4d66c57a7274a8dd7b638c5e0de"
+          },
+          "sumo_seed": 1108
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "f603d713e1b5e7c870e8e459ee0dcdb5674a916d783951caeca54248bb420435",
+          "shard_sha256": "edd87262594f99091b303d7f0f8cc9d06f5972ccdfb05efda4da38ee72c08e22",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1209/sumo_seed1109.npz.json",
+            "sha256": "bf9dad4f52b8309f29278a9b860a4261711bf95a56c5242a5fdc774ed33adb82"
+          },
+          "sumo_seed": 1109
+        },
+        {
+          "demand_scale": 1.0,
+          "scaled_total_persons": 15079,
+          "scenario_manifest_sha256": "17e23e9c51422047838d25e69b65a85ef4ad7ecace8c6fbffd274ec0159fc8a8",
+          "shard_sha256": "37d2a98facb68dbdcb7fc4f263ea0d38dc521bd1acaf4ac84aa937e91e2a631c",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1210/sumo_seed1110.npz.json",
+            "sha256": "49a517ea64113f837183767820f5fbfdd8ab32a94138f7013cc3bd1066cefdff"
+          },
+          "sumo_seed": 1110
+        }
+      ]
+    },
+    "1.25": {
+      "comparison": {
+        "bootstrap_samples": 10000,
+        "checks": {
+          "all_gap_confidence_intervals": true,
+          "all_invariants": true,
+          "completion_rate": true,
+          "decisions": true,
+          "demand": true,
+          "generalized_welfare": true,
+          "in_vehicle_time": true,
+          "trip_duration": true,
+          "wait_time": true
+        },
+        "gap_bootstrap_95_ci": {
+          "completion_rate_absolute_gap": [
+            -0.00548722553862242,
+            -0.0029999371587944414
+          ],
+          "decision_relative_gap": [
+            -0.019509457410338372,
+            -0.018310026876353958
+          ],
+          "demand_relative_error": [
+            -0.003497556691594788,
+            0.0016225687731959615
+          ],
+          "generalized_welfare_relative_gap": [
+            0.019203346426695862,
+            0.03596942394389188
+          ],
+          "in_vehicle_time_relative_gap": [
+            -0.019769700033793816,
+            -0.013467172983744525
+          ],
+          "trip_duration_relative_gap": [
+            -0.01202384759237973,
+            -0.008913918298314337
+          ],
+          "wait_time_relative_gap": [
+            0.03689027215024376,
+            0.06196945085489924
+          ]
+        },
+        "gap_bootstrap_interval_checks": {
+          "completion_rate_absolute_gap": true,
+          "decision_relative_gap": true,
+          "demand_relative_error": true,
+          "generalized_welfare_relative_gap": true,
+          "in_vehicle_time_relative_gap": true,
+          "trip_duration_relative_gap": true,
+          "wait_time_relative_gap": true
+        },
+        "gaps": {
+          "completion_rate_absolute_gap": -0.004272373597100865,
+          "decision_relative_gap": -0.018923134051243913,
+          "demand_relative_error": -0.0010283321406801544,
+          "generalized_welfare_relative_gap": 0.02771429878395908,
+          "in_vehicle_time_relative_gap": -0.016596844686553505,
+          "trip_duration_relative_gap": -0.010417032487483234,
+          "wait_time_relative_gap": 0.04950458426881996
+        },
+        "invariants": [
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9901
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9902
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9903
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9904
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9905
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9906
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9907
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9908
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9909
+          },
+          {
+            "all_trips_completed": true,
+            "fixed_horizon": true,
+            "journey_states_reconciled": true,
+            "ledger_counts_reconciled": true,
+            "seed": 9910
+          }
+        ],
+        "normalization": {
+          "disclosure": "sim-core and SUMO are both normalized by source-person journeys; later ride legs are created only after the preceding leg alights",
+          "expected_source_persons": 18848.75,
+          "formula": "simulator total / generated source-person journeys"
+        },
+        "passed": true,
+        "simulator": {
+          "completion_rate": {
+            "max": 0.9257294429708223,
+            "mean": 0.9228161570649274,
+            "min": 0.9198743544694671,
+            "n": 10,
+            "p50": 0.9222759573940106,
+            "p90": 0.9245165763098449,
+            "p95": 0.9251230096403336,
+            "std": 0.0016708961194458769
+          },
+          "control_decisions": {
+            "max": 13221.0,
+            "mean": 13210.2,
+            "min": 13202.0,
+            "n": 10,
+            "p50": 13209.0,
+            "p90": 13217.4,
+            "p95": 13219.2,
+            "std": 6.321040701937898
+          },
+          "created_ride_legs": {
+            "max": 19982.0,
+            "mean": 19834.0,
+            "min": 19735.0,
+            "n": 10,
+            "p50": 19840.0,
+            "p90": 19912.7,
+            "p95": 19947.35,
+            "std": 78.0498416255778
+          },
+          "generalized_seconds_per_person": {
+            "max": 3398.6879092796676,
+            "mean": 3349.488942236193,
+            "min": 3283.309230769231,
+            "n": 10,
+            "p50": 3346.6689580832794,
+            "p90": 3389.1407337548594,
+            "p95": 3393.9143215172635,
+            "std": 37.01200038103158
+          },
+          "generated_journeys": {
+            "max": 18977.0,
+            "mean": 18846.1,
+            "min": 18760.0,
+            "n": 10,
+            "p50": 18837.0,
+            "p90": 18919.4,
+            "p95": 18948.2,
+            "std": 69.96896137256545
+          },
+          "in_vehicle_seconds_per_person": {
+            "max": 1060.3655439864003,
+            "mean": 1056.5494274043176,
+            "min": 1053.1712310555704,
+            "n": 10,
+            "p50": 1057.2952064935484,
+            "p90": 1059.167675849494,
+            "p95": 1059.766609917947,
+            "std": 2.565742033942992
+          },
+          "trip_duration_seconds": {
+            "max": 2754.1696658097685,
+            "mean": 2745.378149100257,
+            "min": 2737.0745501285346,
+            "n": 10,
+            "p50": 2746.2133676092544,
+            "p90": 2751.3331619537275,
+            "p95": 2752.7514138817482,
+            "std": 5.489824670910638
+          },
+          "wait_seconds_per_person": {
+            "max": 1172.570143214609,
+            "mean": 1146.4697574159375,
+            "min": 1113.1808488063662,
+            "n": 10,
+            "p50": 1143.7080141506203,
+            "p90": 1165.953689811138,
+            "p95": 1169.2619165128735,
+            "std": 18.232564414726166
+          }
+        },
+        "sumo": {
+          "completion_rate": {
+            "max": 0.929002541296061,
+            "mean": 0.9270885306620282,
+            "min": 0.9239725663246319,
+            "n": 10,
+            "p50": 0.9272496809423441,
+            "p90": 0.9280880001140759,
+            "p95": 0.9285452707050684,
+            "std": 0.0013011494688179278
+          },
+          "control_decisions": {
+            "max": 13484.0,
+            "mean": 13465.0,
+            "min": 13447.0,
+            "n": 10,
+            "p50": 13466.0,
+            "p90": 13477.7,
+            "p95": 13480.85,
+            "std": 12.418624006798105
+          },
+          "departed_persons": {
+            "max": 18929.0,
+            "mean": 18865.5,
+            "min": 18802.0,
+            "n": 10,
+            "p50": 18875.0,
+            "p90": 18906.5,
+            "p95": 18917.75,
+            "std": 43.787999370705315
+          },
+          "generalized_seconds_per_person": {
+            "max": 3307.543835397948,
+            "mean": 3259.1635109090807,
+            "min": 3218.169875545155,
+            "n": 10,
+            "p50": 3258.856631508991,
+            "p90": 3284.7321108365354,
+            "p95": 3296.1379731172415,
+            "std": 26.589018781622453
+          },
+          "in_vehicle_seconds_per_person": {
+            "max": 1084.7256459127489,
+            "mean": 1074.3807579787122,
+            "min": 1066.3993834378655,
+            "n": 10,
+            "p50": 1074.3011918051925,
+            "p90": 1078.4897163694288,
+            "p95": 1081.607681141089,
+            "std": 5.239130706172682
+          },
+          "trip_duration_seconds": {
+            "max": 2786.017994858612,
+            "mean": 2774.2778920308488,
+            "min": 2768.7352185089976,
+            "n": 10,
+            "p50": 2774.169665809769,
+            "p90": 2778.09383033419,
+            "p95": 2782.055912596401,
+            "std": 5.009551413921157
+          },
+          "wait_seconds_per_person": {
+            "max": 1120.2718379499177,
+            "mean": 1092.3913764651843,
+            "min": 1070.8151792362514,
+            "n": 10,
+            "p50": 1092.632556116932,
+            "p90": 1105.598323316361,
+            "p95": 1112.9350806331395,
+            "std": 14.52105908489559
+          }
+        },
+        "thresholds": {
+          "completion_rate_absolute_gap": 0.03,
+          "decision_relative_gap": 0.05,
+          "demand_relative_error": 0.03,
+          "generalized_welfare_relative_gap": 0.15,
+          "in_vehicle_time_relative_gap": 0.1,
+          "trip_duration_relative_gap": 0.05,
+          "wait_time_relative_gap": 0.15
+        }
+      },
+      "demand_scale": 1.25,
+      "simulator_seeds": [
+        9901,
+        9902,
+        9903,
+        9904,
+        9905,
+        9906,
+        9907,
+        9908,
+        9909,
+        9910
+      ],
+      "sumo_scaled_person_counts": {
+        "max": 18929.0,
+        "mean": 18865.5,
+        "min": 18802.0,
+        "n": 10,
+        "p50": 18875.0,
+        "p90": 18906.5,
+        "p95": 18917.75,
+        "std": 43.787999370705315
+      },
+      "sumo_sources": [
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18863,
+          "scenario_manifest_sha256": "4beb6d4690c86c05d679ea4e2d66fb6d43a56d637e5a54a88ee7ccde65bad42b",
+          "shard_sha256": "b233c9633356437d6e8adc9f9be03c015a50f424228605a327dfc11000acd093",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1201/sumo_seed1101.npz.json",
+            "sha256": "81305371cee4c4212f29acf5045a60a5cc3a51c0d9093c048cc9473553380970"
+          },
+          "sumo_seed": 1101
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18886,
+          "scenario_manifest_sha256": "2a82086b29b066b32813a826dec58810273ce835abe17e0a420256f4ceb018ea",
+          "shard_sha256": "f603d4d53b36330ed43606af914c72c00499879746a97d9e8e2d8af6cd213bd2",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1202/sumo_seed1102.npz.json",
+            "sha256": "09d1420499678a258517c0f9322c3cda875edd16719a5514198ff39204f95f73"
+          },
+          "sumo_seed": 1102
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18809,
+          "scenario_manifest_sha256": "0034c813cc076378e4993b6f92268854f7dfc44901edd95c17a3aaf9f21c6f5a",
+          "shard_sha256": "016b2ea89bacbcbd25168578718460f22565aa6698274e740a98e6bb404b141a",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1203/sumo_seed1103.npz.json",
+            "sha256": "0aeed5e0b864e951530fb0807975de5142de49db9a50d1e0ef070b8e083fb751"
+          },
+          "sumo_seed": 1103
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18814,
+          "scenario_manifest_sha256": "394af7e89e60f76cb17ee217b72df79c64514a6431f176cdbded30bfca9f2aa6",
+          "shard_sha256": "e32f3a4307497598fc81b19a4173e1326eae8a067b5420405c2039e25eee6ee6",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1204/sumo_seed1104.npz.json",
+            "sha256": "e6681e38f42f5c7f15c785c8d582f47169f9b3d5f28cd47154a2edc7cbfdea7c"
+          },
+          "sumo_seed": 1104
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18896,
+          "scenario_manifest_sha256": "01cf0ccac2705e3079d599a010a68493cd57f1149dc4d1ccbc422be62f595553",
+          "shard_sha256": "2b81e7e6a2914b4b2cc078bb3d5ba4c5e6ef69edbdf9739959fd93a8cc04e3a1",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1205/sumo_seed1105.npz.json",
+            "sha256": "19053d02e3e187e6e5bb6ae546996562bcf2e8d42af551fdd049e84584490fb2"
+          },
+          "sumo_seed": 1105
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18904,
+          "scenario_manifest_sha256": "88aa96acac8c18794bfed9bec3aaaf1020ff06ac01c38ea84f5ec4a214efe22e",
+          "shard_sha256": "1b73f43608fc0ebb40b0c279bd93bbf325bcc984d3e7fa3db19645ffe0d60fdc",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1206/sumo_seed1106.npz.json",
+            "sha256": "520d6eb939d8d6f640e18adfc71c145e890499868d5d90c14624964cf77a4314"
+          },
+          "sumo_seed": 1106
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18929,
+          "scenario_manifest_sha256": "d1d1328a8d234100775ec083e503a394cfc6f7c029c96c3a2fe86cda933daacc",
+          "shard_sha256": "219cd8e709478efcfd4f036bbf6f7b69261e36eee79cb0a3b72d56edceee332a",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1207/sumo_seed1107.npz.json",
+            "sha256": "bfbd666861c4005fa51022164f96ecd3405aee74c11b4f2fe3d4fcbb8467a909"
+          },
+          "sumo_seed": 1107
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18864,
+          "scenario_manifest_sha256": "6aa3a43ba1d21f37d1733da5e2c0d0584c39342a32d2c68057192a900fd3e73f",
+          "shard_sha256": "42ddf42ee5cd6e313e5f2fa069e78f565f16190ee183bf5fbff81703ef9f3b68",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1208/sumo_seed1108.npz.json",
+            "sha256": "9e6eedbad57f32361f1ddd5a3b7e33f12ea69cd2036b7b6a0d28658e8ef4eb71"
+          },
+          "sumo_seed": 1108
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18888,
+          "scenario_manifest_sha256": "08fc9b68f76d2cdc3af98897d310b66597880ed236f37d011c30d794f6a376f5",
+          "shard_sha256": "3958a00a2e1676ae862953405e76668bd8010408203a60031ed19468a9741081",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1209/sumo_seed1109.npz.json",
+            "sha256": "c84401d3c93211f17afc79d74e40607669c4191d61b9b920b96881f932a248b6"
+          },
+          "sumo_seed": 1109
+        },
+        {
+          "demand_scale": 1.25,
+          "scaled_total_persons": 18802,
+          "scenario_manifest_sha256": "83ee7a563c6d8d1859f0ac7b72ba0db816e437cd74991664f7aeb97f7d22687f",
+          "shard_sha256": "dfbc6b144340e5da035f60cbb4352af6eab046916fa44ff6516dfa1b3f3787ca",
+          "summary": {
+            "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1210/sumo_seed1110.npz.json",
+            "sha256": "5cfc62d6806059ef0e417d9c9d710a10662ec3a8f87f0f632858d87500584353"
+          },
+          "sumo_seed": 1110
+        }
+      ]
+    }
+  },
+  "study_stage": "formal",
+  "sumo_sources": [
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11330,
+      "scenario_manifest_sha256": "8bb17334c730d1b188b07b192b802ad9788da2a098ce2829dead8b4de2abefbd",
+      "shard_sha256": "f0b5d56e7bd7539ca2490311ffa622338dcafa56f1356974fda220d3873f6f97",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1201/sumo_seed1101.npz.json",
+        "sha256": "3e345026abbb45bc71bba1242f5082f914f51199c8ffd017da1e3831cbedbfeb"
+      },
+      "sumo_seed": 1101
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11336,
+      "scenario_manifest_sha256": "cc62cc327201a2c121663078fbcec023927d798c058339ec99f1f82225851119",
+      "shard_sha256": "4592fcbc375730c757f625114d5a695edb076271c6902f8400a4aab574c003e0",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1202/sumo_seed1102.npz.json",
+        "sha256": "33307b5f121db32b463e68e0b7517770affccc9d4df44e828c1fcc0132484f01"
+      },
+      "sumo_seed": 1102
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11328,
+      "scenario_manifest_sha256": "924143d60fe47c2b926742190cb37ad858721e7c89f4edb918f27997c3be6428",
+      "shard_sha256": "470d764915231b28feb923a092a23a8a524e8f04e5d42427cfe0545f5988c85e",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1203/sumo_seed1103.npz.json",
+        "sha256": "864687c111e525a4e96cacd33a039f7823bbaaee87306c46d8148a078ad02fc1"
+      },
+      "sumo_seed": 1103
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11178,
+      "scenario_manifest_sha256": "bb4d852a181f9bc968a7839d9aa82edb834828e8810ff42329df7ef7fd6df848",
+      "shard_sha256": "c9022eafefb66a5af31aafb7d4ffc203334d900788ab7692d2752c7c24a2c871",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1204/sumo_seed1104.npz.json",
+        "sha256": "3b44fe3b3683c2d2b3a33f6df136f804769d0fde2c888168c559456f82cfd6c1"
+      },
+      "sumo_seed": 1104
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11337,
+      "scenario_manifest_sha256": "a2fe18dd6a5a7deb26bcbc40b71c7a1b7376a303804b63f67f40bf6e8788a0ea",
+      "shard_sha256": "1914e498250af32e41a5bb260502086570b2643eaa40deeedd1ad8bb6742e8b8",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1205/sumo_seed1105.npz.json",
+        "sha256": "fb3af2fcd9165d5a9829a4a6ade4d9308f6dc8330aff5baf4c5e28b5cfbda16a"
+      },
+      "sumo_seed": 1105
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11294,
+      "scenario_manifest_sha256": "af24d9b074d6587c7dec3f710e665a9c4e6c94e00b12b89c3437b3be07a2173c",
+      "shard_sha256": "ee02203e45804e9e9d0d7dbba70d150938f83c5eed8ccf8a27e5b2b1ba202782",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1206/sumo_seed1106.npz.json",
+        "sha256": "9bc72c36e7c3ea874dd8f0f309ba60b795df162e155ab5be4fd42a357e8bdb0e"
+      },
+      "sumo_seed": 1106
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11425,
+      "scenario_manifest_sha256": "279b580b32026fbee12d52c61c35ba6d0f6b64e8f6b36079858816e27eca05f9",
+      "shard_sha256": "0e7aad24c0ba7711c1999f7c3e856ffe3fe906dbd6cbd38b8ad1acd70eb758ee",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1207/sumo_seed1107.npz.json",
+        "sha256": "d218fe01e312eb78acd5cadca5f57f1c68108caebdd5fae4ea08fcbd0720d746"
+      },
+      "sumo_seed": 1107
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11298,
+      "scenario_manifest_sha256": "ab12db317b194090da552192e5cba44d6e044110a656e34ff4364dac848fd4ef",
+      "shard_sha256": "b0b22530ff2e355e16404df9d04f5d92c02092a6c6104acd26fa17859b8ecbc4",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1208/sumo_seed1108.npz.json",
+        "sha256": "2c993c48372f8206579d76045617b2cfb9d1c79a14b5786b86b508bb215ebbd7"
+      },
+      "sumo_seed": 1108
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11294,
+      "scenario_manifest_sha256": "f9bfc815af625fd01f1d9a75f09976127b6b5b71e7f5e7575e5087f4b80e65aa",
+      "shard_sha256": "68c4425a65c9196338cd13041963e1b355a4adbf8919e8ddd2e6867c2b9a2bbe",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1209/sumo_seed1109.npz.json",
+        "sha256": "4fde2edd49d17ae9fa756fdf29117793797ca96e199d7d97c8e2c61ca38e4e88"
+      },
+      "sumo_seed": 1109
+    },
+    {
+      "demand_scale": 0.75,
+      "scaled_total_persons": 11261,
+      "scenario_manifest_sha256": "677653e7b485f11299f50e70fd5a8432ce4b153f606108792cafbf2268816a3b",
+      "shard_sha256": "42d75c6c65b0bfa437849ee800c3ef376206980c3577f6e3e4d73da21ddc1817",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_0p75_jitter120s_seed1210/sumo_seed1110.npz.json",
+        "sha256": "4e70d7628fa9eca0d5cd8fcf1d1061a236275b9835831f6ef8841a5cf203c3e0"
+      },
+      "sumo_seed": 1110
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "7ebca4924b4e1249f5b97f8fb2a0f5f99b9e44ccb6a221bc9119bc61fa8b791e",
+      "shard_sha256": "2a4c5f40cd06b4bf33549826787e616b36427786d777856f779817333e3949b3",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz.json",
+        "sha256": "70a2da455d1e9f454cd5caa479942043081194da0d9ad90073d59a63c5521887"
+      },
+      "sumo_seed": 1101
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "c222ff4cbe6bb9b0db0e2b1c49fa03bc57481ba8b5ac3286ea547980aaf0c39f",
+      "shard_sha256": "bddfffa7d29c00e74c13d9bdb041868919b92b7abd8ec61a66fde3a760208b34",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1202/sumo_seed1102.npz.json",
+        "sha256": "1f241719db8d72c0911885c35e142887625f86b2c4fe302a1561d32d1703ad9c"
+      },
+      "sumo_seed": 1102
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "33da4f4407b630dea1312fe125527fa8830e2e16c3949feb108ca75845259cbf",
+      "shard_sha256": "b20868acb6b343fb45e370203a2fccbec646ea238fad51fbe37ac7dd8449947d",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1203/sumo_seed1103.npz.json",
+        "sha256": "6ec5b46b8bbf895a1c0d7abf79f45113c0448f0dc41d6b5227f34fee05b3055d"
+      },
+      "sumo_seed": 1103
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "cfff207a2a3a4f52d765410de0d47a8763eba91e5aa4b7b901bfb1f1c4df4479",
+      "shard_sha256": "fdabc40ba491ff882063a85fd7ad3fc2be9cbdcdaaeb40fe3017b1b8b3ce08ed",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1204/sumo_seed1104.npz.json",
+        "sha256": "d5c5b1c743af4eabe65dcf83cea9d218a206ab2edac02938b6cff1d6fb762fd6"
+      },
+      "sumo_seed": 1104
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "e18f23cec485e67f4677f6a2dd30473502cf2eccd7876dc69aafd83a19f103fb",
+      "shard_sha256": "2df16a256ec51b4953e78eb066039369048dc3295ed5f0c26a8a7cdee12b26e7",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1205/sumo_seed1105.npz.json",
+        "sha256": "38abb5f4d5eaf6f112c02c732eaf69a704c86b73295c160d98ee95ba366bd388"
+      },
+      "sumo_seed": 1105
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "fb885ce246dae7af95f0156a1f39cfcdcd72477f557e923de2e816739a1ebce2",
+      "shard_sha256": "d1d4bbf2e27be7235e9fac44e42dbcb7d9211377c036b6f88bd79699c8749429",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1206/sumo_seed1106.npz.json",
+        "sha256": "cbf4b51204f41187a67a5f87abc6619ff52ae109cde5c9ef971936466c79ceb1"
+      },
+      "sumo_seed": 1106
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "46e5e00006aaebad6f863f8fa11a6c9a9772488f1c8b2bcb036911f3944b9cac",
+      "shard_sha256": "9d033f862b56f2d2fc9614c100e0ebd1514d450e5bf9458a60a58ee6e187203c",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1207/sumo_seed1107.npz.json",
+        "sha256": "3a5a61615422a0cad218749f64f5aec5044bf5d2caf0cc638f9726eef39f6af6"
+      },
+      "sumo_seed": 1107
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "0c57ac5a1f4efa36dd489d1bc37a1d79adcf50a29e8fbaea164a3e9c830ee3c2",
+      "shard_sha256": "8044bb6a4937f18c9ed9dc3f579496466fb714edab05015aeca1b35eaabd6e5e",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1208/sumo_seed1108.npz.json",
+        "sha256": "99f27b30ad09d2bc3793e1c26ccf3a76a49ec4d66c57a7274a8dd7b638c5e0de"
+      },
+      "sumo_seed": 1108
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "f603d713e1b5e7c870e8e459ee0dcdb5674a916d783951caeca54248bb420435",
+      "shard_sha256": "edd87262594f99091b303d7f0f8cc9d06f5972ccdfb05efda4da38ee72c08e22",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1209/sumo_seed1109.npz.json",
+        "sha256": "bf9dad4f52b8309f29278a9b860a4261711bf95a56c5242a5fdc774ed33adb82"
+      },
+      "sumo_seed": 1109
+    },
+    {
+      "demand_scale": 1.0,
+      "scaled_total_persons": 15079,
+      "scenario_manifest_sha256": "17e23e9c51422047838d25e69b65a85ef4ad7ecace8c6fbffd274ec0159fc8a8",
+      "shard_sha256": "37d2a98facb68dbdcb7fc4f263ea0d38dc521bd1acaf4ac84aa937e91e2a631c",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1_jitter120s_seed1210/sumo_seed1110.npz.json",
+        "sha256": "49a517ea64113f837183767820f5fbfdd8ab32a94138f7013cc3bd1066cefdff"
+      },
+      "sumo_seed": 1110
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18863,
+      "scenario_manifest_sha256": "4beb6d4690c86c05d679ea4e2d66fb6d43a56d637e5a54a88ee7ccde65bad42b",
+      "shard_sha256": "b233c9633356437d6e8adc9f9be03c015a50f424228605a327dfc11000acd093",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1201/sumo_seed1101.npz.json",
+        "sha256": "81305371cee4c4212f29acf5045a60a5cc3a51c0d9093c048cc9473553380970"
+      },
+      "sumo_seed": 1101
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18886,
+      "scenario_manifest_sha256": "2a82086b29b066b32813a826dec58810273ce835abe17e0a420256f4ceb018ea",
+      "shard_sha256": "f603d4d53b36330ed43606af914c72c00499879746a97d9e8e2d8af6cd213bd2",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1202/sumo_seed1102.npz.json",
+        "sha256": "09d1420499678a258517c0f9322c3cda875edd16719a5514198ff39204f95f73"
+      },
+      "sumo_seed": 1102
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18809,
+      "scenario_manifest_sha256": "0034c813cc076378e4993b6f92268854f7dfc44901edd95c17a3aaf9f21c6f5a",
+      "shard_sha256": "016b2ea89bacbcbd25168578718460f22565aa6698274e740a98e6bb404b141a",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1203/sumo_seed1103.npz.json",
+        "sha256": "0aeed5e0b864e951530fb0807975de5142de49db9a50d1e0ef070b8e083fb751"
+      },
+      "sumo_seed": 1103
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18814,
+      "scenario_manifest_sha256": "394af7e89e60f76cb17ee217b72df79c64514a6431f176cdbded30bfca9f2aa6",
+      "shard_sha256": "e32f3a4307497598fc81b19a4173e1326eae8a067b5420405c2039e25eee6ee6",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1204/sumo_seed1104.npz.json",
+        "sha256": "e6681e38f42f5c7f15c785c8d582f47169f9b3d5f28cd47154a2edc7cbfdea7c"
+      },
+      "sumo_seed": 1104
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18896,
+      "scenario_manifest_sha256": "01cf0ccac2705e3079d599a010a68493cd57f1149dc4d1ccbc422be62f595553",
+      "shard_sha256": "2b81e7e6a2914b4b2cc078bb3d5ba4c5e6ef69edbdf9739959fd93a8cc04e3a1",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1205/sumo_seed1105.npz.json",
+        "sha256": "19053d02e3e187e6e5bb6ae546996562bcf2e8d42af551fdd049e84584490fb2"
+      },
+      "sumo_seed": 1105
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18904,
+      "scenario_manifest_sha256": "88aa96acac8c18794bfed9bec3aaaf1020ff06ac01c38ea84f5ec4a214efe22e",
+      "shard_sha256": "1b73f43608fc0ebb40b0c279bd93bbf325bcc984d3e7fa3db19645ffe0d60fdc",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1206/sumo_seed1106.npz.json",
+        "sha256": "520d6eb939d8d6f640e18adfc71c145e890499868d5d90c14624964cf77a4314"
+      },
+      "sumo_seed": 1106
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18929,
+      "scenario_manifest_sha256": "d1d1328a8d234100775ec083e503a394cfc6f7c029c96c3a2fe86cda933daacc",
+      "shard_sha256": "219cd8e709478efcfd4f036bbf6f7b69261e36eee79cb0a3b72d56edceee332a",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1207/sumo_seed1107.npz.json",
+        "sha256": "bfbd666861c4005fa51022164f96ecd3405aee74c11b4f2fe3d4fcbb8467a909"
+      },
+      "sumo_seed": 1107
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18864,
+      "scenario_manifest_sha256": "6aa3a43ba1d21f37d1733da5e2c0d0584c39342a32d2c68057192a900fd3e73f",
+      "shard_sha256": "42ddf42ee5cd6e313e5f2fa069e78f565f16190ee183bf5fbff81703ef9f3b68",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1208/sumo_seed1108.npz.json",
+        "sha256": "9e6eedbad57f32361f1ddd5a3b7e33f12ea69cd2036b7b6a0d28658e8ef4eb71"
+      },
+      "sumo_seed": 1108
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18888,
+      "scenario_manifest_sha256": "08fc9b68f76d2cdc3af98897d310b66597880ed236f37d011c30d794f6a376f5",
+      "shard_sha256": "3958a00a2e1676ae862953405e76668bd8010408203a60031ed19468a9741081",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1209/sumo_seed1109.npz.json",
+        "sha256": "c84401d3c93211f17afc79d74e40607669c4191d61b9b920b96881f932a248b6"
+      },
+      "sumo_seed": 1109
+    },
+    {
+      "demand_scale": 1.25,
+      "scaled_total_persons": 18802,
+      "scenario_manifest_sha256": "83ee7a563c6d8d1859f0ac7b72ba0db816e437cd74991664f7aeb97f7d22687f",
+      "shard_sha256": "dfbc6b144340e5da035f60cbb4352af6eab046916fa44ff6516dfa1b3f3787ca",
+      "summary": {
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v6/shards_formal_v1/zero/demand_1p25_jitter120s_seed1210/sumo_seed1110.npz.json",
+        "sha256": "5cfc62d6806059ef0e417d9c9d710a10662ec3a8f87f0f632858d87500584353"
+      },
+      "sumo_seed": 1110
+    }
+  ]
+}

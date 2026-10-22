@@ -1,0 +1,1069 @@
+{
+  "aggregates": {
+    "h2oplus": {
+      "maximum_critic_gradient": 390.3948974609375,
+      "seeds": [
+        5101,
+        5102,
+        5103,
+        5104,
+        5105
+      ],
+      "tail_training_simulator_reward_mean": -2806.606399793407,
+      "tail_training_simulator_reward_sd": 84.35314363394126
+    },
+    "h2oplus-no-ratio": {
+      "maximum_critic_gradient": 779.2989501953125,
+      "seeds": [
+        5101,
+        5102,
+        5103,
+        5104,
+        5105
+      ],
+      "tail_training_simulator_reward_mean": -2788.4312724923448,
+      "tail_training_simulator_reward_sd": 47.76707703428141
+    },
+    "h2oplus-no-warmstart": {
+      "maximum_critic_gradient": 208.9895477294922,
+      "seeds": [
+        5101,
+        5102,
+        5103,
+        5104,
+        5105
+      ],
+      "tail_training_simulator_reward_mean": -2786.9774089258935,
+      "tail_training_simulator_reward_sd": 64.47382852467386
+    }
+  },
+  "created_utc": "2026-08-13T09:20:28.484838+00:00",
+  "methods": [
+    "h2oplus",
+    "h2oplus-no-ratio",
+    "h2oplus-no-warmstart"
+  ],
+  "paired_training_simulator_comparisons": {
+    "h2oplus-no-ratio": {
+      "mean_delta": 18.175127301062094,
+      "median_delta": -19.521564669058534,
+      "paired_seed_deltas_vs_h2oplus": {
+        "5101": -20.17673126252521,
+        "5102": -36.447039442231016,
+        "5103": 149.99296839999988,
+        "5104": -19.521564669058534,
+        "5105": 17.028003479125346
+      },
+      "seeds_with_higher_training_simulator_reward": 2
+    },
+    "h2oplus-no-warmstart": {
+      "mean_delta": 19.628990867513494,
+      "median_delta": 22.427755479125608,
+      "paired_seed_deltas_vs_h2oplus": {
+        "5101": 51.01721155378482,
+        "5102": -15.340934742231184,
+        "5103": 44.18256437125774,
+        "5104": -4.1416423243695135,
+        "5105": 22.427755479125608
+      },
+      "seeds_with_higher_training_simulator_reward": 3
+    }
+  },
+  "ratio_diagnostic": {
+    "flag_is_not_a_preregistered_scientific_gate": true,
+    "mean_validation_high_clip_fraction": 0.5489477962427746,
+    "mean_validation_raw_ess_fraction": 0.16902272935170742,
+    "post_hoc_engineering_flag": true
+  },
+  "required_next_step": "evaluate any improvement candidate on development scenarios disjoint from the frozen formal held-out environment before formal confirmation",
+  "roots": [
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation"
+  ],
+  "runs": [
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5101/metadata.json",
+          "sha256": "9e474bb78efefe96caf47da4c859e61cc3a6909d76529361085cfad51e395501"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5101/metrics.jsonl",
+          "sha256": "276c9a3bc00b5aed7fe4d352f877f0202ebb5f62c69e2618dece6ef379314697"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5101/summary.json",
+          "sha256": "2154df74e3cc28adcfa195db9998a24ef83bdf2ab7b33a24039557819fe6e857"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 366.5832214355469,
+        "maximum_epoch": 167
+      },
+      "method": "h2oplus",
+      "policy": {
+        "maximum_absolute_positive_action": 0.7969048023223877,
+        "maximum_hold_probability": 0.7004631757736206,
+        "minimum_hold_probability": 0.24228975176811218
+      },
+      "ratio_validation": {
+        "ess_fraction": {
+          "last": 0.8093523979187012,
+          "maximum": 0.9741562008857727,
+          "mean": 0.8758291770957108,
+          "minimum": 0.7590015530586243
+        },
+        "high_clip_fraction": {
+          "last": 0.3828125,
+          "maximum": 0.8203125,
+          "mean": 0.5520908598265896,
+          "minimum": 0.296875
+        },
+        "joint_auc": {
+          "last": 0.7382659912109375,
+          "maximum": 0.861053466796875,
+          "mean": 0.6027211977567287,
+          "minimum": 0.403961181640625
+        },
+        "low_clip_fraction": {
+          "last": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "raw_ess_fraction": {
+          "last": 0.3705032467842102,
+          "maximum": 0.4123147130012512,
+          "mean": 0.1525714043312507,
+          "minimum": 0.008646680042147636
+        },
+        "state_action_auc": {
+          "last": 0.69952392578125,
+          "maximum": 0.8298797607421875,
+          "mean": 0.576702757377845,
+          "minimum": 0.3853302001953125
+        },
+        "weight_mean": {
+          "last": 0.6785100102424622,
+          "maximum": 0.943366527557373,
+          "mean": 0.7872302601103148,
+          "minimum": 0.6118927001953125
+        }
+      },
+      "run_signature": "36b687b10e734d5af94924c5cf38d30aed6286488ef7295afa572dc8e230a8bc",
+      "seed": 5101,
+      "simulator_decision_events": 100000,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2831.572
+      },
+      "total_updates": 145000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5102/metadata.json",
+          "sha256": "521a4214a6d16fa1df0d1fe0ef76fc172fb8dbf4c162e954d61033006f696d07"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5102/metrics.jsonl",
+          "sha256": "28685c3406b9f1f5c578418f524d91085f2005e169ea13b9bd84737e6bfeacc0"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5102/summary.json",
+          "sha256": "cc51e045279a198692bf67e3109d6849d4c4ab2d2fe4b31556b57c0c98beb466"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 300.6971740722656,
+        "maximum_epoch": 187
+      },
+      "method": "h2oplus",
+      "policy": {
+        "maximum_absolute_positive_action": 0.4204663038253784,
+        "maximum_hold_probability": 0.7569327354431152,
+        "minimum_hold_probability": 0.4416901469230652
+      },
+      "ratio_validation": {
+        "ess_fraction": {
+          "last": 0.8508462309837341,
+          "maximum": 0.9689009189605713,
+          "mean": 0.8652307880407124,
+          "minimum": 0.7564332485198975
+        },
+        "high_clip_fraction": {
+          "last": 0.48046875,
+          "maximum": 0.83984375,
+          "mean": 0.5223988439306358,
+          "minimum": 0.30078125
+        },
+        "joint_auc": {
+          "last": 0.895965576171875,
+          "maximum": 0.946746826171875,
+          "mean": 0.801931127647444,
+          "minimum": 0.458160400390625
+        },
+        "low_clip_fraction": {
+          "last": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "raw_ess_fraction": {
+          "last": 0.26717033982276917,
+          "maximum": 0.5742072463035583,
+          "mean": 0.15546275168183565,
+          "minimum": 0.008626220747828484
+        },
+        "state_action_auc": {
+          "last": 0.8882293701171875,
+          "maximum": 0.917236328125,
+          "mean": 0.7879722462913205,
+          "minimum": 0.458282470703125
+        },
+        "weight_mean": {
+          "last": 0.742003321647644,
+          "maximum": 0.9423187375068665,
+          "mean": 0.7690535256628356,
+          "minimum": 0.610734224319458
+        }
+      },
+      "run_signature": "02e86029322bf2c4d6e6e67c858085df6549938b66239d4cb6a897ae9085f827",
+      "seed": 5102,
+      "simulator_decision_events": 100000,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2697.869060557769
+      },
+      "total_updates": 145000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5103/metadata.json",
+          "sha256": "def6c9ab4b4854d1620f83616c700cbcf049a3af04af7efa072f384ff91055f2"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5103/metrics.jsonl",
+          "sha256": "82dd04fcae4883878ec089d329c1811ebdd39b126fe19b6b6382230892a5dffd"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5103/summary.json",
+          "sha256": "385ed37fd70659eed01e8324eee62b5b60b5313a8b1199dae6671f34f57dd92c"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 254.79913330078125,
+        "maximum_epoch": 164
+      },
+      "method": "h2oplus",
+      "policy": {
+        "maximum_absolute_positive_action": 0.8808532953262329,
+        "maximum_hold_probability": 0.6787610054016113,
+        "minimum_hold_probability": 0.16060656309127808
+      },
+      "ratio_validation": {
+        "ess_fraction": {
+          "last": 0.8551188111305237,
+          "maximum": 0.9768710136413574,
+          "mean": 0.8877648142720923,
+          "minimum": 0.7506586909294128
+        },
+        "high_clip_fraction": {
+          "last": 0.51171875,
+          "maximum": 0.8515625,
+          "mean": 0.5752348265895953,
+          "minimum": 0.29296875
+        },
+        "joint_auc": {
+          "last": 0.8218536376953125,
+          "maximum": 0.9118804931640625,
+          "mean": 0.6513416091830744,
+          "minimum": 0.4665985107421875
+        },
+        "low_clip_fraction": {
+          "last": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "raw_ess_fraction": {
+          "last": 0.28684380650520325,
+          "maximum": 0.4312894940376282,
+          "mean": 0.16806126642982996,
+          "minimum": 0.006011622492223978
+        },
+        "state_action_auc": {
+          "last": 0.814544677734375,
+          "maximum": 0.8780364990234375,
+          "mean": 0.6341773237107117,
+          "minimum": 0.4577789306640625
+        },
+        "weight_mean": {
+          "last": 0.7575756311416626,
+          "maximum": 0.9467782974243164,
+          "mean": 0.8014557682020815,
+          "minimum": 0.5884159803390503
+        }
+      },
+      "run_signature": "5c9c1da6e56edfabe8c56981b6f9d307d192d0b8b1b9bcdb39f7bec1faa62076",
+      "seed": 5103,
+      "simulator_decision_events": 100000,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2928.62005
+      },
+      "total_updates": 145000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5104/metadata.json",
+          "sha256": "024e0dd5c89666571fa31595e38a8a0ca7b731436b22bbb52b4cbe0a1ed638c7"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5104/metrics.jsonl",
+          "sha256": "252ac76962596d42baa74c482f2436725a1fe2f459bf80dd56816e2bf8347987"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5104/summary.json",
+          "sha256": "45d7f436745656db5646d17c9025fdfbf99306de1d70cf21a93301d268734d6a"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 239.39547729492188,
+        "maximum_epoch": 145
+      },
+      "method": "h2oplus",
+      "policy": {
+        "maximum_absolute_positive_action": 0.5316848754882812,
+        "maximum_hold_probability": 0.7599417567253113,
+        "minimum_hold_probability": 0.16622143983840942
+      },
+      "ratio_validation": {
+        "ess_fraction": {
+          "last": 0.8576193451881409,
+          "maximum": 0.9756938815116882,
+          "mean": 0.8642280628915467,
+          "minimum": 0.7445067763328552
+        },
+        "high_clip_fraction": {
+          "last": 0.45703125,
+          "maximum": 0.84375,
+          "mean": 0.5080608742774566,
+          "minimum": 0.28515625
+        },
+        "joint_auc": {
+          "last": 0.7479400634765625,
+          "maximum": 0.845672607421875,
+          "mean": 0.6650169240256955,
+          "minimum": 0.4789276123046875
+        },
+        "low_clip_fraction": {
+          "last": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "raw_ess_fraction": {
+          "last": 0.27409428358078003,
+          "maximum": 0.48371514678001404,
+          "mean": 0.19859580001174715,
+          "minimum": 0.008828514255583286
+        },
+        "state_action_auc": {
+          "last": 0.7091217041015625,
+          "maximum": 0.824859619140625,
+          "mean": 0.6345671725410946,
+          "minimum": 0.4825592041015625
+        },
+        "weight_mean": {
+          "last": 0.740439236164093,
+          "maximum": 0.9487528204917908,
+          "mean": 0.7662531823092114,
+          "minimum": 0.5882340669631958
+        }
+      },
+      "run_signature": "0151bb191922da3c1b2a3ccfd9f63465e2f38c1710c8fda28a8cdf3d3acbe858",
+      "seed": 5104,
+      "simulator_decision_events": 99999,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2801.5596849301396
+      },
+      "total_updates": 145000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5105/metadata.json",
+          "sha256": "22bc30e59aabafe9d48e71f36b670ab3c3e03b283d04ddb0f480c756b5a209e9"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5105/metrics.jsonl",
+          "sha256": "9a7b669d84bb73c4cdc4f7d191c67ec6dcf56410683fb7a0b498b7e1ac4d31be"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_core/h2oplus_seed5105/summary.json",
+          "sha256": "7ff6904de567e2f6d9f5cc15cd897d5f42edc2952332794472964bdaea8e0e4e"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 390.3948974609375,
+        "maximum_epoch": 145
+      },
+      "method": "h2oplus",
+      "policy": {
+        "maximum_absolute_positive_action": 0.31945890188217163,
+        "maximum_hold_probability": 0.7503916621208191,
+        "minimum_hold_probability": 0.34104466438293457
+      },
+      "ratio_validation": {
+        "ess_fraction": {
+          "last": 0.8330287933349609,
+          "maximum": 0.9860161542892456,
+          "mean": 0.8904460058735975,
+          "minimum": 0.6934707760810852
+        },
+        "high_clip_fraction": {
+          "last": 0.4765625,
+          "maximum": 0.921875,
+          "mean": 0.5869535765895953,
+          "minimum": 0.27734375
+        },
+        "joint_auc": {
+          "last": 0.8710174560546875,
+          "maximum": 0.883209228515625,
+          "mean": 0.6974773517233788,
+          "minimum": 0.3622894287109375
+        },
+        "low_clip_fraction": {
+          "last": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "raw_ess_fraction": {
+          "last": 0.2925456166267395,
+          "maximum": 0.8041362762451172,
+          "mean": 0.17042242430387378,
+          "minimum": 0.004622026812285185
+        },
+        "state_action_auc": {
+          "last": 0.844970703125,
+          "maximum": 0.868988037109375,
+          "mean": 0.6858933288927023,
+          "minimum": 0.3966522216796875
+        },
+        "weight_mean": {
+          "last": 0.7284197807312012,
+          "maximum": 0.9756036996841431,
+          "mean": 0.8106893039163138,
+          "minimum": 0.5478898286819458
+        }
+      },
+      "run_signature": "f2c7cee3ba4e28f469e8cc9d0cad49a4f622e4ed4b3f9cb2b15a0bc4be4a2865",
+      "seed": 5105,
+      "simulator_decision_events": 100000,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2773.4112034791256
+      },
+      "total_updates": 145000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5101/metadata.json",
+          "sha256": "7522a455934e839f80aa150f789ed164b029d14e42c73d6cb66aeeb2fd778edc"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5101/metrics.jsonl",
+          "sha256": "1de0e88afbee666820ca184b3e57973fb82cc7cea4231368b107dd88ec854fb6"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5101/summary.json",
+          "sha256": "5ba26dd5e57a84933f2c3c6e284b301ee2c08a1e564e40e12af0be8bc5c565d3"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 779.2989501953125,
+        "maximum_epoch": 165
+      },
+      "method": "h2oplus-no-ratio",
+      "policy": {
+        "maximum_absolute_positive_action": 0.765692949295044,
+        "maximum_hold_probability": 0.941150426864624,
+        "minimum_hold_probability": 0.26300084590911865
+      },
+      "ratio_validation": null,
+      "run_signature": "f288883b91ef8d2a6f25c8cc76303f9c86f98b5b2d23510ed7a6c5ee9cfddc47",
+      "seed": 5101,
+      "simulator_decision_events": 99999,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2851.7487312625253
+      },
+      "total_updates": 145000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5102/metadata.json",
+          "sha256": "265e08b2dd9e42fb1725e0a6d16ae2c11055db140473422676243716722a6a19"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5102/metrics.jsonl",
+          "sha256": "184426686abe0951ffc13b0366155ccb20bc2b304a1b53dccaf98ec60fa5706f"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5102/summary.json",
+          "sha256": "c7f87b69047408db4f111cab11ad2fff1e7370c8b4b4435f2d60e4c7eeda8557"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 556.4464721679688,
+        "maximum_epoch": 183
+      },
+      "method": "h2oplus-no-ratio",
+      "policy": {
+        "maximum_absolute_positive_action": 0.8630452156066895,
+        "maximum_hold_probability": 0.7674860954284668,
+        "minimum_hold_probability": 0.00014740831102244556
+      },
+      "ratio_validation": null,
+      "run_signature": "05e56221a5ac1814c00b76999f57a27baee15a6b532fd6a617dc2e2ad643cd7e",
+      "seed": 5102,
+      "simulator_decision_events": 100000,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2734.3161
+      },
+      "total_updates": 145000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5103/metadata.json",
+          "sha256": "39e2760af329bafcfec5f890227b69188a400cc320dfdcce4fdefc39eb6f4d12"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5103/metrics.jsonl",
+          "sha256": "1fbc13d755075c9f3ad8ca08e0c8a4e8b1fd15e56e143b6ef52b54f3717e4e2c"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5103/summary.json",
+          "sha256": "a1d065ad98bac11917c367a5a40241cee1e9d012f16822ccd04847b408aa973d"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 621.5836791992188,
+        "maximum_epoch": 179
+      },
+      "method": "h2oplus-no-ratio",
+      "policy": {
+        "maximum_absolute_positive_action": 0.8982019424438477,
+        "maximum_hold_probability": 0.7798508405685425,
+        "minimum_hold_probability": 0.11663356423377991
+      },
+      "ratio_validation": null,
+      "run_signature": "5347e4ff6103c7c4efa647f4674639b9dc18d777ff389804c36708a8363c03da",
+      "seed": 5103,
+      "simulator_decision_events": 99999,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2778.6270816
+      },
+      "total_updates": 145000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5104/metadata.json",
+          "sha256": "cd695502e0779252c54fc3309ef3f3962aee554c85b6e3ffd2db380b0af51950"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5104/metrics.jsonl",
+          "sha256": "6399d26e9e8a014ff896b945dc4cce32d4fa716d68623c59d2fb04b7f7cabdeb"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5104/summary.json",
+          "sha256": "7f77cb565aac7e698b8482fc33faa7519cd48bc5f956e57c5e58edba5fce641a"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 498.3935241699219,
+        "maximum_epoch": 155
+      },
+      "method": "h2oplus-no-ratio",
+      "policy": {
+        "maximum_absolute_positive_action": 0.8620390892028809,
+        "maximum_hold_probability": 0.7626273036003113,
+        "minimum_hold_probability": 0.3047640323638916
+      },
+      "ratio_validation": null,
+      "run_signature": "37ea7ab069504fe1c271cff12065eb84b6930045ddfebba159988c7f32261f22",
+      "seed": 5104,
+      "simulator_decision_events": 99999,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2821.081249599198
+      },
+      "total_updates": 145000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5105/metadata.json",
+          "sha256": "bb49e41d9b435ef84a86edaf655d939638d3f67e3eabad491d644dbfc35999ed"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5105/metrics.jsonl",
+          "sha256": "1ff1fae64f07ebfd1acc6fc0a64146770c6abdeb6e1fe5aa04ee0ab428214600"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-ratio_seed5105/summary.json",
+          "sha256": "53f76b6ea9a7b36d516d98a07efa7e70da2baac752c6cdfa0cb554e7a9a180d9"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 617.4522705078125,
+        "maximum_epoch": 188
+      },
+      "method": "h2oplus-no-ratio",
+      "policy": {
+        "maximum_absolute_positive_action": 0.7710363864898682,
+        "maximum_hold_probability": 0.8096381425857544,
+        "minimum_hold_probability": 0.2695663273334503
+      },
+      "ratio_validation": null,
+      "run_signature": "e3ad644129a4df8b714cc4783c92c743ecb37b4957958de7f96514f20a6ae17a",
+      "seed": 5105,
+      "simulator_decision_events": 100000,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2756.3832
+      },
+      "total_updates": 145000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5101/metadata.json",
+          "sha256": "8916e720f1f79dc803e1820bd509e1dd7e3150c6339c0a599afed47e3e53d777"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5101/metrics.jsonl",
+          "sha256": "08129cd56283f3bc0f26c0dcf787ad1b97969bbf1846834717ef659d47204e79"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5101/summary.json",
+          "sha256": "da79bae10ce6ec5a5c22358348ec71683cf989d303782ccad8305930e23b0769"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 149.30673217773438,
+        "maximum_epoch": 125
+      },
+      "method": "h2oplus-no-warmstart",
+      "policy": {
+        "maximum_absolute_positive_action": 0.7990154027938843,
+        "maximum_hold_probability": 0.751002311706543,
+        "minimum_hold_probability": 0.28082120418548584
+      },
+      "ratio_validation": {
+        "ess_fraction": {
+          "last": 0.8209155797958374,
+          "maximum": 0.9767703413963318,
+          "mean": 0.8849055388070255,
+          "minimum": 0.7932828068733215
+        },
+        "high_clip_fraction": {
+          "last": 0.48828125,
+          "maximum": 0.86328125,
+          "mean": 0.5908146676300579,
+          "minimum": 0.12109375
+        },
+        "joint_auc": {
+          "last": 0.74407958984375,
+          "maximum": 0.83441162109375,
+          "mean": 0.6392386552226337,
+          "minimum": 0.429351806640625
+        },
+        "low_clip_fraction": {
+          "last": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "raw_ess_fraction": {
+          "last": 0.1239638552069664,
+          "maximum": 0.5507557988166809,
+          "mean": 0.161147362988636,
+          "minimum": 0.004636635538190603
+        },
+        "state_action_auc": {
+          "last": 0.7308197021484375,
+          "maximum": 0.8196258544921875,
+          "mean": 0.6274677783767612,
+          "minimum": 0.445281982421875
+        },
+        "weight_mean": {
+          "last": 0.7167620658874512,
+          "maximum": 0.9531872272491455,
+          "mean": 0.8020512802752456,
+          "minimum": 0.5529553890228271
+        }
+      },
+      "run_signature": "c4b3dd26669e21669cbb3bd8835d447f08ea696ef89f9b46fdb1580f2faa9cbf",
+      "seed": 5101,
+      "simulator_decision_events": 99999,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2780.5547884462153
+      },
+      "total_updates": 95000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5102/metadata.json",
+          "sha256": "522aa9fa01e167b070f32d31b3bca402108de8f348bdb9bb9d62b6d69491f0c4"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5102/metrics.jsonl",
+          "sha256": "89f94614f49a32e135f064692d4c907f35983c858ed6c3cfec76bdc6a66e4463"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5102/summary.json",
+          "sha256": "1d8149a189080e2e307a99018dc613de8a5fb1b2767b62213465e7fa46ea8e36"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 185.35264587402344,
+        "maximum_epoch": 167
+      },
+      "method": "h2oplus-no-warmstart",
+      "policy": {
+        "maximum_absolute_positive_action": 0.7145875096321106,
+        "maximum_hold_probability": 0.6953808665275574,
+        "minimum_hold_probability": 0.09756956994533539
+      },
+      "ratio_validation": {
+        "ess_fraction": {
+          "last": 0.8668853640556335,
+          "maximum": 0.9770562648773193,
+          "mean": 0.880736749640779,
+          "minimum": 0.7617989778518677
+        },
+        "high_clip_fraction": {
+          "last": 0.49609375,
+          "maximum": 0.7265625,
+          "mean": 0.5148572976878613,
+          "minimum": 0.28125
+        },
+        "joint_auc": {
+          "last": 0.7944488525390625,
+          "maximum": 0.8267974853515625,
+          "mean": 0.6694305067117503,
+          "minimum": 0.432830810546875
+        },
+        "low_clip_fraction": {
+          "last": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "raw_ess_fraction": {
+          "last": 0.2770146429538727,
+          "maximum": 0.45485997200012207,
+          "mean": 0.19502381515834546,
+          "minimum": 0.009359383024275303
+        },
+        "state_action_auc": {
+          "last": 0.767974853515625,
+          "maximum": 0.816925048828125,
+          "mean": 0.6533779078136289,
+          "minimum": 0.4305572509765625
+        },
+        "weight_mean": {
+          "last": 0.7613919973373413,
+          "maximum": 0.9337673187255859,
+          "mean": 0.7834278613845737,
+          "minimum": 0.6002907752990723
+        }
+      },
+      "run_signature": "3a62a71e3c85d49aadc88e467d79ba26fa9b054fa1d2cf2afbbba62e1eb522c5",
+      "seed": 5102,
+      "simulator_decision_events": 99999,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2713.2099953
+      },
+      "total_updates": 95000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5103/metadata.json",
+          "sha256": "7d5736093a39632f75d65145afc78ee519db3c975b54880f3e40cce41d5648e2"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5103/metrics.jsonl",
+          "sha256": "61720a2827948f73097857ad719fa25f560839a33d38c8bd14fd56402340e2d5"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5103/summary.json",
+          "sha256": "3a5eb58507a9008551211fdbcc19e924019d8ab845cb41cdc320e7111c9cfc5a"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 194.80128479003906,
+        "maximum_epoch": 185
+      },
+      "method": "h2oplus-no-warmstart",
+      "policy": {
+        "maximum_absolute_positive_action": 0.7667597532272339,
+        "maximum_hold_probability": 0.6918748617172241,
+        "minimum_hold_probability": 0.19365541636943817
+      },
+      "ratio_validation": {
+        "ess_fraction": {
+          "last": 0.8105536103248596,
+          "maximum": 0.9669474363327026,
+          "mean": 0.8627329120746238,
+          "minimum": 0.7573127746582031
+        },
+        "high_clip_fraction": {
+          "last": 0.4140625,
+          "maximum": 0.79296875,
+          "mean": 0.5109510476878613,
+          "minimum": 0.2734375
+        },
+        "joint_auc": {
+          "last": 0.7271881103515625,
+          "maximum": 0.8923187255859375,
+          "mean": 0.6038917144598989,
+          "minimum": 0.446807861328125
+        },
+        "low_clip_fraction": {
+          "last": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "raw_ess_fraction": {
+          "last": 0.19351410865783691,
+          "maximum": 0.4450962543487549,
+          "mean": 0.14809017315926837,
+          "minimum": 0.006106373388320208
+        },
+        "state_action_auc": {
+          "last": 0.6992034912109375,
+          "maximum": 0.8645172119140625,
+          "mean": 0.5715586932408327,
+          "minimum": 0.4286346435546875
+        },
+        "weight_mean": {
+          "last": 0.6827932596206665,
+          "maximum": 0.9328645467758179,
+          "mean": 0.7627330002068096,
+          "minimum": 0.6113219857215881
+        }
+      },
+      "run_signature": "4deb77d4cc16ca9299aee90a8d5faf01319efd937a9762610b6d41c125df7715",
+      "seed": 5103,
+      "simulator_decision_events": 100000,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2884.4374856287423
+      },
+      "total_updates": 95000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5104/metadata.json",
+          "sha256": "5c6ff23daee52857cea1ff41db6e6918a6bc718e2a5c254260d957b0fae435e4"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5104/metrics.jsonl",
+          "sha256": "e5d0d8b1e0d131959f98fa0307d710cdeacd6a3800efa1658c50918cf2ef9ca2"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5104/summary.json",
+          "sha256": "f7c57e7a8a6f0e9514cc25fb1be068124f84e7dacafb825115751f8bdece367a"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 202.31094360351562,
+        "maximum_epoch": 180
+      },
+      "method": "h2oplus-no-warmstart",
+      "policy": {
+        "maximum_absolute_positive_action": 0.7628612518310547,
+        "maximum_hold_probability": 0.6859966516494751,
+        "minimum_hold_probability": 0.19156354665756226
+      },
+      "ratio_validation": {
+        "ess_fraction": {
+          "last": 0.788459837436676,
+          "maximum": 0.9655775427818298,
+          "mean": 0.8538391900200375,
+          "minimum": 0.7384960651397705
+        },
+        "high_clip_fraction": {
+          "last": 0.41015625,
+          "maximum": 0.765625,
+          "mean": 0.5028675939306358,
+          "minimum": 0.30078125
+        },
+        "joint_auc": {
+          "last": 0.7958984375,
+          "maximum": 0.887359619140625,
+          "mean": 0.6763085161330383,
+          "minimum": 0.475799560546875
+        },
+        "low_clip_fraction": {
+          "last": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "raw_ess_fraction": {
+          "last": 0.1591215431690216,
+          "maximum": 0.4849972128868103,
+          "mean": 0.12521294756614834,
+          "minimum": 0.005357074551284313
+        },
+        "state_action_auc": {
+          "last": 0.7460784912109375,
+          "maximum": 0.855377197265625,
+          "mean": 0.6512637276180907,
+          "minimum": 0.4771270751953125
+        },
+        "weight_mean": {
+          "last": 0.6706879138946533,
+          "maximum": 0.9363952279090881,
+          "mean": 0.7541876414607716,
+          "minimum": 0.595841646194458
+        }
+      },
+      "run_signature": "892a03dbc9702da576b003bc27c071b0069341d454daa35c88afb1c84a7e4098",
+      "seed": 5104,
+      "simulator_decision_events": 99997,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2805.701327254509
+      },
+      "total_updates": 95000
+    },
+    {
+      "artifacts": {
+        "metadata": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5105/metadata.json",
+          "sha256": "2716a7abcd2efe9ffa81d55866617fa5f3582d2b0d9f9672fd0a4b2e8203c3fb"
+        },
+        "metrics": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5105/metrics.jsonl",
+          "sha256": "284e68520bd264fc84689a6d3b3445b2a067880f442741d97898cce86e1db9ab"
+        },
+        "summary": {
+          "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/h2oplus_ablation/h2oplus-no-warmstart_seed5105/summary.json",
+          "sha256": "03172df52c4c4ea8749bbe9572794ab4ea75d2febe20bc6117939e43fb06c0b4"
+        }
+      },
+      "completed_epochs": 190,
+      "critic_gradient": {
+        "maximum": 208.9895477294922,
+        "maximum_epoch": 172
+      },
+      "method": "h2oplus-no-warmstart",
+      "policy": {
+        "maximum_absolute_positive_action": 0.7183094620704651,
+        "maximum_hold_probability": 0.8387081623077393,
+        "minimum_hold_probability": 0.07199472188949585
+      },
+      "ratio_validation": {
+        "ess_fraction": {
+          "last": 0.808850884437561,
+          "maximum": 0.9690656065940857,
+          "mean": 0.8747897427206095,
+          "minimum": 0.7556548118591309
+        },
+        "high_clip_fraction": {
+          "last": 0.45703125,
+          "maximum": 0.69921875,
+          "mean": 0.48067196531791906,
+          "minimum": 0.2734375
+        },
+        "joint_auc": {
+          "last": 0.7670745849609375,
+          "maximum": 0.8480224609375,
+          "mean": 0.6583171249125045,
+          "minimum": 0.47784423828125
+        },
+        "low_clip_fraction": {
+          "last": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "raw_ess_fraction": {
+          "last": 0.227807879447937,
+          "maximum": 0.6007433533668518,
+          "mean": 0.2442477497708246,
+          "minimum": 0.005019902251660824
+        },
+        "state_action_auc": {
+          "last": 0.72119140625,
+          "maximum": 0.8377685546875,
+          "mean": 0.6329421997070312,
+          "minimum": 0.4497833251953125
+        },
+        "weight_mean": {
+          "last": 0.6972660422325134,
+          "maximum": 0.9265425801277161,
+          "mean": 0.7687356875121938,
+          "minimum": 0.6094276905059814
+        }
+      },
+      "run_signature": "4deaf362a609728df92a93a1e02faf9dd0a8c5b27f936ff32a4cbb7559ed1da2",
+      "seed": 5105,
+      "simulator_decision_events": 99999,
+      "tail_training_simulator_reward": {
+        "events": 20000,
+        "mean_reward_per_event": -2750.983448
+      },
+      "total_updates": 95000
+    }
+  ],
+  "schema_version": "transit-h2oplus-mechanism-diagnostic-v7-v1",
+  "scientific_interpretation": {
+    "reason": "simulator training rewards and optimizer diagnostics are not held-out target-SUMO outcomes",
+    "supports_formal_method_selection": false,
+    "supports_held_out_model_effect_claim": false
+  },
+  "scope": "exploratory training-internal mechanism diagnosis",
+  "seeds": [
+    5101,
+    5102,
+    5103,
+    5104,
+    5105
+  ]
+}

@@ -21,7 +21,7 @@ import torch
 
 import tempfile
 
-from viskit.tabulate import tabulate
+from tabulate import tabulate
 
 
 class TerminalTablePrinter(object):

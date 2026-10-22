@@ -1,0 +1,40 @@
+{
+  "schema_version": "h2oplus-minimal-remote-sync-policy-v1",
+  "status": "active-default-for-future-sync-tools",
+  "scope": "future H2Oplus scheduler-managed training and development-evaluation synchronization",
+  "default_mode": "allowlist-only",
+  "default_include_classes": [
+    "scientific result JSON required by the registered local analyzer",
+    "matrix manifests",
+    "host execution and host summary metadata",
+    "scheduler and token-bound backend-exit evidence",
+    "source-sync inventory metadata",
+    "bounded logs required to establish task completion or diagnose a failure"
+  ],
+  "default_exclude_patterns": [
+    "*.pt",
+    "*.pth",
+    "*.ckpt",
+    "*.pkl",
+    "*.pickle",
+    "*optimizer*",
+    "*replay_buffer*",
+    "*workspace*",
+    "*checkpoint*"
+  ],
+  "large_artifact_exception_requirements": {
+    "explicit_local_analysis_dependency": true,
+    "metadata_or_digest_is_insufficient": true,
+    "planned_file_count_and_bytes_recorded_before_transfer": true,
+    "specific_paths_allowlisted": true,
+    "broad_directory_sync_forbidden": true
+  },
+  "operational_rules": [
+    "Do not copy training checkpoints merely to preserve a second local copy.",
+    "Keep large artifacts on the execution host when local analysis consumes only result summaries.",
+    "Verify the minimal local partition before considering any additional transfer.",
+    "A later formal-confirmation deployment must receive separate authorization and build only the artifacts it actually needs."
+  ],
+  "scientific_protocol_or_gate_changed": false,
+  "formal_held_out_outcomes_read": false
+}

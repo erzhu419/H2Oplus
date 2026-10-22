@@ -1,0 +1,187 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/core/cql_seed5102/checkpoints/latest.pt",
+    "sha256": "840bf35b54417f128f60644aa2b974415cc95074b5f3d6e6ff216a657a60128f"
+  },
+  "completed_epochs": 0,
+  "completed_utc": "2026-08-12T07:50:02.387400+00:00",
+  "final_blocked_simultaneous_batch_size": 0,
+  "final_policy": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/core/cql_seed5102/checkpoints/final_actor.pt",
+    "sha256": "f201892ba4a1b6719ec6a89f893901f2e3c0030ea728e661057d7dd26128484f",
+    "source_training_checkpoint_sha256": "840bf35b54417f128f60644aa2b974415cc95074b5f3d6e6ff216a657a60128f"
+  },
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 5929.34765625,
+  "max_rss_mb": 7278.671875,
+  "maximum_simultaneous_decisions": 0,
+  "mdp_version": "v7",
+  "method": "cql",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": true,
+    "cql_penalty_subset_replacement": false,
+    "cql_penalty_subset_size": null,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "critic_loss": "mse",
+    "default_offline_updates": 250000,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 0,
+    "description": "offline-only Conservative Q-Learning",
+    "ensemble_size": 2,
+    "gradient_clip_norm": null,
+    "huber_delta": 1.0,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 5.0,
+    "offline_initializer": null,
+    "offline_objective": "cql",
+    "offline_temperature_action_samples": 1,
+    "offline_update_order": "critic-before-actor",
+    "online_backup": "sac",
+    "online_fraction": 0.0,
+    "online_update_mode": "none",
+    "online_update_order": "critic-before-actor",
+    "ratio_update_interval": 4,
+    "reference": "https://proceedings.neurips.cc/paper/2020/hash/0d2b2061826a5df3221116a5085a6052-Abstract.html",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_replacement": false,
+    "target_subset_size": 2,
+    "temperature_state_source": "actor",
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003,
+    "warmup_action_mode": "policy"
+  },
+  "method_protocol": "offline-only Conservative Q-Learning",
+  "offline_initializer_consumed": null,
+  "offline_initializer_produced": null,
+  "offline_metrics": {
+    "train/actor_grad_norm": 5.813752174377441,
+    "train/actor_loss": 256.77435302734375,
+    "train/actor_updated": 1.0,
+    "train/alpha": 0.4832231104373932,
+    "train/alpha_loss": 0.01978476345539093,
+    "train/cql_penalty": 0.23629242181777954,
+    "train/critic_grad_norm": 2085.062255859375,
+    "train/critic_loss": 2.9906458854675293,
+    "train/hold_probability": 0.1715041995048523,
+    "train/hybrid_entropy": -0.02720244973897934,
+    "train/hybrid_gate_entropy": 0.19319674372673035,
+    "train/hybrid_weighted_positive_entropy": -0.2203991860151291,
+    "train/offline_max_abs_td": 25.1417236328125,
+    "train/offline_nonterminal_abs_td": 2.2341270446777344,
+    "train/offline_td_loss": 1.8091838359832764,
+    "train/offline_terminal_abs_td": 0.0,
+    "train/offline_terminal_loss_fraction": 0.0,
+    "train/offline_terminal_rows": 0.0,
+    "train/online_critic_update": 0.0,
+    "train/positive_action_mean": -0.8470253348350525,
+    "train/q_data_mean": -258.59307861328125,
+    "train/sim_td_loss": 0.0,
+    "train/update": 250000.0,
+    "train/value_advantage": 0.0,
+    "train/value_grad_norm": 0.0,
+    "train/value_loss": 0.0
+  },
+  "online_buffer_size": 0,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "critic_loss": {
+        "effective": "huber",
+        "profile": "mse"
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "huber_delta": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 5.0,
+        "profile": 5.0
+      },
+      "offline_updates": {
+        "effective": 250000,
+        "profile": 250000
+      },
+      "online_fraction": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": 0.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 0,
+        "profile": 0
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 0,
+        "profile": 0
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/core/cql_seed5102",
+  "run_signature": "71d6eddf4a632406e8823a41c36add0a17b6f27deb8afec43113bd6f0653bf12",
+  "schema_version": "transit-training-summary-v8",
+  "seed": 5102,
+  "simulator_decision_event_cap": 0,
+  "simulator_decision_event_underfill": 0,
+  "simulator_decision_events": 0,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 1.079144243936753,
+    "data_load": 40.16736894097994,
+    "device_cache": 2.346507067006314,
+    "model_init": 6.961276854999596,
+    "offline_pretraining": 9865.58428487397,
+    "provenance_audit": 3.1599704429972917
+  },
+  "total_updates": 250000,
+  "warmup_metrics": {}
+}

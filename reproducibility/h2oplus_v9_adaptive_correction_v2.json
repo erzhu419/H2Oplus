@@ -1,0 +1,94 @@
+{
+  "correction": {
+    "behavior": "authorize method h2oplus only after the v9 validator is installed and only when the legacy v7 branch registry exactly matches its expected set",
+    "corrected_source_sha256": {
+      "SimpleSAC/train_transit_v9_adaptive.py": "bc90ad5bd9439757e0961d54ca060cde0492ab2a5156fad9645d363b87bc7ed8",
+      "SimpleSAC/transit_v9/__init__.py": "82b9baacf827c1be58b5ecfd1f615455796da671bba17348cb683e87f9b23e6d",
+      "SimpleSAC/transit_v9/trainer.py": "b5a1cdf8e5a0bde24e8027bbb5de7a09fb79129ac7d0af670d6fe0f0b3e56e26"
+    },
+    "focused_test_command": "TMPDIR=/tmp/h2oplus-v9-pytest PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -s tests/test_h2oplus_v9_adaptation.py tests/test_v7_networks.py tests/test_policy_export_v7.py",
+    "focused_test_result": "22 passed",
+    "new_deployment_and_task_ids_required": true,
+    "scope": "v9 wrapper process only; frozen v7 files remain unchanged"
+  },
+  "created_utc": "2026-08-17T03:04:31.174213+00:00",
+  "defect": {
+    "cause": "the v9 wrapper installed a stricter registered initializer validator, but the frozen v7 main preflight applied its separate legacy branch allowlist before calling that validator",
+    "class": "pre-training offline-initializer compatibility guard",
+    "message": "offline initializer is restricted to registered H2O+ ablation and sensitivity branches"
+  },
+  "formal_held_out_outcomes_read": false,
+  "generator": {
+    "bytes": 8940,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/build_h2oplus_v9_adaptive_correction_v2.py",
+    "sha256": "f692b399fc05c28d5aca09ad0ac038d02165bce02ba104940c1f176f41691774"
+  },
+  "invalid_v1_lineage": {
+    "cancelled_after_failed-preflight_task_ids": [
+      "t82482",
+      "t82483",
+      "t82484",
+      "t82486"
+    ],
+    "cancelled_before-launch_task_ids": [
+      "t82485",
+      "t82487"
+    ],
+    "deployment_manifest": {
+      "bytes": 5057,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v9_adaptive_pilot_v1/workspace/deployment_manifest_v9.json",
+      "sha256": "59cff21dd9fa515e1ba40c2076fea6f77ce47724585da74f903b694bb78eddc8"
+    },
+    "eligible_as_scientific_evidence": false,
+    "failed_task_ids": [
+      "t82479",
+      "t82480",
+      "t82481"
+    ],
+    "queue_snapshot": {
+      "bytes": 10030,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_incidents/v1_initializer_bridge/queue_snapshot.json",
+      "sha256": "5faa22f7362a6f1dc23ed0f448b7fd0105f794b4ff9c65917ddd6e5350621a44"
+    },
+    "requeue_allowed": false,
+    "scientific_training_artifacts_produced": false,
+    "submission_record": {
+      "bytes": 9312,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v9_adaptive_submission_record_v1.json",
+      "sha256": "12f88950a47aa78d58e64b1296da9888347b409844777fa77daa0b474360c314"
+    },
+    "task_ids": [
+      "t82479",
+      "t82480",
+      "t82481",
+      "t82482",
+      "t82483",
+      "t82484",
+      "t82485",
+      "t82486",
+      "t82487"
+    ]
+  },
+  "local_training_or_sumo_executed": false,
+  "remote_process_audit": [
+    {
+      "checked_utc": "2026-08-17T03:04:31.899144+00:00",
+      "command": "pgrep -af '[t]rain_transit_v9_adaptive.py' || true; nvidia-smi --query-compute-apps=pid,used_memory --format=csv,noheader || true",
+      "host": "jtl110gpu",
+      "no_v9_training_process": true,
+      "returncode": 0,
+      "stdout_lines": []
+    },
+    {
+      "checked_utc": "2026-08-17T03:04:32.034950+00:00",
+      "command": "pgrep -af '[t]rain_transit_v9_adaptive.py' || true; nvidia-smi --query-compute-apps=pid,used_memory --format=csv,noheader || true",
+      "host": "jtl110gpu2",
+      "no_v9_training_process": true,
+      "returncode": 0,
+      "stdout_lines": []
+    }
+  ],
+  "schema_version": "transit-h2oplus-v9-adaptive-correction-v2",
+  "status": "v1-invalid-sealed-v2-correction-authorized",
+  "study_stage": "development"
+}

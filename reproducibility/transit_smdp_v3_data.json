@@ -1,0 +1,233 @@
+{
+  "created_utc": "2026-08-03T08:44:10.273588+00:00",
+  "inputs": [
+    {
+      "exists": true,
+      "hdf5": {
+        "attrs": {
+          "action_dim": 1,
+          "action_semantics": "a_hold in [-1,1]; hold_seconds=30*(a_hold+1); speed_ratio=1.0",
+          "config": "{\"discount_gamma_per_minute\": 0.99, \"episode_seconds\": 24000.0, \"max_headway_ratio\": 5.0, \"max_hold_seconds\": 60.0, \"max_scheduled_headway_seconds\": 720.0, \"max_waiting_passengers\": 50.0, \"nominal_speed_mps\": 13.89, \"reward_balance_weight\": 0.1, \"reward_hold_weight\": 0.05, \"reward_huber_delta\": 1.0}",
+          "created_utc": "2026-08-03T08:44:05.011639+00:00",
+          "deduplication": "for deterministic policies heuristic_best, sac and zero, retain only policy_seed=42; exact cross-seed copies removed",
+          "discount_semantics": "gamma_per_minute ** (delta_t_seconds/60)",
+          "episode_horizon_semantics": "24000 s covers departures through 18000 s and all observed route completions",
+          "legacy_reward": "discarded: v3 rewards are recomputed; no loader-side correction allowed",
+          "legacy_second_action": "discarded: v2 SUMO collector did not apply speed action",
+          "n_transitions": 1756009,
+          "policy_names": "{\"heuristic_best\": 0, \"heuristic_weak\": 1, \"random\": 2, \"sac\": 3, \"zero\": 4}",
+          "policy_seed_semantics": "legacy --seed affected policy RNG only",
+          "reward_semantics": "computed exactly once from next-event normalized headways and prior hold",
+          "schema_version": "transit-smdp-v3",
+          "source_path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5",
+          "source_rows": 3374285,
+          "source_rows_dropped_as_exact_seed_copies": 1618276,
+          "source_rows_examined": 3374285,
+          "source_sha256": "19147be9f2400671f5baf6797142bddedb2a6e044861675db431adb682c44956",
+          "split_names": "{\"train\": 0}",
+          "split_semantics": "legacy data are training-only; evaluation requires fresh SUMO seeds",
+          "state_dim": 12,
+          "state_names": "[\"line_id\", \"station_progress\", \"episode_progress\", \"forward_headway_ratio\", \"backward_headway_ratio\", \"target_forward_headway_ratio\", \"waiting_passenger_fraction\", \"base_dwell_fraction\", \"co_line_forward_headway_ratio\", \"co_line_backward_headway_ratio\", \"segment_speed_ratio\", \"scheduled_headway_fraction\"]",
+          "station_max_by_line": "[38.0, 36.0, 33.0, 34.0, 40.0, 41.0, 37.0, 38.0, 45.0, 46.0, 24.0, 23.0]",
+          "sumo_seed_semantics": "-1 means unknown: legacy collector did not propagate --seed to SUMO",
+          "transition_semantics": "same bus at its next station-arrival event"
+        },
+        "datasets": {
+          "actions": {
+            "compression": "gzip",
+            "dtype": "float32",
+            "shape": [
+              1756009,
+              1
+            ]
+          },
+          "delta_t_seconds": {
+            "compression": "gzip",
+            "dtype": "float32",
+            "shape": [
+              1756009
+            ]
+          },
+          "discounts": {
+            "compression": "gzip",
+            "dtype": "float32",
+            "shape": [
+              1756009
+            ]
+          },
+          "next_observations": {
+            "compression": "gzip",
+            "dtype": "float32",
+            "shape": [
+              1756009,
+              12
+            ]
+          },
+          "observations": {
+            "compression": "gzip",
+            "dtype": "float32",
+            "shape": [
+              1756009,
+              12
+            ]
+          },
+          "policy_id": {
+            "compression": "gzip",
+            "dtype": "int8",
+            "shape": [
+              1756009
+            ]
+          },
+          "policy_seed": {
+            "compression": "gzip",
+            "dtype": "int32",
+            "shape": [
+              1756009
+            ]
+          },
+          "rewards": {
+            "compression": "gzip",
+            "dtype": "float32",
+            "shape": [
+              1756009
+            ]
+          },
+          "source_index": {
+            "compression": "gzip",
+            "dtype": "int64",
+            "shape": [
+              1756009
+            ]
+          },
+          "split_id": {
+            "compression": "gzip",
+            "dtype": "uint8",
+            "shape": [
+              1756009
+            ]
+          },
+          "sumo_seed": {
+            "compression": "gzip",
+            "dtype": "int32",
+            "shape": [
+              1756009
+            ]
+          },
+          "terminals": {
+            "compression": "gzip",
+            "dtype": "uint8",
+            "shape": [
+              1756009
+            ]
+          }
+        },
+        "policy_id_counts": {
+          "0": 135042,
+          "1": 675351,
+          "2": 676089,
+          "3": 134933,
+          "4": 134594
+        },
+        "terminals_counts": {
+          "0": 1756009
+        }
+      },
+      "mtime_utc": "2026-08-03T08:44:05.701385+00:00",
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v3/transit_smdp_v3.h5",
+      "sha256": "776069a8f9b9254fa721019bfe6ca7c89ac18076034ed6cc1caa146c256b0a09",
+      "size_bytes": 105433960
+    },
+    {
+      "exists": true,
+      "hdf5": {
+        "error": "Unable to synchronously open file (file signature not found)"
+      },
+      "mtime_utc": "2026-08-03T08:44:05.720635+00:00",
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v3/transit_smdp_v3.h5.summary.json",
+      "sha256": "6ba7ddb58f58531b8d80cae5f2fb2b71cb8e98abdd317a2f9016a95ab5977f53",
+      "size_bytes": 1301
+    },
+    {
+      "exists": true,
+      "mtime_utc": "2026-08-03T08:32:37.064540+00:00",
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/legacy_seed_leakage.json",
+      "sha256": "787ff53124e29716c4d48b0fc243281aea04daa6a6a5ed2cd296a5bc206ef949",
+      "size_bytes": 6693
+    }
+  ],
+  "label": "transit-smdp-v3-training-data",
+  "repository": {
+    "branch": "master",
+    "commit": "cdaafcc0c4613c4a006669afd790c368a7190a1e",
+    "root": "/home/erzhu419/mine_code/sumo-rl/H2Oplus",
+    "status_porcelain": [
+      "M SimpleSAC/bus_replay_buffer.py",
+      " M SimpleSAC/bus_sampler.py",
+      " M SimpleSAC/eval_with_metrics.py",
+      " M SimpleSAC/h2o+_bus_main.py",
+      " M SimpleSAC/h2o+_main.py",
+      " M SimpleSAC/h2oplus_bus.py",
+      " M SimpleSAC/h2oplus_ensemble.py",
+      " M SimpleSAC/mixed_replay_buffer.py",
+      " D SimpleSAC/run_full_experiments.sh",
+      " M SimpleSAC/train_offline_ensemble.py",
+      " M SimpleSAC/utils.py",
+      " M bus_h2o/common/data_utils.py",
+      " M bus_h2o/envs/sumo_gym_env.py",
+      " M bus_h2o/sumo_env/rl_bridge.py",
+      " M collect_policy/merge_v2_lazy.py",
+      " M viskit/logging.py",
+      "?? SimpleSAC/aggregate_multiseed.py",
+      "?? SimpleSAC/check_bc_checkpoints.py",
+      "?? SimpleSAC/deploy/",
+      "?? SimpleSAC/dispatch_r3_evals.py",
+      "?? SimpleSAC/dispatch_r3_nosnap_evals.py",
+      "?? SimpleSAC/eval_daganzo.py",
+      "?? SimpleSAC/evaluate_transit_v3.py",
+      "?? SimpleSAC/paired_analysis.py",
+      "?? SimpleSAC/r3_rlpd_missing_eval_supervisor.py",
+      "?? SimpleSAC/rollout_sim_for_verification.py",
+      "?? SimpleSAC/run_bc_queue.sh",
+      "?? SimpleSAC/run_full_experiments_H2O+.sh",
+      "?? SimpleSAC/run_h2oplus_minimal_ablation.sh",
+      "?? SimpleSAC/run_multiseed_eval.sh",
+      "?? SimpleSAC/run_p4_hold_calibration.sh",
+      "?? SimpleSAC/train_awac_bus.py",
+      "?? SimpleSAC/train_bc.py",
+      "?? SimpleSAC/train_iql_bus.py",
+      "?? SimpleSAC/train_td3bc_bus.py",
+      "?? SimpleSAC/train_transit_v3.py",
+      "?? SimpleSAC/transit_v3/",
+      "?? SimpleSAC/verify_assumption1.py",
+      "?? bus_h2o/daganzo_policy.py",
+      "?? bus_h2o/datasets_v3/",
+      "?? bus_h2o/envs/all_lines_sim_env.py",
+      "?? bus_h2o/envs/all_lines_sumo_env.py",
+      "?? bus_h2o/mdp_contract.py",
+      "?? collect_policy/build_canonical_v3.py",
+      "?? collect_policy/rebuild_lazy_snapshot_index.sh",
+      "?? collect_policy/validate_lazy_snapshot_index.py",
+      "?? paper/",
+      "?? reproducibility/"
+    ],
+    "tracked_diff_sha256": "d9a7a2b14000cda546a81b669b6eb9028a34cc698c84ade46518ff3bd9cdcbb2"
+  },
+  "runtime": {
+    "cuda_visible_devices": null,
+    "executable": "/usr/bin/python3",
+    "machine": "x86_64",
+    "nvidia_smi": "0, NVIDIA GeForce RTX 4060 Laptop GPU, 610.88, 8188 MiB",
+    "packages": {
+      "h5py": "3.16.0",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "torch": "2.8.0+cu128"
+    },
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+    "sumo_home": "/usr/share/sumo",
+    "sumo_version": "Eclipse SUMO sumo 1.27.1\n Build features: Linux-6.8.0-117-generic x86_64 GNU 11.4.0 Release FMI Proj GUI Intl SWIG Eigen GDAL GL2PS\n Copyright (C) 2001-2026 German Aerospace Center (DLR) and others; https://sumo.dlr.de\n\nEclipse SUMO sumo 1.27.1 is part of SUMO.\nThis program and the accompanying materials\nare made available under the terms of the Eclipse Public License v2.0\nwhich accompanies this distribution, and is available at\nhttp://www.eclipse.org/legal/epl-v20.html\nThis program may also be made available under the following Secondary\nLicenses when the conditions for such availability set forth in the Eclipse\nPublic License 2.0 are satisfied: GNU General Public License, version 2\nor later which is available at\nhttps://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html\nSPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later"
+  },
+  "schema_version": 1,
+  "status": "candidate"
+}

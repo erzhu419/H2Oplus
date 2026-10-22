@@ -1,4 +1,7 @@
-from sim_core.passenger import Passenger
+try:
+    from bus_h2o.sim_core.passenger import Passenger
+except ModuleNotFoundError:
+    from sim_core.passenger import Passenger
 import numpy as np
 
 
@@ -16,6 +19,30 @@ class Station(object):
         self.direction = direction
         # od is the passengers demand of every hour
         self.od = od
+
+    def backward_headway_observation_speed(self, current_time):
+        """Return the calibrated SUMO lane-speed proxy at this event time."""
+
+        profile = getattr(self, "backward_headway_observation_speed_profile", None)
+        if profile is not None:
+            times, speeds = profile
+            index = int(np.searchsorted(times, float(current_time), side="left"))
+            if index == len(times):
+                index -= 1
+            elif index > 0:
+                left = index - 1
+                if float(current_time) - times[left] <= times[index] - float(
+                    current_time
+                ):
+                    index = left
+            return float(speeds[index])
+        if getattr(self, "requires_dynamic_observation_speed", False):
+            raise RuntimeError(
+                f"formal v7 speed profile is missing for stop {self.station_name}"
+            )
+        return float(
+            getattr(self, "backward_headway_observation_speed_mps", 10.0)
+        )
 
     # def station_update(self, current_time, stations):
     #     # 自己写的

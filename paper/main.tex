@@ -1,0 +1,98 @@
+\documentclass[preprint,12pt,authoryear,nopreprintline]{elsarticle}
+
+\journal{Transportation Research Part C: Emerging Technologies}
+\date{}
+\biboptions{authoryear,round}
+
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{colortbl}
+\usepackage{seqsplit}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+
+\makeatletter
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@empty}
+\makeatother
+
+\setlength{\emergencystretch}{3em}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newtheorem{assumption}{Assumption}
+
+% Math commands
+\input{math_commands}
+
+% cleveref: name the theorem-like environments we added
+\crefname{assumption}{Assumption}{Assumptions}
+\crefname{proposition}{Proposition}{Propositions}
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{remark}{Remark}{Remarks}
+\crefname{algorithm}{Algorithm}{Algorithms}
+\crefname{equation}{Eq.}{Eqs.}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Completion-Aware Cross-Fidelity Offline-to-Online Reinforcement Learning for Multi-Line Bus Holding}
+
+\author[csu]{Yifan Zhang}
+\ead{erzhu419@gmail.com}
+\ead{204201048@csu.edu.cn}
+\author[csu]{Liang Zheng}
+\ead{zhengliang@csu.edu.cn}
+\author[monash]{Qifan Zhang}
+\ead{zhangqifan0419@gmail.com}
+\address[csu]{Central South University, Changsha, Hunan, China}
+\address[monash]{Faculty of Information Technology, Monash University Malaysia, Malaysia}
+
+
+\input{sections/0_abstract}
+
+\begin{keyword}
+Bus holding control \sep offline-to-online reinforcement learning \sep completion-aware control \sep cross-fidelity simulation \sep passenger welfare
+\end{keyword}
+
+\end{frontmatter}
+
+\input{sections/1_introduction}
+\input{sections/2_related_work}
+\input{sections/3_problem}
+\input{sections/4_method}
+\input{sections/5_experiments}
+\input{sections/6_discussion}
+\input{sections/7_conclusion}
+\input{sections/8_declarations}
+
+\clearpage
+\appendix
+\numberwithin{equation}{section}
+\numberwithin{table}{section}
+\numberwithin{figure}{section}
+\renewcommand{\theequation}{\Alph{section}.\arabic{equation}}
+\renewcommand{\thetable}{\Alph{section}.\arabic{table}}
+\renewcommand{\thefigure}{\Alph{section}.\arabic{figure}}
+\input{sections/A_properties}
+\input{sections/A_appendix}
+
+\bibliographystyle{elsarticle-harv}
+\bibliography{references}
+
+\end{document}

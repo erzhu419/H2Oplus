@@ -1,0 +1,81 @@
+{
+  "schema_version": "transit-h2oplus-v20-formal-confirmation-serialization-incident-closeout-v3",
+  "created_utc": "2026-08-28T03:00:57Z",
+  "status": "sealed-zero-result-pre-rollout-serialization-incident",
+  "study_stage": "formal-confirmation",
+  "matrix_type": "endpoint-only-formal-confirmation",
+  "tasks": [
+    {
+      "task_id": "t84210",
+      "scheduler_status": "failed",
+      "backend_returncode": 1,
+      "backend_status_path": "/tmp/scheduleurm_exit_t84210_1404f9c1c818b8e63d10fa9f.status",
+      "backend_token": "1787885748791722388:507459:136033519304704"
+    },
+    {
+      "task_id": "t84211",
+      "scheduler_status": "cancelled-after-deterministic-backend-failure",
+      "backend_returncode": 1,
+      "backend_status_path": "/tmp/scheduleurm_exit_t84211_00e88f8e22c4646d73096404.status",
+      "backend_token": "1787885866770995719:507459:136033519304704",
+      "automatic_retry_of": "t84210"
+    }
+  ],
+  "task_signature": "H2Oplus/v20/formal-confirmation-v3/a0bd8650e6f8/single/jtl110gpu/glibc227",
+  "node": "jtl110gpu",
+  "failure_phase": "post-input-verification pre-rollout host-execution evidence serialization",
+  "root_cause": "the frozen dispatch stored Path objects in immutable_evidence.blocks[*].manifests and then passed that evidence to Python 3.8 json.dumps",
+  "completed_formal_result_count": 0,
+  "completed_matrix_manifest_count": 0,
+  "remote_sumo_episode_count": 0,
+  "formal_held_out_outcome_access_authorized": true,
+  "formal_held_out_outcomes_read": false,
+  "scientific_numeric_outcomes_available": false,
+  "scientific_numeric_outcomes_read": false,
+  "training": false,
+  "remote_incident_result_root": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v20_formal_confirmation_evaluation_v3/remote_results_v3/single_jtl110gpu",
+  "remote_incident_results_preserved": true,
+  "host_execution_status_is_nonterminal_due_to_failed_error_serialization": true,
+  "backend_nonzero_overrides_host_execution": true,
+  "incident_evidence": {
+    "submission_record": {
+      "path": "reproducibility/h2oplus_v20_formal_confirmation_submission_v3.json",
+      "bytes": 16651,
+      "sha256": "0ea0a8cfc94f538e7c04cad5e049b37f5fa27aca458e68f47d1ef4586c578382"
+    },
+    "host_execution": {
+      "path": "host_execution.json",
+      "bytes": 467,
+      "sha256": "d9d43792c568b05302f61da95ce60d141514bf3902e878e08a5a56c63a440c44"
+    },
+    "scheduler_t84210": {
+      "path": "scheduler_t84210.log",
+      "bytes": 4499,
+      "sha256": "4010ff45d0c39ef8bb9152082da10ebf0f181808c6cfbf6d4c6f58e425c51782"
+    },
+    "scheduler_t84211": {
+      "path": "scheduler_t84211.log",
+      "bytes": 4499,
+      "sha256": "d470a3f11d1b1bb357510103ea4a2cb820cc6c55fc0308cfd815762b6911c7d9"
+    },
+    "backend_exit_t84210": {
+      "path": "backend_exit_t84210.status",
+      "bytes": 56,
+      "sha256": "0a7a78e898a148b173e5804b603971b57ed2bcdccb25e59e407cd8eda8d5de0e"
+    },
+    "backend_exit_t84211": {
+      "path": "backend_exit_t84211.status",
+      "bytes": 56,
+      "sha256": "15c17940428c8cd1015f116b76a9065b6742911758498bddbc1295b4b732c0ee"
+    }
+  },
+  "correction_boundary": {
+    "fresh_deployment_and_task_identity_required": true,
+    "permitted_change": "convert Path values in dispatch execution evidence to their exact string paths before JSON serialization",
+    "python38_full_immutable_evidence_json_preflight_required": true,
+    "scientific_source_change_permitted": false,
+    "protocol_methods_scenarios_actors_behavior_or_gates_change_permitted": false,
+    "v1_v2_or_v3_result_reuse_permitted": false
+  },
+  "user_authorized_formal_confirmation_objective_completed": false
+}

@@ -1,0 +1,87 @@
+{
+  "common_failure": {
+    "episode_logs": 105,
+    "matching_tracebacks": 105,
+    "message": "ValueError: few-shot policy lacks its frozen protocol",
+    "result_json_files": 0
+  },
+  "correction_sha256": "1068625af0bd49e87a1c34813be88187d1c3c5af31c77f81be966c2ad141e8c3",
+  "formal_held_out_outcomes_read": false,
+  "recorded_utc": "2026-08-14T17:13:22.076824+00:00",
+  "root_cause": "the v1 matrix validated but did not propagate the frozen protocol hash to evaluator children",
+  "scheduler_fix": {
+    "classification": "PROTOCOL_INTEGRITY",
+    "focused_tests_failed": 0,
+    "focused_tests_passed": 52,
+    "remote_process_killed": false,
+    "service_restarted_local_only": true,
+    "source": "/home/erzhu419/mine_code/scheduleurm/skill/scheduler_failure/crash_requeue.py",
+    "source_sha256": "f08ed8bd3e7dbf0831217a2e4d3481ce3401148a5c900feac6a70e786a8da9bd"
+  },
+  "scheduler_lineage": [
+    {
+      "exit_code": 1,
+      "finished_at": 1786726519.416452,
+      "id": "t82395",
+      "last_block_reason": "launcher exit-status sentinel recorded rc=1; err_pattern: Traceback (most recent call, Error:, RuntimeError",
+      "parent_id": null,
+      "requeued_as": "t82397",
+      "retry_count": null,
+      "signature": "H2Oplus/v8/development/fewshot-eval/d5ca1ef143f4/shard0/jtl110gpu/glibc227",
+      "started_at": 1786726379.752647,
+      "status": "failed"
+    },
+    {
+      "exit_code": 1,
+      "finished_at": 1786726895.6996374,
+      "id": "t82397",
+      "last_block_reason": "launcher exit-status sentinel recorded rc=1; err_pattern: Traceback (most recent call, Error:, RuntimeError",
+      "parent_id": "t82395",
+      "requeued_as": "t82398",
+      "retry_count": 1,
+      "signature": "H2Oplus/v8/development/fewshot-eval/d5ca1ef143f4/shard0/jtl110gpu/glibc227",
+      "started_at": 1786726620.1205244,
+      "status": "failed"
+    },
+    {
+      "exit_code": 1,
+      "finished_at": 1786727144.3526294,
+      "id": "t82398",
+      "last_block_reason": "launcher exit-status sentinel recorded rc=1; err_pattern: Traceback (most recent call, Error:, RuntimeError",
+      "parent_id": "t82397",
+      "requeued_as": "t82399",
+      "retry_count": 2,
+      "signature": "H2Oplus/v8/development/fewshot-eval/d5ca1ef143f4/shard0/jtl110gpu/glibc227",
+      "started_at": 1786727005.2396474,
+      "status": "failed"
+    },
+    {
+      "exit_code": 1,
+      "finished_at": 1786727449.7399547,
+      "id": "t82399",
+      "last_block_reason": "user batch force-cancel",
+      "parent_id": "t82398",
+      "requeued_as": null,
+      "retry_count": 3,
+      "signature": "H2Oplus/v8/development/fewshot-eval/d5ca1ef143f4/shard0/jtl110gpu/glibc227",
+      "started_at": 1786727239.3007383,
+      "status": "cancelled"
+    },
+    {
+      "exit_code": null,
+      "finished_at": 1786726534.9388423,
+      "id": "t82396",
+      "last_block_reason": "user batch cancel",
+      "parent_id": null,
+      "requeued_as": null,
+      "retry_count": null,
+      "signature": "H2Oplus/v8/development/fewshot-eval/d5ca1ef143f4/shard1/jtl110gpu/glibc227",
+      "started_at": null,
+      "status": "cancelled"
+    }
+  ],
+  "schema_version": "transit-h2oplus-v8-fewshot-evaluation-retry-incident-v1",
+  "study_stage": "development",
+  "training_or_policy_artifacts_changed": false,
+  "v1_deployment_manifest_sha256": "d5ca1ef143f44dfe7f4c1d01c7279dd05348ddf444999a725f8840987edf8c66"
+}

@@ -1,0 +1,252 @@
+{
+  "behavior_mixture": {
+    "coverage_rationale": "zero and low-hold operational policies are complemented by a zero-inflated uniform positive-hold policy so the full admissible holding range has logged support",
+    "policies": [
+      {
+        "policy": "zero",
+        "policy_name": "zero"
+      },
+      {
+        "policy": "random-hurdle",
+        "policy_name": "random-hurdle-p0.5-beta1-3",
+        "random_beta_alpha": 1.0,
+        "random_beta_beta": 3.0,
+        "random_zero_probability": 0.5
+      },
+      {
+        "policy": "random-hurdle",
+        "policy_name": "random-hurdle-p0.5-uniform",
+        "random_beta_alpha": 1.0,
+        "random_beta_beta": 1.0,
+        "random_zero_probability": 0.5
+      },
+      {
+        "headway_gain": 0.05,
+        "policy": "headway-balance",
+        "policy_name": "headway-gain-0.05"
+      },
+      {
+        "headway_gain": 0.1,
+        "policy": "headway-balance",
+        "policy_name": "headway-gain-0.1"
+      },
+      {
+        "headway_gain": 0.25,
+        "policy": "headway-balance",
+        "policy_name": "headway-gain-0.25"
+      },
+      {
+        "headway_gain": 0.5,
+        "policy": "headway-balance",
+        "policy_name": "headway-gain-0.5"
+      },
+      {
+        "policy": "myopic-welfare",
+        "policy_name": "myopic-welfare-v2"
+      }
+    ],
+    "schema_version": "transit-smdp-v7-behavior-mixture-v1",
+    "selected_policy_names": [
+      "zero",
+      "random-hurdle-p0.5-uniform"
+    ]
+  },
+  "collector": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v7.py",
+  "collector_sha256": "29b4ba1cb695a0b7f9b36223938b2c23523f484349cb766f9730885740d8b94f",
+  "created_utc": "2026-08-08T19:51:25.646166+00:00",
+  "environment_cells": 1,
+  "environment_design": {
+    "demand_scales": [
+      1.0
+    ],
+    "environment_cells": 1,
+    "independent_realization_blocks": 1,
+    "mode": "paired"
+  },
+  "independent_realization_blocks": 1,
+  "jobs": [
+    {
+      "block_id": 0,
+      "diagnostic": true,
+      "edge_xml": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml",
+      "episode_seconds": 1200,
+      "max_events": 0,
+      "output": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/pilot_matrix_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz",
+      "policy": {
+        "policy": "zero",
+        "policy_name": "zero"
+      },
+      "policy_seed": 925634419,
+      "realization_block_id": 0,
+      "realization_block_name": null,
+      "scenario": {
+        "demand_scale": 1.0,
+        "depart_jitter_seconds": 120.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/training_scenarios_v6/formal_v1/demand_1_jitter120s_seed1201/manifest.json",
+        "runtime_input_sha256": {
+          "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/training_scenarios_v6/formal_v1/demand_1_jitter120s_seed1201/passenger_objects.add.xml": "13cd0e7ce3fceba2ff3f35693f35d185bc00546bae923221ae0dcc0adcc8e0db",
+          "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/training_scenarios_v6/formal_v1/demand_1_jitter120s_seed1201/passengers_direct.rou.xml": "faf4492b543e2f3e26987b39d617f68950c262bb68a0c9dc7044e80fcca76fb1",
+          "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/training_scenarios_v6/formal_v1/demand_1_jitter120s_seed1201/passengers_transfer.rou.xml": "a26eb12301f4136d5fa6f83cdeb2864984263af12bae1a79393c5c66ffdcb9f0",
+          "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/training_scenarios_v6/formal_v1/demand_1_jitter120s_seed1201/scenario.sumocfg": "0c432a7e9e0fc3282818d43842e24b367be92a9d88b3346bf5a89ebe8ac8c12a",
+          "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/b_network/3_bus_station.add.xml": "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+          "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/b_network/5g_changsha_bus_network_with_signal_d.net.xml": "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+          "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/c_social_vehicle_rou/5_design_social_vehicle.rou.xml": "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+          "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml": "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+          "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/d_bus_rou/2_bus_timetable.rou.xml": "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+        },
+        "selection_seed": 1201,
+        "sha256": "7ebca4924b4e1249f5b97f8fb2a0f5f99b9e44ccb6a221bc9119bc61fa8b791e",
+        "tag": "demand_1_jitter120s_seed1201"
+      },
+      "signature": "19e80dcff128e1d8424430f610d6ff6d6419bc237e7ea4ee721a1bb2ef2c0c7e",
+      "source_sha256": {
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/evaluation.py": "2419ebc3a56d95e0048f1a2b462ae4da3d5575ee295a8ef2e40de971769b573e",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/policies.py": "f1cf7a5dbdda7360ce17deb687f13591dd4457d1bd0436ac87b04a18c25767f6",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v5/evaluation.py": "7f1c634a42dfa1f8bc2bef6113d4e7862184bbb0f504fea2e31d6dbc0dacc6b1",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/common/data_utils.py": "ed1ec95396889cf5b0b589a8b8ccfdb4ab7b8b6d7d4f7d8dbaed22033b04c4b8",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/all_lines_sumo_env.py": "d812bee9098d907ec9b505670007c260fdaa8a9140526b11304af31d41b20cb6",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/sumo_gym_env.py": "c35f47a86372648dd287593fb8f88d4952320601aeb635842746dc1bf6429128",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v7.py": "459520496888ebf8b13eb456858fe0c6cab4e400e6af9fef22d07f738a6e2376",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml": "7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/d_8_compute_running_time.py": "46ee8472607754ce7e99023f860ed5e5206b1803dfbc33292198e26e32afa709",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/e_8_gurobi_test_considerbusnum_V3.py": "973a6d099d1880c1d93acbdd9312d08633276f4dea554ed6701087a938b9897c",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py": "f4d5feefa32b5a2e787fcb01f33ba73e3dd77d49db729d5c60cfd57b77c66012",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py": "02386d8ca91d8a4100480a082d6d33761d65232f123a20f45ff7119e1b47bbf2",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_env.py": "3dbcda82e179bcc904b64d213816ea5ece681a0034564e17e87e00d03598bed5",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_provenance.py": "2df62454349c8649012170c5dbd90acae975c31b84b633fe48b75851511adf6d",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v7.py": "29b4ba1cb695a0b7f9b36223938b2c23523f484349cb766f9730885740d8b94f",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml": "1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_lane.add.xml": "6d083e597fc8b19cfde874488a4c0921abee738ea3ea1ba1f154611f7f9ccc03",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_line.add.xml": "3436791192adf67e927873637a61718471dabe1afc03b1b679db4ba0327560aa",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_signal.add.xml": "4ee961a5d9263b9fc2c8e5ced272f7bb06c80636ffe15bf2b7fae0fa013a4240",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_stop.add.xml": "afd2d4099971465258e5acc86943ae34ef9191638b72665516b4888687c392b8",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/bus.py": "a088753355fb1a392a870add678346af0a709c0a5d7097e88ec37a801b43d29e",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/lane.py": "6320f73be0ef0efa8dafc7eaf7a8f951f04232210dda5d6b06681ccb264a8ab1",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/line.py": "1f4e8f15b8e225a8647326e163594d5b7fac286d39103a6ca3b124265359f0ff",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/passenger.py": "ea973ae4919dd30e0b1274dea5a128b3ee49d241313c9c65d15f01df91afaf06",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/signal.py": "f4257a80c31bc9fd6558ec432bd91d44a2a957fdaa7f1f753819a837cd6b9c1e",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/stop.py": "ec04c67bcc68a793dabc6553f68ac1012b9b77ddd1abb5152336b3c1da3033d8"
+      },
+      "split": "train",
+      "sumo_dir": "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control",
+      "sumo_seed": 1101,
+      "sumo_version": "Eclipse SUMO sumo 1.27.1"
+    },
+    {
+      "block_id": 0,
+      "diagnostic": true,
+      "edge_xml": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml",
+      "episode_seconds": 1200,
+      "max_events": 0,
+      "output": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/pilot_matrix_v1/random-hurdle-p0.5-uniform/demand_1_jitter120s_seed1201/sumo_seed1101.npz",
+      "policy": {
+        "policy": "random-hurdle",
+        "policy_name": "random-hurdle-p0.5-uniform",
+        "random_beta_alpha": 1.0,
+        "random_beta_beta": 1.0,
+        "random_zero_probability": 0.5
+      },
+      "policy_seed": 828906424,
+      "realization_block_id": 0,
+      "realization_block_name": null,
+      "scenario": {
+        "demand_scale": 1.0,
+        "depart_jitter_seconds": 120.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/training_scenarios_v6/formal_v1/demand_1_jitter120s_seed1201/manifest.json",
+        "runtime_input_sha256": {
+          "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/training_scenarios_v6/formal_v1/demand_1_jitter120s_seed1201/passenger_objects.add.xml": "13cd0e7ce3fceba2ff3f35693f35d185bc00546bae923221ae0dcc0adcc8e0db",
+          "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/training_scenarios_v6/formal_v1/demand_1_jitter120s_seed1201/passengers_direct.rou.xml": "faf4492b543e2f3e26987b39d617f68950c262bb68a0c9dc7044e80fcca76fb1",
+          "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/training_scenarios_v6/formal_v1/demand_1_jitter120s_seed1201/passengers_transfer.rou.xml": "a26eb12301f4136d5fa6f83cdeb2864984263af12bae1a79393c5c66ffdcb9f0",
+          "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/training_scenarios_v6/formal_v1/demand_1_jitter120s_seed1201/scenario.sumocfg": "0c432a7e9e0fc3282818d43842e24b367be92a9d88b3346bf5a89ebe8ac8c12a",
+          "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/b_network/3_bus_station.add.xml": "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+          "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/b_network/5g_changsha_bus_network_with_signal_d.net.xml": "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+          "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/c_social_vehicle_rou/5_design_social_vehicle.rou.xml": "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+          "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml": "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+          "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/d_bus_rou/2_bus_timetable.rou.xml": "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+        },
+        "selection_seed": 1201,
+        "sha256": "7ebca4924b4e1249f5b97f8fb2a0f5f99b9e44ccb6a221bc9119bc61fa8b791e",
+        "tag": "demand_1_jitter120s_seed1201"
+      },
+      "signature": "c3510c4b15e7899055dd3af9c4812b31fbdf583e2b451c9a8675f3122a080f4b",
+      "source_sha256": {
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/evaluation.py": "2419ebc3a56d95e0048f1a2b462ae4da3d5575ee295a8ef2e40de971769b573e",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/policies.py": "f1cf7a5dbdda7360ce17deb687f13591dd4457d1bd0436ac87b04a18c25767f6",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v5/evaluation.py": "7f1c634a42dfa1f8bc2bef6113d4e7862184bbb0f504fea2e31d6dbc0dacc6b1",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/common/data_utils.py": "ed1ec95396889cf5b0b589a8b8ccfdb4ab7b8b6d7d4f7d8dbaed22033b04c4b8",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/all_lines_sumo_env.py": "d812bee9098d907ec9b505670007c260fdaa8a9140526b11304af31d41b20cb6",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/sumo_gym_env.py": "c35f47a86372648dd287593fb8f88d4952320601aeb635842746dc1bf6429128",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v7.py": "459520496888ebf8b13eb456858fe0c6cab4e400e6af9fef22d07f738a6e2376",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml": "7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/d_8_compute_running_time.py": "46ee8472607754ce7e99023f860ed5e5206b1803dfbc33292198e26e32afa709",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/e_8_gurobi_test_considerbusnum_V3.py": "973a6d099d1880c1d93acbdd9312d08633276f4dea554ed6701087a938b9897c",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py": "f4d5feefa32b5a2e787fcb01f33ba73e3dd77d49db729d5c60cfd57b77c66012",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py": "02386d8ca91d8a4100480a082d6d33761d65232f123a20f45ff7119e1b47bbf2",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_env.py": "3dbcda82e179bcc904b64d213816ea5ece681a0034564e17e87e00d03598bed5",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_provenance.py": "2df62454349c8649012170c5dbd90acae975c31b84b633fe48b75851511adf6d",
+        "/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v7.py": "29b4ba1cb695a0b7f9b36223938b2c23523f484349cb766f9730885740d8b94f",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml": "1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_lane.add.xml": "6d083e597fc8b19cfde874488a4c0921abee738ea3ea1ba1f154611f7f9ccc03",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_line.add.xml": "3436791192adf67e927873637a61718471dabe1afc03b1b679db4ba0327560aa",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_signal.add.xml": "4ee961a5d9263b9fc2c8e5ced272f7bb06c80636ffe15bf2b7fae0fa013a4240",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_stop.add.xml": "afd2d4099971465258e5acc86943ae34ef9191638b72665516b4888687c392b8",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/bus.py": "a088753355fb1a392a870add678346af0a709c0a5d7097e88ec37a801b43d29e",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/lane.py": "6320f73be0ef0efa8dafc7eaf7a8f951f04232210dda5d6b06681ccb264a8ab1",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/line.py": "1f4e8f15b8e225a8647326e163594d5b7fac286d39103a6ca3b124265359f0ff",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/passenger.py": "ea973ae4919dd30e0b1274dea5a128b3ee49d241313c9c65d15f01df91afaf06",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/signal.py": "f4257a80c31bc9fd6558ec432bd91d44a2a957fdaa7f1f753819a837cd6b9c1e",
+        "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/stop.py": "ec04c67bcc68a793dabc6553f68ac1012b9b77ddd1abb5152336b3c1da3033d8"
+      },
+      "split": "train",
+      "sumo_dir": "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control",
+      "sumo_seed": 1101,
+      "sumo_version": "Eclipse SUMO sumo 1.27.1"
+    }
+  ],
+  "paired_policy_comparison": true,
+  "runner_sha256": "d7a695b412d2bbf60f672678e09c47fb778e9f1155a1537e3c6e17224089d32c",
+  "schema_version": "transit-smdp-v7-collection-matrix-v2",
+  "source_sha256": {
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/evaluation.py": "2419ebc3a56d95e0048f1a2b462ae4da3d5575ee295a8ef2e40de971769b573e",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/policies.py": "f1cf7a5dbdda7360ce17deb687f13591dd4457d1bd0436ac87b04a18c25767f6",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v5/evaluation.py": "7f1c634a42dfa1f8bc2bef6113d4e7862184bbb0f504fea2e31d6dbc0dacc6b1",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/common/data_utils.py": "ed1ec95396889cf5b0b589a8b8ccfdb4ab7b8b6d7d4f7d8dbaed22033b04c4b8",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/all_lines_sumo_env.py": "d812bee9098d907ec9b505670007c260fdaa8a9140526b11304af31d41b20cb6",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/sumo_gym_env.py": "c35f47a86372648dd287593fb8f88d4952320601aeb635842746dc1bf6429128",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v7.py": "459520496888ebf8b13eb456858fe0c6cab4e400e6af9fef22d07f738a6e2376",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml": "7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/d_8_compute_running_time.py": "46ee8472607754ce7e99023f860ed5e5206b1803dfbc33292198e26e32afa709",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/e_8_gurobi_test_considerbusnum_V3.py": "973a6d099d1880c1d93acbdd9312d08633276f4dea554ed6701087a938b9897c",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py": "f4d5feefa32b5a2e787fcb01f33ba73e3dd77d49db729d5c60cfd57b77c66012",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py": "02386d8ca91d8a4100480a082d6d33761d65232f123a20f45ff7119e1b47bbf2",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_env.py": "3dbcda82e179bcc904b64d213816ea5ece681a0034564e17e87e00d03598bed5",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_provenance.py": "2df62454349c8649012170c5dbd90acae975c31b84b633fe48b75851511adf6d",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v7.py": "29b4ba1cb695a0b7f9b36223938b2c23523f484349cb766f9730885740d8b94f",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml": "1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_lane.add.xml": "6d083e597fc8b19cfde874488a4c0921abee738ea3ea1ba1f154611f7f9ccc03",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_line.add.xml": "3436791192adf67e927873637a61718471dabe1afc03b1b679db4ba0327560aa",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_signal.add.xml": "4ee961a5d9263b9fc2c8e5ced272f7bb06c80636ffe15bf2b7fae0fa013a4240",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_stop.add.xml": "afd2d4099971465258e5acc86943ae34ef9191638b72665516b4888687c392b8",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/bus.py": "a088753355fb1a392a870add678346af0a709c0a5d7097e88ec37a801b43d29e",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/lane.py": "6320f73be0ef0efa8dafc7eaf7a8f951f04232210dda5d6b06681ccb264a8ab1",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/line.py": "1f4e8f15b8e225a8647326e163594d5b7fac286d39103a6ca3b124265359f0ff",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/passenger.py": "ea973ae4919dd30e0b1274dea5a128b3ee49d241313c9c65d15f01df91afaf06",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/signal.py": "f4257a80c31bc9fd6558ec432bd91d44a2a957fdaa7f1f753819a837cd6b9c1e",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/stop.py": "ec04c67bcc68a793dabc6553f68ac1012b9b77ddd1abb5152336b3c1da3033d8"
+  },
+  "study_stage": "pilot",
+  "sumo_version": "Eclipse SUMO sumo 1.27.1",
+  "workers": 2
+}

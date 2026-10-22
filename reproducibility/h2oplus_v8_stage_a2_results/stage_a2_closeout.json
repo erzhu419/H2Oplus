@@ -1,0 +1,117 @@
+{
+  "artifact_integrity": {
+    "canonical_matrix_count": 5,
+    "partition_count": 2,
+    "passed": true,
+    "result_count": 150
+  },
+  "artifacts": {
+    "analysis_identity_reconciliation": {
+      "path": "reproducibility/h2oplus_v8_stage_a2_results/evidence/stage_a2_analysis_identity_reconciliation.json",
+      "sha256": "db221e6a39027d2d902ef5b63cc0319eb6ac235c3f031e783adff56ea2ce5db7",
+      "size_bytes": 8819
+    },
+    "artifact_manifest": {
+      "path": "reproducibility/h2oplus_v8_stage_a2_results/stage_a2_file_manifest.json",
+      "sha256": "9d559d42ae65fcc31046355dc56b3ad33139d1a97d9871dac53aca540668dbb7",
+      "size_bytes": 123136
+    },
+    "artifact_manifest_verification": {
+      "path": "reproducibility/h2oplus_v8_stage_a2_results/stage_a2_file_manifest_verification.json",
+      "sha256": "21cef4be144a3f377b6076648f13a3e30b59630e5b11dff11996a2609fa076e4",
+      "size_bytes": 974
+    },
+    "authorization": {
+      "path": "reproducibility/h2oplus_v8_stage_a2_execution_authorization_v1.json",
+      "sha256": "147344656c073f518af79c3d682a75c01d255a7e0fdf13c03130bf1021d5cabb",
+      "size_bytes": 842
+    },
+    "freeze": {
+      "path": "reproducibility/h2oplus_v8_stage_a2_freeze_v1.json",
+      "sha256": "2186a2dfe0968446075f654ba1657aff6c059e78cdc5fb8310e5b9f4ab3fbd64",
+      "size_bytes": 5403
+    },
+    "partition_sync_evidence": {
+      "path": "reproducibility/h2oplus_v8_stage_a2_results/evidence/stage_a2_partition_sync_evidence.json",
+      "sha256": "aa99f310d27105f005d61ea9f01c4725e5bbb5f593b14a77fc4770f8bc211b22",
+      "size_bytes": 82205
+    },
+    "registration": {
+      "path": "reproducibility/h2oplus_v8_stage_a2_registration_v1.json",
+      "sha256": "ac84a4ce4612a7c8a5e03c64e0edc767f1c8a5a8c1c33de1f838781f3bde9308",
+      "size_bytes": 5467
+    },
+    "scheduler_evidence": {
+      "path": "reproducibility/h2oplus_v8_stage_a2_results/evidence/stage_a2_scheduler_evidence.json",
+      "sha256": "b12a7f7533b50f702fb97ae2ce3381fbe53fee98698917eb3bae63e600d063e2",
+      "size_bytes": 4785
+    },
+    "scientific_analysis": {
+      "path": "reproducibility/h2oplus_v8_stage_a2_results/stage_a2_gate_analysis.json",
+      "sha256": "5b5e88ca47f0eb6624cdf92ed38ba3c99076e5106344f9e04a33d4d607e2c2a8",
+      "size_bytes": 25145
+    },
+    "scientific_analysis_verification": {
+      "path": "reproducibility/h2oplus_v8_stage_a2_results/stage_a2_gate_analysis_verification.json",
+      "sha256": "dd8b7200cd739ceec2496cecb9d356a73a5f24c502140e66d897435f112c574a",
+      "size_bytes": 6304
+    }
+  },
+  "created_utc": "2026-08-14T08:40:59.307889+00:00",
+  "development_scientific_result": {
+    "all_SAC_comparisons_confirmed": false,
+    "comparisons": {
+      "sac-mixed": {
+        "all_preregistered_checks_passed": false,
+        "comparator_mean": 2461.934134702274,
+        "completion_rate_noninferiority_passed": true,
+        "h2oplus_mean": 2516.379337149186,
+        "h2oplus_relative_improvement": -0.022114808710549067,
+        "holm_adjusted_p": 1.0,
+        "maximum_demand_scale_relative_degradation": 0.03723042950881696,
+        "training_seed_wins": 1
+      },
+      "sac-online": {
+        "all_preregistered_checks_passed": false,
+        "comparator_mean": 2455.8590020300394,
+        "completion_rate_noninferiority_passed": true,
+        "h2oplus_mean": 2516.379337149186,
+        "h2oplus_relative_improvement": -0.02464324501900147,
+        "holm_adjusted_p": 1.0,
+        "maximum_demand_scale_relative_degradation": 0.05923381975451741,
+        "training_seed_wins": 0
+      }
+    },
+    "passed": false
+  },
+  "formal_held_out_outcomes_read": false,
+  "local_sumo_execution": false,
+  "next_action": "Do not launch Stage B; use development-only diagnostics to register a new candidate-improvement pilot without reading formal held-out outcomes.",
+  "scheduler_reconciliation": {
+    "direct_token_bound_backend_and_host_execution_evidence_controls_completion": true,
+    "final_bounded_readonly_status_timed_out_on_lock": true,
+    "queue_mutation_or_requeue_performed": false,
+    "queue_snapshot": {
+      "t82300": {
+        "exit_code": 0,
+        "last_progress_line": "DONE H2O+ v8 Stage A2 shard 0: 75/75 jobs",
+        "status": "done"
+      },
+      "t82301": {
+        "exit_code": 0,
+        "last_progress_line": "DONE H2O+ v8 Stage A2 shard 1: 75/75 jobs",
+        "status": "done"
+      }
+    }
+  },
+  "schema_version": "transit-h2oplus-v8-stage-a2-closeout-v1",
+  "stage_b": {
+    "authorized": false,
+    "eligible": false,
+    "reason": "Stage A2 preregistered H2O+ superiority gates failed against both SAC comparators",
+    "submitted": false
+  },
+  "status": "complete-development-scientific-gate-failed",
+  "supports_current_formal_held_out_model_effect_claim": false,
+  "training_or_evaluation_rerun_during_closeout": false
+}

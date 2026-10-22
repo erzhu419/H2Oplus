@@ -1,0 +1,40 @@
+{
+  "admission_only_source_paths": [
+    "SimpleSAC/transit_v12/__init__.py",
+    "SimpleSAC/transit_v12/provenance.py",
+    "SimpleSAC/transit_v12/trainer.py"
+  ],
+  "checked_task": "h2oplus_v13a1_proximal_weak_seed6201",
+  "checks": {
+    "admission_path": true,
+    "dataset": true,
+    "formal_held_out_outcomes_read": true,
+    "method": true,
+    "passed": true,
+    "run_name": true,
+    "run_signature": true,
+    "schema_version": true,
+    "seed": true,
+    "simulator_aggregate": true,
+    "simulator_runtime": true,
+    "stage": true,
+    "study_stage": true,
+    "training_source_sha256": true,
+    "v13_protocol_sha256": true,
+    "v13_source_sha256": false,
+    "v13_wrapper_sha256": true,
+    "variant": true
+  },
+  "created_utc": "2026-08-22T04:07:24.665003+00:00",
+  "failed_checks": [
+    "v13_source_sha256"
+  ],
+  "formal_held_out_outcomes_read": false,
+  "passed": false,
+  "root_cause": "The frozen admission correctly bound the inherited transit_v12 source layer, while the runtime _v13_source_sha256 function omitted those three files.",
+  "runtime_only_source_paths": [],
+  "schema_version": "transit-h2oplus-v13-pretraining-admission-diagnosis-v1",
+  "scientific_training_executed": false,
+  "shared_source_hash_mismatches": [],
+  "sumo_executed_by_diagnosis": false
+}

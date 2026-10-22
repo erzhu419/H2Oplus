@@ -775,12 +775,14 @@ class ContrastiveDynamicsDiscriminator(nn.Module):
     that differ between SUMO and SIM but are not dynamics-related.
 
     Training: InfoNCE contrastive loss.
-    IS weight: cosine similarity to SUMO prototype embedding.
+    IS weight: calibrated real-vs-sim prototype density ratio.
     """
 
     DYN_INDICES = [5, 6, 11]  # fwd_hw, bwd_hw, gap (absolute in 17-dim obs)
 
-    def __init__(self, obs_dim=17, action_dim=2, embed_dim=16, hidden_dim=128, n_hidden=2):
+    def __init__(self, obs_dim=17, action_dim=2, embed_dim=16, hidden_dim=128,
+                 n_hidden=2, ratio_mode="nce", ratio_temperature=0.2,
+                 ratio_center_momentum=0.01, min_weight=0.01, max_weight=20.0):
         super().__init__()
         # Input: dyn(3) + delta(3) + relative_delta(3) + cross_terms(3) = 12
         # NO action — dynamics discrimination should be action-invariant
@@ -793,7 +795,16 @@ class ContrastiveDynamicsDiscriminator(nn.Module):
         self.encoder = nn.Sequential(*layers)
         self.embed_dim = embed_dim
         self.register_buffer('sumo_prototype', torch.zeros(embed_dim))
+        # Non-persistent buffers keep old checkpoints loadable while allowing
+        # fresh runs to calibrate a proper real/sim density ratio online.
+        self.register_buffer('sim_prototype', torch.zeros(embed_dim), persistent=False)
+        self.register_buffer('ratio_logit_center', torch.zeros(()), persistent=False)
         self._proto_count = 0
+        self.ratio_mode = ratio_mode
+        self.ratio_temperature = ratio_temperature
+        self.ratio_center_momentum = ratio_center_momentum
+        self.min_weight = min_weight
+        self.max_weight = max_weight
 
     def _build_input(self, obs, action, next_obs):
         """Extract dynamics-only features. NO action input.
@@ -835,13 +846,37 @@ class ContrastiveDynamicsDiscriminator(nn.Module):
         return self.encoder(torch.cat([obs, action], dim=-1))
 
     def compute_weight(self, obs, action, next_obs):
-        """Weight = cosine similarity to SUMO prototype."""
+        """Return real/sim importance weight for a transition.
+
+        Legacy cosine mode maps similarity to [0, 1]. The default NCE mode
+        compares similarity to real and sim prototypes, so good sim transitions
+        can be upweighted instead of only downweighted.
+        """
         with torch.no_grad():
             z = self.encode(obs, action, next_obs)
-            # Cosine similarity to prototype, mapped to [0, 1]
-            cos_sim = F.cosine_similarity(z, self.sumo_prototype.unsqueeze(0), dim=-1)
-            w = (cos_sim + 1) / 2  # [-1,1] → [0,1]
-            return w.clamp(0.01, 1.0)
+            real_ready = torch.norm(self.sumo_prototype) > 1e-6
+            sim_ready = torch.norm(self.sim_prototype) > 1e-6
+            if not real_ready:
+                return torch.ones(z.shape[0], device=z.device)
+
+            real_cos = F.cosine_similarity(
+                z, self.sumo_prototype.unsqueeze(0), dim=-1
+            )
+            if self.ratio_mode in ("cosine", "prototype") or not sim_ready:
+                w = (real_cos + 1) / 2  # legacy [-1,1] -> [0,1]
+                return w.clamp(self.min_weight, 1.0)
+
+            sim_cos = F.cosine_similarity(
+                z, self.sim_prototype.unsqueeze(0), dim=-1
+            )
+            temp = max(float(self.ratio_temperature), 1e-6)
+            log_w = (real_cos - sim_cos) / temp - self.ratio_logit_center
+            log_w = torch.clamp(
+                log_w,
+                min=float(np.log(self.min_weight)),
+                max=float(np.log(self.max_weight)),
+            )
+            return torch.exp(log_w)
 
     def train_step(self, real_obs, real_action, real_next_obs,
                     sim_obs, sim_action, sim_next_obs,
@@ -871,13 +906,30 @@ class ContrastiveDynamicsDiscriminator(nn.Module):
         loss.backward()
         optimizer.step()
 
-        # Update SUMO prototype (EMA of all real embeddings)
+        # Update real/sim prototypes and center the sim log-ratio so the
+        # average sim transition starts near weight 1 before trainer clipping.
         with torch.no_grad():
             z_all_real = self.encode(real_obs, real_action, real_next_obs)
+            z_all_sim = self.encode(sim_obs, sim_action, sim_next_obs)
             ema = min(0.05, 1.0 / (self._proto_count + 1))
             self._proto_count += 1
-            self.sumo_prototype = (1 - ema) * self.sumo_prototype + ema * z_all_real.mean(dim=0)
-            self.sumo_prototype = F.normalize(self.sumo_prototype, dim=0)
+            real_proto = (1 - ema) * self.sumo_prototype + ema * z_all_real.mean(dim=0)
+            sim_proto = (1 - ema) * self.sim_prototype + ema * z_all_sim.mean(dim=0)
+            self.sumo_prototype.copy_(F.normalize(real_proto, dim=0))
+            self.sim_prototype.copy_(F.normalize(sim_proto, dim=0))
+
+            if self.ratio_mode not in ("cosine", "prototype"):
+                real_cos = F.cosine_similarity(
+                    z_all_sim, self.sumo_prototype.unsqueeze(0), dim=-1
+                )
+                sim_cos = F.cosine_similarity(
+                    z_all_sim, self.sim_prototype.unsqueeze(0), dim=-1
+                )
+                center = (real_cos - sim_cos).mean() / max(
+                    float(self.ratio_temperature), 1e-6
+                )
+                m = float(self.ratio_center_momentum)
+                self.ratio_logit_center.mul_(1 - m).add_(m * center)
 
         return loss.item()
 

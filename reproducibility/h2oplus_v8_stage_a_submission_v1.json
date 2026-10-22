@@ -1,0 +1,82 @@
+{
+  "authorization": {
+    "path": "h2oplus_v8_development_stage_a_execution_authorization_v1.json",
+    "sha256": "cebc1083ad6d94b6643f6343e862e022794e69c272d42d1e8be2cf0f911c5cf5"
+  },
+  "created_utc": "2026-08-13T22:45:17+00:00",
+  "deployment": {
+    "aggregate_sha256": "9b0271f69e0625aa439655b117dbfd0e4ac14587a55a93671eb7c2795ed87d2d",
+    "entry_count": 410,
+    "manifest_sha256": "f93cc9f543b55054245236ca77c06017d243a4cfee4080d1b881009d69fbb9e7",
+    "runtime_verified_on_execution_host": true,
+    "total_file_bytes": 808229237
+  },
+  "environment_contract": {
+    "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+    "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+    "CUDA_VISIBLE_DEVICES": "0,1",
+    "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4",
+    "cpu_threads_per_library": 1,
+    "python": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/python"
+  },
+  "formal_held_out_outcomes_read": false,
+  "freeze": {
+    "path": "h2oplus_v8_stage_a_freeze_v1.json",
+    "sha256": "0291c8f78ecb76a4ea36f25e1a70a1ea3b8237d02811adc28181c1fbd12615c0"
+  },
+  "preflight_rejections": [
+    {
+      "created_task": false,
+      "reason": "scheduleurm reserves CUDA_VISIBLE_DEVICES and rejected it in --env before submission",
+      "resolution": "retain the CPU-only scheduler reservation and set the frozen visible-device value only for the evaluation command process"
+    }
+  ],
+  "registration": {
+    "execution_authorized_field_remains_immutable": false,
+    "path": "h2oplus_v8_development_pilot_registration_v1.json",
+    "sha256": "d76dbde2d54b53c18b12770523f02a85221d0622839b3619c882362a2cc6a820"
+  },
+  "runtime_host_decision": {
+    "decision": "run both deterministic shards on jtl110gpu under one portable runtime identity",
+    "jtl110gpu": {
+      "glibc": "2.27",
+      "portable_runtime_signature": "264d3c412b8e6c42320995208d2e009eb809b85626047206c4de752c2dae06e7"
+    },
+    "jtl110gpu2": {
+      "glibc": "2.39",
+      "portable_runtime_signature": "2ef8d9dc4cf5562c75ba2d60c6b91d125e84084ba4c01f9431ef4e364fe358ab"
+    },
+    "reason": "the provenance contract includes libc in portable identity; cross-host complementary shards would not form one auditable matrix even though wheel and SUMO binary content hashes match"
+  },
+  "runtime_lock": {
+    "path": "h2oplus_v8_stage_a_sumo_runtime_lock_py38.json",
+    "runtime_signature": "264d3c412b8e6c42320995208d2e009eb809b85626047206c4de752c2dae06e7",
+    "sha256": "ac60ae58e0e6db6bb1386ffdfe0d164b96f81e49e4983b8b062ceddb65da51a4"
+  },
+  "scheduler_tasks": [
+    {
+      "cpu_cores": 12,
+      "est_vram_mb": 0,
+      "id": "t82273",
+      "ram_mb": 32768,
+      "require_node": "jtl110gpu",
+      "shard_count": 2,
+      "shard_index": 0,
+      "signature": "H2Oplus/v8/development/stage-a/f93cc9f543b5/shard0/jtl110gpu/glibc227"
+    },
+    {
+      "cpu_cores": 12,
+      "est_vram_mb": 0,
+      "id": "t82274",
+      "ram_mb": 32768,
+      "require_node": "jtl110gpu",
+      "shard_count": 2,
+      "shard_index": 1,
+      "signature": "H2Oplus/v8/development/stage-a/f93cc9f543b5/shard1/jtl110gpu/glibc227"
+    }
+  ],
+  "schema_version": "transit-h2oplus-v8-stage-a-submission-v1",
+  "stage_b_submitted": false,
+  "status": "stage-A-submitted-awaiting-scheduler-launch",
+  "training": false
+}

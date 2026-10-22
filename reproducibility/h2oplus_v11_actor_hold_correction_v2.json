@@ -1,0 +1,103 @@
+{
+  "corrected_runtime_source_sha256": {
+    "SimpleSAC/train_transit_v11_actor_hold.py": "2784ba8512742c85517c1d95a25b63f841f76acf222f9d2e9ece3ed698b7f24d",
+    "SimpleSAC/transit_v10/__init__.py": "a40d5cf193fc8d78f269ff3cec3b3ff691d3999ac4fce41c8e97b83a316cdbc1",
+    "SimpleSAC/transit_v10/provenance.py": "4f5afabae851b6d673288cc979e47e1876742cb45471bd0c6977a8fa4a36f8bb",
+    "SimpleSAC/transit_v10/trainer.py": "0ab1c8dbbe9d37301104f02e5cb48af5bd40f0357d9ad5173c911574a7b1ca0a",
+    "SimpleSAC/transit_v11/__init__.py": "8acc1801b4b2a537b795cb83e8e7a6910be48e4122042bb6adbcaecf879f3a73",
+    "SimpleSAC/transit_v11/provenance.py": "a55886e943a4bfc62c5298099a9d3be87302c596243a0d698c8c801ae3073212",
+    "SimpleSAC/transit_v11/trainer.py": "492156a6c7b4d388acdd2889db9a5704d99c83206f8664856f5c0c79ed42ea0b"
+  },
+  "correction": {
+    "actor_and_temperature_state_source_uses_same_release_predicate": true,
+    "atomic_event_overshoot_cannot_release_actor_early": true,
+    "nominal_release_milestone": 10000,
+    "release_predicate": "online_critic_updates >= 5000 after 5k warmup",
+    "zero_5k_10k_actor_and_temperature_hash_equality_remains_fail_closed": true
+  },
+  "created_utc": "2026-08-20T12:55:53.969930+00:00",
+  "defect": {
+    "class": "fail-closed-nominal-milestone-boundary-mismatch",
+    "description": "The v1 actor release predicate used replay_buffer.online_size. An atomic simultaneous-decision batch may put actual replay size above 10000 before the nominal 10k export, permitting an actor and temperature update before the required 0/5k/10k hash equality check.",
+    "detected_during_no_sumo_preflight_closeout": true,
+    "observed_scientific_outcome": false
+  },
+  "design_rationale": {
+    "bytes": 4673,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_rationale_v1.json",
+    "sha256": "456ddcb73c5d78a8f0bf90f3e8ddfbbfda81c8c45c76d505f4d309eead35605b"
+  },
+  "exact_runtime_source_replacements": [
+    {
+      "path": "SimpleSAC/train_transit_v11_actor_hold.py",
+      "v1_sha256": "83a2173c6c9ced389bc71df6589faaf6f71229b60bf3f0aa299d4b65bded65a6",
+      "v2_sha256": "2784ba8512742c85517c1d95a25b63f841f76acf222f9d2e9ece3ed698b7f24d"
+    },
+    {
+      "path": "SimpleSAC/transit_v11/__init__.py",
+      "v1_sha256": "d62d43e3fa4d99f8e16b15af2a993dfe8038b45ea01b51b10c45d920993a83d6",
+      "v2_sha256": "8acc1801b4b2a537b795cb83e8e7a6910be48e4122042bb6adbcaecf879f3a73"
+    },
+    {
+      "path": "SimpleSAC/transit_v11/trainer.py",
+      "v1_sha256": "57c5282d08bd6ef14222c1fb3f19b6f0572407f9ef258040d4b4edf97ab97916",
+      "v2_sha256": "492156a6c7b4d388acdd2889db9a5704d99c83206f8664856f5c0c79ed42ea0b"
+    }
+  ],
+  "formal_confirmation_stage_authorized_or_submitted": false,
+  "formal_held_out_outcomes_read": false,
+  "generator": {
+    "bytes": 50178,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/prepare_h2oplus_v11_actor_hold.py",
+    "sha256": "424eb956f531bc7549ff309dd3548e05210ffe2ffb50602fa63b9f6030ac05d5"
+  },
+  "required_next_lineage": {
+    "fresh_deployment": "v2",
+    "fresh_local_and_two_host_no_sumo_verification": true,
+    "fresh_training_submission_record": true,
+    "reuse_or_overwrite_v1_result_roots": false
+  },
+  "schema_version": "transit-h2oplus-v11-actor-hold-correction-v2",
+  "status": "corrected-before-any-v11-training-or-sumo-execution",
+  "study_stage": "development",
+  "superseded_v1_lineage": {
+    "deployment_manifest": {
+      "bytes": 6028,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v11_actor_hold_pilot_v1/workspace/deployment_manifest_v11.json",
+      "sha256": "9239fa4526866efab89dd03519d646773caacdd54c59cf9e5cd34f4c0da73ae2"
+    },
+    "eligible_to_authorize_training_after_correction": false,
+    "local_verification": {
+      "bytes": 965,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_deployment_verification_local_v1.json",
+      "sha256": "8596e8aa7b3f5e4dccd2b176b682b52f43ac67c16edc0e1fc75518b3ea289145"
+    },
+    "preflight_closeout": {
+      "bytes": 4220,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_preflight_closeout_v1.json",
+      "sha256": "6151f95d07700daca533643a854c54808a906d4bd9da1541d22e0829f4dda01d"
+    },
+    "preflight_submission": {
+      "bytes": 4967,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v11_actor_hold_preflight_submission_v1.json",
+      "sha256": "c8500cb06b6f160d91f008594f7cf802b84db719cdb1b53e18f4fb8b5b83aa72"
+    },
+    "preflight_task_ids": [
+      "t82894",
+      "t82895"
+    ],
+    "preserved_as_no_training_no_sumo_operational_evidence_only": true,
+    "training_submission_gate_open_in_v1_closeout": true
+  },
+  "v1_runtime_source_sha256": {
+    "SimpleSAC/train_transit_v11_actor_hold.py": "83a2173c6c9ced389bc71df6589faaf6f71229b60bf3f0aa299d4b65bded65a6",
+    "SimpleSAC/transit_v10/__init__.py": "a40d5cf193fc8d78f269ff3cec3b3ff691d3999ac4fce41c8e97b83a316cdbc1",
+    "SimpleSAC/transit_v10/provenance.py": "4f5afabae851b6d673288cc979e47e1876742cb45471bd0c6977a8fa4a36f8bb",
+    "SimpleSAC/transit_v10/trainer.py": "0ab1c8dbbe9d37301104f02e5cb48af5bd40f0357d9ad5173c911574a7b1ca0a",
+    "SimpleSAC/transit_v11/__init__.py": "d62d43e3fa4d99f8e16b15af2a993dfe8038b45ea01b51b10c45d920993a83d6",
+    "SimpleSAC/transit_v11/provenance.py": "a55886e943a4bfc62c5298099a9d3be87302c596243a0d698c8c801ae3073212",
+    "SimpleSAC/transit_v11/trainer.py": "57c5282d08bd6ef14222c1fb3f19b6f0572407f9ef258040d4b4edf97ab97916"
+  },
+  "v1_training_or_sumo_executed": false,
+  "v1_training_submission_record_exists": false
+}

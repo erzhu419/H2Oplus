@@ -1,0 +1,35 @@
+{
+  "correction": {
+    "analysis_source": {
+      "path": "reproducibility/analyze_h2oplus_v8_stage_a.py",
+      "sha256": "3aa9aff2438703045a498d306be2ba6e5ec215e5871c4bf3798597632e2704fd"
+    },
+    "behavior": "validate the registered block name, SUMO seed, canonical-root basename and raw alias, then normalize to the preregistered block name",
+    "evaluation_outputs_changed": false,
+    "focused_test": {
+      "path": "tests/test_analyze_h2oplus_v8_stage_a.py",
+      "sha256": "52582e6cde2282a94cf9c117f0539c121b90dd003df7d0ed2a325c4ac3271c6e"
+    },
+    "formal_held_out_outcomes_read": false,
+    "gate_definitions_changed": false,
+    "scope": "analysis parser only",
+    "training_code_changed": false
+  },
+  "created_utc": "2026-08-14T03:47:53.506225+00:00",
+  "initial_fail_closed_attempt": {
+    "cause": "generic matrix loader exposed sumo-seed-4101..4105 aliases while the preregistration names the same immutable cells v8-development-01..05",
+    "exception": "ValueError: Stage A block coverage drifted",
+    "report_created": false
+  },
+  "passed": true,
+  "schema_version": "transit-h2oplus-v8-stage-a-analysis-correction-v1",
+  "verification": {
+    "analysis_report": {
+      "path": "reproducibility/h2oplus_v8_stage_a_results/stage_a_gate_analysis.json",
+      "sha256": "20c8532b264d3f0048bf2b654ea6a1968aa4c272fcc87e48c989e578bf4e95c8"
+    },
+    "command": "python3 -m pytest -q tests/test_analyze_h2oplus_v8_stage_a.py tests/test_h2oplus_v8_stage_a_dispatch.py",
+    "failed": 0,
+    "passed": 5
+  }
+}

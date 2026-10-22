@@ -36,6 +36,135 @@ from viskit.logging import logger, setup_logger
 
 nowTime = datetime.datetime.now().strftime('%y-%m-%d-%H-%M-%S')
 
+
+# ─────────────────────────────────────────────────────────────────────────
+# Checkpoint helpers (crash-resilient resume)
+# Saves only the SIM portion of the replay buffer because the OFFLINE
+# portion is deterministic for a given (seed, data_source, residual_ratio)
+# and is re-materialized by MixedReplayBuffer on construction.
+# Atomic save: write to .tmp then os.replace.
+# ─────────────────────────────────────────────────────────────────────────
+def _save_ckpt(path, h2o, replay_buffer, train_sampler, viskit_metrics, epoch):
+    ckpt = {
+        'epoch': epoch,
+        # ── H2OPLUS networks (weights) ──
+        'policy': h2o.policy.state_dict(),
+        'qf1': h2o.qf1.state_dict(),
+        'qf2': h2o.qf2.state_dict(),
+        'target_qf1': h2o.target_qf1.state_dict(),
+        'target_qf2': h2o.target_qf2.state_dict(),
+        'vf': h2o.vf.state_dict(),
+        # ── Optimizers ──
+        'policy_optimizer': h2o.policy_optimizer.state_dict(),
+        'qf_optimizer': h2o.qf_optimizer.state_dict(),
+        'vf_optimizer': h2o.vf_optimizer.state_dict(),
+        # ── Step counter (drives target-net update period & pretrain gate) ──
+        'total_steps': int(h2o._total_steps),
+        # ── Mid-episode sim sampler state ──
+        'sampler_current_obs': train_sampler._current_observation,
+        'sampler_traj_steps': int(train_sampler._traj_steps),
+        # ── Logged metrics (for continuity of viskit tabular) ──
+        'viskit_metrics': dict(viskit_metrics),
+        # ── RNG ──
+        'np_rng': np.random.get_state(),
+        'torch_rng': torch.get_rng_state(),
+        'cuda_rng': torch.cuda.get_rng_state() if torch.cuda.is_available() else None,
+    }
+    if getattr(h2o, 'log_alpha', None) is not None:
+        ckpt['log_alpha'] = h2o.log_alpha.state_dict()
+        ckpt['alpha_optimizer'] = h2o.alpha_optimizer.state_dict()
+    if getattr(h2o, 'd_sa', None) is not None:
+        ckpt['d_sa'] = h2o.d_sa.state_dict()
+        ckpt['d_sas'] = h2o.d_sas.state_dict()
+        ckpt['d_sa_optimizer'] = h2o.d_sa_optimizer.state_dict()
+        ckpt['d_sas_optimizer'] = h2o.d_sas_optimizer.state_dict()
+    if getattr(h2o, 'dynamics_ratio_estimator', None) is not None:
+        ckpt['dynamics_ratio_estimator'] = h2o.dynamics_ratio_estimator.state_dict()
+        ckpt['dynamics_ratio_estimator_optimizer'] = h2o.dynamics_ratio_estimator_optimizer.state_dict()
+
+    fd = replay_buffer.fixed_dataset_size
+    ptr = replay_buffer.ptr
+    size = replay_buffer.size
+    # The sim region may have wrapped; save the whole slice [fd:max_size)
+    # up to `size - fd` valid entries. Simpler and robust: dump entire region
+    # because sim region is small (~50k rows × ~80 bytes ≈ 4 MB).
+    sim_end = max(ptr, fd + max(0, size - fd))
+    ckpt['buffer'] = {
+        'ptr': ptr, 'size': size, 'fixed_dataset_size': fd,
+        'state': replay_buffer.state[fd:sim_end].copy(),
+        'action': replay_buffer.action[fd:sim_end].copy(),
+        'reward': replay_buffer.reward[fd:sim_end].copy(),
+        'next_state': replay_buffer.next_state[fd:sim_end].copy(),
+        'done': replay_buffer.done[fd:sim_end].copy(),
+    }
+
+    tmp = path + '.tmp'
+    torch.save(ckpt, tmp)
+    os.replace(tmp, path)
+
+
+def _load_ckpt(path, h2o, replay_buffer, train_sampler, viskit_metrics, device):
+    ckpt = torch.load(path, map_location=device)
+
+    # Networks
+    h2o.policy.load_state_dict(ckpt['policy'])
+    h2o.qf1.load_state_dict(ckpt['qf1'])
+    h2o.qf2.load_state_dict(ckpt['qf2'])
+    h2o.target_qf1.load_state_dict(ckpt['target_qf1'])
+    h2o.target_qf2.load_state_dict(ckpt['target_qf2'])
+    h2o.vf.load_state_dict(ckpt['vf'])
+    # Optimizers
+    h2o.policy_optimizer.load_state_dict(ckpt['policy_optimizer'])
+    h2o.qf_optimizer.load_state_dict(ckpt['qf_optimizer'])
+    h2o.vf_optimizer.load_state_dict(ckpt['vf_optimizer'])
+    # Step counter (controls target update period & pretrain gate)
+    h2o._total_steps = int(ckpt.get('total_steps', 0))
+    # Sim sampler mid-episode state
+    if 'sampler_current_obs' in ckpt:
+        train_sampler._current_observation = ckpt['sampler_current_obs']
+        train_sampler._traj_steps = int(ckpt['sampler_traj_steps'])
+    # Viskit metrics (restored in-place)
+    if 'viskit_metrics' in ckpt:
+        viskit_metrics.update(ckpt['viskit_metrics'])
+
+    if 'log_alpha' in ckpt and getattr(h2o, 'log_alpha', None) is not None:
+        h2o.log_alpha.load_state_dict(ckpt['log_alpha'])
+        h2o.alpha_optimizer.load_state_dict(ckpt['alpha_optimizer'])
+    if 'd_sa' in ckpt and getattr(h2o, 'd_sa', None) is not None:
+        h2o.d_sa.load_state_dict(ckpt['d_sa'])
+        h2o.d_sas.load_state_dict(ckpt['d_sas'])
+        h2o.d_sa_optimizer.load_state_dict(ckpt['d_sa_optimizer'])
+        h2o.d_sas_optimizer.load_state_dict(ckpt['d_sas_optimizer'])
+    if 'dynamics_ratio_estimator' in ckpt and getattr(h2o, 'dynamics_ratio_estimator', None) is not None:
+        h2o.dynamics_ratio_estimator.load_state_dict(ckpt['dynamics_ratio_estimator'])
+        h2o.dynamics_ratio_estimator_optimizer.load_state_dict(ckpt['dynamics_ratio_estimator_optimizer'])
+
+    buf = ckpt['buffer']
+    fd_saved = buf['fixed_dataset_size']
+    if fd_saved != replay_buffer.fixed_dataset_size:
+        raise ValueError(
+            f"fixed_dataset_size mismatch on ckpt load: saved={fd_saved} "
+            f"current={replay_buffer.fixed_dataset_size}. Cannot resume — "
+            f"check seed/data_source/residual_ratio matches."
+        )
+    fd = replay_buffer.fixed_dataset_size
+    n = buf['state'].shape[0]
+    if n > 0:
+        replay_buffer.state[fd:fd + n] = buf['state']
+        replay_buffer.action[fd:fd + n] = buf['action']
+        replay_buffer.reward[fd:fd + n] = buf['reward']
+        replay_buffer.next_state[fd:fd + n] = buf['next_state']
+        replay_buffer.done[fd:fd + n] = buf['done']
+    replay_buffer.ptr = buf['ptr']
+    replay_buffer.size = buf['size']
+
+    np.random.set_state(ckpt['np_rng'])
+    torch.set_rng_state(ckpt['torch_rng'])
+    if ckpt.get('cuda_rng') is not None and torch.cuda.is_available():
+        torch.cuda.set_rng_state(ckpt['cuda_rng'])
+
+    return ckpt['epoch']
+
 FLAGS_DEF = define_flags_with_default(
     current_time=nowTime,
     name_str='',
@@ -52,6 +181,10 @@ FLAGS_DEF = define_flags_with_default(
     seed=42,
     device='cuda',
     save_model=False,
+    # Crash-resilient checkpoint: resumes this run from ckpt_dir/ckpt.pt if
+    # present. Empty string disables.
+    ckpt_dir='',
+    ckpt_every=5,
     batch_size=256,
 
     reward_scale=1.0,
@@ -243,8 +376,37 @@ def main(argv):
 
     viskit_metrics = {}
 
+    # ── Checkpoint resume detection ────────────────────────────────────
+    start_epoch = 0
+    ckpt_path = None
+    if FLAGS.ckpt_dir:
+        os.makedirs(FLAGS.ckpt_dir, exist_ok=True)
+        ckpt_path = os.path.join(FLAGS.ckpt_dir, 'ckpt.pt')
+        if os.path.exists(ckpt_path):
+            print(f"[ckpt] resuming from {ckpt_path}", flush=True)
+            saved_epoch = _load_ckpt(ckpt_path, h2o, replay_buffer,
+                                      train_sampler, viskit_metrics, FLAGS.device)
+            start_epoch = saved_epoch + 1
+            print(f"[ckpt] resumed — next epoch = {start_epoch}/{FLAGS.n_epochs} "
+                  f"(total_steps={h2o._total_steps})", flush=True)
+        else:
+            print(f"[ckpt] fresh start, will save every {FLAGS.ckpt_every} epochs to {ckpt_path}", flush=True)
+
+    # When n_rollout_steps_per_epoch=0 (pure offline-only mode), warm up the
+    # sim scope of the replay buffer once with random-policy rollouts so that
+    # batch sampling from the sim scope doesn't crash. The offline phase
+    # otherwise uses only the D4RL "real" scope.  Skip on resume — buffer is
+    # already restored from checkpoint.
+    if FLAGS.n_rollout_steps_per_epoch == 0 and start_epoch == 0:
+        print("[offline-only] warmup: 1024 sim random-policy steps for sim-scope buffer", flush=True)
+        train_sampler.sample(
+            sampler_policy, 1024,
+            deterministic=False, replay_buffer=replay_buffer,
+            joint_noise_std=FLAGS.joint_noise_std,
+        )
+
     # train and evaluate for n_epochs
-    for epoch in trange(FLAGS.n_epochs):
+    for epoch in trange(start_epoch, FLAGS.n_epochs, initial=start_epoch, total=FLAGS.n_epochs):
         metrics = {}
 
         # TODO rollout from the simulator
@@ -304,9 +466,27 @@ def main(argv):
         logger.record_dict(viskit_metrics)
         logger.dump_tabular(with_prefix=False, with_timestamp=False)
 
+        # ── Periodic checkpoint save ───────────────────────────────────
+        if ckpt_path is not None and (epoch + 1) % FLAGS.ckpt_every == 0:
+            _save_ckpt(ckpt_path, h2o, replay_buffer, train_sampler, viskit_metrics, epoch)
+            print(f"[ckpt] saved at epoch {epoch + 1} "
+                  f"(total_steps={h2o._total_steps})", flush=True)
+
+    # Guard against the resume-already-finished case (start_epoch==n_epochs,
+    # loop body never ran, so `epoch` is undefined).
+    final_epoch = epoch if 'epoch' in dir() else start_epoch - 1
+
     if FLAGS.save_model:
-        save_data = {'h2o': h2o, 'variant': variant, 'epoch': epoch}
+        save_data = {'h2o': h2o, 'variant': variant, 'epoch': final_epoch}
         wandb_logger.save_pickle(save_data, 'model.pkl')
+
+    # Training finished normally — rename ckpt.pt → ckpt.pt.done so a
+    # re-launch with the same ckpt_dir starts fresh instead of resuming
+    # a completed run.
+    if ckpt_path is not None and os.path.exists(ckpt_path):
+        done_path = ckpt_path + '.done'
+        os.replace(ckpt_path, done_path)
+        print(f"[ckpt] run complete — ckpt moved to {done_path}", flush=True)
 
 if __name__ == '__main__':
     absl.app.run(main)

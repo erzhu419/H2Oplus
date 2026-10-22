@@ -1,0 +1,169 @@
+{
+  "campaign": "H2O+ v8 development few-shot sample-efficiency comparison",
+  "development_environment": {
+    "blocks": [
+      {
+        "demand_realization_seed": 4401,
+        "name": "v8-fewshot-development-01",
+        "sumo_seed": 4301
+      },
+      {
+        "demand_realization_seed": 4402,
+        "name": "v8-fewshot-development-02",
+        "sumo_seed": 4302
+      },
+      {
+        "demand_realization_seed": 4403,
+        "name": "v8-fewshot-development-03",
+        "sumo_seed": 4303
+      }
+    ],
+    "demand_scales": [
+      0.85,
+      1.0,
+      1.15
+    ],
+    "depart_jitter_seconds": 90.0,
+    "environment_cells": 9
+  },
+  "endpoint": {
+    "completion_constraint": "passenger_completion_rate",
+    "direction": "lower-is-better",
+    "paired_unit": "training seed after averaging the nine development cells",
+    "primary": "generalized_seconds_per_passenger",
+    "sample_efficiency_summary": "normalized trapezoidal area under the performance-versus-online-event curve from 0 through 100000 events on the linear event axis"
+  },
+  "execution_authorized_in_registration": false,
+  "fewshot_confirmation_gate": {
+    "completion_rate_noninferiority_margin": 0.005,
+    "exact_one_sided_paired_sign_flip_p_less_than": 0.05,
+    "final_100000_event_relative_degradation_not_greater_than": 0.05,
+    "mean_at_10000_events_lower": true,
+    "mean_at_25000_events_lower": true,
+    "mean_relative_aulc_improvement_at_least": 0.02,
+    "no_demand_scale_aulc_relative_degradation_greater_than": 0.01,
+    "training_seeds_with_lower_aulc_at_least": 4
+  },
+  "formal_held_out_may_be_read_for_selection": false,
+  "formal_held_out_outcomes_read": false,
+  "generator": {
+    "bytes": 32711,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/prepare_h2oplus_v8_fewshot.py",
+    "sha256": "c910c904e6feb50583d80f783fb998b55514f619b0bfdd4b5ab2400a035de34c"
+  },
+  "interpretation": {
+    "development_only": true,
+    "failure_retains_all_results": true,
+    "stage_b_authorized_or_submitted": false,
+    "supports_formal_held_out_model_effect_claim": false
+  },
+  "learner_step_matched": {
+    "definition": "same trainer actor/critic learner iterations; not equal wall time, optimizer-step count or online interaction",
+    "pairs": [
+      {
+        "h2oplus_online_events": 5000,
+        "learner_update_steps": 50000,
+        "sac_online_events": 55000
+      },
+      {
+        "h2oplus_online_events": 10000,
+        "learner_update_steps": 55000,
+        "sac_online_events": 60000
+      },
+      {
+        "h2oplus_online_events": 25000,
+        "learner_update_steps": 70000,
+        "sac_online_events": 75000
+      },
+      {
+        "h2oplus_online_events": 50000,
+        "learner_update_steps": 95000,
+        "sac_online_events": 100000
+      },
+      {
+        "h2oplus_online_events": 100000,
+        "learner_update_steps": 145000,
+        "sac_online_events": 150000
+      }
+    ],
+    "ratio_accounting": "H2O+ ratio-optimizer steps are recorded separately and are not credited as SAC learner steps",
+    "role": "secondary; SAC receives 50000 additional online events",
+    "supports_few_shot_claim": false
+  },
+  "local_training_or_sumo_allowed": false,
+  "methods": [
+    "h2oplus",
+    "sac-online"
+  ],
+  "online_sample_matched": {
+    "atomic_batch_policy": "record actual events; accept only bounded intermediate overshoot below one simultaneous-decision batch and enforce the final hard cap",
+    "budgets": [
+      0,
+      5000,
+      10000,
+      25000,
+      50000,
+      100000
+    ],
+    "primary": true,
+    "x_axis": "nominal cumulative online simulator decision events",
+    "zero_and_5000_alias": "evaluate the zero-event actor once and alias 5000 only after exact actor-tensor SHA-256 equality proves warmup made no policy update"
+  },
+  "registered_matrix": {
+    "evaluation_shards": 2,
+    "training_runs": 10,
+    "unique_actor_policies_per_seed": 14,
+    "unique_remote_sumo_episodes": 630,
+    "workers_per_shard": 12
+  },
+  "registered_utc": "2026-08-14T11:22:50.661438+00:00",
+  "schema_version": "transit-h2oplus-v8-fewshot-registration-v1",
+  "sources": {
+    "a2_gate_analysis": {
+      "bytes": 25145,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a2_results/stage_a2_gate_analysis.json",
+      "sha256": "5b5e88ca47f0eb6624cdf92ed38ba3c99076e5106344f9e04a33d4d607e2c2a8"
+    },
+    "fewshot_analysis": {
+      "bytes": 17327,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/analyze_h2oplus_v8_fewshot.py",
+      "sha256": "e5a3be80f36e51929f859fbd352f6bdfcef4c493cfb0c6148b1741eca3631a1c"
+    },
+    "fewshot_evaluator": {
+      "bytes": 5294,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/evaluate_transit_v8_fewshot.py",
+      "sha256": "848f2697f1691b5f0ef7674a63657ebaa037f4947852e0162c7b875ef624c0f7"
+    },
+    "fewshot_matrix_runner": {
+      "bytes": 5555,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/run_evaluation_matrix_v8_fewshot.py",
+      "sha256": "dbf769a7d483cba179f31557273f19dd24f1429b9a0b82296e67df084bddc914"
+    },
+    "fewshot_wrapper": {
+      "bytes": 22940,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/train_transit_v8_fewshot.py",
+      "sha256": "c79158eaeb516b727be3d9e730b71d5bbc65937508e8dfe4e3e82ef3304c7921"
+    },
+    "frozen_v7_training_deployment": {
+      "bytes": 116595,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/deployment_manifest.json",
+      "sha256": "db1bc95b9763a202cb3398abc550aa62b49d7c548eac034021c1ba21697f89cd"
+    }
+  },
+  "status": "registered-not-submitted",
+  "stop_rules": [
+    "stop a run on nonfinite state, nonzero exit, or event/update-contract failure",
+    "retain every registered seed and milestone irrespective of performance",
+    "never use formal held-out outcomes for development selection",
+    "never train or run SUMO locally",
+    "do not launch a formal confirmation stage from this registration"
+  ],
+  "study_stage": "development",
+  "training_seeds": [
+    6201,
+    6202,
+    6203,
+    6204,
+    6205
+  ]
+}

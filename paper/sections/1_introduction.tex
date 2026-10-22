@@ -1,0 +1,97 @@
+\section{Introduction}
+\label{sec:intro}
+
+High-frequency bus service is vulnerable to bunching: a delayed vehicle faces
+more waiting passengers and longer dwell, while its follower faces fewer,
+causing an initially small headway perturbation to grow
+~\citep{rezazada2024review}. Holding an early bus at selected stops can restore
+spacing, but it also adds time for passengers already on board
+~\citep{delgado2012holding}. Analytical headway control and schedule-reliability
+control address different operational goals
+~\citep{daganzo2009headway,xuan2011dynamic}; RL can represent richer stochastic
+and multi-line interactions
+~\citep{alesiani2018reinforcement,wang2020real,wang2023multiobjective}.
+
+Learning through exploration on an operating fleet is generally unacceptable.
+Offline RL can use historical transitions, but its policy is vulnerable outside
+logged action support. Online learning in a simulator supplies adaptive
+experience, but an inexpensive model can differ from the target in travel
+times, dwell propagation, demand events, and the physical duration between
+asynchronous decisions. H2O RL combines immutable
+target replay with interaction in an imperfect simulator~\citep{niu2022h2o};
+H2O+ generalizes this construction across offline and online base learners
+~\citep{niu2025h2oplus}. The transit question is therefore not only whether
+simulator interaction improves an offline policy, but whether the resulting
+behavior remains service-complete when transferred back to the target
+simulator.
+
+Bus holding makes this distinction consequential. Stop decisions are
+asynchronous, several buses can request control at the same physical time, and
+exact zero hold is much more common than a positive duration. More importantly,
+an objective that integrates waiting and in-vehicle passenger time does not by
+itself ensure that journeys finish before a fixed evaluation horizon. During
+development we observed precisely this objective--constraint mismatch: lower
+generalized passenger time could coexist with a completion-rate loss large
+enough to fail a preregistered service boundary. The final policy therefore
+separates learning from deployment. A frozen H2O+ actor supplies the state
+dependent action, while a deterministic completion-safety reserve modifies
+only a bounded set of low-load tail-bus states with remaining demand.
+
+The resulting evidence chain is summarized in \Cref{tab:evidence_chain}. The
+target is a SUMO microsimulation of 12
+directional services and 389 scheduled vehicle trips. The offline replay
+contains 3,284,718 chronological transitions from 240 complete episodes. The
+online environment is a causal event-driven simulator with matched timetable,
+capacity, passenger-journey, state, action, and reward contracts. The final
+candidate and direct parent share five frozen terminal-quarter actors and differ
+only in the last deterministic completion-safety transform; lineage controls
+retain their own frozen actors. Candidate design used prior development
+outcomes, but the final candidate, direct parent, analysis, and ten-block formal
+environment were fixed before formal outcomes were accessed.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Separation of learning, adaptive development, and formal confirmation.
+Only the final column supplies confirmatory evidence.}
+\label{tab:evidence_chain}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.29\textwidth}
+                >{\raggedright\arraybackslash}p{0.29\textwidth}
+                >{\raggedright\arraybackslash}p{0.32\textwidth}}
+\toprule
+\textbf{Frozen learning evidence} & \textbf{Adaptive development} &
+\textbf{Fresh formal confirmation} \\
+\midrule
+Target-SUMO replay; calibrated online simulator; five IQL-initialized H2O+
+actors; 25,000 simulator events; fixed endpoint checkpoints. &
+Terminal actor taper and deterministic hold transforms were developed over
+successive preregistered rounds. Development outcomes informed the final
+completion-safety reserve and therefore are not confirmatory. &
+The fixed candidate and fixed direct parent were evaluated on 30 untouched
+SUMO cells: ten independent blocks crossed with three demand levels. Exact
+paired block tests used all five training seeds within each block. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Formal confirmation comprised 1,350 new SUMO episodes and 45 fixed physical
+behaviors. Relative to its direct behavior parent, the reserve-augmented policy
+reduced generalized passenger time by 92.12 s per departed passenger
+($3.71\%$), increased completion by 0.00466, and reduced unfinished passengers
+by 77.22 on average. The primary endpoint improved and the completion
+noninferiority condition passed in all ten independent blocks. The result is
+not attributed to density-ratio correction: held-out ratio diagnostics did not
+generalize, and the sealed actor training used unit simulator weights.
+
+This work makes four contributions. First, it defines a chronological
+finite-horizon SMDP representation that serializes simultaneous
+controls while charging exact generalized passenger time once per physical
+interval. Second, it provides an audited multi-policy target dataset and a
+causal online simulator under a common transit contract. Third, it combines a
+stabilized H2O+ actor with an explicit, state-conditioned completion-safety
+reserve whose direct effect can be isolated against an identical parent.
+Fourth, it supplies a preregistered formal comparison on fresh environment
+blocks, with the independent unit, noninferiority margin, and claim boundary
+fixed before outcome access. The formal claim concerns the final reserve
+relative to its identical direct parent in this simulator scenario family;
+\Cref{sec:discussion:limitations} collects the limits on broader interpretation.

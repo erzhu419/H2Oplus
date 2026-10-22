@@ -18,7 +18,12 @@ from ml_collections import ConfigDict
 from ml_collections.config_flags import config_flags
 from ml_collections.config_dict import config_dict
 
-import wandb
+try:
+    import wandb
+    HAS_WANDB = True
+except ImportError:
+    wandb = None
+    HAS_WANDB = False
 
 import torch
 

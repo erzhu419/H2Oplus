@@ -1,0 +1,73 @@
+{
+  "binding_change": "The already unique v18 empty-tail expectation values are copied into the legacy frozen-validator fields only after every parent parser has run.",
+  "changed_source_paths": [
+    "SimpleSAC/evaluate_transit_v18_empty_tail_reserve_v3.py",
+    "reproducibility/run_evaluation_matrix_v18_empty_tail_reserve_v3.py",
+    "reproducibility/run_h2oplus_v18_empty_tail_reserve_evaluation_dispatch_v3.py"
+  ],
+  "created_utc": "2026-08-25T06:07:13.902124+00:00",
+  "final_namespace_binding_smoke_required": true,
+  "formal_held_out_outcomes_read": false,
+  "methods_protocol_scenarios_or_gates_changed": false,
+  "new_dispatch": {
+    "bytes": 12570,
+    "path": "reproducibility/run_h2oplus_v18_empty_tail_reserve_evaluation_dispatch_v3.py",
+    "sha256": "2b9a6b44ce83813e5fee6fab37c14813a7d474bea6221741080f841124e3b8c1"
+  },
+  "new_evaluator": {
+    "bytes": 3160,
+    "path": "SimpleSAC/evaluate_transit_v18_empty_tail_reserve_v3.py",
+    "sha256": "7073f5b70c4a7446fa0a29f721ff414c48680349e26dea1b9c7b92125d762303"
+  },
+  "new_matrix": {
+    "bytes": 1138,
+    "path": "reproducibility/run_evaluation_matrix_v18_empty_tail_reserve_v3.py",
+    "sha256": "a5e38711119d33f5e7132dc146b48d10ff8c63ae9f0f15addc606e5d91f77b11"
+  },
+  "old_dispatch": {
+    "bytes": 11443,
+    "path": "reproducibility/run_h2oplus_v18_empty_tail_reserve_evaluation_dispatch_v2.py",
+    "sha256": "eda37797a270c0ee8c3435859510c8fbe9f97072f1ff7d12709be3d0dec0976f"
+  },
+  "old_evaluator": {
+    "bytes": 2965,
+    "path": "SimpleSAC/evaluate_transit_v18_empty_tail_reserve_v2.py",
+    "sha256": "7ff636c4b1b8b62397372bc67f25ca7fd43fa442c5a4132f358309ef0cf81eb4"
+  },
+  "old_matrix": {
+    "bytes": 2170,
+    "path": "reproducibility/run_evaluation_matrix_v18_empty_tail_reserve_v2.py",
+    "sha256": "cb074ae7f6daa377dd702822f9c27c9e5829837c31d08a03f8ff0d7941ceb31e"
+  },
+  "parent_v17_option_names_preserved": true,
+  "root_cause": "v18-v2 renamed the empty-tail CLI options, but copied them into the legacy fields before the parent v17 parser ran; v17 then overwrote those fields with its parent thresholds",
+  "runtime_changed": false,
+  "schema_version": "transit-h2oplus-v18-empty-tail-reserve-namespace-correction-v3",
+  "scientific_behavior_changed": false,
+  "scope": "final namespace rebinding and fresh evidence identity only",
+  "status": "corrected-before-any-v18-v3-development-outcome",
+  "study_stage": "development",
+  "training_or_policy_artifacts_changed": false,
+  "v18_v1_or_v2_results_reused": false,
+  "v18_v1_or_v2_scientific_numeric_outcomes_read": false,
+  "v1_incident_closeout": {
+    "bytes": 18123,
+    "path": "reproducibility/h2oplus_v18_empty_tail_reserve_results/evaluation_incidents/v1_parser_contract/incident_closeout_v1.json",
+    "sha256": "a47fadd4c8b515d9fe5b1ce0a9781862f4cf974a289ef5100309b2fcaddf2600"
+  },
+  "v1_incident_verification": {
+    "bytes": 716,
+    "path": "reproducibility/h2oplus_v18_empty_tail_reserve_results/evaluation_incidents/v1_parser_contract/incident_verification_v1.json",
+    "sha256": "80dc525acc2466a45bc9d26aa9d1ea8f8cbe5738f0529eddb2646d088834ea0e"
+  },
+  "v2_incident_closeout": {
+    "bytes": 33141,
+    "path": "reproducibility/h2oplus_v18_empty_tail_reserve_results/evaluation_incidents/v2_namespace_binding/incident_closeout_v2.json",
+    "sha256": "c2cf9e59248887be24df96e53dcd4cb09a7f5c9fb5e5a8e8fd7746c6cf6d3568"
+  },
+  "v2_incident_verification": {
+    "bytes": 718,
+    "path": "reproducibility/h2oplus_v18_empty_tail_reserve_results/evaluation_incidents/v2_namespace_binding/incident_verification_v2.json",
+    "sha256": "ee32840d6de1e10a7b3c9a622c1ff50ab33d63234b3cb3616d37af18a256f9b8"
+  }
+}

@@ -25,6 +25,8 @@ sys.path.insert(0, _BUS_H2O)
 from common.data_utils import (
     build_edge_linear_map, extract_structured_context, set_route_length
 )
+from mdp_contract_v4 import RAW_EVENT_STATE_NAMES as RAW_EVENT_STATE_NAMES_V4
+from mdp_contract_v5 import RAW_EVENT_STATE_NAMES as RAW_EVENT_STATE_NAMES_V5
 
 
 class SumoGymEnv:
@@ -42,12 +44,26 @@ class SumoGymEnv:
     """
 
     def __init__(self, sumo_dir, edge_xml, schedule_xml=None, max_steps=18000,
-                 gui=False, line_id="7X"):
+                 gui=False, line_id="7X", scale=1.0, seed=None,
+                 sumo_cfg=None, passenger_obj_xml=None,
+                 observation_schema="v3", sumo_backend="libsumo"):
         # Lazy import to avoid libsumo conflicts
         self._sumo_dir = sumo_dir
         self._gui = gui
         self._max_steps = max_steps
         self._line_id = line_id
+        self._scale = float(scale)
+        self._seed = None if seed is None else int(seed)
+        self._sumo_cfg = sumo_cfg or "control_sim_traci_period.sumocfg"
+        self._passenger_obj_xml = passenger_obj_xml
+        if sumo_backend not in {"libsumo", "traci"}:
+            raise ValueError("sumo_backend must be 'libsumo' or 'traci'")
+        if gui and sumo_backend != "traci":
+            raise ValueError("SUMO GUI requires the explicit traci backend")
+        self._sumo_backend = sumo_backend
+        if observation_schema not in {"v3", "v4", "v5"}:
+            raise ValueError("observation_schema must be 'v3', 'v4', or 'v5'")
+        self.observation_schema = observation_schema
         self._bridge = None
 
         # Build edge maps and SUMO indices
@@ -119,12 +135,30 @@ class SumoGymEnv:
 
     def _ensure_bridge(self):
         if self._bridge is None:
-            # Add SUMO paths
-            sys.path.insert(0, self._sumo_dir)
-            sys.path.insert(0, os.path.join(self._sumo_dir, "sim_obj"))
+            # Add the package root only. Adding ``sim_obj`` itself would make
+            # its ``signal.py`` shadow Python's standard-library module in
+            # subprocesses such as Torch compilation workers.
+            if self._sumo_dir not in sys.path:
+                sys.path.insert(0, self._sumo_dir)
+            try:
+                from bus_h2o.sumo_provenance import (
+                    configure_sumo_backend_environment,
+                )
+            except ModuleNotFoundError:
+                from sumo_provenance import configure_sumo_backend_environment
+
+            configure_sumo_backend_environment(self._sumo_backend)
             from sumo_env.rl_bridge import SumoRLBridge
             self._bridge = SumoRLBridge(
-                root_dir=self._sumo_dir, gui=self._gui, max_steps=self._max_steps
+                root_dir=self._sumo_dir,
+                gui=self._gui,
+                max_steps=self._max_steps,
+                scale=self._scale,
+                seed=self._seed,
+                sumo_cfg=self._sumo_cfg,
+                passenger_obj_xml=self._passenger_obj_xml,
+                edge_xml=self._edge_xml,
+                sumo_backend=self._sumo_backend,
             )
 
     def save_sumo_state(self, path=None):
@@ -182,7 +216,7 @@ class SumoGymEnv:
         self._event_counter = 0
 
     def _event_to_obs(self, ev, headway_fallback=360.0):
-        """Convert SUMO event to 15-dim obs vector (same format as SIM)."""
+        """Convert a SUMO event to the selected auditable observation schema."""
         line_idx = self._line_idx_map.get(ev.line_id, 0)
         bus_idx = self._bus_idx_map.get(str(ev.bus_id), 0)
 
@@ -193,6 +227,60 @@ class SumoGymEnv:
                 else len(self._station_index)
             )
         station_idx = self._station_index[sk]
+
+        if self.observation_schema in {"v4", "v5"}:
+            target_hw = self._line_headway.get(ev.line_id, headway_fallback)
+            values = {
+                "line_id": float(line_idx),
+                "station_index": float(station_idx),
+                "sim_time_seconds": float(ev.sim_time),
+                "forward_headway_seconds": float(ev.forward_headway),
+                "backward_headway_seconds": float(ev.backward_headway),
+                "target_forward_headway_seconds": float(
+                    getattr(ev, "target_forward_headway", target_hw)
+                ),
+                "target_backward_headway_seconds": float(
+                    getattr(ev, "target_backward_headway", target_hw)
+                ),
+                "eligible_stranded_passengers": float(
+                    getattr(ev, "eligible_stranded_passengers", 0)
+                ),
+                "onboard_passengers": float(
+                    getattr(ev, "onboard_passengers", 0)
+                ),
+                "eligible_arrival_rate_per_second": float(
+                    getattr(ev, "eligible_arrival_rate_per_second", 0.0)
+                ),
+                "base_dwell_seconds": float(ev.base_stop_duration),
+                "forward_bus_present": float(
+                    bool(getattr(ev, "forward_bus_present", True))
+                ),
+                "backward_bus_present": float(
+                    bool(getattr(ev, "backward_bus_present", True))
+                ),
+                "bus_capacity": float(getattr(ev, "bus_capacity", 50.0)),
+            }
+            state_names = RAW_EVENT_STATE_NAMES_V4
+            if self.observation_schema == "v5":
+                passenger_time = ev.metadata.get("passenger_time_at_decision")
+                if passenger_time is None:
+                    raise RuntimeError("SUMO v5 event lacks passenger-time metadata")
+                if abs(float(passenger_time["time_seconds"]) - float(ev.sim_time)) > 1e-9:
+                    raise RuntimeError("SUMO v5 event and passenger-time clocks disagree")
+                values.update(
+                    {
+                        "system_waiting_passengers": float(
+                            passenger_time["waiting_passengers"]
+                        ),
+                        "system_in_vehicle_passengers": float(
+                            passenger_time["in_vehicle_passengers"]
+                        ),
+                    }
+                )
+                state_names = RAW_EVENT_STATE_NAMES_V5
+            return np.asarray(
+                [values[name] for name in state_names], dtype=np.float32
+            )
 
         tp = int(ev.sim_time // 3600)
         if tp not in self._time_period_index:

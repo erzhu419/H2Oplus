@@ -1,0 +1,91 @@
+{
+  "bounded_readonly_status_used": true,
+  "created_utc": "2026-08-14T08:31:37.909128+00:00",
+  "passed": true,
+  "queue_status_is_not_sufficient_completion_evidence": true,
+  "reconciliation": {
+    "mutation_or_requeue_performed": false,
+    "t82300": "queue done agrees with token-bound backend exit0 and completed host execution",
+    "t82301": "queue running label is stale after transient SSH route failure; token-bound backend exit0, completed host execution, exact outputs, and no residual process establish operational completion"
+  },
+  "remote_process_probe": {
+    "command_pattern": "evaluate_transit_v7.py|run_evaluation_matrix_v4.py|run_h2oplus_v8_stage_a2_dispatch.py",
+    "matching_process_count": 0,
+    "node": "jtl110gpu"
+  },
+  "remote_scheduler_logs": {
+    "t82300": "DONE H2O+ v8 Stage A2 shard 0: 75/75 jobs",
+    "t82301": "DONE H2O+ v8 Stage A2 shard 1: 75/75 jobs"
+  },
+  "schema_version": "transit-h2oplus-v8-stage-a2-scheduler-evidence-v1",
+  "tasks": {
+    "t82300": {
+      "backend_finished_epoch": 1786687929,
+      "backend_status_path": "reproducibility/h2oplus_v8_stage_a2_results/evidence/backend_exit_t82300.status",
+      "backend_status_sha256": "eeeef516b846450d5a95cf9e3614d57f5e395970da93b137dbaae1d8809c03d4",
+      "backend_token": "1786681309986099115:840939:134916574941184",
+      "completed_block_count": 5,
+      "direct_evidence_overrode_stale_running_label": false,
+      "exit_code": 0,
+      "formal_held_out_outcomes_read": false,
+      "host_execution_completed": true,
+      "host_execution_path": "reproducibility/deployments/h2oplus_v8_stage_a2_sac_baseline_v1/results/shard0_jtl110gpu/host_execution.json",
+      "host_execution_returncode": 0,
+      "host_execution_sha256": "f850679ca7ce3861497907e0866d3550ba395f1e200ef787aec68ce2f58e3d12",
+      "host_execution_status": "completed",
+      "manifest_count": 5,
+      "queue_exit_code_at_closeout": 0,
+      "queue_exit_status_token": "1786681309986099115:840939:134916574941184",
+      "queue_label_reconciled": true,
+      "queue_last_status_sync_reason": null,
+      "queue_last_status_sync_status": null,
+      "queue_status_at_closeout": "done",
+      "remote_node": "jtl110gpu",
+      "required_environment": {
+        "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+        "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+        "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4"
+      },
+      "residual_process_count": 0,
+      "result_count": 75,
+      "task_signature": "H2Oplus/v8/development/stage-a2/5f879bd6e16d/shard0/jtl110gpu/glibc227",
+      "token_bound": true,
+      "training": false,
+      "workers": 12
+    },
+    "t82301": {
+      "backend_finished_epoch": 1786695211,
+      "backend_status_path": "reproducibility/h2oplus_v8_stage_a2_results/evidence/backend_exit_t82301.status",
+      "backend_status_sha256": "ea7f24e6834f2b03a31737cf79de977b1751f42ca312e06ea4976291892b69f3",
+      "backend_token": "1786688531940724528:868174:136219350528000",
+      "completed_block_count": 5,
+      "direct_evidence_overrode_stale_running_label": true,
+      "exit_code": 0,
+      "formal_held_out_outcomes_read": false,
+      "host_execution_completed": true,
+      "host_execution_path": "reproducibility/deployments/h2oplus_v8_stage_a2_sac_baseline_v1/results/shard1_jtl110gpu/host_execution.json",
+      "host_execution_returncode": 0,
+      "host_execution_sha256": "4d146370b3fa8cf0751834733d69f6f0c9b0530175b46d9dc7ead3be36824f84",
+      "host_execution_status": "completed",
+      "manifest_count": 5,
+      "queue_exit_code_at_closeout": null,
+      "queue_exit_status_token": "1786688531940724528:868174:136219350528000",
+      "queue_label_reconciled": false,
+      "queue_last_status_sync_reason": "local backend ssh/proc probe failed on jtl110gpu: rc=255: ssh login route down: direct: outer ssh route timed out after 15s",
+      "queue_last_status_sync_status": "running",
+      "queue_status_at_closeout": "running",
+      "remote_node": "jtl110gpu",
+      "required_environment": {
+        "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+        "CPATH": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+        "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4"
+      },
+      "residual_process_count": 0,
+      "result_count": 75,
+      "task_signature": "H2Oplus/v8/development/stage-a2/5f879bd6e16d/shard1/jtl110gpu/glibc227",
+      "token_bound": true,
+      "training": false,
+      "workers": 12
+    }
+  }
+}

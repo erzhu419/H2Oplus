@@ -1,0 +1,258 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v9_adaptive_pilot_v2/remote_results/h2oplus_v9_adaptation_seed6201/checkpoints/latest.pt",
+    "sha256": "d4a677362cedd9c39cec906b4ad4d400aaf7253fb04a5ba1a790289b473b1d12"
+  },
+  "completed_epochs": 48,
+  "completed_utc": "2026-08-17T03:48:16.066837+00:00",
+  "final_blocked_simultaneous_batch_size": 0,
+  "final_policy": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v9_adaptive_pilot_v2/remote_results/h2oplus_v9_adaptation_seed6201/checkpoints/final_actor.pt",
+    "sha256": "d24275c147d99910744dd4472658a84a442d67b4131f0c199c79c857aa6d27bb",
+    "source_training_checkpoint_sha256": "d4a677362cedd9c39cec906b4ad4d400aaf7253fb04a5ba1a790289b473b1d12"
+  },
+  "final_ratio_validation": {
+    "ratio/validation_available": 1.0,
+    "ratio/validation_clip_fraction": 0.765625,
+    "ratio/validation_ess_fraction": 0.9518398642539978,
+    "ratio/validation_high_clip_fraction": 0.765625,
+    "ratio/validation_joint_accuracy": 0.5234375,
+    "ratio/validation_joint_auc": 0.639495849609375,
+    "ratio/validation_joint_brier": 0.4334558844566345,
+    "ratio/validation_joint_loss": 2.3394391536712646,
+    "ratio/validation_joint_real_logit_mean": 5.150763511657715,
+    "ratio/validation_joint_sim_logit_mean": 3.966864585876465,
+    "ratio/validation_log_weight_mean": 0.8897491693496704,
+    "ratio/validation_log_weight_std": 1.456436038017273,
+    "ratio/validation_loss": 4.2727203369140625,
+    "ratio/validation_low_clip_fraction": 0.0,
+    "ratio/validation_raw_ess_fraction": 0.06188305839896202,
+    "ratio/validation_state_action_accuracy": 0.537109375,
+    "ratio/validation_state_action_auc": 0.644439697265625,
+    "ratio/validation_state_action_brier": 0.40182313323020935,
+    "ratio/validation_state_action_loss": 1.9332809448242188,
+    "ratio/validation_state_action_real_logit_mean": 4.519409656524658,
+    "ratio/validation_state_action_sim_logit_mean": 3.077115535736084,
+    "ratio/validation_weight_max": 1.0,
+    "ratio/validation_weight_mean": 0.9097785949707031,
+    "ratio/validation_weight_min": 0.030259104445576668
+  },
+  "max_cuda_memory_mb": 6098.29443359375,
+  "max_rss_mb": 11056.2890625,
+  "maximum_simultaneous_decisions": 6,
+  "mdp_version": "v7",
+  "method": "h2oplus",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "cql_penalty_subset_replacement": false,
+    "cql_penalty_subset_size": null,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "critic_loss": "mse",
+    "default_offline_updates": 50000,
+    "default_ratio_pretrain_updates": 1000,
+    "default_warmup_events": 5000,
+    "description": "transit-adapted H2O+: IQL warm start, frozen-policy simulator warmup, H2O+ mixed value backup, balanced target/simulator replay, and pretrained conditional dynamics-ratio correction",
+    "ensemble_size": 2,
+    "gradient_clip_norm": null,
+    "huber_delta": 1.0,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.1,
+    "offline_cql_alpha": 0.0,
+    "offline_initializer": null,
+    "offline_objective": "iql",
+    "offline_temperature_action_samples": 1,
+    "offline_update_order": "critic-before-actor",
+    "online_backup": "h2oplus",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "online_update_order": "actor-before-critic",
+    "ratio_update_interval": 4,
+    "reference": "https://doi.org/10.1109/ICRA55743.2025.11127503",
+    "reference_commit": "02171768283d307244700c69003423704db83b05",
+    "reference_implementation": "https://github.com/t6-thu/H2Oplus",
+    "target_entropy": -1.0,
+    "target_subset_replacement": false,
+    "target_subset_size": 2,
+    "temperature_state_source": "actor",
+    "use_ratio_correction": true,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003,
+    "warmup_action_mode": "policy"
+  },
+  "method_protocol": "transit-adapted H2O+: IQL warm start, frozen-policy simulator warmup, H2O+ mixed value backup, balanced target/simulator replay, and pretrained conditional dynamics-ratio correction",
+  "offline_initializer_consumed": {
+    "bytes": 19088947,
+    "offline_updates": 50000,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v9_adaptive_pilot_v2/workspace/reproducibility/h2oplus_v9_initializers/h2oplus_seed6201.pt",
+    "schema_version": "transit-offline-initializer-v7-v1",
+    "sha256": "bf4031516355add2a1b8b6ff20fd67743456b55b16fbaf6828e65a1f424ec94d",
+    "source_method": "h2oplus",
+    "source_run_name": "h2oplus_seed6201",
+    "source_run_signature": "f962e74285e9ea83d5cfcc8d857cb431a1164d8731414a262600e84b468f766f",
+    "source_training_seed": 6201,
+    "v9_reuse_authorized": true
+  },
+  "offline_initializer_produced": null,
+  "offline_metrics": {
+    "train/actor_grad_norm": 1.1763935089111328,
+    "train/actor_loss": 0.4013178050518036,
+    "train/actor_updated": 1.0,
+    "train/alpha": 1.0,
+    "train/alpha_loss": 0.0,
+    "train/cql_penalty": 0.0,
+    "train/critic_grad_norm": 121.24288177490234,
+    "train/critic_loss": 0.20574940741062164,
+    "train/offline_max_abs_td": 3.1553802490234375,
+    "train/offline_nonterminal_abs_td": 0.4726436138153076,
+    "train/offline_td_loss": 0.20574940741062164,
+    "train/offline_terminal_abs_td": 0.0,
+    "train/offline_terminal_loss_fraction": 0.0,
+    "train/offline_terminal_rows": 0.0,
+    "train/online_critic_update": 0.0,
+    "train/q_data_mean": -40.444759368896484,
+    "train/sim_td_loss": 0.0,
+    "train/update": 50000.0,
+    "train/value_advantage": -0.07106943428516388,
+    "train/value_grad_norm": 9.63011646270752,
+    "train/value_loss": 0.011733699589967728
+  },
+  "online_buffer_size": 24999,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "critic_loss": {
+        "effective": "huber",
+        "profile": "mse"
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "huber_delta": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 50000,
+        "profile": 50000
+      },
+      "online_fraction": {
+        "effective": 0.5,
+        "profile": 0.5
+      },
+      "ratio_pretrain_updates": {
+        "effective": 1000,
+        "profile": 1000
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": 0.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 500,
+        "profile": 500
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 1000,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {
+    "ratio/joint_accuracy": 0.96875,
+    "ratio/joint_auc": 0.98516845703125,
+    "ratio/joint_brier": 0.027778644114732742,
+    "ratio/joint_loss": 0.11881513893604279,
+    "ratio/joint_real_logit_mean": 3.471518039703369,
+    "ratio/joint_sim_logit_mean": -2.786907434463501,
+    "ratio/loss": 0.24766521155834198,
+    "ratio/state_action_accuracy": 0.96875,
+    "ratio/state_action_auc": 0.97955322265625,
+    "ratio/state_action_brier": 0.029962999746203423,
+    "ratio/state_action_loss": 0.1288500726222992,
+    "ratio/state_action_real_logit_mean": 3.330292224884033,
+    "ratio/state_action_sim_logit_mean": -2.680464744567871,
+    "ratio/validation_available": 0.0
+  },
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v9_adaptive_pilot_v2/remote_results/h2oplus_v9_adaptation_seed6201",
+  "run_signature": "61071b4024d7eba6dca438966a5240965850113ffe4a5173e4b2acfbd7eb9d2a",
+  "schema_version": "transit-training-summary-v8",
+  "seed": 6201,
+  "simulator_decision_event_cap": 25000,
+  "simulator_decision_event_underfill": 0,
+  "simulator_decision_events": 25000,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 80.7993653381709,
+    "data_load": 16.920826917979866,
+    "device_cache": 0.6193821261404082,
+    "model_init": 2.24769240594469,
+    "offline_initializer_restore": 0.12961139890830964,
+    "online_rollout": 189.27618454082403,
+    "online_training": 784.2661334727891,
+    "online_warmup_rollout": 9.67983937507961,
+    "provenance_audit": 0.8125163830118254,
+    "ratio_pretraining": 19.11995525297243,
+    "simulator_init": 4.099655767087825
+  },
+  "total_updates": 74000,
+  "warmup_metrics": {
+    "action_mode": "policy",
+    "blocked_simultaneous_batch_size": 0,
+    "current_demand_scale": 0.75,
+    "demand_scale_episode_starts": {
+      "0.75": 1,
+      "1": 0,
+      "1.25": 0
+    },
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 1000,
+    "hard_event_cap_reached": false,
+    "maximum_simultaneous_decisions": 5,
+    "mean_delta_t": 3.4084084084084085,
+    "mean_hold_seconds": 3.3079434621334074,
+    "mean_reward": -458.3943943943944,
+    "online_buffer_size": 999,
+    "transitions": 999,
+    "trip_boundaries_total": 0
+  }
+}

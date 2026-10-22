@@ -1,0 +1,96 @@
+{
+  "actor_forward_pass": {
+    "eligible_event_count": 128437,
+    "floor_seconds": {
+      "20": {
+        "mean_additional_arrival_exposure_per_episode_by_seed": [
+          29.837,
+          43.067,
+          39.74,
+          30.746,
+          27.388
+        ],
+        "mean_additional_onboard_passenger_seconds_per_episode_by_seed": [
+          38883.4,
+          57763.4,
+          52799.4,
+          40199.3,
+          35464.7
+        ]
+      },
+      "30": {
+        "mean_additional_arrival_exposure_per_episode_by_seed": [
+          51.061,
+          64.983,
+          61.288,
+          52.334,
+          47.39
+        ],
+        "mean_additional_onboard_passenger_seconds_per_episode_by_seed": [
+          67282.0,
+          87289.5,
+          81690.9,
+          69192.7,
+          61932.9
+        ]
+      },
+      "40": {
+        "mean_additional_arrival_exposure_per_episode_by_seed": [
+          72.963,
+          86.907,
+          83.206,
+          74.233,
+          68.629
+        ],
+        "mean_additional_onboard_passenger_seconds_per_episode_by_seed": [
+          96786.7,
+          116830.8,
+          111221.4,
+          98688.5,
+          90329.2
+        ]
+      }
+    },
+    "parent_actor_checkpoint_sha256_by_seed": {
+      "6201": "de2fbe865e668c3a03f6e87f6b5c5e2a85912a5bddfeac5be086862402ba95db",
+      "6202": "be198e4ff5b548a015fb28f1c498e7170197f9a37fa6013f6c29c28d721c8dcf",
+      "6203": "0ac55f8f53ec3385014ff679ad3904b980a3fcbe9438a776cfd8e56bdecbee45",
+      "6204": "7a2dfd2c7ed2dfe38ba2951ee8868247b2a538a96650e3f4bece836298af3c8f",
+      "6205": "eb934c19a2c3df4831e905c36cb99fdaa8d92f09ff259e769c34241cd9f7d03f"
+    },
+    "deterministic": true,
+    "device": "cpu",
+    "sumo_executed": false
+  },
+  "candidate_selection": {
+    "candidate_floor_seconds": 30.0,
+    "diagnostic_floor_seconds": [
+      20.0,
+      40.0
+    ],
+    "reason": "The 20-second diagnostic is structurally underpowered against the sealed v16 completion deficit; the 40-second diagnostic has materially higher onboard exposure. The 30-second floor is the predesignated balance and cannot be replaced after v17 outcomes are observed.",
+    "v16_endpoint_completion_increase_required": 0.003624131567060068,
+    "v16_mean_additional_completions_required_per_15079_departures": 54.653480400398165
+  },
+  "created_utc": "2026-08-24T15:20:40Z",
+  "dataset": {
+    "episode_count": 240,
+    "path": "bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5",
+    "sha256": "6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899"
+  },
+  "eligibility_guard": {
+    "backward_bus_present": 0,
+    "eligible_arrival_rate_per_second_strictly_positive": true,
+    "forward_bus_present": 1,
+    "horizon_progress_interval": [
+      0.5,
+      0.75
+    ],
+    "interval_upper_bound_exclusive": true,
+    "onboard_capacity_fraction_at_most": 0.25
+  },
+  "formal_held_out_outcomes_read": false,
+  "prior_v14_v15_v16_development_outcomes_used_for_design": true,
+  "schema_version": "transit-h2oplus-v17-tail-service-reserve-offline-design-evidence-v1",
+  "study_stage": "development"
+}

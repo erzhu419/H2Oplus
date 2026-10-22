@@ -1,0 +1,105 @@
+{
+  "capacity_audit_lanes": [],
+  "created_utc": "2026-08-11T02:18:51.532923+00:00",
+  "hosts": [
+    {
+      "gpus": [
+        {
+          "physical_gpu": "0",
+          "stages": [
+            {
+              "name": "h2oplus-ablation-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "h2oplus-no-ratio_seed5101",
+                    "h2oplus-no-ratio_seed5105",
+                    "h2oplus-no-warmstart_seed5104"
+                  ],
+                  "name": "jtl110gpu-gpu0-h2oplus-ablation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "physical_gpu": "1",
+          "stages": [
+            {
+              "name": "h2oplus-ablation-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "h2oplus-no-ratio_seed5102",
+                    "h2oplus-no-warmstart_seed5101",
+                    "h2oplus-no-warmstart_seed5105"
+                  ],
+                  "name": "jtl110gpu-gpu1-h2oplus-ablation"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "hostname": "jtl110gpu",
+      "hostname_aliases": [
+        "huiwei-Super-Server"
+      ]
+    },
+    {
+      "gpus": [
+        {
+          "physical_gpu": "0",
+          "stages": [
+            {
+              "name": "h2oplus-ablation-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "h2oplus-no-ratio_seed5103",
+                    "h2oplus-no-warmstart_seed5102"
+                  ],
+                  "name": "jtl110gpu2-gpu0-h2oplus-ablation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "physical_gpu": "1",
+          "stages": [
+            {
+              "name": "h2oplus-ablation-serial",
+              "workers": [
+                {
+                  "jobs": [
+                    "h2oplus-no-ratio_seed5104",
+                    "h2oplus-no-warmstart_seed5103"
+                  ],
+                  "name": "jtl110gpu2-gpu1-h2oplus-ablation"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "hostname": "jtl110gpu2",
+      "hostname_aliases": [
+        "erzhu419-Super-Server"
+      ]
+    }
+  ],
+  "job_set_sha256": "403becb95451d97450bebd5b3933cbf36445d1f72bddcc86c93ab9f07b42a3ca",
+  "plan": {
+    "path": "../training_plans_v7_formal_v2_v6/training_plan_v7_formal_ablation_server_h2oplus_v6.json",
+    "sha256": "e9dc746c9a2cb5a97463f1dcc8b3ba3e6ebdfca28b2f436d2bd05d9407d16bd1"
+  },
+  "plan_id": "v7-formal-ablation-server-h2oplus-v6",
+  "policy": {
+    "capacity_admission": "no method in this plan shares a physical GPU",
+    "h2oplus": "the formal H2O+ ablation jobs are deterministically distributed over all four server GPUs with one serial worker per GPU",
+    "runtime_comparison": "wall-clock timings are resource observations and are not used for cross-method efficiency claims"
+  },
+  "schema_version": "transit-training-dispatch-v1",
+  "status": "frozen-before-formal-outcomes"
+}

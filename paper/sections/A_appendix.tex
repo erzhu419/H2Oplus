@@ -1,0 +1,184 @@
+\section{Implementation and provenance details}
+\label{app:impl}
+
+\subsection{Structured network implementation}
+\label{app:architecture}
+
+The 229-dimensional canonical state has a five-value batch prefix followed by
+16 padded 14-value event slots. Each slot contains an active flag, 12
+normalized local features, and the stored prior action. The service index is
+expanded to a 12-way one-hot code; selected/current status and relative slot
+position are appended before encoding. One shared slot multilayer perceptron
+maps each local vector to 128 features. The current slot, active-slot mean,
+active-slot maximum, previously selected-slot mean, and future-slot mean form
+five pooled views. A fusion multilayer perceptron combines these views with the
+five-value prefix to produce 256 state features.
+
+The actor maps the fused features through two 256-unit hidden layers to a gate
+logit, latent normal mean, and log standard deviation. The
+log standard deviation is clipped to $[-5,2]$. The initial gate bias gives a
+positive-hold probability of approximately 0.35 and the conditional bias
+favors short holds. The critic ensemble contains two independently
+parameterized heads after one structured encoder; the target ensemble is an
+exact structural copy. The value network has a separate encoder and scalar
+head. Main modules use rectified linear unit activations and no layer
+normalization.
+
+\subsection{Frozen training values}
+\label{app:training}
+
+\Cref{tab:hparams} lists the principal final-profile values. All optimizers use
+adaptive moment estimation (Adam). Stored rewards remain physical generalized passenger-seconds; numerical
+conditioning is applied only inside the trainer. Actions, rewards,
+continuations, durations, and terminal flags remain single precision.
+
+\begin{table*}[tp]
+\centering
+\small
+\caption{Final actor-training and architecture values.}
+\label{tab:hparams}
+\begin{tabular}{@{}p{0.54\linewidth}p{0.42\linewidth}@{}}
+\toprule
+Parameter & Value \\
+\midrule
+Canonical state width & 229 \\
+Maximum event slots & 16 \\
+Slot embedding and fused widths & 128 and 256, respectively \\
+Actor/critic/value hidden widths & 256, 256 \\
+Critic heads & 2 \\
+Maximum hold & 60 s \\
+Critic and simulator-actor minibatches & 256 and 128, respectively \\
+Actor/critic/value/entropy learning rates & $3\times10^{-4}$ \\
+Ratio learning rate & $10^{-4}$ \\
+Target update rate & 0.005 \\
+Simulator critic-minibatch fraction & 0.5 \\
+IQL expectile & 0.7 \\
+IQL exponential multiplier & 3 \\
+Maximum IQL actor weight & 100 \\
+Mixed-backup coefficient & 0.1 \\
+Initial entropy temperature & 1.0 \\
+Target entropy & 0.0 \\
+Trainer reward scale $\kappa_r$ & $10^{-4}$ \\
+Critic Huber threshold & 1.0 \\
+Actor interpolation coefficient & $5\times10^{-5}$ \\
+Offline IQL updates & 50,000 \\
+Frozen-policy warmup & 5,000 events \\
+Actor/temperature freeze endpoint & 10,000 events \\
+Actor ramp & 10,000--15,000 events; multiplier approximately 0.1 to 1 \\
+Ratio pretraining & 1,000 updates \\
+Ratio update interval & 4 learner updates \\
+Terminal actor taper & 15,000--25,000 events; multiplier linear 1 to 0.25 \\
+Total learner updates & 70,000 \\
+Fixed actor endpoint & 25,000 simulator events \\
+Training seeds & 6201--6205 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The terminal-quarter branch reused each seed's sealed 10,000-event state and
+continued without restarting optimizer, replay, or simulator chronology. All
+15 terminal-taper branches passed artifact and training-stability checks; only
+the preregistered quarter-rate branch supplied the five actors used by the
+final candidate. The actor regression uses the weight in
+\Cref{eq:iql_weight}; the online critic uses \Cref{eq:critic_target} with
+\Cref{eq:mixed_backup,eq:sac_bootstrap}.
+
+\subsection{Ratio diagnostic}
+\label{app:ratio}
+
+Target and simulator examples enter each domain-classifier loss in equal
+numbers. Offline validation is split by complete environment block, and
+simulator validation holds out complete trajectories. A diagnostic random
+stream is separate from optimization sampling. \Cref{tab:ratio_diag} reports
+the across-seed summary that determined interpretation of the ratio module.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Domain-ratio diagnostics across five sealed actor-training seeds.}
+\label{tab:ratio_diag}
+\begin{tabular}{lrrr}
+\toprule
+Diagnostic & Mean & Minimum & Maximum \\
+\midrule
+Training joint AUC & 0.9477 & 0.9370 & 0.9580 \\
+Held-out joint AUC & 0.4520 & 0.4366 & 0.4747 \\
+Held-out raw ESS fraction & 0.0615 & 0.0100 & 0.1530 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The separation between training and validation AUC, together with low raw
+ESS, shows that the classifier did not supply a usable
+generalizing correction. The optimizer used unit ratio weights, so the
+diagnostic failure did not directly perturb critic updates.
+
+\subsection{Dataset integrity and support}
+\label{app:support}
+
+The immutable replay contains 3,284,718 rows, 240 trajectories, 240 terminal
+rows, and 1,025,206 zero-duration agent-environment-cycle rows. No nonfinite row
+was found, and chronological passenger-ledger reconstruction had zero maximum
+error. Exact zero hold accounts for 80.2246\% of actions, while 2,145 rows use
+the exact 60-s upper endpoint. The audit groups uncertainty by complete
+environment cells rather than treating rows as independent samples.
+
+For the final low-load guard, 128,437 rows (3.91\%) satisfy the physical-state
+conditions in the audited replay. Among these rows, 5.81\%, 3.69\%, and 2.17\%
+have behavior holds of at least 20, 30, and 40 s, respectively. These values
+motivate reporting the final 60-s action as an operational reserve outside
+dense logged support.
+
+\subsection{Seed-specific formal effects}
+\label{app:seed_effect}
+
+\Cref{tab:seed_effect} shows the candidate-minus-parent effect after averaging
+each training seed over the ten formal blocks and three demand levels. The
+direction is the same for all seeds.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Formal candidate-minus-parent differences by training seed.}
+\label{tab:seed_effect}
+\begin{tabular}{lrrr}
+\toprule
+Seed & $\Delta Y$ (s/departed) & $\Delta R_{\mathrm{cmp}}$ & $\Delta U$ (passengers) \\
+\midrule
+6201 & $-87.25$ & $+0.00457$ & $-75.43$ \\
+6202 & $-97.44$ & $+0.00485$ & $-80.67$ \\
+6203 & $-94.28$ & $+0.00478$ & $-79.63$ \\
+6204 & $-93.44$ & $+0.00465$ & $-76.97$ \\
+6205 & $-88.21$ & $+0.00444$ & $-73.40$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Formal evidence package}
+\label{app:evidence}
+
+The formal package records 45 physical behaviors, 30 fresh environment cells,
+ten complete block manifests, and 1,350 result records. The registered analyzer
+reads only endpoint results and implements the exact sign tests and gates in
+\Cref{sec:exp:statistics}. A second analyzer independently recomputes result
+counts, candidate--parent means, demand and block differences, win counts, and
+gate outcomes. A separate closeout verifies source, protocol, environment,
+method, scheduler, and file-manifest bindings.
+
+The central machine-readable files are:
+\begin{itemize}[leftmargin=*,nosep]
+    \item \path{formal_confirmation_analysis_v1.json};
+    \item \path{formal_confirmation_analysis_verification_v1.json};
+    \item \path{evaluation_closeout_v1.json}; and
+    \item \path{evaluation_closeout_verification_v1.json}.
+\end{itemize}
+\begin{samepage}
+They are stored in the following directory:
+\begin{quote}
+\small
+\texttt{reproducibility/}\\
+\texttt{h2oplus\_v20\_formal\_confirmation\_results/}
+\end{quote}
+The synchronized package intentionally contains no checkpoint, optimizer,
+dataset, replay, or remote-workspace copy.
+\end{samepage}

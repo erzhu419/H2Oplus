@@ -1,0 +1,1173 @@
+#!/usr/bin/env python3
+"""Preregister and package the H2O+ v14 terminal-taper development pilot."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import shutil
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+import torch
+
+
+ROOT = Path(__file__).resolve().parents[1]
+REPRO = ROOT / "reproducibility"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from SimpleSAC.transit_v14.trainer import (  # noqa: E402
+    BASE_PROXIMAL_RATE,
+    PREDESIGNATED_CANDIDATE,
+    TERMINAL_ACTOR_LR_MULTIPLIERS,
+    integrated_actor_lr_exposure,
+)
+from SimpleSAC.transit_v14.provenance import (  # noqa: E402
+    checkpoint_state_sha256,
+)
+
+
+REGISTRATION_SCHEMA = "transit-h2oplus-v14-terminal-taper-registration-v1"
+AUTHORIZATION_SCHEMA = "transit-h2oplus-v14-terminal-taper-authorization-v1"
+RATIONALE_SCHEMA = "transit-h2oplus-v14-terminal-taper-rationale-v1"
+PLAN_SCHEMA = "transit-h2oplus-v14-terminal-taper-training-plan-v1"
+PROTOCOL_SCHEMA = "transit-h2oplus-v14-terminal-taper-protocol-v1"
+ADMISSION_SCHEMA = "transit-training-admission-v14-terminal-taper-development-v1"
+FREEZE_SCHEMA = "transit-h2oplus-v14-terminal-taper-freeze-v1"
+DEPLOYMENT_SCHEMA = "transit-h2oplus-v14-terminal-taper-deployment-v1"
+DIAGNOSIS_SCHEMA = "transit-h2oplus-v14-terminal-taper-diagnosis-v1"
+SOURCE_HANDOFF_SCHEMA = "transit-h2oplus-v12-prefix-handoff-v2"
+TRAINING_SEEDS = (6201, 6202, 6203, 6204, 6205)
+VARIANTS = tuple(TERMINAL_ACTOR_LR_MULTIPLIERS)
+USER_AUTHORIZATION_TEXT = "那就继续改进"
+BASE_MANIFEST_SHA256 = (
+    "db1bc95b9763a202cb3398abc550aa62b49d7c548eac034021c1ba21697f89cd"
+)
+V12_PROTOCOL_SHA256 = (
+    "ed6cd5e32f4719a0ef8925272688fdb3393e5c5056027ae9d6430b1ba20d5f1c"
+)
+SEALED_V12 = {
+    "prefix_closeout": (
+        REPRO / "h2oplus_v12_staged_release_prefix_closeout_v2.json",
+        "8bb303dbe038089422ba88f28bf06cd47a672b71f929d1c14306679b943d0ef1",
+    ),
+    "prefix_verification": (
+        REPRO / "h2oplus_v12_staged_release_prefix_closeout_verification_v2.json",
+        "b13b7f0827326f52c6c9f512a7385e71e5abf40a8f15df0e70d5ec26126242e7",
+    ),
+    "branch_closeout": (
+        REPRO / "h2oplus_v12_staged_release_branch_closeout_v2.json",
+        "998f47488b50b2cd40f9a6ddd5a399712bb9208cb1ef883cad1181f800385b66",
+    ),
+    "branch_verification": (
+        REPRO / "h2oplus_v12_staged_release_branch_closeout_verification_v2.json",
+        "6835e3c545be22c25bd9e3c7eae7ef987bb1864e027c4fef9849788f744868c8",
+    ),
+    "development_analysis": (
+        REPRO / "h2oplus_v12_staged_release_results/staged_release_analysis_v1.json",
+        "49a172e8ff4340c64c33f683223c4dd9bb7b2a8aa501ff3a3abe13c8d20f4f13",
+    ),
+    "evaluation_closeout": (
+        REPRO / "h2oplus_v12_staged_release_results/evaluation_closeout_v1.json",
+        "18379992c2c04700fc6460cffda3b5a4ad23feef73841b8ba00b25d2a9c14969",
+    ),
+    "evaluation_verification": (
+        REPRO / "h2oplus_v12_staged_release_results/evaluation_closeout_verification_v1.json",
+        "ed3db861b6a27add86e809ec76ea00485fe3ddd914ed302618e9264fb484f8d1",
+    ),
+    "v12_protocol": (
+        REPRO / "h2oplus_v12_staged_release_protocol_v2.json",
+        V12_PROTOCOL_SHA256,
+    ),
+}
+SEALED_V13 = {
+    "branch_closeout": (
+        REPRO / "h2oplus_v13_proximal_release_branch_closeout_v2.json",
+        "94c848856082de9f5cda3f794489b5744059fbe9508967e272bf942f689579ec",
+    ),
+    "branch_verification": (
+        REPRO / "h2oplus_v13_proximal_release_branch_closeout_verification_v2.json",
+        "c8486651fe1f676128ce7f472463f3ba3a0d82321f8b3aa7855ec3a577262b9b",
+    ),
+    "development_analysis": (
+        REPRO / "h2oplus_v13_proximal_release_results/proximal_release_analysis_v1.json",
+        "9365833e0756f1a2876d5abfa7bc90e96edd27b2c66cfedf59ed0241dd7c5c57",
+    ),
+    "evaluation_closeout": (
+        REPRO / "h2oplus_v13_proximal_release_results/evaluation_closeout_v1.json",
+        "229bfa6e3825082969362a9602faba9c02a6784d0ecbe74f5e41c626f4a7e0aa",
+    ),
+    "evaluation_verification": (
+        REPRO / "h2oplus_v13_proximal_release_results/evaluation_closeout_verification_v1.json",
+        "632fb716c9842e6d40bcb037b0b8b84a854ebe46891920309e079438273f7bce",
+    ),
+    "evaluation_file_manifest": (
+        REPRO / "h2oplus_v13_proximal_release_results/evaluation_file_manifest_v1.json",
+        "c4ab0b2f8f07f0e5ffcc7105a759931aee063c11cae817ac85e7c6a65d130a21",
+    ),
+    "evaluation_file_manifest_verification": (
+        REPRO / "h2oplus_v13_proximal_release_results/evaluation_file_manifest_verification_v1.json",
+        "90fe7bfb78629d9c617723e09ad40ad7c966bd628821594c03365a3accd66113",
+    ),
+    "protocol": (
+        REPRO / "h2oplus_v13_proximal_release_protocol_v2.json",
+        "8f330bc7a55b35c9c10ae03434ddbecd30528e4529b01e734dbbd6c44bdd5f12",
+    ),
+    "evaluation_source_freeze": (
+        REPRO / "h2oplus_v13_proximal_release_evaluation_source_freeze_v1.json",
+        "6bf24fe1bbadd1fa55332b7f90c0127ca25188f590a008d9e61d2951930a1519",
+    ),
+    "evaluation_methods": (
+        REPRO / "h2oplus_v13_proximal_release_evaluation_methods_v1.json",
+        "712cea480fe1c35bfee4186fbbea137682b8515888d40a05870a55f695caa104",
+    ),
+}
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--formal-workspace",
+        type=Path,
+        default=REPRO / "deployments/v7_formal_v2_training_v7r1/workspace",
+    )
+    parser.add_argument(
+        "--deployment-root",
+        type=Path,
+        default=REPRO / "deployments/h2oplus_v14_terminal_taper_pilot_v1",
+    )
+    parser.add_argument("--force", action="store_true")
+    return parser.parse_args()
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(8 * 1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def stable_object_sha256(value: Any) -> str:
+    encoded = json.dumps(value, sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def descriptor(path: Path, *, deployed_path: Path | None = None) -> dict[str, Any]:
+    resolved = path.expanduser().resolve(strict=True)
+    return {
+        "path": str(deployed_path if deployed_path is not None else resolved),
+        "sha256": sha256(resolved),
+        "bytes": resolved.stat().st_size,
+    }
+
+
+def write_stable(path: Path, payload: dict[str, Any], *, force: bool) -> None:
+    destination = path.expanduser().resolve()
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    time_keys = {"created_utc", "registered_utc", "authorized_utc"}
+    if destination.exists():
+        previous = json.loads(destination.read_text())
+        old = {key: value for key, value in previous.items() if key not in time_keys}
+        new = {key: value for key, value in payload.items() if key not in time_keys}
+        if old != new and not force:
+            raise FileExistsError(f"refusing to replace different artifact: {destination}")
+        for key in time_keys:
+            if isinstance(previous.get(key), str):
+                payload[key] = previous[key]
+    temporary = destination.with_suffix(destination.suffix + ".partial")
+    temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+    os.replace(temporary, destination)
+
+
+def source_map() -> dict[str, str]:
+    relative_paths = (
+        "SimpleSAC/train_transit_v14_terminal_taper.py",
+        "SimpleSAC/transit_v10/__init__.py",
+        "SimpleSAC/transit_v10/provenance.py",
+        "SimpleSAC/transit_v10/trainer.py",
+        "SimpleSAC/transit_v11/__init__.py",
+        "SimpleSAC/transit_v11/provenance.py",
+        "SimpleSAC/transit_v11/trainer.py",
+        "SimpleSAC/transit_v12/__init__.py",
+        "SimpleSAC/transit_v12/provenance.py",
+        "SimpleSAC/transit_v12/trainer.py",
+        "SimpleSAC/transit_v13/__init__.py",
+        "SimpleSAC/transit_v13/provenance.py",
+        "SimpleSAC/transit_v13/trainer.py",
+        "SimpleSAC/transit_v14/__init__.py",
+        "SimpleSAC/transit_v14/provenance.py",
+        "SimpleSAC/transit_v14/trainer.py",
+    )
+    return {relative: sha256(ROOT / relative) for relative in relative_paths}
+
+
+def _verify_sealed_v12() -> dict[str, Path]:
+    paths = {}
+    for label, (path, expected) in SEALED_V12.items():
+        resolved = path.resolve(strict=True)
+        actual = sha256(resolved)
+        if actual != expected:
+            raise ValueError(f"sealed v12 input drifted for {label}: {actual}")
+        paths[label] = resolved
+    prefix = json.loads(paths["prefix_closeout"].read_text())
+    prefix_verification = json.loads(paths["prefix_verification"].read_text())
+    branch = json.loads(paths["branch_closeout"].read_text())
+    branch_verification = json.loads(paths["branch_verification"].read_text())
+    evaluation = json.loads(paths["evaluation_closeout"].read_text())
+    evaluation_verification = json.loads(paths["evaluation_verification"].read_text())
+    if (
+        prefix.get("status") != "passed"
+        or prefix.get("artifact_integrity_passed") is not True
+        or prefix.get("exact_seed_matched_10k_handoffs_passed") is not True
+        or prefix_verification.get("status") != "passed"
+        or prefix_verification.get("verified_run_count") != 5
+        or branch.get("status") != "passed"
+        or branch.get("artifact_integrity_passed") is not True
+        or branch.get("scientific_stability_passed_for_all_30_training_runs") is not True
+        or branch_verification.get("status") != "passed"
+        or evaluation.get("passed") is not True
+        or evaluation.get("formal_confirmation_eligible") is not False
+        or evaluation_verification.get("development_screening_gate_passed") is not False
+        or any(
+            payload.get("formal_held_out_outcomes_read") is not False
+            for payload in (
+                prefix,
+                prefix_verification,
+                branch,
+                branch_verification,
+                evaluation,
+                evaluation_verification,
+            )
+        )
+    ):
+        raise ValueError("sealed v12 closeout contract is not suitable for v14 development")
+    return paths
+
+
+def _verify_sealed_v13() -> dict[str, Path]:
+    paths = {}
+    for label, (path, expected) in SEALED_V13.items():
+        resolved = path.resolve(strict=True)
+        if sha256(resolved) != expected:
+            raise ValueError(f"sealed v13 input drifted for {label}")
+        paths[label] = resolved
+    closeout = json.loads(paths["branch_closeout"].read_text())
+    verification = json.loads(paths["branch_verification"].read_text())
+    analysis = json.loads(paths["development_analysis"].read_text())
+    evaluation = json.loads(paths["evaluation_closeout"].read_text())
+    evaluation_verification = json.loads(
+        paths["evaluation_verification"].read_text()
+    )
+    if (
+        closeout.get("status") != "passed"
+        or closeout.get("artifact_integrity_passed") is not True
+        or closeout.get("scientific_stability_passed_for_all_15_branches")
+        is not True
+        or closeout.get("exact_seed_matched_v12_10k_handoffs_passed")
+        is not True
+        or verification.get("passed") is not True
+        or verification.get("verified_run_count") != 15
+        or verification.get("all_15_scientific_stability_passed") is not True
+        or analysis.get("formal_confirmation_eligible") is not False
+        or evaluation.get("passed") is not True
+        or evaluation.get("formal_confirmation_eligible") is not False
+        or evaluation_verification.get("passed") is not True
+        or evaluation_verification.get("development_screening_gate_passed")
+        is not False
+        or any(
+            payload.get("formal_held_out_outcomes_read") is not False
+            for payload in (
+                closeout,
+                verification,
+                analysis,
+                evaluation,
+                evaluation_verification,
+            )
+        )
+    ):
+        raise ValueError("sealed v13 closeout is not suitable for v14 development")
+    return paths
+
+
+def _build_diagnosis(
+    sealed: dict[str, Path], control: Path, *, force: bool
+) -> Path:
+    analysis = json.loads(sealed["development_analysis"].read_text())
+    result = analysis["development_scientific_result"]
+    failed = sorted(name for name, passed in result["checks"].items() if not passed)
+    expected_failed = sorted(
+        [
+            "candidate_mean_lower_than_all_controls_at_25000",
+            "relative_aulc_improvement_over_all_controls",
+            "seed_wins_over_all_controls",
+        ]
+    )
+    comparison = analysis["diagnostic_results_not_used_as_selection_gates"][
+        "comparisons"
+    ]["h2oplus-v13-proximal-strong"]
+    if (
+        failed != expected_failed
+        or comparison.get("seed_wins") != 0
+        or comparison.get("mean_lower") is not False
+        or any(row.get("candidate_lower") is not False for row in comparison["per_seed"])
+    ):
+        raise ValueError("v13 terminal-drift diagnosis drifted")
+
+    branch_root = REPRO / "h2oplus_v13_proximal_release_results/branches_v2"
+    checkpoints = (20_000, 22_500, 25_000)
+    trajectories: dict[int, dict[str, float]] = {}
+    metric_files = []
+    for seed in TRAINING_SEEDS:
+        path = branch_root / f"h2oplus_v13a2_proximal_strong_seed{seed}/metrics.jsonl"
+        rows = [json.loads(line) for line in path.read_text().splitlines() if line]
+        metric_files.append(descriptor(path))
+        for target in checkpoints:
+            row = min(
+                rows,
+                key=lambda value: abs(
+                    int(value["actual_cumulative_simulator_decision_events"])
+                    - target
+                ),
+            )
+            metrics = row["train"]
+            values = trajectories.setdefault(
+                target,
+                {"relative_l2_sum": 0.0, "actor_grad_sum": 0.0},
+            )
+            values["relative_l2_sum"] += float(
+                metrics["v13/actor_relative_l2_before_pull"]
+            )
+            values["actor_grad_sum"] += float(metrics["train/actor_grad_norm"])
+
+    trajectory_summary = {
+        str(target): {
+            "mean_actor_relative_l2_before_pull": (
+                trajectories[target]["relative_l2_sum"] / len(TRAINING_SEEDS)
+            ),
+            "mean_actor_grad_norm": (
+                trajectories[target]["actor_grad_sum"] / len(TRAINING_SEEDS)
+            ),
+        }
+        for target in checkpoints
+    }
+    payload = {
+        "schema_version": DIAGNOSIS_SCHEMA,
+        "created_utc": datetime.now(timezone.utc).isoformat(),
+        "status": "frozen-before-v14-registration-and-training",
+        "study_stage": "development",
+        "formal_held_out_outcomes_read": False,
+        "local_training_or_sumo_executed": False,
+        "v13_artifact_integrity_passed": True,
+        "v13_training_stability_passed_15_of_15": True,
+        "v13_development_screening_passed": False,
+        "v13_failed_checks": expected_failed,
+        "v13_mean_aulc": result["all_algorithm_mean_aulc"],
+        "v13_mean_primary_at_25000": result["mean_primary_at_25000"],
+        "strong_diagnostic_vs_predesignated_medium": comparison,
+        "strong_lower_aulc_than_medium_in_all_five_seeds": True,
+        "strong_training_trajectory": trajectory_summary,
+        "late_relative_l2_acceleration_observed": (
+            trajectory_summary["25000"]["mean_actor_relative_l2_before_pull"]
+            > trajectory_summary["22500"]["mean_actor_relative_l2_before_pull"]
+            > trajectory_summary["20000"]["mean_actor_relative_l2_before_pull"]
+        ),
+        "metric_files": metric_files,
+        "sealed_v13_inputs": {
+            label: descriptor(
+                path,
+                deployed_path=control / "sealed_v13" / f"{label}.json",
+            )
+            for label, path in sealed.items()
+        },
+        "checkpoint_selection_by_behavior": False,
+    }
+    path = REPRO / "h2oplus_v14_terminal_taper_diagnosis_v1.json"
+    write_stable(path, payload, force=force)
+    return path
+
+
+def _build_rationale(
+    sealed_v12: dict[str, Path],
+    sealed_v13: dict[str, Path],
+    diagnosis: Path,
+    control: Path,
+    *,
+    force: bool,
+) -> Path:
+    evidence = json.loads(diagnosis.read_text())
+    payload = {
+        "schema_version": RATIONALE_SCHEMA,
+        "created_utc": datetime.now(timezone.utc).isoformat(),
+        "status": "frozen-before-v14-training-or-new-development-outcomes",
+        "study_stage": "development",
+        "formal_held_out_outcomes_read": False,
+        "local_training_or_sumo_executed": False,
+        "diagnosis": {
+            "v13_artifact_integrity_passed": True,
+            "v13_all_15_training_runs_stable": True,
+            "v13_development_screening_passed": False,
+            "v13_failed_checks": evidence["v13_failed_checks"],
+            "strong_diagnostic_lower_aulc_than_candidate_all_five_seeds": True,
+            "late_relative_l2_acceleration_observed": True,
+            "mechanistic_hypothesis": (
+                "v13 strong fixed anchoring improved all five seed AULCs over the "
+                "predesignated medium dose, but actor drift still accelerated after "
+                "20k while actor gradients were small; tapering only the late actor "
+                "learning rate can bound terminal drift while retaining early release"
+            ),
+        },
+        "selected_intervention": {
+            "common_base": "exact sealed seed-matched v12 10k handoff",
+            "preserved_behavior": (
+                "v13 strong fixed 5e-5 proximal pull, v12 actor release ramp, full "
+                "temperature rate, online-only actor states, 50/50 critic replay, "
+                "and unit ratio weights"
+            ),
+            "sole_new_factor": (
+                "linear actor learning-rate taper from multiplier 1.0 at 15k to "
+                "the registered terminal multiplier at 25k"
+            ),
+            "base_proximal_rate": BASE_PROXIMAL_RATE,
+            "terminal_actor_lr_multipliers": TERMINAL_ACTOR_LR_MULTIPLIERS,
+            "full_rate_equivalent_actor_updates": {
+                name: integrated_actor_lr_exposure(value)
+                for name, value in TERMINAL_ACTOR_LR_MULTIPLIERS.items()
+            },
+            "predesignated_candidate": PREDESIGNATED_CANDIDATE,
+            "checkpoint_selection_by_behavior": False,
+        },
+        "diagnosis_evidence": descriptor(
+            diagnosis, deployed_path=control / "diagnosis.json"
+        ),
+        "sealed_v12_handoff_inputs": {
+            label: descriptor(
+                path, deployed_path=control / "sealed_v12" / f"{label}.json"
+            )
+            for label, path in sealed_v12.items()
+        },
+        "sealed_v13_inputs": {
+            label: descriptor(
+                path, deployed_path=control / "sealed_v13" / f"{label}.json"
+            )
+            for label, path in sealed_v13.items()
+        },
+        "claim_boundary": {
+            "all_v7_through_v13_evidence_preserved": True,
+            "supports_formal_held_out_effect_claim": False,
+            "formal_confirmation_stage_authorized_or_submitted": False,
+        },
+        "generator": descriptor(Path(__file__).resolve()),
+    }
+    path = REPRO / "h2oplus_v14_terminal_taper_rationale_v1.json"
+    write_stable(path, payload, force=force)
+    return path
+
+
+def _source_handoffs(
+    workspace: Path, prefix_verification: Path
+) -> dict[int, dict[str, Any]]:
+    verified = {
+        int(row["seed"]): row
+        for row in json.loads(prefix_verification.read_text())["runs"]
+    }
+    records = {}
+    source_root = REPRO / "h2oplus_v12_staged_release_results/prefix_v2"
+    target_root = workspace / "reproducibility/h2oplus_v14_source_handoffs_v1"
+    for seed in TRAINING_SEEDS:
+        run_name = f"h2oplus_v12a2_shared_prefix_seed{seed}"
+        manifest = source_root / run_name / "v12_handoff/manifest.json"
+        payload = json.loads(manifest.read_text())
+        row = verified[seed]
+        if (
+            payload.get("schema_version") != SOURCE_HANDOFF_SCHEMA
+            or payload.get("passed") is not True
+            or payload.get("formal_held_out_outcomes_read") is not False
+            or payload.get("seed") != seed
+            or payload.get("prefix_run_name") != run_name
+            or payload.get("protocol_sha256") != V12_PROTOCOL_SHA256
+            or payload.get("checkpoint_state_sha256") != row["checkpoint_state_sha256"]
+            or payload.get("actor_tensor_sha256") != row["actor_tensor_sha256"]
+            or payload.get("temperature_tensor_sha256")
+            != row["temperature_tensor_sha256"]
+            or checkpoint_state_sha256(manifest.parent / "checkpoints/latest.pt")
+            != row["checkpoint_state_sha256"]
+        ):
+            raise ValueError(f"sealed v12 source handoff drifted for seed {seed}")
+        for file_record in payload["files"]:
+            source = manifest.parent / file_record["path"]
+            if (
+                not source.is_file()
+                or source.stat().st_size != file_record["bytes"]
+                or sha256(source) != file_record["sha256"]
+            ):
+                raise ValueError(f"v12 source handoff file drifted: {source}")
+        records[seed] = {
+            "source_manifest": manifest,
+            "path": str(target_root / f"seed{seed}/v12_handoff/manifest.json"),
+            "manifest_sha256": sha256(manifest),
+            "prefix_run_name": run_name,
+            "prefix_run_signature": payload["prefix_run_signature"],
+            "v12_protocol_sha256": payload["protocol_sha256"],
+            "v12_source_sha256": payload["v12_source_sha256"],
+            "checkpoint_state_sha256": payload["checkpoint_state_sha256"],
+            "actor_tensor_sha256": payload["actor_tensor_sha256"],
+            "temperature_tensor_sha256": payload["temperature_tensor_sha256"],
+            "online_events_actual": row["simulator_decision_events"],
+        }
+    return records
+
+
+def _initializers(workspace: Path) -> dict[int, dict[str, Any]]:
+    source_root = (
+        REPRO
+        / "deployments/h2oplus_v12_staged_release_pilot_v2/workspace/"
+        "reproducibility/h2oplus_v12_initializers_v2"
+    )
+    target_root = workspace / "reproducibility/h2oplus_v14_initializers_v1"
+    records = {}
+    for seed in TRAINING_SEEDS:
+        source = source_root / f"h2oplus_seed{seed}.pt"
+        payload = torch.load(source, map_location="cpu", weights_only=False)
+        extra = dict(payload["extra"])
+        if (
+            payload.get("artifact_schema") != "transit-offline-initializer-v7-v1"
+            or extra.get("source_training_seed") != seed
+            or extra.get("offline_updates_completed") != 50_000
+        ):
+            raise ValueError(f"v14 initializer source drifted for seed {seed}")
+        records[seed] = {
+            "source": source,
+            "path": str(target_root / source.name),
+            "sha256": sha256(source),
+            "bytes": source.stat().st_size,
+            "extra_sha256": stable_object_sha256(extra),
+            "source_run_signature": extra["source_run_signature"],
+        }
+    return records
+
+
+def _command_arguments(
+    *,
+    workspace: Path,
+    output_root: Path,
+    run_name: str,
+    run_signature: str,
+    seed: int,
+    admission: Path,
+    initializer: dict[str, Any],
+    handoff: dict[str, Any],
+) -> list[str]:
+    return [
+        "--method", "h2oplus",
+        "--run-name", run_name,
+        "--run-signature", run_signature,
+        "--seed", str(seed),
+        "--device", "cuda:0",
+        "--max-canonical-processes-per-gpu", "1",
+        "--cpu-threads", "6",
+        "--dataset", str(workspace / "bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5"),
+        "--sim-env", str(workspace / "bus_h2o/calibrated_env"),
+        "--training-admission", str(admission),
+        "--offline-initializer", initializer["path"],
+        "--offline-initializer-source-signature", initializer["source_run_signature"],
+        "--output-root", str(output_root),
+        "--max-offline-rows", "0",
+        "--online-capacity", "30000",
+        "--offline-updates", "50000",
+        "--warmup-events", "5000",
+        "--ratio-pretrain-updates", "1000",
+        "--epochs", "40",
+        "--events-per-epoch", "500",
+        "--interaction-chunk-events", "16",
+        "--updates-per-epoch", "500",
+        "--utd-ratio", "1",
+        "--batch-size", "256",
+        "--reward-scale", "0.0001",
+        "--critic-loss", "huber",
+        "--huber-delta", "1.0",
+        "--ensemble-size", "2",
+        "--hidden-dim", "256",
+        "--online-fraction", "0.5",
+        "--target-entropy", "0.0",
+        "--initial-temperature", "1.0",
+        "--iql-advantage-temperature", "3.0",
+        "--offline-cql-alpha", "0.0",
+        "--cql-n-actions", "10",
+        "--ratio-update-interval", "4",
+        "--offline-checkpoint-every", "10000",
+        "--checkpoint-every", "1",
+        "--log-every", "250",
+        "--resource-interval", "5.0",
+        "--device-cache-observation-dtype", "float32",
+        "--compile-networks",
+        "--compile-mode", "default",
+        "--sim-demand-scales", "0.75", "1.0", "1.25",
+        "--branch-handoff-manifest", handoff["path"],
+    ]
+
+
+def _build_jobs(
+    *,
+    workspace: Path,
+    deployment_root: Path,
+    identity: dict[str, Any],
+    initializers: dict[int, dict[str, Any]],
+    handoffs: dict[int, dict[str, Any]],
+) -> list[dict[str, Any]]:
+    output_root = deployment_root / "remote_results_v1"
+    admission_root = workspace / "reproducibility/h2oplus_v14_control_v1/admissions"
+    jobs = []
+    for variant in VARIANTS:
+        for seed in TRAINING_SEEDS:
+            settings = {
+                "stage": "branch",
+                "warmup_events": 5_000,
+                "epochs": 40,
+                "offline_updates": 50_000,
+                "expected_total_updates": 70_000,
+                "online_event_cap": 25_000,
+                "export_online_events": [25_000],
+                "base_proximal_rate": BASE_PROXIMAL_RATE,
+                "terminal_actor_lr_multiplier": TERMINAL_ACTOR_LR_MULTIPLIERS[
+                    variant
+                ],
+                "full_rate_equivalent_actor_updates": integrated_actor_lr_exposure(
+                    TERMINAL_ACTOR_LR_MULTIPLIERS[variant]
+                ),
+            }
+            run_name = f"h2oplus_v14_{variant.replace('-', '_')}_seed{seed}"
+            signature = stable_object_sha256(
+                {
+                    **identity,
+                    "variant": variant,
+                    "seed": seed,
+                    "settings": settings,
+                    "initializer_sha256": initializers[seed]["sha256"],
+                    "source_handoff_manifest_sha256": handoffs[seed][
+                        "manifest_sha256"
+                    ],
+                    "source_checkpoint_state_sha256": handoffs[seed][
+                        "checkpoint_state_sha256"
+                    ],
+                }
+            )
+            admission = admission_root / f"{run_name}.json"
+            command = _command_arguments(
+                workspace=workspace,
+                output_root=output_root,
+                run_name=run_name,
+                run_signature=signature,
+                seed=seed,
+                admission=admission,
+                initializer=initializers[seed],
+                handoff=handoffs[seed],
+            )
+            jobs.append(
+                {
+                    "name": run_name,
+                    "method": "h2oplus",
+                    "variant": variant,
+                    "seed": seed,
+                    "run_signature": signature,
+                    "stage": "branch",
+                    "training_admission": str(admission),
+                    "offline_initializer": {
+                        key: value
+                        for key, value in initializers[seed].items()
+                        if key != "source"
+                    },
+                    "branch_handoff_manifest": handoffs[seed]["path"],
+                    "prefix": {
+                        "name": handoffs[seed]["prefix_run_name"],
+                        "run_signature": handoffs[seed]["prefix_run_signature"],
+                        "seed": seed,
+                    },
+                    "source_handoff": {
+                        key: value
+                        for key, value in handoffs[seed].items()
+                        if key not in {"source_manifest", "path", "prefix_run_name", "prefix_run_signature"}
+                    },
+                    "command_arguments": command,
+                    "milestones": [
+                        {
+                            "online_events": 25_000,
+                            "learner_update_steps": 70_000,
+                            "ratio_optimizer_steps": 6_000,
+                        }
+                    ],
+                    "predesignated_candidate": variant == PREDESIGNATED_CANDIDATE,
+                    **settings,
+                }
+            )
+    return jobs
+
+
+def _copy(source: Path, destination: Path) -> None:
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if destination.exists() or destination.is_symlink():
+        destination.unlink()
+    shutil.copy2(source, destination)
+    if sha256(source) != sha256(destination):
+        raise RuntimeError(f"deployment copy hash mismatch: {destination}")
+
+
+def _remove_unregistered_bytecode(workspace: Path, base_manifest: Path) -> None:
+    base = json.loads(base_manifest.read_text())
+    allowed = {
+        row["path"]
+        for row in base.get("entries", [])
+        if row.get("type") == "file"
+        and (
+            Path(row["path"]).suffix in {".pyc", ".pyo"}
+            or "__pycache__" in Path(row["path"]).parts
+        )
+    }
+    for path in sorted(workspace.rglob("*"), reverse=True):
+        if not path.is_file():
+            continue
+        relative = path.relative_to(workspace).as_posix()
+        is_bytecode = (
+            path.suffix in {".pyc", ".pyo"} or "__pycache__" in path.relative_to(workspace).parts
+        )
+        if is_bytecode and relative not in allowed:
+            path.unlink()
+    for path in sorted(workspace.rglob("__pycache__"), reverse=True):
+        try:
+            path.rmdir()
+        except OSError:
+            pass
+
+
+def main() -> int:
+    args = parse_args()
+    formal_workspace = args.formal_workspace.expanduser().resolve(strict=True)
+    base_manifest = formal_workspace / "deployment_manifest.json"
+    if sha256(base_manifest) != BASE_MANIFEST_SHA256:
+        raise ValueError("frozen base v7 deployment manifest drifted")
+    sealed_v12 = _verify_sealed_v12()
+    sealed_v13 = _verify_sealed_v13()
+    deployment_root = args.deployment_root.expanduser().resolve()
+    workspace = deployment_root / "workspace"
+    control = workspace / "reproducibility/h2oplus_v14_control_v1"
+    source_handoffs = _source_handoffs(
+        workspace, sealed_v12["prefix_verification"]
+    )
+    initializers = _initializers(workspace)
+    diagnosis = _build_diagnosis(sealed_v13, control, force=args.force)
+    rationale = _build_rationale(
+        sealed_v12,
+        sealed_v13,
+        diagnosis,
+        control,
+        force=args.force,
+    )
+
+    registration = REPRO / "h2oplus_v14_terminal_taper_registration_v1.json"
+    registration_payload = {
+        "schema_version": REGISTRATION_SCHEMA,
+        "registered_utc": datetime.now(timezone.utc).isoformat(),
+        "campaign": "H2O+ v14 terminal actor-taper development pilot",
+        "status": "registered-before-v14-training-or-new-development-evaluation",
+        "study_stage": "development",
+        "formal_held_out_outcomes_read": False,
+        "local_training_or_sumo_allowed": False,
+        "frozen_v7_through_v13_evidence_modified": False,
+        "diagnosis": descriptor(
+            diagnosis, deployed_path=control / "diagnosis.json"
+        ),
+        "rationale": descriptor(rationale, deployed_path=control / "rationale.json"),
+        "new_training_runs": 15,
+        "reused_prefix_runs": 5,
+        "rerun_prefix_runs": 0,
+        "training_seeds": list(TRAINING_SEEDS),
+        "variants": list(VARIANTS),
+        "base_proximal_rate": BASE_PROXIMAL_RATE,
+        "terminal_actor_lr_multipliers": TERMINAL_ACTOR_LR_MULTIPLIERS,
+        "full_rate_equivalent_actor_updates": {
+            name: integrated_actor_lr_exposure(value)
+            for name, value in TERMINAL_ACTOR_LR_MULTIPLIERS.items()
+        },
+        "terminal_taper_online_event_interval": [15_000, 25_000],
+        "predesignated_candidate": PREDESIGNATED_CANDIDATE,
+        "maximum_online_events": 25_000,
+        "checkpoint_selection_by_behavior": False,
+        "development_evaluation_submitted": False,
+        "formal_confirmation_stage_authorized_or_submitted": False,
+        "v14_source_sha256": source_map(),
+    }
+    write_stable(registration, registration_payload, force=args.force)
+
+    authorization = REPRO / "h2oplus_v14_terminal_taper_authorization_v1.json"
+    authorization_payload = {
+        "schema_version": AUTHORIZATION_SCHEMA,
+        "authorized_utc": datetime.now(timezone.utc).isoformat(),
+        "status": "authorized-development-only",
+        "user_authorization_text": USER_AUTHORIZATION_TEXT,
+        "user_authorization_text_sha256": hashlib.sha256(
+            USER_AUTHORIZATION_TEXT.encode()
+        ).hexdigest(),
+        "registration": descriptor(
+            registration, deployed_path=control / "registration.json"
+        ),
+        "diagnosis": descriptor(
+            diagnosis, deployed_path=control / "diagnosis.json"
+        ),
+        "rationale": descriptor(rationale, deployed_path=control / "rationale.json"),
+        "remote_training_authorized": True,
+        "reuse_sealed_v12_10k_handoffs_authorized": True,
+        "preserve_sealed_v13_evidence_authorized": True,
+        "prefix_training_rerun_authorized": False,
+        "remote_development_evaluation_after_training_closeout_authorized": True,
+        "local_training_or_sumo_authorized": False,
+        "formal_held_out_access_authorized": False,
+        "formal_confirmation_stage_authorized": False,
+    }
+    write_stable(authorization, authorization_payload, force=args.force)
+
+    identity = {
+        "registration_sha256": sha256(registration),
+        "authorization_sha256": sha256(authorization),
+        "diagnosis_sha256": sha256(diagnosis),
+        "rationale_sha256": sha256(rationale),
+        "v14_source_sha256": source_map(),
+        "v12_prefix_closeout_sha256": SEALED_V12["prefix_closeout"][1],
+        "v12_prefix_verification_sha256": SEALED_V12[
+            "prefix_verification"
+        ][1],
+        "v13_branch_closeout_sha256": SEALED_V13["branch_closeout"][1],
+        "v13_branch_verification_sha256": SEALED_V13[
+            "branch_verification"
+        ][1],
+        "v13_development_analysis_sha256": SEALED_V13[
+            "development_analysis"
+        ][1],
+        "v13_evaluation_closeout_sha256": SEALED_V13[
+            "evaluation_closeout"
+        ][1],
+        "v13_evaluation_verification_sha256": SEALED_V13[
+            "evaluation_verification"
+        ][1],
+    }
+    jobs = _build_jobs(
+        workspace=workspace,
+        deployment_root=deployment_root,
+        identity=identity,
+        initializers=initializers,
+        handoffs=source_handoffs,
+    )
+
+    plan = REPRO / "h2oplus_v14_terminal_taper_training_plan_v1.json"
+    plan_payload = {
+        "schema_version": PLAN_SCHEMA,
+        "created_utc": datetime.now(timezone.utc).isoformat(),
+        "status": "frozen-before-v14-training",
+        "study_stage": "development",
+        "formal_held_out_outcomes_read": False,
+        "workspace": str(workspace),
+        "remote_output_root": str(deployment_root / "remote_results_v1"),
+        "registration": descriptor(
+            registration, deployed_path=control / "registration.json"
+        ),
+        "authorization": descriptor(
+            authorization, deployed_path=control / "authorization.json"
+        ),
+        "diagnosis": descriptor(
+            diagnosis, deployed_path=control / "diagnosis.json"
+        ),
+        "rationale": descriptor(rationale, deployed_path=control / "rationale.json"),
+        "base_v7_training_deployment": descriptor(
+            base_manifest, deployed_path=workspace / "deployment_manifest.json"
+        ),
+        "required_environment": {
+            "LD_PRELOAD": "/usr/lib/x86_64-linux-gnu/libcurl.so.4",
+            "CC": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+            "CPATH": (
+                "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/"
+                "deployments/v7_formal_v2_training_v7r1/workspace/reproducibility/"
+                "toolchain/libxcrypt-4.4.36-hd590300_1/include"
+            ),
+            "CUDA_VISIBLE_DEVICES": "scheduler-assigned exactly one physical GPU",
+            "PYTHONDONTWRITEBYTECODE": "1",
+        },
+        "v14_source_sha256": source_map(),
+        "jobs": jobs,
+    }
+    write_stable(plan, plan_payload, force=args.force)
+
+    protocol = REPRO / "h2oplus_v14_terminal_taper_protocol_v1.json"
+    protocol_payload = {
+        "schema_version": PROTOCOL_SCHEMA,
+        "created_utc": datetime.now(timezone.utc).isoformat(),
+        "status": "frozen-before-v14-training-and-new-development-outcomes",
+        "study_stage": "development",
+        "formal_held_out_outcomes_read": False,
+        "local_training_or_sumo_allowed": False,
+        "registration": descriptor(
+            registration, deployed_path=control / "registration.json"
+        ),
+        "authorization": descriptor(
+            authorization, deployed_path=control / "authorization.json"
+        ),
+        "diagnosis": descriptor(
+            diagnosis, deployed_path=control / "diagnosis.json"
+        ),
+        "rationale": descriptor(rationale, deployed_path=control / "rationale.json"),
+        "training_plan": descriptor(plan, deployed_path=control / "training_plan.json"),
+        "base_v7_training_deployment": descriptor(
+            base_manifest, deployed_path=workspace / "deployment_manifest.json"
+        ),
+        "v14_source_sha256": source_map(),
+        "training_jobs": jobs,
+        "terminal_taper": {
+            "new_branch_jobs": 15,
+            "reused_sealed_v12_prefix_jobs": 5,
+            "rerun_prefix_jobs": 0,
+            "base_proximal_rate": BASE_PROXIMAL_RATE,
+            "terminal_actor_lr_multipliers": TERMINAL_ACTOR_LR_MULTIPLIERS,
+            "full_rate_equivalent_actor_updates": {
+                name: integrated_actor_lr_exposure(value)
+                for name, value in TERMINAL_ACTOR_LR_MULTIPLIERS.items()
+            },
+            "terminal_taper_online_event_interval": [15_000, 25_000],
+            "predesignated_candidate": PREDESIGNATED_CANDIDATE,
+            "development_evaluation_release_requires": (
+                "all 15 branch tasks exact token-bound backend exit0, exact terminal "
+                "artifacts, registered stability and independent training closeout"
+            ),
+            "runtime_admission_preflight_required_before_submission": True,
+        },
+        "policy_budgets": {
+            variant: {
+                "export_online_events": [25_000],
+                "common_evaluation_events": [0, 5_000, 10_000, 25_000],
+                "milestones": [
+                    {
+                        "online_events": 25_000,
+                        "learner_update_steps": 70_000,
+                        "ratio_optimizer_steps": 6_000,
+                    }
+                ],
+            }
+            for variant in VARIANTS
+        },
+        "analysis_gates": {
+            "predesignated_candidate": PREDESIGNATED_CANDIDATE,
+            "candidate_relative_aulc_improvement_over_v12_actor_ramp_at_least": 0.01,
+            "candidate_relative_aulc_improvement_over_v13_strong_at_least": 0.005,
+            "candidate_relative_aulc_improvement_over_v11_at_least": 0.01,
+            "candidate_relative_aulc_improvement_over_v10_delayed_actor_at_least": 0.02,
+            "candidate_relative_aulc_improvement_over_sac_at_least": 0.02,
+            "candidate_relative_aulc_improvement_over_fixed_h2o_at_least": 0.03,
+            "candidate_seed_wins_over_v12_actor_ramp_at_least": 4,
+            "candidate_seed_wins_over_v13_strong_at_least": 4,
+            "candidate_seed_wins_over_v11_at_least": 4,
+            "candidate_seed_wins_over_v10_delayed_actor_at_least": 4,
+            "candidate_seed_wins_over_sac_at_least": 4,
+            "candidate_seed_wins_over_fixed_h2o_at_least": 4,
+            "candidate_mean_lower_than_all_controls_at_25000": True,
+            "completion_rate_noninferiority_margin": 0.003,
+            "no_demand_scale_relative_aulc_degradation_over_sac_greater_than": 0.01,
+            "all_15_training_runs_pass_registered_stability": True,
+            "all_branches_share_exact_seed_matched_v12_10k_state": True,
+        },
+        "development_evaluation_submitted": False,
+        "formal_confirmation_stage_authorized_or_submitted": False,
+    }
+    write_stable(protocol, protocol_payload, force=args.force)
+
+    formal_admission = formal_workspace / (
+        "reproducibility/event_cap_regate_v7_v1_remote/"
+        "training_admission_v7_formal_v2_event_cap_fix_v1.json"
+    )
+    base_admission = json.loads(formal_admission.read_text())
+    admissions_root = REPRO / "h2oplus_v14_terminal_taper_training_admissions_v1"
+    admissions = []
+    for job in jobs:
+        admission_payload = {
+            "schema_version": ADMISSION_SCHEMA,
+            "created_utc": datetime.now(timezone.utc).isoformat(),
+            "study_stage": "development",
+            "passed": True,
+            "formal_held_out_outcomes_read": False,
+            "method": job["method"],
+            "variant": job["variant"],
+            "stage": job["stage"],
+            "seed": job["seed"],
+            "run_name": job["name"],
+            "run_signature": job["run_signature"],
+            "dataset": base_admission["dataset"],
+            "simulator": base_admission["simulator"],
+            "training_source_sha256": base_admission["training_source_sha256"],
+            "v14_source_sha256": source_map(),
+            "v14_wrapper": descriptor(ROOT / "SimpleSAC/train_transit_v14_terminal_taper.py"),
+            "v14_protocol": descriptor(protocol, deployed_path=control / "protocol.json"),
+            "v14_diagnosis": descriptor(
+                diagnosis, deployed_path=control / "diagnosis.json"
+            ),
+            "v14_rationale": descriptor(rationale, deployed_path=control / "rationale.json"),
+            "sealed_v13_branch_closeout": descriptor(
+                sealed_v13["branch_closeout"],
+                deployed_path=control / "sealed_v13/branch_closeout.json",
+            ),
+            "base_v7_admission_source": descriptor(formal_admission),
+            "offline_initializer": job["offline_initializer"],
+            "source_v12_handoff": job["source_handoff"],
+            "selected_arguments": job,
+            "checks": {
+                "base_v7_source_map_reused_exactly": True,
+                "v14_overlay_bound_separately": True,
+                "offline_initializer_exactly_bound": True,
+                "sealed_v12_10k_handoff_exactly_bound": True,
+                "sealed_v13_closeout_exactly_bound": True,
+                "runtime_admission_preflight_required_before_submission": True,
+                "formal_held_out_outcomes_read": False,
+            },
+        }
+        path = admissions_root / f"{job['name']}.json"
+        write_stable(path, admission_payload, force=args.force)
+        admissions.append(path)
+
+    freeze = REPRO / "h2oplus_v14_terminal_taper_freeze_v1.json"
+    freeze_payload = {
+        "schema_version": FREEZE_SCHEMA,
+        "created_utc": datetime.now(timezone.utc).isoformat(),
+        "status": "frozen-before-v14-training-and-new-development-outcomes",
+        "study_stage": "development",
+        "formal_held_out_outcomes_read": False,
+        "registration": descriptor(
+            registration, deployed_path=control / "registration.json"
+        ),
+        "authorization": descriptor(
+            authorization, deployed_path=control / "authorization.json"
+        ),
+        "diagnosis": descriptor(
+            diagnosis, deployed_path=control / "diagnosis.json"
+        ),
+        "rationale": descriptor(rationale, deployed_path=control / "rationale.json"),
+        "sealed_v13_inputs": {
+            label: descriptor(
+                path, deployed_path=control / "sealed_v13" / f"{label}.json"
+            )
+            for label, path in sealed_v13.items()
+        },
+        "sealed_v12_handoff_inputs": {
+            label: descriptor(
+                path, deployed_path=control / "sealed_v12" / f"{label}.json"
+            )
+            for label, path in sealed_v12.items()
+        },
+        "training_plan": descriptor(plan, deployed_path=control / "training_plan.json"),
+        "protocol": descriptor(protocol, deployed_path=control / "protocol.json"),
+        "training_admissions": [
+            descriptor(path, deployed_path=control / "admissions" / path.name)
+            for path in admissions
+        ],
+        "v14_source_sha256": source_map(),
+        "new_training_runs": 15,
+        "prefix_runs_rerun": 0,
+        "development_evaluation_submitted": False,
+        "formal_confirmation_stage_authorized_or_submitted": False,
+    }
+    write_stable(freeze, freeze_payload, force=args.force)
+
+    if deployment_root.exists():
+        if not args.force:
+            raise FileExistsError(f"refusing to replace deployment: {deployment_root}")
+        shutil.rmtree(deployment_root)
+    deployment_root.mkdir(parents=True)
+    shutil.copytree(formal_workspace, workspace, copy_function=os.link, symlinks=True)
+    _remove_unregistered_bytecode(workspace, workspace / "deployment_manifest.json")
+
+    mappings: dict[Path, Path] = {}
+    for relative in source_map():
+        mappings[ROOT / relative] = workspace / relative
+    mappings.update(
+        {
+            ROOT / "reproducibility/verify_h2oplus_v14_terminal_taper_deployment.py": workspace / "reproducibility/verify_h2oplus_v14_terminal_taper_deployment.py",
+            registration: control / "registration.json",
+            authorization: control / "authorization.json",
+            diagnosis: control / "diagnosis.json",
+            rationale: control / "rationale.json",
+            plan: control / "training_plan.json",
+            protocol: control / "protocol.json",
+            freeze: control / "freeze.json",
+        }
+    )
+    for admission in admissions:
+        mappings[admission] = control / "admissions" / admission.name
+    for label, path in sealed_v12.items():
+        mappings[path] = control / "sealed_v12" / f"{label}.json"
+    for label, path in sealed_v13.items():
+        mappings[path] = control / "sealed_v13" / f"{label}.json"
+    for seed, initializer in initializers.items():
+        mappings[initializer["source"]] = Path(initializer["path"])
+    for seed, handoff in source_handoffs.items():
+        source_manifest = handoff["source_manifest"]
+        source_root = source_manifest.parent
+        target_root = Path(handoff["path"]).parent
+        payload = json.loads(source_manifest.read_text())
+        mappings[source_manifest] = target_root / "manifest.json"
+        for row in payload["files"]:
+            mappings[source_root / row["path"]] = target_root / row["path"]
+    for source, destination in mappings.items():
+        _copy(source, destination)
+
+    entries = [
+        {
+            "path": destination.relative_to(workspace).as_posix(),
+            "sha256": sha256(destination),
+            "bytes": destination.stat().st_size,
+        }
+        for destination in sorted(mappings.values())
+    ]
+    deployment_payload = {
+        "schema_version": DEPLOYMENT_SCHEMA,
+        "created_utc": datetime.now(timezone.utc).isoformat(),
+        "status": "immutable-v14-v1-overlay-on-frozen-v7-workspace",
+        "study_stage": "development",
+        "formal_held_out_outcomes_included": False,
+        "frozen_v7_through_v13_evidence_modified": False,
+        "checkpoint_selection_by_behavior": False,
+        "base_v7_training_deployment": descriptor(
+            workspace / "deployment_manifest.json"
+        ),
+        "overlay_entry_count": len(entries),
+        "overlay_aggregate_sha256": stable_object_sha256({"entries": entries}),
+        "entries": entries,
+    }
+    deployment_manifest = workspace / "deployment_manifest_v14_v1.json"
+    deployment_manifest.write_text(
+        json.dumps(deployment_payload, indent=2, sort_keys=True) + "\n"
+    )
+    print(
+        json.dumps(
+            {
+                "registration": descriptor(registration),
+                "authorization": descriptor(authorization),
+                "diagnosis": descriptor(diagnosis),
+                "rationale": descriptor(rationale),
+                "training_plan": descriptor(plan),
+                "protocol": descriptor(protocol),
+                "freeze": descriptor(freeze),
+                "deployment_manifest": descriptor(deployment_manifest),
+                "overlay_entry_count": len(entries),
+                "new_training_runs": 15,
+                "prefix_runs_rerun": 0,
+                "development_evaluation_submitted": False,
+                "formal_held_out_outcomes_read": False,
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

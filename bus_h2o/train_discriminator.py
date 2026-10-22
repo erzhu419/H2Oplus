@@ -26,6 +26,8 @@ Usage
     python train_discriminator.py --mock --n_sim_events 200 --epochs 50
 """
 
+from __future__ import annotations
+
 import argparse
 import os
 import sys

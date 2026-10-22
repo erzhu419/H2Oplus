@@ -1,0 +1,35 @@
+\begin{abstract}
+Exploratory reinforcement learning (RL) on an operating bus fleet is
+impractical, while policies trained only from historical data cannot acquire
+new experience. Hybrid Offline-and-Online (H2O) RL combines fixed target replay
+with simulator interaction, but the inexpensive online simulator can differ
+from the target in transition and event-duration dynamics. We study this
+cross-fidelity problem for multi-line bus holding and address a failure mode in
+which lower generalized passenger time coexists with incomplete passenger
+journeys.
+
+We formulate asynchronous holding as a 24,000-s chronological semi-Markov
+decision process (SMDP) with exact passenger-time accounting and a mixed
+discrete--continuous action. An immutable Simulation of Urban MObility (SUMO)
+dataset contains 3,284,718 transitions from 240 episodes, eight behavior
+policies, and 30 environment cells. An improved H2O framework (H2O+) actor is
+adapted to transit, initialized by implicit Q-learning (IQL), and continued for
+25,000 online-simulator decision
+events. The deployed policy then applies a preregistered completion-safety
+reserve: in low-load tail-bus states with remaining demand, it raises the
+physical hold to 60 s. Its direct parent uses the identical actor and inherited
+action transform but omits this final reserve.
+
+Formal confirmation used 1,350 fresh SUMO episodes: ten independent
+environment blocks, three demand levels, five training seeds, and 45 fixed
+physical behaviors. Averaged over the candidate--parent pairs, the reserve-augmented policy
+reduced generalized passenger time from 2,484.86 to 2,392.73 s per departed
+passenger (difference $-92.12$ s; $-3.71\%$), increased completion from
+0.96185 to 0.96650 (difference $+0.00466$), and reduced unfinished passengers
+from 655.42 to 578.20. It improved the primary endpoint and satisfied a 0.003
+completion noninferiority margin in all ten paired blocks; both one-sided exact
+sign-test p-values were 0.0009766, so the preregistered intersection--union test
+passed. Benefits had the same direction at all demand levels and training
+seeds. The confirmed claim is limited to this fixed candidate versus its fixed
+direct parent in simulator-to-simulator endpoint evaluation.
+\end{abstract}

@@ -1,0 +1,147 @@
+{
+  "campaign": "H2O+ v8 Stage A2 development SAC-baseline confirmation",
+  "comparison_gate": {
+    "completion_rate_noninferiority_margin": 0.005,
+    "directional_mean_improvement_greater_than": 0.0,
+    "holm_adjusted_one_sided_p_less_than": 0.05,
+    "mean_relative_improvement_at_least": 0.02,
+    "no_demand_scale_mean_relative_degradation_greater_than": 0.01,
+    "training_seeds_with_lower_paired_mean_at_least": 4
+  },
+  "development_environment": {
+    "blocks": [
+      {
+        "demand_realization_seed": 4201,
+        "name": "v8-development-01",
+        "sumo_seed": 4101
+      },
+      {
+        "demand_realization_seed": 4202,
+        "name": "v8-development-02",
+        "sumo_seed": 4102
+      },
+      {
+        "demand_realization_seed": 4203,
+        "name": "v8-development-03",
+        "sumo_seed": 4103
+      },
+      {
+        "demand_realization_seed": 4204,
+        "name": "v8-development-04",
+        "sumo_seed": 4104
+      },
+      {
+        "demand_realization_seed": 4205,
+        "name": "v8-development-05",
+        "sumo_seed": 4105
+      }
+    ],
+    "demand_scales": [
+      0.85,
+      1.0,
+      1.15
+    ],
+    "design": {
+      "bytes": 11029,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_development_environment_stage_a_v1.json",
+      "sha256": "d4a40a900cf9f72043c1d7c2067d02d6c79f2081f856b38cb257ec2ad0d18f3c"
+    },
+    "environment_cells": 15,
+    "verified_disjoint": true
+  },
+  "endpoint": {
+    "direction": "lower-is-better",
+    "paired_unit": "training seed x development environment block",
+    "primary": "generalized_seconds_per_passenger",
+    "secondary_constraint": "passenger_completion_rate"
+  },
+  "execution_authorized": false,
+  "existing_reference_evidence": {
+    "note": "the failed lambda0.5 candidate gate does not answer H2O+ versus SAC; only the 75 sealed H2O+ rows are reused",
+    "stage_a_analysis": {
+      "bytes": 11789,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/stage_a_gate_analysis.json",
+      "sha256": "20c8532b264d3f0048bf2b654ea6a1968aa4c272fcc87e48c989e578bf4e95c8"
+    },
+    "stage_a_file_manifest": {
+      "bytes": 120685,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/stage_a_file_manifest.json",
+      "sha256": "a424b65d330d8338a2aaaf1f7af3c381ef787a6c85267553ff9e7dec8a6ceb8d"
+    },
+    "stage_a_independent_verification": {
+      "bytes": 1263,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v8_stage_a_results/stage_a_file_manifest_verification.json",
+      "sha256": "bfc52b45946b66440e27e4248d5a790e9b9cab9e2053cd6b60c0c37bf1dacf3c"
+    }
+  },
+  "formal_held_out_may_be_read_for_selection": false,
+  "formal_held_out_outcomes_read": false,
+  "generator": {
+    "bytes": 23516,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/prepare_h2oplus_v8_stage_a2.py",
+    "sha256": "cf1c88f05453833a80bf7302f02b78721cc6a564a795a506733634fc645a7502"
+  },
+  "interpretation": {
+    "development_only": true,
+    "directional_superiority": "positive mean effect and Holm-corrected p<0.05",
+    "practical_confirmation": "directional superiority plus >=2% mean improvement, 4/5 seed robustness, completion noninferiority, and no scale degradation >1%",
+    "stage_b_authorized_or_submitted": false,
+    "supports_formal_held_out_model_effect_claim": false
+  },
+  "local_sumo_or_training_allowed": false,
+  "matrix": {
+    "assignment": "sorted-portable-job-key-round-robin-v1 within each block",
+    "new_sac_methods": 10,
+    "new_sumo_episodes": 150,
+    "reused_h2oplus_sumo_episodes": 75,
+    "shards": 2,
+    "workers_per_shard": 12
+  },
+  "multiple_testing": {
+    "family": [
+      "h2oplus-vs-sac-mixed",
+      "h2oplus-vs-sac-online"
+    ],
+    "familywise_alpha": 0.05,
+    "one_sided_alternative": "H2O+ has lower generalized seconds per passenger",
+    "procedure": "Holm step-down"
+  },
+  "new_policies": [
+    "sac-mixed",
+    "sac-online"
+  ],
+  "purpose": "determine whether the already-frozen H2O+ lambda=0.1 policies outperform SAC-mixed and SAC-online on the disjoint development set",
+  "reference_policy": "h2oplus",
+  "registered_utc": "2026-08-14T04:15:05.454200+00:00",
+  "scheduler_task_ids": [],
+  "schema_version": "transit-h2oplus-v8-stage-a2-sac-baseline-registration-v1",
+  "source_training_evidence": {
+    "baseline_manifest": {
+      "bytes": 63479,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/baseline_manifest.json",
+      "sha256": "9d35a4397c758b06b03f1c4e399e727d116c6a9198656ba2b13a49f4a5e2826f"
+    },
+    "baseline_matrix_audit": {
+      "bytes": 48034,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/formal_results_v7_v7r1/baseline_matrix_audit.json",
+      "sha256": "52c88d9d33a4aae518a8bf3889f7cedd4e3e971e84e18d6b23fcd3b951b53a12"
+    }
+  },
+  "status": "registered-not-submitted",
+  "stop_rules": [
+    "stop on nonzero exit, nonfinite result, or source/plan/dispatch mismatch",
+    "retain every registered seed and final checkpoint",
+    "never use formal held-out outcomes for development selection",
+    "never train or run SUMO locally",
+    "do not launch Stage B from this registration"
+  ],
+  "submission_requires_explicit_user_approval": true,
+  "training": false,
+  "training_seeds": [
+    5101,
+    5102,
+    5103,
+    5104,
+    5105
+  ]
+}

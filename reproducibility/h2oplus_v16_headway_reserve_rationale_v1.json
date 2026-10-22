@@ -1,0 +1,81 @@
+{
+  "created_utc": "2026-08-24T11:12:06.937550+00:00",
+  "diagnosis": {
+    "intervention": "retain the low-cost eighth-scale action everywhere and add a bounded schedule-adjusted headway reserve only while the episode remains inside a fixed early-horizon window",
+    "mechanistic_boundary": "the transformed hold is never negative, never exceeds the sealed parent actor hold, and remains exactly zero whenever the parent actor emits zero",
+    "uniform_scale_tradeoff": "v15 hold-eighth improved the 25k primary endpoint in 39 of 45 paired cells relative to hold-quarter, while hold-three-eighths improved completion in 34 of 45 cells and increased mean primary time"
+  },
+  "fixed_design": {
+    "base_hold_scale": 0.125,
+    "candidate_horizon_cutoff": 0.75,
+    "checkpoint_selection_by_behavior": false,
+    "diagnostic_horizon_cutoffs": [
+      0.5,
+      1.0
+    ],
+    "headway_balance_gain": 1.0,
+    "headway_reserve_formula": "before cutoff: min(parent_hold, max(0.125*parent_hold, 0.5*((H_b-T_b)-(H_f-T_f)))); after cutoff: 0.125*parent_hold",
+    "new_remote_development_episodes": 135,
+    "new_training_runs": 0,
+    "parent": "sealed v15 hold-eighth 25k behaviors, exact seeds 6201-6205",
+    "predesignated_candidate": "headway-reserve-three-quarter"
+  },
+  "formal_held_out_outcomes_read": false,
+  "frozen_v15_evidence": {
+    "development_analysis": {
+      "bytes": 31340,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_results/hold_calibration_analysis_v1.json",
+      "sha256": "d122aa79f6ee2cd5010e241607347921ed9bdc80bbed6ba41c3105e601ac9d9c"
+    },
+    "evaluation_audit": {
+      "bytes": 9733,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_results/evaluation_audit_v1.json",
+      "sha256": "a060b49e3155092542681c7d6afef66bcb2b31ab04ffe523273754ae2dcfa7e8"
+    },
+    "evaluation_closeout": {
+      "bytes": 33938,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_results/evaluation_closeout_v1.json",
+      "sha256": "2e4598c433eb6ffaf18fb9919b608b00d5cdd17f5a53e466ca587d6c8213feab"
+    },
+    "evaluation_closeout_verification": {
+      "bytes": 2251,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_results/evaluation_closeout_verification_v1.json",
+      "sha256": "f5edd5c2ef651172068c9cd595e6cb7710a3ffdd66e545671f5b4a014885e0b6"
+    },
+    "methods": {
+      "bytes": 46822,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_evaluation_methods_v1.json",
+      "sha256": "7712a35cbb1adbc55acf50bd8843bb3f4f7dc17090d0e65deeeb10ffe5177e5a"
+    },
+    "protocol": {
+      "bytes": 5373,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_protocol_v1.json",
+      "sha256": "6cd856504438ad0e9614b49156100cef12f24201b41562bf223e898f15ef0a8c"
+    },
+    "source_freeze": {
+      "bytes": 6060,
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/h2oplus_v15_hold_calibration_evaluation_source_freeze_v1.json",
+      "sha256": "af025dbd817a4d7c4661227fefae7653ecc5ca9bf666e94a1c0a8ca7e05f642d"
+    }
+  },
+  "prior_v14_and_v15_development_outcomes_used_for_design": true,
+  "schema_version": "transit-h2oplus-v16-headway-reserve-rationale-v1",
+  "status": "frozen-before-any-v16-outcome",
+  "study_stage": "development",
+  "v15_failed_preregistered_gates": [
+    "completion_rate_noninferiority_against_all_controls",
+    "relative_aulc_improvement_over_all_controls"
+  ],
+  "v15_observed_design_signal": {
+    "candidate_aulc": 2441.8244047906414,
+    "candidate_endpoint": 2429.964729987385,
+    "completion_delta_vs_h2oplus": -0.004033188697071144,
+    "completion_delta_vs_sac": -0.0039415926122909895,
+    "completion_delta_vs_v10": -0.003225719836584151,
+    "eighth_aulc": 2436.147166644969,
+    "eighth_endpoint": 2411.0406028351426,
+    "relative_vs_v11": 0.0076275224959640245,
+    "relative_vs_v12": 0.009713244357756664
+  },
+  "v16_development_evaluation_outcomes_read": false
+}

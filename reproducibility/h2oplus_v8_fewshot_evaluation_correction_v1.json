@@ -1,0 +1,38 @@
+{
+  "cancelled_task": {
+    "id": "t82396",
+    "reason": "prevent the known deployment defect from being repeated on shard 1",
+    "started": false,
+    "status": "cancelled"
+  },
+  "created_utc": "2026-08-14T17:01:09+00:00",
+  "failed_deployment_manifest_sha256": "d5ca1ef143f44dfe7f4c1d01c7279dd05348ddf444999a725f8840987edf8c66",
+  "failed_task": {
+    "backend_exit_file_sha256": "cd4d6b53739a355e46d64686b7e4f80a628ef74aadf9ca4ddf7e985804538703",
+    "block_log_sha256": "9acbd104b80bb295230e264ec2c1cb2919e0f5dc77f25bd5159cd71961e07f2f",
+    "failed_episode_logs": 105,
+    "host_execution_sha256": "41a510cbecc8f149e6d5f9592449885da740301ed278d7458c683c362c740402",
+    "id": "t82395",
+    "matrix_manifest_sha256": "d67cc50d16e5ed209c26d1634eb0ade87ee0a82c01583fa9a49d10f7e0d4a596",
+    "representative_log_sha256": "73901ded4486f8d3e593604e572cc5209826037bb4077445a295141c4a5b4041",
+    "result_json_files": 0,
+    "signature": "H2Oplus/v8/development/fewshot-eval/d5ca1ef143f4/shard0/jtl110gpu/glibc227",
+    "status": "failed",
+    "exit_code": 1
+  },
+  "formal_held_out_outcomes_read": false,
+  "frozen_protocol_sha256": "26d4f5c4ca9f337c11886855658127ef93a35954ca58eb43710aa70350610294",
+  "root_cause": "the matrix wrapper validated the frozen protocol hash but did not propagate it into evaluator child-process environments",
+  "schema_version": "transit-h2oplus-v8-fewshot-evaluation-correction-v1",
+  "scope": "evaluation-provenance-propagation-only",
+  "source_replacements": [
+    {
+      "corrected_sha256": "ac895cfec83cb1812d11e62e4348e1c6b9487d3eca85b3a512baff0a1aa5500c",
+      "path": "reproducibility/run_evaluation_matrix_v8_fewshot.py",
+      "reason": "propagate the already-verified frozen protocol hash to evaluator child processes",
+      "registered_sha256": "dbf769a7d483cba179f31557273f19dd24f1429b9a0b82296e67df084bddc914"
+    }
+  ],
+  "study_stage": "development",
+  "training_or_policy_artifacts_changed": false
+}
