@@ -5,6 +5,16 @@ workspace.  A manifest records the exact Git state, runtime, input hashes and
 HDF5 schema used by an experiment.  It does not copy or modify the underlying
 datasets.
 
+The publication includes versioned analyses and closeouts together with small
+existing `.log`, CSV, JSON, and JSONL records in their original directories.
+Look under `h2oplus_v*_results/` for development-round evidence and under
+`h2oplus_v20_formal_confirmation_results/` for the separately authorized final
+confirmation. Earlier runtime and training records also remain under
+`formal_results_v7_v7r1/` and the repository's `experiment_output*` directories.
+The 2026-10-31 additions are limited to 2 MiB per text artifact; large raw traces,
+replay, checkpoints, deployment copies, and caches are not published. Existing
+failure/incident labels and scientific records are preserved unchanged.
+
 The pre-rebuild paper results are marked `legacy-invalid`: they remain useful
 for diagnosis, but must not be reused as submission evidence because the v2
 replay loader applied the large-headway reward penalty twice.

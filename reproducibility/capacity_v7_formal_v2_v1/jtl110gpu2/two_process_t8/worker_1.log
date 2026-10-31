@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/benchmark_training_kernel_v4.py", line 469, in <module>
+    main()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/reproducibility/benchmark_training_kernel_v4.py", line 281, in main
+    replay.materialize_device_cache(include_online=args.phase == "online")
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/SimpleSAC/transit_v3/replay_buffer.py", line 492, in materialize_device_cache
+    self._offline_device_cache = {
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/SimpleSAC/transit_v3/replay_buffer.py", line 493, in <dictcomp>
+    key: torch.as_tensor(
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.80 GiB. GPU 0 has a total capacity of 11.76 GiB of which 2.62 GiB is free. Process 1247975 has 5.88 GiB memory in use. Including non-PyTorch memory, this process has 3.07 GiB memory in use. Of the allocated memory 2.83 GiB is allocated by PyTorch, and 2.94 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

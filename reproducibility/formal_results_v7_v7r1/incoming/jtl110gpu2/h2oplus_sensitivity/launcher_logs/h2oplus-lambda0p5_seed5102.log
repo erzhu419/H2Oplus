@@ -1,0 +1,590 @@
+
+[2026-08-13T12:54:40.643565+00:00] signature=630bee3a0d3c3072184ff1a5a13435953b274c242dd94e64093d27a7b013b279 resume=None
+2026-08-13 20:55:19,963 INFO loaded shared IQL initializer=/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_core/h2oplus_seed5102/checkpoints/offline_initializer.pt source_signature=02e86029322bf2c4d6e6e67c858085df6549938b66239d4cb6a897ae9085f827
+2026-08-13 20:55:21,032 INFO run=/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_sensitivity/h2oplus-lambda0p5_seed5102 method=h2oplus-lambda0p5 device=cuda:0 offline_rows=3284718 simulator=67d5869a90a761068b2ba954d79b5c34f3f42516f573c7efd51e788498cde6c9
+  Loaded line 102S: 15-dim obs, 19 segs, 35 trips
+  Loaded line 102X: 15-dim obs, 18 segs, 31 trips
+  Loaded line 122S: 15-dim obs, 17 segs, 33 trips
+  Loaded line 122X: 15-dim obs, 17 segs, 32 trips
+  Loaded line 311S: 15-dim obs, 20 segs, 28 trips
+  Loaded line 311X: 15-dim obs, 21 segs, 26 trips
+  Loaded line 406S: 15-dim obs, 19 segs, 28 trips
+  Loaded line 406X: 15-dim obs, 19 segs, 28 trips
+  Loaded line 705S: 15-dim obs, 23 segs, 25 trips
+  Loaded line 705X: 15-dim obs, 23 segs, 21 trips
+  Loaded line 7S: 15-dim obs, 12 segs, 52 trips
+  Loaded line 7X: 15-dim obs, 12 segs, 50 trips
+2026-08-13 20:55:52,800 INFO warmup rollout {'events': 5000, 'transitions': 4999, 'episodes_started': 1, 'demand_scale_episode_starts': {'0.75': 1, '1': 0, '1.25': 0}, 'current_demand_scale': 0.75, 'discarded_pending_total': 0, 'trip_boundaries_total': 0, 'maximum_simultaneous_decisions': 8, 'blocked_simultaneous_batch_size': 0, 'hard_event_cap_reached': False, 'mean_reward': -676.502900580116, 'mean_delta_t': 1.509501900380076, 'mean_hold_seconds': 3.2936981767416, 'online_buffer_size': 4999, 'action_mode': 'policy'}
+2026-08-13 20:56:24,777 INFO ratio pretraining {'ratio/loss': 0.5685080885887146, 'ratio/joint_loss': 0.27508607506752014, 'ratio/state_action_loss': 0.29342201352119446, 'ratio/joint_auc': 0.94732666015625, 'ratio/joint_accuracy': 0.892578125, 'ratio/joint_brier': 0.07910509407520294, 'ratio/joint_real_logit_mean': 2.0247559547424316, 'ratio/joint_sim_logit_mean': -1.567293405532837, 'ratio/state_action_auc': 0.9430694580078125, 'ratio/state_action_accuracy': 0.880859375, 'ratio/state_action_brier': 0.08641104400157928, 'ratio/state_action_real_logit_mean': 2.0675809383392334, 'ratio/state_action_sim_logit_mean': -1.4102332592010498, 'ratio/validation_available': 0.0}
+2026-08-13 20:57:01,763 INFO mixed update 250/500 rate=7.3/s critic=0.3944 actor=27.8412 actor_updated=1 alpha=0.9214
+2026-08-13 20:57:13,594 INFO mixed update 500/500 rate=11.3/s critic=0.0947 actor=24.9370 actor_updated=1 alpha=0.8531
+2026-08-13 20:57:13,598 INFO epoch=1/190 reward=-1613.88200 online=5499 rollout=3.32s train=44.42s
+2026-08-13 20:57:25,830 INFO mixed update 250/500 rate=24.1/s critic=0.2030 actor=26.4287 actor_updated=1 alpha=0.7906
+2026-08-13 20:57:37,712 INFO mixed update 500/500 rate=24.3/s critic=0.0630 actor=27.0150 actor_updated=1 alpha=0.7329
+2026-08-13 20:57:37,717 INFO epoch=2/190 reward=-1946.55200 online=5999 rollout=3.53s train=20.59s
+2026-08-13 20:57:49,847 INFO mixed update 250/500 rate=24.3/s critic=0.1497 actor=23.3801 actor_updated=1 alpha=0.6796
+2026-08-13 20:58:02,258 INFO mixed update 500/500 rate=24.4/s critic=0.0804 actor=22.5178 actor_updated=1 alpha=0.6303
+2026-08-13 20:58:02,262 INFO epoch=3/190 reward=-1953.12375 online=6500 rollout=4.07s train=20.47s
+2026-08-13 20:58:14,418 INFO mixed update 250/500 rate=24.3/s critic=0.5466 actor=24.6626 actor_updated=1 alpha=0.5846
+2026-08-13 20:58:26,565 INFO mixed update 500/500 rate=24.1/s critic=0.0680 actor=25.0748 actor_updated=1 alpha=0.5423
+2026-08-13 20:58:26,570 INFO epoch=4/190 reward=-2216.01002 online=6999 rollout=3.54s train=20.76s
+2026-08-13 20:58:38,791 INFO mixed update 250/500 rate=24.1/s critic=0.5658 actor=22.5856 actor_updated=1 alpha=0.5030
+2026-08-13 20:58:50,787 INFO mixed update 500/500 rate=24.2/s critic=0.6915 actor=24.6816 actor_updated=1 alpha=0.4666
+2026-08-13 20:58:50,792 INFO epoch=5/190 reward=-2178.94600 online=7499 rollout=3.54s train=20.67s
+2026-08-13 20:59:04,728 INFO mixed update 250/500 rate=24.0/s critic=0.4381 actor=23.6197 actor_updated=1 alpha=0.4329
+2026-08-13 20:59:16,608 INFO mixed update 500/500 rate=24.2/s critic=0.0575 actor=25.1258 actor_updated=1 alpha=0.4016
+2026-08-13 20:59:16,613 INFO epoch=6/190 reward=-2214.72000 online=7999 rollout=3.51s train=20.65s
+2026-08-13 20:59:28,800 INFO mixed update 250/500 rate=24.4/s critic=0.0538 actor=23.5566 actor_updated=1 alpha=0.3725
+2026-08-13 20:59:40,817 INFO mixed update 500/500 rate=24.3/s critic=0.0672 actor=24.3245 actor_updated=1 alpha=0.3456
+2026-08-13 20:59:40,822 INFO epoch=7/190 reward=-2302.95200 online=8499 rollout=3.60s train=20.60s
+2026-08-13 20:59:52,906 INFO mixed update 250/500 rate=24.4/s critic=0.2987 actor=23.3661 actor_updated=1 alpha=0.3206
+2026-08-13 21:00:05,375 INFO mixed update 500/500 rate=24.6/s critic=0.2703 actor=26.8268 actor_updated=1 alpha=0.2975
+2026-08-13 21:00:05,380 INFO epoch=8/190 reward=-2337.19600 online=8999 rollout=4.25s train=20.30s
+2026-08-13 21:00:17,527 INFO mixed update 250/500 rate=24.4/s critic=0.0998 actor=26.6344 actor_updated=1 alpha=0.2760
+2026-08-13 21:00:29,304 INFO mixed update 500/500 rate=24.7/s critic=0.0449 actor=28.6613 actor_updated=1 alpha=0.2560
+2026-08-13 21:00:29,308 INFO epoch=9/190 reward=-2360.44910 online=9500 rollout=3.65s train=20.27s
+2026-08-13 21:00:41,437 INFO mixed update 250/500 rate=24.4/s critic=0.4785 actor=27.7769 actor_updated=1 alpha=0.2375
+2026-08-13 21:00:53,389 INFO mixed update 500/500 rate=24.5/s critic=0.6218 actor=30.5844 actor_updated=1 alpha=0.2204
+2026-08-13 21:00:53,394 INFO epoch=10/190 reward=-2556.11022 online=9999 rollout=3.66s train=20.42s
+2026-08-13 21:01:07,234 INFO mixed update 250/500 rate=25.1/s critic=0.5080 actor=27.2922 actor_updated=1 alpha=0.2045
+2026-08-13 21:01:19,403 INFO mixed update 500/500 rate=24.6/s critic=0.1680 actor=26.5422 actor_updated=1 alpha=0.1897
+2026-08-13 21:01:19,408 INFO epoch=11/190 reward=-2443.84661 online=10501 rollout=3.55s train=20.29s
+2026-08-13 21:01:31,389 INFO mixed update 250/500 rate=24.9/s critic=0.3940 actor=27.8765 actor_updated=1 alpha=0.1760
+2026-08-13 21:01:43,370 INFO mixed update 500/500 rate=24.7/s critic=0.1342 actor=26.5877 actor_updated=1 alpha=0.1633
+2026-08-13 21:01:43,375 INFO epoch=12/190 reward=-2620.19478 online=10999 rollout=3.70s train=20.26s
+2026-08-13 21:01:55,649 INFO mixed update 250/500 rate=24.2/s critic=0.0806 actor=27.8485 actor_updated=1 alpha=0.1516
+2026-08-13 21:02:08,669 INFO mixed update 500/500 rate=24.2/s critic=0.0706 actor=29.4073 actor_updated=1 alpha=0.1407
+2026-08-13 21:02:08,674 INFO epoch=13/190 reward=-2876.48800 online=11499 rollout=4.59s train=20.70s
+2026-08-13 21:02:21,037 INFO mixed update 250/500 rate=24.0/s critic=0.5271 actor=29.7747 actor_updated=1 alpha=0.1305
+2026-08-13 21:02:33,088 INFO mixed update 500/500 rate=24.2/s critic=0.0856 actor=29.2403 actor_updated=1 alpha=0.1211
+2026-08-13 21:02:33,092 INFO epoch=14/190 reward=-3009.74000 online=11999 rollout=3.73s train=20.68s
+2026-08-13 21:02:45,391 INFO mixed update 250/500 rate=24.1/s critic=0.8821 actor=30.7062 actor_updated=1 alpha=0.1124
+2026-08-13 21:02:57,591 INFO mixed update 500/500 rate=24.1/s critic=0.2499 actor=30.7136 actor_updated=1 alpha=0.1043
+2026-08-13 21:02:57,596 INFO epoch=15/190 reward=-3113.98600 online=12499 rollout=3.74s train=20.76s
+2026-08-13 21:03:12,892 INFO mixed update 250/500 rate=25.2/s critic=0.1429 actor=32.4334 actor_updated=1 alpha=0.0968
+2026-08-13 21:03:24,635 INFO mixed update 500/500 rate=25.2/s critic=0.1407 actor=27.5481 actor_updated=1 alpha=0.0898
+2026-08-13 21:03:24,639 INFO epoch=16/190 reward=-2513.97800 online=12999 rollout=4.76s train=19.84s
+2026-08-13 21:03:37,020 INFO mixed update 250/500 rate=24.4/s critic=0.0475 actor=35.4349 actor_updated=1 alpha=0.0834
+2026-08-13 21:03:49,538 INFO mixed update 500/500 rate=24.3/s critic=0.1282 actor=34.2724 actor_updated=1 alpha=0.0774
+2026-08-13 21:03:49,542 INFO epoch=17/190 reward=-1797.02600 online=13499 rollout=4.34s train=20.56s
+2026-08-13 21:04:09,404 INFO mixed update 250/500 rate=24.6/s critic=0.2711 actor=32.7298 actor_updated=1 alpha=0.0718
+2026-08-13 21:04:21,416 INFO mixed update 500/500 rate=24.6/s critic=0.0822 actor=32.1959 actor_updated=1 alpha=0.0667
+2026-08-13 21:04:21,430 INFO epoch=18/190 reward=-2443.26000 online=13999 rollout=11.54s train=20.34s
+2026-08-13 21:04:33,177 INFO mixed update 250/500 rate=25.0/s critic=0.2863 actor=30.1256 actor_updated=1 alpha=0.0619
+2026-08-13 21:04:44,780 INFO mixed update 500/500 rate=25.0/s critic=0.1035 actor=31.3418 actor_updated=1 alpha=0.0575
+2026-08-13 21:04:44,793 INFO epoch=19/190 reward=-431.35529 online=14500 rollout=3.38s train=19.97s
+2026-08-13 21:04:56,702 INFO mixed update 250/500 rate=24.6/s critic=0.0830 actor=32.1010 actor_updated=1 alpha=0.0534
+2026-08-13 21:05:08,273 INFO mixed update 500/500 rate=24.8/s critic=0.2291 actor=36.6100 actor_updated=1 alpha=0.0495
+2026-08-13 21:05:08,285 INFO epoch=20/190 reward=-847.93788 online=14999 rollout=3.32s train=20.16s
+2026-08-13 21:05:20,925 INFO mixed update 250/500 rate=24.4/s critic=0.3171 actor=30.4888 actor_updated=1 alpha=0.0460
+2026-08-13 21:05:32,596 INFO mixed update 500/500 rate=24.5/s critic=0.0821 actor=33.5001 actor_updated=1 alpha=0.0427
+2026-08-13 21:05:32,609 INFO epoch=21/190 reward=-973.22200 online=15499 rollout=3.30s train=20.40s
+2026-08-13 21:05:44,639 INFO mixed update 250/500 rate=24.3/s critic=0.0849 actor=28.3769 actor_updated=1 alpha=0.0397
+2026-08-13 21:05:56,566 INFO mixed update 500/500 rate=24.2/s critic=0.1924 actor=32.3680 actor_updated=1 alpha=0.0368
+2026-08-13 21:05:56,578 INFO epoch=22/190 reward=-1034.79400 online=15999 rollout=3.27s train=20.69s
+2026-08-13 21:06:08,299 INFO mixed update 250/500 rate=25.0/s critic=0.3397 actor=34.3303 actor_updated=1 alpha=0.0342
+2026-08-13 21:06:20,068 INFO mixed update 500/500 rate=24.8/s critic=0.1301 actor=30.6602 actor_updated=1 alpha=0.0318
+2026-08-13 21:06:20,078 INFO epoch=23/190 reward=-1038.07937 online=16503 rollout=3.33s train=20.16s
+2026-08-13 21:06:32,106 INFO mixed update 250/500 rate=24.3/s critic=0.5334 actor=31.0536 actor_updated=1 alpha=0.0297
+2026-08-13 21:06:44,217 INFO mixed update 500/500 rate=24.0/s critic=0.0585 actor=33.6648 actor_updated=1 alpha=0.0277
+2026-08-13 21:06:44,228 INFO epoch=24/190 reward=-1022.26210 online=16999 rollout=3.28s train=20.85s
+2026-08-13 21:06:56,187 INFO mixed update 250/500 rate=24.2/s critic=0.1024 actor=33.8475 actor_updated=1 alpha=0.0257
+2026-08-13 21:07:08,047 INFO mixed update 500/500 rate=24.4/s critic=0.6566 actor=33.1526 actor_updated=1 alpha=0.0239
+2026-08-13 21:07:08,060 INFO epoch=25/190 reward=-954.81200 online=17499 rollout=3.33s train=20.49s
+2026-08-13 21:07:20,775 INFO mixed update 250/500 rate=24.3/s critic=0.2728 actor=33.2718 actor_updated=1 alpha=0.0223
+2026-08-13 21:07:32,383 INFO mixed update 500/500 rate=24.8/s critic=0.0548 actor=30.5195 actor_updated=1 alpha=0.0207
+2026-08-13 21:07:32,394 INFO epoch=26/190 reward=-1133.44841 online=18003 rollout=3.40s train=20.16s
+2026-08-13 21:07:44,639 INFO mixed update 250/500 rate=23.7/s critic=0.1785 actor=34.8639 actor_updated=1 alpha=0.0193
+2026-08-13 21:07:57,052 INFO mixed update 500/500 rate=23.5/s critic=0.6382 actor=33.8068 actor_updated=1 alpha=0.0182
+2026-08-13 21:07:57,066 INFO epoch=27/190 reward=-1580.14718 online=18499 rollout=3.42s train=21.23s
+2026-08-13 21:08:09,044 INFO mixed update 250/500 rate=24.6/s critic=0.0795 actor=31.3857 actor_updated=1 alpha=0.0173
+2026-08-13 21:08:20,960 INFO mixed update 500/500 rate=24.4/s critic=0.5937 actor=37.0071 actor_updated=1 alpha=0.0164
+2026-08-13 21:08:20,973 INFO epoch=28/190 reward=-1953.95200 online=18999 rollout=3.44s train=20.45s
+2026-08-13 21:08:32,947 INFO mixed update 250/500 rate=24.6/s critic=0.2945 actor=31.5675 actor_updated=1 alpha=0.0156
+2026-08-13 21:08:45,172 INFO mixed update 500/500 rate=24.2/s critic=0.3026 actor=32.9429 actor_updated=1 alpha=0.0154
+2026-08-13 21:08:45,185 INFO epoch=29/190 reward=-2353.82036 online=19500 rollout=3.53s train=20.67s
+2026-08-13 21:08:57,275 INFO mixed update 250/500 rate=24.3/s critic=0.1022 actor=34.7983 actor_updated=1 alpha=0.0150
+2026-08-13 21:09:09,410 INFO mixed update 500/500 rate=24.1/s critic=0.0612 actor=33.3906 actor_updated=1 alpha=0.0145
+2026-08-13 21:09:09,423 INFO epoch=30/190 reward=-2600.39479 online=19999 rollout=3.52s train=20.71s
+2026-08-13 21:09:22,510 INFO mixed update 250/500 rate=24.6/s critic=0.4642 actor=36.3850 actor_updated=1 alpha=0.0141
+2026-08-13 21:09:34,792 INFO mixed update 500/500 rate=24.2/s critic=0.7325 actor=32.6586 actor_updated=1 alpha=0.0139
+2026-08-13 21:09:34,806 INFO epoch=31/190 reward=-3141.41916 online=20500 rollout=3.63s train=20.68s
+2026-08-13 21:09:47,966 INFO mixed update 250/500 rate=23.9/s critic=0.3059 actor=34.4183 actor_updated=1 alpha=0.0139
+2026-08-13 21:10:00,103 INFO mixed update 500/500 rate=24.0/s critic=0.2881 actor=33.3715 actor_updated=1 alpha=0.0137
+2026-08-13 21:10:00,115 INFO epoch=32/190 reward=-3600.97600 online=21000 rollout=4.45s train=20.85s
+2026-08-13 21:10:12,417 INFO mixed update 250/500 rate=24.1/s critic=0.4369 actor=34.6002 actor_updated=1 alpha=0.0142
+2026-08-13 21:10:24,434 INFO mixed update 500/500 rate=24.2/s critic=0.0761 actor=36.2569 actor_updated=1 alpha=0.0148
+2026-08-13 21:10:24,446 INFO epoch=33/190 reward=-3719.17635 online=21499 rollout=3.67s train=20.65s
+2026-08-13 21:10:37,484 INFO mixed update 250/500 rate=24.3/s critic=0.0792 actor=36.3739 actor_updated=1 alpha=0.0144
+2026-08-13 21:10:49,282 INFO mixed update 500/500 rate=24.6/s critic=0.0833 actor=36.3941 actor_updated=1 alpha=0.0145
+2026-08-13 21:10:49,294 INFO epoch=34/190 reward=-4177.95400 online=21999 rollout=4.54s train=20.30s
+2026-08-13 21:11:01,500 INFO mixed update 250/500 rate=24.2/s critic=0.0938 actor=36.2147 actor_updated=1 alpha=0.0146
+2026-08-13 21:11:13,694 INFO mixed update 500/500 rate=24.1/s critic=0.0652 actor=39.7482 actor_updated=1 alpha=0.0153
+2026-08-13 21:11:13,706 INFO epoch=35/190 reward=-4335.78000 online=22499 rollout=3.68s train=20.72s
+2026-08-13 21:11:27,664 INFO mixed update 250/500 rate=24.1/s critic=0.2613 actor=37.2969 actor_updated=1 alpha=0.0158
+2026-08-13 21:11:40,968 INFO mixed update 500/500 rate=24.0/s critic=0.1798 actor=41.8644 actor_updated=1 alpha=0.0160
+2026-08-13 21:11:40,981 INFO epoch=36/190 reward=-4654.09000 online=22999 rollout=4.77s train=20.83s
+2026-08-13 21:11:53,937 INFO mixed update 250/500 rate=23.5/s critic=0.0755 actor=36.0845 actor_updated=1 alpha=0.0165
+2026-08-13 21:12:06,055 INFO mixed update 500/500 rate=23.9/s critic=0.1401 actor=39.1649 actor_updated=1 alpha=0.0178
+2026-08-13 21:12:06,065 INFO epoch=37/190 reward=-4688.36400 online=23499 rollout=4.15s train=20.92s
+2026-08-13 21:12:18,533 INFO mixed update 250/500 rate=24.1/s critic=0.2798 actor=43.9176 actor_updated=1 alpha=0.0191
+2026-08-13 21:12:30,746 INFO mixed update 500/500 rate=24.1/s critic=0.2345 actor=37.1708 actor_updated=1 alpha=0.0203
+2026-08-13 21:12:30,760 INFO epoch=38/190 reward=-4742.22200 online=23999 rollout=3.91s train=20.77s
+2026-08-13 21:12:44,160 INFO mixed update 250/500 rate=24.0/s critic=0.3169 actor=46.1331 actor_updated=1 alpha=0.0209
+2026-08-13 21:12:56,289 INFO mixed update 500/500 rate=24.1/s critic=0.0539 actor=41.8587 actor_updated=1 alpha=0.0204
+2026-08-13 21:12:56,302 INFO epoch=39/190 reward=-5043.16367 online=24500 rollout=4.79s train=20.74s
+2026-08-13 21:13:08,503 INFO mixed update 250/500 rate=24.5/s critic=0.3082 actor=44.1583 actor_updated=1 alpha=0.0202
+2026-08-13 21:13:22,736 INFO mixed update 500/500 rate=22.7/s critic=0.1514 actor=45.7318 actor_updated=1 alpha=0.0197
+2026-08-13 21:13:22,759 INFO epoch=40/190 reward=-5276.65130 online=24999 rollout=4.42s train=22.01s
+2026-08-13 21:13:39,366 INFO mixed update 250/500 rate=23.8/s critic=0.2258 actor=40.6954 actor_updated=1 alpha=0.0197
+2026-08-13 21:13:52,607 INFO mixed update 500/500 rate=24.0/s critic=0.6210 actor=40.2277 actor_updated=1 alpha=0.0202
+2026-08-13 21:13:52,619 INFO epoch=41/190 reward=-5809.50996 online=25501 rollout=5.11s train=20.80s
+2026-08-13 21:14:05,124 INFO mixed update 250/500 rate=23.8/s critic=0.2776 actor=42.6116 actor_updated=1 alpha=0.0195
+2026-08-13 21:14:17,318 INFO mixed update 500/500 rate=24.0/s critic=0.2111 actor=50.1779 actor_updated=1 alpha=0.0197
+2026-08-13 21:14:17,331 INFO epoch=42/190 reward=-5693.01406 online=25999 rollout=3.83s train=20.86s
+2026-08-13 21:14:29,627 INFO mixed update 250/500 rate=24.3/s critic=0.2322 actor=48.0880 actor_updated=1 alpha=0.0189
+2026-08-13 21:14:42,336 INFO mixed update 500/500 rate=23.9/s critic=0.2447 actor=41.8590 actor_updated=1 alpha=0.0194
+2026-08-13 21:14:42,349 INFO epoch=43/190 reward=-4547.66000 online=26499 rollout=4.05s train=20.96s
+2026-08-13 21:14:56,021 INFO mixed update 250/500 rate=22.0/s critic=0.2659 actor=45.0212 actor_updated=1 alpha=0.0208
+2026-08-13 21:15:09,656 INFO mixed update 500/500 rate=22.8/s critic=0.2951 actor=50.4878 actor_updated=1 alpha=0.0209
+2026-08-13 21:15:09,669 INFO epoch=44/190 reward=-3136.05600 online=26999 rollout=5.42s train=21.89s
+2026-08-13 21:15:23,503 INFO mixed update 250/500 rate=23.3/s critic=0.1157 actor=48.2282 actor_updated=1 alpha=0.0205
+2026-08-13 21:15:41,832 INFO mixed update 500/500 rate=23.7/s critic=0.8920 actor=47.2478 actor_updated=1 alpha=0.0205
+2026-08-13 21:15:41,846 INFO epoch=45/190 reward=-7143.01000 online=27499 rollout=11.11s train=21.06s
+2026-08-13 21:15:58,004 INFO mixed update 250/500 rate=20.1/s critic=0.2772 actor=49.7369 actor_updated=1 alpha=0.0203
+2026-08-13 21:16:10,056 INFO mixed update 500/500 rate=21.9/s critic=0.3382 actor=48.8361 actor_updated=1 alpha=0.0192
+2026-08-13 21:16:10,070 INFO epoch=46/190 reward=-621.40600 online=27999 rollout=4.59s train=22.86s
+2026-08-13 21:16:22,190 INFO mixed update 250/500 rate=23.9/s critic=0.0930 actor=45.5316 actor_updated=1 alpha=0.0192
+2026-08-13 21:16:34,276 INFO mixed update 500/500 rate=23.9/s critic=0.1201 actor=52.0707 actor_updated=1 alpha=0.0196
+2026-08-13 21:16:34,288 INFO epoch=47/190 reward=-702.31275 online=28501 rollout=3.32s train=20.88s
+2026-08-13 21:16:46,385 INFO mixed update 250/500 rate=24.1/s critic=0.1305 actor=44.0234 actor_updated=1 alpha=0.0190
+2026-08-13 21:16:58,314 INFO mixed update 500/500 rate=24.1/s critic=0.2688 actor=41.9117 actor_updated=1 alpha=0.0206
+2026-08-13 21:16:58,325 INFO epoch=48/190 reward=-1030.51400 online=29001 rollout=3.25s train=20.77s
+2026-08-13 21:17:10,377 INFO mixed update 250/500 rate=24.2/s critic=0.4278 actor=47.8567 actor_updated=1 alpha=0.0198
+2026-08-13 21:17:22,256 INFO mixed update 500/500 rate=24.2/s critic=0.1604 actor=45.7485 actor_updated=1 alpha=0.0195
+2026-08-13 21:17:22,269 INFO epoch=49/190 reward=-1026.26506 online=29499 rollout=3.28s train=20.65s
+2026-08-13 21:17:35,525 INFO mixed update 250/500 rate=22.3/s critic=0.2981 actor=45.7714 actor_updated=1 alpha=0.0197
+2026-08-13 21:17:47,984 INFO mixed update 500/500 rate=22.9/s critic=0.1735 actor=48.2731 actor_updated=1 alpha=0.0201
+2026-08-13 21:17:47,997 INFO epoch=50/190 reward=-1223.66267 online=30000 rollout=3.86s train=21.85s
+2026-08-13 21:18:00,986 INFO mixed update 250/500 rate=24.0/s critic=0.2210 actor=52.5549 actor_updated=1 alpha=0.0202
+2026-08-13 21:18:13,062 INFO mixed update 500/500 rate=24.0/s critic=0.3930 actor=45.5629 actor_updated=1 alpha=0.0201
+2026-08-13 21:18:13,074 INFO epoch=51/190 reward=-1380.27255 online=30499 rollout=3.37s train=20.85s
+2026-08-13 21:18:25,191 INFO mixed update 250/500 rate=24.2/s critic=0.0947 actor=50.8050 actor_updated=1 alpha=0.0198
+2026-08-13 21:18:37,258 INFO mixed update 500/500 rate=24.0/s critic=0.4736 actor=46.0695 actor_updated=1 alpha=0.0195
+2026-08-13 21:18:37,271 INFO epoch=52/190 reward=-1374.25200 online=30999 rollout=3.38s train=20.80s
+2026-08-13 21:18:49,869 INFO mixed update 250/500 rate=23.4/s critic=0.6063 actor=48.0007 actor_updated=1 alpha=0.0202
+2026-08-13 21:19:03,103 INFO mixed update 500/500 rate=22.8/s critic=0.2403 actor=46.3279 actor_updated=1 alpha=0.0205
+2026-08-13 21:19:03,116 INFO epoch=53/190 reward=-1422.93600 online=31499 rollout=3.88s train=21.95s
+2026-08-13 21:19:16,598 INFO mixed update 250/500 rate=22.1/s critic=0.4310 actor=50.1981 actor_updated=1 alpha=0.0209
+2026-08-13 21:19:28,805 INFO mixed update 500/500 rate=22.8/s critic=0.2078 actor=43.5450 actor_updated=1 alpha=0.0192
+2026-08-13 21:19:28,818 INFO epoch=54/190 reward=-2120.78643 online=32000 rollout=3.78s train=21.91s
+2026-08-13 21:19:41,084 INFO mixed update 250/500 rate=23.8/s critic=0.1064 actor=50.6203 actor_updated=1 alpha=0.0195
+2026-08-13 21:19:53,633 INFO mixed update 500/500 rate=24.1/s critic=0.2544 actor=48.5487 actor_updated=1 alpha=0.0185
+2026-08-13 21:19:53,646 INFO epoch=55/190 reward=-2493.79242 online=32501 rollout=4.07s train=20.75s
+2026-08-13 21:20:06,535 INFO mixed update 250/500 rate=24.5/s critic=0.0684 actor=39.5514 actor_updated=1 alpha=0.0182
+2026-08-13 21:20:18,419 INFO mixed update 500/500 rate=24.5/s critic=0.2080 actor=52.2130 actor_updated=1 alpha=0.0173
+2026-08-13 21:20:18,431 INFO epoch=56/190 reward=-2850.22244 online=33000 rollout=3.45s train=20.41s
+2026-08-13 21:20:30,434 INFO mixed update 250/500 rate=24.6/s critic=0.1461 actor=45.9600 actor_updated=1 alpha=0.0175
+2026-08-13 21:20:42,480 INFO mixed update 500/500 rate=24.4/s critic=0.2496 actor=48.2111 actor_updated=1 alpha=0.0181
+2026-08-13 21:20:42,496 INFO epoch=57/190 reward=-3609.67000 online=33500 rollout=3.55s train=20.50s
+2026-08-13 21:20:55,557 INFO mixed update 250/500 rate=24.2/s critic=0.3217 actor=52.1585 actor_updated=1 alpha=0.0176
+2026-08-13 21:21:07,570 INFO mixed update 500/500 rate=24.3/s critic=0.1144 actor=54.3557 actor_updated=1 alpha=0.0170
+2026-08-13 21:21:07,583 INFO epoch=58/190 reward=-4704.95391 online=33999 rollout=4.48s train=20.59s
+2026-08-13 21:21:19,872 INFO mixed update 250/500 rate=24.2/s critic=0.0615 actor=47.0728 actor_updated=1 alpha=0.0168
+2026-08-13 21:21:31,870 INFO mixed update 500/500 rate=24.3/s critic=0.5720 actor=51.7448 actor_updated=1 alpha=0.0167
+2026-08-13 21:21:31,883 INFO epoch=59/190 reward=-5353.10000 online=34499 rollout=3.71s train=20.58s
+2026-08-13 21:21:43,838 INFO mixed update 250/500 rate=24.9/s critic=0.2570 actor=50.1550 actor_updated=1 alpha=0.0167
+2026-08-13 21:21:56,360 INFO mixed update 500/500 rate=24.9/s critic=0.1326 actor=50.1700 actor_updated=1 alpha=0.0169
+2026-08-13 21:21:56,374 INFO epoch=60/190 reward=-5714.81038 online=35000 rollout=4.41s train=20.07s
+2026-08-13 21:22:09,675 INFO mixed update 250/500 rate=25.2/s critic=0.1211 actor=52.5359 actor_updated=1 alpha=0.0171
+2026-08-13 21:22:21,742 INFO mixed update 500/500 rate=24.8/s critic=0.2756 actor=58.3342 actor_updated=1 alpha=0.0174
+2026-08-13 21:22:21,756 INFO epoch=61/190 reward=-6229.85371 online=35499 rollout=3.64s train=20.20s
+2026-08-13 21:22:33,838 INFO mixed update 250/500 rate=24.6/s critic=0.0673 actor=50.0796 actor_updated=1 alpha=0.0180
+2026-08-13 21:22:46,874 INFO mixed update 500/500 rate=24.5/s critic=0.2344 actor=52.9512 actor_updated=1 alpha=0.0185
+2026-08-13 21:22:46,886 INFO epoch=62/190 reward=-6178.22000 online=35999 rollout=4.68s train=20.44s
+2026-08-13 21:22:59,905 INFO mixed update 250/500 rate=23.3/s critic=0.0909 actor=53.0209 actor_updated=1 alpha=0.0195
+2026-08-13 21:23:12,094 INFO mixed update 500/500 rate=23.6/s critic=0.3281 actor=53.1158 actor_updated=1 alpha=0.0185
+2026-08-13 21:23:12,107 INFO epoch=63/190 reward=-6427.49600 online=36499 rollout=4.04s train=21.17s
+2026-08-13 21:23:24,962 INFO mixed update 250/500 rate=23.3/s critic=0.3261 actor=54.3434 actor_updated=1 alpha=0.0178
+2026-08-13 21:23:37,000 INFO mixed update 500/500 rate=23.8/s critic=0.3632 actor=57.6292 actor_updated=1 alpha=0.0178
+2026-08-13 21:23:37,014 INFO epoch=64/190 reward=-6401.35000 online=36999 rollout=3.91s train=20.98s
+2026-08-13 21:23:48,986 INFO mixed update 250/500 rate=24.9/s critic=0.4403 actor=57.1914 actor_updated=1 alpha=0.0175
+2026-08-13 21:24:02,007 INFO mixed update 500/500 rate=24.5/s critic=0.0888 actor=63.5455 actor_updated=1 alpha=0.0171
+2026-08-13 21:24:02,020 INFO epoch=65/190 reward=-6275.40200 online=37499 rollout=4.57s train=20.43s
+2026-08-13 21:24:16,538 INFO mixed update 250/500 rate=24.0/s critic=0.8490 actor=55.9568 actor_updated=1 alpha=0.0160
+2026-08-13 21:24:28,770 INFO mixed update 500/500 rate=24.0/s critic=0.2041 actor=57.1881 actor_updated=1 alpha=0.0155
+2026-08-13 21:24:28,784 INFO epoch=66/190 reward=-6944.97400 online=37999 rollout=3.79s train=20.82s
+2026-08-13 21:24:41,062 INFO mixed update 250/500 rate=24.2/s critic=0.4584 actor=58.7696 actor_updated=1 alpha=0.0158
+2026-08-13 21:24:53,300 INFO mixed update 500/500 rate=24.1/s critic=0.2404 actor=58.2421 actor_updated=1 alpha=0.0170
+2026-08-13 21:24:53,312 INFO epoch=67/190 reward=-7254.75600 online=38499 rollout=3.77s train=20.74s
+2026-08-13 21:25:06,758 INFO mixed update 250/500 rate=23.8/s critic=0.9416 actor=55.0246 actor_updated=1 alpha=0.0171
+2026-08-13 21:25:18,969 INFO mixed update 500/500 rate=24.0/s critic=0.1844 actor=57.9619 actor_updated=1 alpha=0.0183
+2026-08-13 21:25:18,980 INFO epoch=68/190 reward=-7868.73904 online=39001 rollout=4.80s train=20.85s
+2026-08-13 21:25:31,508 INFO mixed update 250/500 rate=23.9/s critic=0.1547 actor=64.1693 actor_updated=1 alpha=0.0184
+2026-08-13 21:25:43,597 INFO mixed update 500/500 rate=24.1/s critic=0.1579 actor=63.6317 actor_updated=1 alpha=0.0181
+2026-08-13 21:25:43,610 INFO epoch=69/190 reward=-8627.19880 online=39499 rollout=3.86s train=20.75s
+2026-08-13 21:25:55,948 INFO mixed update 250/500 rate=24.1/s critic=0.3022 actor=58.2253 actor_updated=1 alpha=0.0175
+2026-08-13 21:26:08,208 INFO mixed update 500/500 rate=24.1/s critic=0.3004 actor=62.9944 actor_updated=1 alpha=0.0183
+2026-08-13 21:26:08,222 INFO epoch=70/190 reward=-8582.88400 online=39999 rollout=3.86s train=20.74s
+2026-08-13 21:26:24,948 INFO mixed update 250/500 rate=23.9/s critic=0.3600 actor=63.2443 actor_updated=1 alpha=0.0191
+2026-08-13 21:26:37,283 INFO mixed update 500/500 rate=24.2/s critic=0.8616 actor=60.5279 actor_updated=1 alpha=0.0190
+2026-08-13 21:26:37,296 INFO epoch=71/190 reward=-8863.00600 online=40499 rollout=5.31s train=20.69s
+2026-08-13 21:26:50,089 INFO mixed update 250/500 rate=23.9/s critic=0.0528 actor=60.5109 actor_updated=1 alpha=0.0184
+2026-08-13 21:27:04,454 INFO mixed update 500/500 rate=23.9/s critic=1.3457 actor=64.7931 actor_updated=1 alpha=0.0169
+2026-08-13 21:27:04,463 INFO epoch=72/190 reward=-10542.89200 online=40999 rollout=6.27s train=20.89s
+2026-08-13 21:27:22,017 INFO mixed update 250/500 rate=24.2/s critic=0.4741 actor=75.0514 actor_updated=1 alpha=0.0169
+2026-08-13 21:27:34,041 INFO mixed update 500/500 rate=24.2/s critic=0.3752 actor=68.7942 actor_updated=1 alpha=0.0154
+2026-08-13 21:27:34,052 INFO epoch=73/190 reward=-12383.94200 online=41499 rollout=8.95s train=20.63s
+2026-08-13 21:27:46,443 INFO mixed update 250/500 rate=24.7/s critic=0.6999 actor=58.7668 actor_updated=1 alpha=0.0151
+2026-08-13 21:27:58,339 INFO mixed update 500/500 rate=24.5/s critic=0.2122 actor=59.9788 actor_updated=1 alpha=0.0150
+2026-08-13 21:27:58,351 INFO epoch=74/190 reward=-334.29000 online=41999 rollout=3.85s train=20.44s
+2026-08-13 21:28:10,640 INFO mixed update 250/500 rate=24.0/s critic=0.1454 actor=65.1399 actor_updated=1 alpha=0.0141
+2026-08-13 21:28:22,502 INFO mixed update 500/500 rate=24.1/s critic=0.4440 actor=72.0616 actor_updated=1 alpha=0.0140
+2026-08-13 21:28:22,514 INFO epoch=75/190 reward=-584.77844 online=42500 rollout=3.42s train=20.73s
+2026-08-13 21:28:35,496 INFO mixed update 250/500 rate=24.2/s critic=0.8743 actor=67.7521 actor_updated=1 alpha=0.0142
+2026-08-13 21:28:47,408 INFO mixed update 500/500 rate=24.1/s critic=0.2752 actor=66.1629 actor_updated=1 alpha=0.0138
+2026-08-13 21:28:47,421 INFO epoch=76/190 reward=-550.09820 online=42999 rollout=3.21s train=20.71s
+2026-08-13 21:28:59,468 INFO mixed update 250/500 rate=24.1/s critic=0.6665 actor=77.6360 actor_updated=1 alpha=0.0133
+2026-08-13 21:29:11,784 INFO mixed update 500/500 rate=23.7/s critic=0.6122 actor=64.2252 actor_updated=1 alpha=0.0130
+2026-08-13 21:29:11,797 INFO epoch=77/190 reward=-605.32400 online=43499 rollout=3.25s train=21.12s
+2026-08-13 21:29:23,923 INFO mixed update 250/500 rate=24.0/s critic=0.8778 actor=73.9183 actor_updated=1 alpha=0.0130
+2026-08-13 21:29:35,615 INFO mixed update 500/500 rate=24.3/s critic=0.5973 actor=66.8622 actor_updated=1 alpha=0.0138
+2026-08-13 21:29:35,629 INFO epoch=78/190 reward=-610.17166 online=44000 rollout=3.25s train=20.57s
+2026-08-13 21:29:47,728 INFO mixed update 250/500 rate=24.0/s critic=0.1723 actor=66.2015 actor_updated=1 alpha=0.0149
+2026-08-13 21:29:59,565 INFO mixed update 500/500 rate=24.1/s critic=0.4800 actor=62.3445 actor_updated=1 alpha=0.0143
+2026-08-13 21:29:59,578 INFO epoch=79/190 reward=-620.82400 online=44500 rollout=3.20s train=20.74s
+2026-08-13 21:30:11,390 INFO mixed update 250/500 rate=24.5/s critic=0.4621 actor=63.9422 actor_updated=1 alpha=0.0144
+2026-08-13 21:30:23,591 INFO mixed update 500/500 rate=24.7/s critic=0.1921 actor=64.4305 actor_updated=1 alpha=0.0144
+2026-08-13 21:30:23,604 INFO epoch=80/190 reward=-648.74549 online=44999 rollout=3.78s train=20.23s
+2026-08-13 21:30:36,711 INFO mixed update 250/500 rate=24.3/s critic=0.2586 actor=76.0943 actor_updated=1 alpha=0.0141
+2026-08-13 21:30:48,549 INFO mixed update 500/500 rate=24.3/s critic=0.2177 actor=59.6915 actor_updated=1 alpha=0.0143
+2026-08-13 21:30:48,561 INFO epoch=81/190 reward=-729.03800 online=45499 rollout=3.29s train=20.57s
+2026-08-13 21:31:00,697 INFO mixed update 250/500 rate=23.9/s critic=0.3014 actor=69.7916 actor_updated=1 alpha=0.0151
+2026-08-13 21:31:12,794 INFO mixed update 500/500 rate=23.9/s critic=0.7380 actor=59.0184 actor_updated=1 alpha=0.0156
+2026-08-13 21:31:12,806 INFO epoch=82/190 reward=-1029.92400 online=45999 rollout=3.34s train=20.89s
+2026-08-13 21:31:24,958 INFO mixed update 250/500 rate=24.0/s critic=0.1064 actor=66.7600 actor_updated=1 alpha=0.0157
+2026-08-13 21:31:37,020 INFO mixed update 500/500 rate=24.0/s critic=0.3229 actor=74.9915 actor_updated=1 alpha=0.0156
+2026-08-13 21:31:37,034 INFO epoch=83/190 reward=-1318.82236 online=46500 rollout=3.39s train=20.82s
+2026-08-13 21:31:49,989 INFO mixed update 250/500 rate=23.7/s critic=0.1991 actor=68.5966 actor_updated=1 alpha=0.0146
+2026-08-13 21:32:02,103 INFO mixed update 500/500 rate=23.8/s critic=1.1872 actor=87.4175 actor_updated=1 alpha=0.0146
+2026-08-13 21:32:02,115 INFO epoch=84/190 reward=-1863.11423 online=46999 rollout=4.09s train=20.98s
+2026-08-13 21:32:14,350 INFO mixed update 250/500 rate=24.0/s critic=0.1357 actor=69.8250 actor_updated=1 alpha=0.0147
+2026-08-13 21:32:26,440 INFO mixed update 500/500 rate=24.0/s critic=0.2963 actor=67.3937 actor_updated=1 alpha=0.0142
+2026-08-13 21:32:26,453 INFO epoch=85/190 reward=-2015.38200 online=47499 rollout=3.49s train=20.83s
+2026-08-13 21:32:40,731 INFO mixed update 250/500 rate=24.0/s critic=0.3194 actor=74.6102 actor_updated=1 alpha=0.0150
+2026-08-13 21:32:53,740 INFO mixed update 500/500 rate=23.3/s critic=0.2493 actor=65.3365 actor_updated=1 alpha=0.0155
+2026-08-13 21:32:53,753 INFO epoch=86/190 reward=-2198.07400 online=47999 rollout=4.40s train=21.50s
+2026-08-13 21:33:05,978 INFO mixed update 250/500 rate=24.1/s critic=0.4422 actor=55.2993 actor_updated=1 alpha=0.0155
+2026-08-13 21:33:19,081 INFO mixed update 500/500 rate=23.2/s critic=0.1230 actor=63.2171 actor_updated=1 alpha=0.0163
+2026-08-13 21:33:19,112 INFO epoch=87/190 reward=-1999.98600 online=48499 rollout=3.79s train=21.55s
+2026-08-13 21:33:31,577 INFO mixed update 250/500 rate=23.8/s critic=0.3426 actor=68.0589 actor_updated=1 alpha=0.0162
+2026-08-13 21:33:43,585 INFO mixed update 500/500 rate=24.0/s critic=0.1501 actor=56.8811 actor_updated=1 alpha=0.0161
+2026-08-13 21:33:43,598 INFO epoch=88/190 reward=-2086.57400 online=48999 rollout=3.67s train=20.81s
+2026-08-13 21:33:56,544 INFO mixed update 250/500 rate=24.0/s critic=0.1016 actor=57.3401 actor_updated=1 alpha=0.0159
+2026-08-13 21:34:10,023 INFO mixed update 500/500 rate=23.0/s critic=0.6975 actor=76.5629 actor_updated=1 alpha=0.0153
+2026-08-13 21:34:10,035 INFO epoch=89/190 reward=-1938.48800 online=49499 rollout=4.71s train=21.71s
+2026-08-13 21:34:22,792 INFO mixed update 250/500 rate=23.2/s critic=0.7975 actor=67.3443 actor_updated=1 alpha=0.0150
+2026-08-13 21:34:36,084 INFO mixed update 500/500 rate=22.7/s critic=3.3860 actor=68.0751 actor_updated=1 alpha=0.0146
+2026-08-13 21:34:36,098 INFO epoch=90/190 reward=-2047.09581 online=50000 rollout=4.06s train=21.99s
+2026-08-13 21:34:50,299 INFO mixed update 250/500 rate=23.9/s critic=0.9090 actor=69.5407 actor_updated=1 alpha=0.0141
+2026-08-13 21:35:04,044 INFO mixed update 500/500 rate=23.3/s critic=0.7696 actor=71.6287 actor_updated=1 alpha=0.0143
+2026-08-13 21:35:04,067 INFO epoch=91/190 reward=-2195.75551 online=50499 rollout=4.64s train=21.42s
+2026-08-13 21:35:16,482 INFO mixed update 250/500 rate=24.1/s critic=0.4857 actor=74.0249 actor_updated=1 alpha=0.0147
+2026-08-13 21:35:30,102 INFO mixed update 500/500 rate=23.0/s critic=0.3362 actor=65.5690 actor_updated=1 alpha=0.0155
+2026-08-13 21:35:30,118 INFO epoch=92/190 reward=-2326.03593 online=51000 rollout=4.26s train=21.78s
+2026-08-13 21:35:43,506 INFO mixed update 250/500 rate=22.4/s critic=0.1560 actor=68.6623 actor_updated=1 alpha=0.0150
+2026-08-13 21:35:56,171 INFO mixed update 500/500 rate=22.9/s critic=0.1099 actor=60.8603 actor_updated=1 alpha=0.0153
+2026-08-13 21:35:56,184 INFO epoch=93/190 reward=-2287.52305 online=51499 rollout=4.17s train=21.88s
+2026-08-13 21:36:09,549 INFO mixed update 250/500 rate=23.7/s critic=0.2456 actor=67.2149 actor_updated=1 alpha=0.0145
+2026-08-13 21:36:21,770 INFO mixed update 500/500 rate=23.8/s critic=0.3389 actor=66.4595 actor_updated=1 alpha=0.0144
+2026-08-13 21:36:21,783 INFO epoch=94/190 reward=-2391.40600 online=51999 rollout=4.56s train=21.03s
+2026-08-13 21:36:33,887 INFO mixed update 250/500 rate=24.5/s critic=0.7544 actor=66.2670 actor_updated=1 alpha=0.0143
+2026-08-13 21:36:46,016 INFO mixed update 500/500 rate=24.3/s critic=0.5352 actor=70.5811 actor_updated=1 alpha=0.0153
+2026-08-13 21:36:46,029 INFO epoch=95/190 reward=-2516.35200 online=52499 rollout=3.64s train=20.60s
+2026-08-13 21:37:00,766 INFO mixed update 250/500 rate=24.2/s critic=0.1910 actor=73.4313 actor_updated=1 alpha=0.0165
+2026-08-13 21:37:12,967 INFO mixed update 500/500 rate=24.1/s critic=0.3914 actor=84.6485 actor_updated=1 alpha=0.0166
+2026-08-13 21:37:12,981 INFO epoch=96/190 reward=-2774.08167 online=53001 rollout=3.72s train=20.72s
+2026-08-13 21:37:26,390 INFO mixed update 250/500 rate=23.9/s critic=0.3666 actor=78.6697 actor_updated=1 alpha=0.0165
+2026-08-13 21:37:38,694 INFO mixed update 500/500 rate=23.9/s critic=0.2441 actor=70.8611 actor_updated=1 alpha=0.0160
+2026-08-13 21:37:38,707 INFO epoch=97/190 reward=-3050.59519 online=53500 rollout=4.80s train=20.92s
+2026-08-13 21:37:51,087 INFO mixed update 250/500 rate=24.0/s critic=0.1900 actor=64.6442 actor_updated=1 alpha=0.0154
+2026-08-13 21:38:03,705 INFO mixed update 500/500 rate=23.7/s critic=0.2178 actor=75.7489 actor_updated=1 alpha=0.0155
+2026-08-13 21:38:03,719 INFO epoch=98/190 reward=-3082.42485 online=53999 rollout=3.90s train=21.10s
+2026-08-13 21:38:17,437 INFO mixed update 250/500 rate=24.0/s critic=0.5257 actor=79.2379 actor_updated=1 alpha=0.0153
+2026-08-13 21:38:30,596 INFO mixed update 500/500 rate=23.6/s critic=0.1255 actor=72.1644 actor_updated=1 alpha=0.0149
+2026-08-13 21:38:30,610 INFO epoch=99/190 reward=-2214.53600 online=54499 rollout=5.73s train=21.15s
+2026-08-13 21:38:50,217 INFO mixed update 250/500 rate=24.2/s critic=0.4535 actor=91.5671 actor_updated=1 alpha=0.0145
+2026-08-13 21:39:02,609 INFO mixed update 500/500 rate=24.1/s critic=0.5995 actor=74.8254 actor_updated=1 alpha=0.0139
+2026-08-13 21:39:02,622 INFO epoch=100/190 reward=-2788.36600 online=54999 rollout=11.26s train=20.74s
+2026-08-13 21:39:15,863 INFO mixed update 250/500 rate=24.1/s critic=2.5030 actor=76.7537 actor_updated=1 alpha=0.0156
+2026-08-13 21:39:28,266 INFO mixed update 500/500 rate=23.9/s critic=0.6161 actor=74.5183 actor_updated=1 alpha=0.0160
+2026-08-13 21:39:28,286 INFO epoch=101/190 reward=-430.00600 online=55499 rollout=3.57s train=20.94s
+2026-08-13 21:39:40,425 INFO mixed update 250/500 rate=24.0/s critic=0.6247 actor=72.3809 actor_updated=1 alpha=0.0157
+2026-08-13 21:39:52,363 INFO mixed update 500/500 rate=24.1/s critic=0.7524 actor=73.9381 actor_updated=1 alpha=0.0155
+2026-08-13 21:39:52,386 INFO epoch=102/190 reward=-685.53200 online=55999 rollout=3.31s train=20.78s
+2026-08-13 21:40:04,883 INFO mixed update 250/500 rate=23.3/s critic=0.6496 actor=75.6045 actor_updated=1 alpha=0.0158
+2026-08-13 21:40:18,499 INFO mixed update 500/500 rate=22.4/s critic=0.1137 actor=70.8870 actor_updated=1 alpha=0.0158
+2026-08-13 21:40:18,521 INFO epoch=103/190 reward=-815.35800 online=56499 rollout=3.81s train=22.30s
+2026-08-13 21:40:30,685 INFO mixed update 250/500 rate=24.1/s critic=0.3074 actor=71.2987 actor_updated=1 alpha=0.0151
+2026-08-13 21:40:42,430 INFO mixed update 500/500 rate=24.4/s critic=0.2821 actor=79.4141 actor_updated=1 alpha=0.0148
+2026-08-13 21:40:42,443 INFO epoch=104/190 reward=-798.53400 online=56999 rollout=3.44s train=20.47s
+2026-08-13 21:40:54,258 INFO mixed update 250/500 rate=24.5/s critic=0.1459 actor=73.6834 actor_updated=1 alpha=0.0162
+2026-08-13 21:41:06,976 INFO mixed update 500/500 rate=24.1/s critic=0.6244 actor=79.6752 actor_updated=1 alpha=0.0158
+2026-08-13 21:41:06,989 INFO epoch=105/190 reward=-878.13600 online=57499 rollout=3.80s train=20.73s
+2026-08-13 21:41:20,080 INFO mixed update 250/500 rate=24.5/s critic=0.5634 actor=68.6739 actor_updated=1 alpha=0.0160
+2026-08-13 21:41:32,041 INFO mixed update 500/500 rate=24.5/s critic=0.1382 actor=81.5246 actor_updated=1 alpha=0.0150
+2026-08-13 21:41:32,054 INFO epoch=106/190 reward=-839.73653 online=58000 rollout=3.38s train=20.44s
+2026-08-13 21:41:44,043 INFO mixed update 250/500 rate=24.3/s critic=0.0946 actor=70.0792 actor_updated=1 alpha=0.0141
+2026-08-13 21:41:55,925 INFO mixed update 500/500 rate=24.3/s critic=0.2635 actor=68.4248 actor_updated=1 alpha=0.0150
+2026-08-13 21:41:55,937 INFO epoch=107/190 reward=-867.65600 online=58500 rollout=3.29s train=20.58s
+2026-08-13 21:42:07,973 INFO mixed update 250/500 rate=24.3/s critic=0.2757 actor=79.5374 actor_updated=1 alpha=0.0162
+2026-08-13 21:42:19,704 INFO mixed update 500/500 rate=24.5/s critic=0.4785 actor=74.6117 actor_updated=1 alpha=0.0160
+2026-08-13 21:42:19,716 INFO epoch=108/190 reward=-909.04200 online=59000 rollout=3.33s train=20.44s
+2026-08-13 21:42:32,006 INFO mixed update 250/500 rate=23.8/s critic=0.2598 actor=73.4021 actor_updated=1 alpha=0.0157
+2026-08-13 21:42:44,477 INFO mixed update 500/500 rate=24.1/s critic=1.2551 actor=73.6781 actor_updated=1 alpha=0.0160
+2026-08-13 21:42:44,489 INFO epoch=109/190 reward=-1507.48297 online=59499 rollout=3.99s train=20.77s
+2026-08-13 21:42:56,991 INFO mixed update 250/500 rate=23.9/s critic=0.3537 actor=70.1942 actor_updated=1 alpha=0.0163
+2026-08-13 21:43:09,839 INFO mixed update 500/500 rate=23.5/s critic=0.5234 actor=74.5509 actor_updated=1 alpha=0.0161
+2026-08-13 21:43:09,856 INFO epoch=110/190 reward=-2804.66200 online=59999 rollout=4.05s train=21.30s
+2026-08-13 21:43:24,201 INFO mixed update 250/500 rate=23.0/s critic=0.8854 actor=79.9765 actor_updated=1 alpha=0.0176
+2026-08-13 21:43:38,135 INFO mixed update 500/500 rate=22.3/s critic=1.5968 actor=78.7063 actor_updated=1 alpha=0.0182
+2026-08-13 21:43:38,148 INFO epoch=111/190 reward=-2681.43400 online=60499 rollout=4.32s train=22.47s
+2026-08-13 21:43:51,790 INFO mixed update 250/500 rate=22.7/s critic=0.8657 actor=89.1931 actor_updated=1 alpha=0.0183
+2026-08-13 21:44:04,179 INFO mixed update 500/500 rate=23.1/s critic=0.1547 actor=74.6638 actor_updated=1 alpha=0.0183
+2026-08-13 21:44:04,202 INFO epoch=112/190 reward=-2980.98807 online=61002 rollout=4.38s train=21.65s
+2026-08-13 21:44:16,518 INFO mixed update 250/500 rate=24.3/s critic=0.5076 actor=82.8986 actor_updated=1 alpha=0.0187
+2026-08-13 21:44:28,572 INFO mixed update 500/500 rate=24.2/s critic=0.2420 actor=75.0053 actor_updated=1 alpha=0.0180
+2026-08-13 21:44:28,585 INFO epoch=113/190 reward=-3152.63783 online=61499 rollout=3.72s train=20.64s
+2026-08-13 21:44:45,101 INFO mixed update 250/500 rate=18.6/s critic=0.1964 actor=69.3498 actor_updated=1 alpha=0.0171
+2026-08-13 21:44:59,604 INFO mixed update 500/500 rate=20.1/s critic=0.1796 actor=73.9698 actor_updated=1 alpha=0.0162
+2026-08-13 21:44:59,617 INFO epoch=114/190 reward=-3751.03393 online=62000 rollout=6.14s train=24.87s
+2026-08-13 21:45:11,707 INFO mixed update 250/500 rate=24.5/s critic=0.5846 actor=81.8794 actor_updated=1 alpha=0.0154
+2026-08-13 21:45:23,905 INFO mixed update 500/500 rate=24.3/s critic=0.4029 actor=73.7876 actor_updated=1 alpha=0.0159
+2026-08-13 21:45:23,919 INFO epoch=115/190 reward=-4033.57916 online=62499 rollout=3.74s train=20.55s
+2026-08-13 21:45:38,042 INFO mixed update 250/500 rate=24.2/s critic=0.6559 actor=92.7200 actor_updated=1 alpha=0.0168
+2026-08-13 21:45:50,813 INFO mixed update 500/500 rate=24.3/s critic=0.1764 actor=84.6870 actor_updated=1 alpha=0.0179
+2026-08-13 21:45:50,825 INFO epoch=116/190 reward=-4361.11600 online=62999 rollout=4.41s train=20.54s
+2026-08-13 21:46:02,971 INFO mixed update 250/500 rate=24.4/s critic=0.1326 actor=83.0444 actor_updated=1 alpha=0.0186
+2026-08-13 21:46:15,176 INFO mixed update 500/500 rate=24.3/s critic=0.2454 actor=64.1890 actor_updated=1 alpha=0.0194
+2026-08-13 21:46:15,189 INFO epoch=117/190 reward=-4466.78643 online=63500 rollout=3.74s train=20.61s
+2026-08-13 21:46:27,490 INFO mixed update 250/500 rate=24.2/s critic=2.7000 actor=75.7394 actor_updated=1 alpha=0.0202
+2026-08-13 21:46:39,713 INFO mixed update 500/500 rate=24.1/s critic=2.0934 actor=80.2821 actor_updated=1 alpha=0.0217
+2026-08-13 21:46:39,727 INFO epoch=118/190 reward=-4826.94790 online=63999 rollout=3.80s train=20.73s
+2026-08-13 21:46:52,674 INFO mixed update 250/500 rate=24.6/s critic=0.4263 actor=78.8579 actor_updated=1 alpha=0.0217
+2026-08-13 21:47:04,912 INFO mixed update 500/500 rate=24.3/s critic=1.0691 actor=73.9630 actor_updated=1 alpha=0.0205
+2026-08-13 21:47:04,926 INFO epoch=119/190 reward=-4712.12600 online=64499 rollout=4.62s train=20.57s
+2026-08-13 21:47:17,241 INFO mixed update 250/500 rate=24.1/s critic=0.4602 actor=81.6157 actor_updated=1 alpha=0.0214
+2026-08-13 21:47:29,227 INFO mixed update 500/500 rate=24.3/s critic=0.5016 actor=88.0056 actor_updated=1 alpha=0.0209
+2026-08-13 21:47:29,241 INFO epoch=120/190 reward=-4778.40400 online=64999 rollout=3.76s train=20.54s
+2026-08-13 21:47:44,029 INFO mixed update 250/500 rate=24.3/s critic=0.1292 actor=76.3806 actor_updated=1 alpha=0.0205
+2026-08-13 21:47:57,171 INFO mixed update 500/500 rate=24.2/s critic=0.3485 actor=85.8516 actor_updated=1 alpha=0.0199
+2026-08-13 21:47:57,184 INFO epoch=121/190 reward=-5052.44400 online=65499 rollout=4.73s train=20.64s
+2026-08-13 21:48:09,320 INFO mixed update 250/500 rate=24.6/s critic=1.1630 actor=81.7927 actor_updated=1 alpha=0.0188
+2026-08-13 21:48:21,305 INFO mixed update 500/500 rate=24.6/s critic=0.4935 actor=78.8586 actor_updated=1 alpha=0.0208
+2026-08-13 21:48:21,318 INFO epoch=122/190 reward=-5261.58600 online=65999 rollout=3.79s train=20.33s
+2026-08-13 21:48:33,423 INFO mixed update 250/500 rate=24.7/s critic=0.2385 actor=78.3144 actor_updated=1 alpha=0.0219
+2026-08-13 21:48:45,421 INFO mixed update 500/500 rate=24.7/s critic=0.7226 actor=77.1433 actor_updated=1 alpha=0.0231
+2026-08-13 21:48:45,433 INFO epoch=123/190 reward=-5695.15800 online=66499 rollout=3.83s train=20.27s
+2026-08-13 21:48:57,566 INFO mixed update 250/500 rate=24.7/s critic=0.6214 actor=77.2551 actor_updated=1 alpha=0.0228
+2026-08-13 21:49:10,802 INFO mixed update 500/500 rate=24.4/s critic=1.5192 actor=85.1284 actor_updated=1 alpha=0.0227
+2026-08-13 21:49:10,815 INFO epoch=124/190 reward=-5673.59000 online=66999 rollout=4.90s train=20.47s
+2026-08-13 21:49:22,926 INFO mixed update 250/500 rate=24.5/s critic=0.1470 actor=79.4922 actor_updated=1 alpha=0.0221
+2026-08-13 21:49:35,096 INFO mixed update 500/500 rate=24.4/s critic=0.2306 actor=87.2786 actor_updated=1 alpha=0.0206
+2026-08-13 21:49:35,110 INFO epoch=125/190 reward=-4275.91200 online=67499 rollout=3.76s train=20.52s
+2026-08-13 21:49:50,814 INFO mixed update 250/500 rate=24.2/s critic=0.7543 actor=96.1144 actor_updated=1 alpha=0.0197
+2026-08-13 21:50:03,069 INFO mixed update 500/500 rate=24.2/s critic=0.2788 actor=78.9813 actor_updated=1 alpha=0.0198
+2026-08-13 21:50:03,083 INFO epoch=126/190 reward=-3188.35400 online=67999 rollout=3.81s train=20.70s
+2026-08-13 21:50:16,885 INFO mixed update 250/500 rate=24.6/s critic=0.1624 actor=79.8971 actor_updated=1 alpha=0.0216
+2026-08-13 21:50:35,790 INFO mixed update 500/500 rate=24.7/s critic=0.1992 actor=73.3815 actor_updated=1 alpha=0.0221
+2026-08-13 21:50:35,803 INFO epoch=127/190 reward=-7280.92200 online=68499 rollout=12.50s train=20.21s
+2026-08-13 21:50:47,921 INFO mixed update 250/500 rate=24.5/s critic=0.8015 actor=81.7495 actor_updated=1 alpha=0.0223
+2026-08-13 21:50:59,879 INFO mixed update 500/500 rate=24.4/s critic=0.2806 actor=84.1995 actor_updated=1 alpha=0.0230
+2026-08-13 21:50:59,892 INFO epoch=128/190 reward=-720.16600 online=68999 rollout=3.61s train=20.47s
+2026-08-13 21:51:11,808 INFO mixed update 250/500 rate=24.5/s critic=0.2415 actor=83.1080 actor_updated=1 alpha=0.0228
+2026-08-13 21:51:23,930 INFO mixed update 500/500 rate=24.3/s critic=1.6680 actor=89.9762 actor_updated=1 alpha=0.0220
+2026-08-13 21:51:23,953 INFO epoch=129/190 reward=-741.86000 online=69499 rollout=3.42s train=20.62s
+2026-08-13 21:51:38,434 INFO mixed update 250/500 rate=21.1/s critic=0.8814 actor=91.5868 actor_updated=1 alpha=0.0212
+2026-08-13 21:51:50,617 INFO mixed update 500/500 rate=22.4/s critic=0.4929 actor=83.3915 actor_updated=1 alpha=0.0206
+2026-08-13 21:51:50,628 INFO epoch=130/190 reward=-1278.12400 online=69999 rollout=4.29s train=22.37s
+2026-08-13 21:52:03,994 INFO mixed update 250/500 rate=24.3/s critic=0.3065 actor=89.3652 actor_updated=1 alpha=0.0204
+2026-08-13 21:52:15,446 INFO mixed update 500/500 rate=24.8/s critic=0.3749 actor=76.8249 actor_updated=1 alpha=0.0216
+2026-08-13 21:52:15,459 INFO epoch=131/190 reward=-1266.21756 online=70500 rollout=3.24s train=20.19s
+2026-08-13 21:52:27,458 INFO mixed update 250/500 rate=24.3/s critic=1.0005 actor=91.2641 actor_updated=1 alpha=0.0222
+2026-08-13 21:52:39,390 INFO mixed update 500/500 rate=24.2/s critic=0.7780 actor=82.9179 actor_updated=1 alpha=0.0224
+2026-08-13 21:52:39,401 INFO epoch=132/190 reward=-1386.57515 online=70999 rollout=3.29s train=20.64s
+2026-08-13 21:52:51,382 INFO mixed update 250/500 rate=24.2/s critic=0.3534 actor=85.0056 actor_updated=1 alpha=0.0231
+2026-08-13 21:53:03,448 INFO mixed update 500/500 rate=24.1/s critic=0.4556 actor=81.6667 actor_updated=1 alpha=0.0233
+2026-08-13 21:53:03,462 INFO epoch=133/190 reward=-1345.38800 online=71499 rollout=3.32s train=20.73s
+2026-08-13 21:53:15,369 INFO mixed update 250/500 rate=24.4/s critic=0.1485 actor=76.8609 actor_updated=1 alpha=0.0249
+2026-08-13 21:53:27,279 INFO mixed update 500/500 rate=24.3/s critic=0.1683 actor=88.9616 actor_updated=1 alpha=0.0245
+2026-08-13 21:53:27,292 INFO epoch=134/190 reward=-1316.90200 online=71999 rollout=3.26s train=20.56s
+2026-08-13 21:53:39,470 INFO mixed update 250/500 rate=24.2/s critic=1.1926 actor=87.3921 actor_updated=1 alpha=0.0237
+2026-08-13 21:53:51,496 INFO mixed update 500/500 rate=24.1/s critic=0.5712 actor=88.2963 actor_updated=1 alpha=0.0232
+2026-08-13 21:53:51,507 INFO epoch=135/190 reward=-1362.45509 online=72500 rollout=3.47s train=20.73s
+2026-08-13 21:54:04,958 INFO mixed update 250/500 rate=24.5/s critic=1.1486 actor=85.4593 actor_updated=1 alpha=0.0234
+2026-08-13 21:54:17,057 INFO mixed update 500/500 rate=24.2/s critic=0.1363 actor=81.2543 actor_updated=1 alpha=0.0229
+2026-08-13 21:54:17,068 INFO epoch=136/190 reward=-1986.76892 online=73002 rollout=3.41s train=20.66s
+2026-08-13 21:54:29,648 INFO mixed update 250/500 rate=23.2/s critic=1.4856 actor=83.5515 actor_updated=1 alpha=0.0226
+2026-08-13 21:54:41,809 INFO mixed update 500/500 rate=23.5/s critic=0.3371 actor=92.8440 actor_updated=1 alpha=0.0232
+2026-08-13 21:54:41,821 INFO epoch=137/190 reward=-2255.35010 online=73499 rollout=3.48s train=21.26s
+2026-08-13 21:54:54,056 INFO mixed update 250/500 rate=24.1/s critic=0.4979 actor=87.6675 actor_updated=1 alpha=0.0256
+2026-08-13 21:55:06,073 INFO mixed update 500/500 rate=24.2/s critic=0.3663 actor=92.2103 actor_updated=1 alpha=0.0255
+2026-08-13 21:55:06,086 INFO epoch=138/190 reward=-3358.31400 online=73999 rollout=3.58s train=20.68s
+2026-08-13 21:55:18,208 INFO mixed update 250/500 rate=24.4/s critic=0.6150 actor=86.8535 actor_updated=1 alpha=0.0246
+2026-08-13 21:55:30,288 INFO mixed update 500/500 rate=24.3/s critic=0.2605 actor=79.8522 actor_updated=1 alpha=0.0252
+2026-08-13 21:55:30,302 INFO epoch=139/190 reward=-3996.42315 online=74500 rollout=3.60s train=20.60s
+2026-08-13 21:55:42,555 INFO mixed update 250/500 rate=24.2/s critic=0.3816 actor=100.3241 actor_updated=1 alpha=0.0245
+2026-08-13 21:55:55,454 INFO mixed update 500/500 rate=24.1/s critic=1.2372 actor=79.1777 actor_updated=1 alpha=0.0237
+2026-08-13 21:55:55,469 INFO epoch=140/190 reward=-4758.59400 online=75000 rollout=4.43s train=20.72s
+2026-08-13 21:56:09,694 INFO mixed update 250/500 rate=24.1/s critic=0.5863 actor=90.4221 actor_updated=1 alpha=0.0228
+2026-08-13 21:56:21,918 INFO mixed update 500/500 rate=24.0/s critic=0.6884 actor=102.6331 actor_updated=1 alpha=0.0236
+2026-08-13 21:56:21,931 INFO epoch=141/190 reward=-5382.68537 online=75499 rollout=3.70s train=20.86s
+2026-08-13 21:56:34,225 INFO mixed update 250/500 rate=24.1/s critic=0.3690 actor=87.7718 actor_updated=1 alpha=0.0243
+2026-08-13 21:56:47,238 INFO mixed update 500/500 rate=24.1/s critic=2.2954 actor=94.1604 actor_updated=1 alpha=0.0249
+2026-08-13 21:56:47,251 INFO epoch=142/190 reward=-5821.82271 online=76001 rollout=4.52s train=20.78s
+2026-08-13 21:56:59,566 INFO mixed update 250/500 rate=24.0/s critic=0.5496 actor=92.6742 actor_updated=1 alpha=0.0265
+2026-08-13 21:57:12,003 INFO mixed update 500/500 rate=23.8/s critic=0.1303 actor=92.3390 actor_updated=1 alpha=0.0277
+2026-08-13 21:57:12,014 INFO epoch=143/190 reward=-6064.59237 online=76499 rollout=3.78s train=20.97s
+2026-08-13 21:57:24,434 INFO mixed update 250/500 rate=23.8/s critic=0.2029 actor=89.6663 actor_updated=1 alpha=0.0278
+2026-08-13 21:57:36,781 INFO mixed update 500/500 rate=23.8/s critic=1.0128 actor=83.1940 actor_updated=1 alpha=0.0271
+2026-08-13 21:57:36,795 INFO epoch=144/190 reward=-6145.22400 online=76999 rollout=3.73s train=21.03s
+2026-08-13 21:57:49,962 INFO mixed update 250/500 rate=24.1/s critic=0.3396 actor=94.4675 actor_updated=1 alpha=0.0271
+2026-08-13 21:58:02,091 INFO mixed update 500/500 rate=24.1/s critic=0.3284 actor=87.1204 actor_updated=1 alpha=0.0270
+2026-08-13 21:58:02,104 INFO epoch=145/190 reward=-6411.75800 online=77499 rollout=4.56s train=20.73s
+2026-08-13 21:58:20,153 INFO mixed update 250/500 rate=20.7/s critic=0.1815 actor=95.7883 actor_updated=1 alpha=0.0261
+2026-08-13 21:58:32,425 INFO mixed update 500/500 rate=22.2/s critic=0.2104 actor=85.7953 actor_updated=1 alpha=0.0263
+2026-08-13 21:58:32,437 INFO epoch=146/190 reward=-6479.64600 online=77999 rollout=4.35s train=22.55s
+2026-08-13 21:58:45,030 INFO mixed update 250/500 rate=23.5/s critic=0.2330 actor=101.0458 actor_updated=1 alpha=0.0301
+2026-08-13 21:58:57,055 INFO mixed update 500/500 rate=23.9/s critic=0.0985 actor=87.7331 actor_updated=1 alpha=0.0289
+2026-08-13 21:58:57,067 INFO epoch=147/190 reward=-5901.88000 online=78499 rollout=3.70s train=20.91s
+2026-08-13 21:59:12,545 INFO mixed update 250/500 rate=21.4/s critic=0.2684 actor=104.6792 actor_updated=1 alpha=0.0265
+2026-08-13 21:59:25,864 INFO mixed update 500/500 rate=21.8/s critic=0.4190 actor=104.4218 actor_updated=1 alpha=0.0263
+2026-08-13 21:59:25,876 INFO epoch=148/190 reward=-5799.28000 online=78999 rollout=5.85s train=22.95s
+2026-08-13 21:59:38,617 INFO mixed update 250/500 rate=23.5/s critic=0.8575 actor=95.8864 actor_updated=1 alpha=0.0249
+2026-08-13 21:59:50,905 INFO mixed update 500/500 rate=23.6/s critic=0.2461 actor=91.9506 actor_updated=1 alpha=0.0265
+2026-08-13 21:59:50,918 INFO epoch=149/190 reward=-5720.10400 online=79499 rollout=3.87s train=21.16s
+2026-08-13 22:00:03,178 INFO mixed update 250/500 rate=24.2/s critic=0.2927 actor=94.4353 actor_updated=1 alpha=0.0259
+2026-08-13 22:00:15,184 INFO mixed update 500/500 rate=24.3/s critic=0.9948 actor=103.8210 actor_updated=1 alpha=0.0246
+2026-08-13 22:00:15,197 INFO epoch=150/190 reward=-6570.13400 online=79999 rollout=3.70s train=20.57s
+2026-08-13 22:00:32,582 INFO mixed update 250/500 rate=24.4/s critic=0.3138 actor=106.4382 actor_updated=1 alpha=0.0248
+2026-08-13 22:00:44,770 INFO mixed update 500/500 rate=24.3/s critic=0.7984 actor=92.9112 actor_updated=1 alpha=0.0249
+2026-08-13 22:00:44,783 INFO epoch=151/190 reward=-7783.99202 online=80500 rollout=4.86s train=20.60s
+2026-08-13 22:00:57,192 INFO mixed update 250/500 rate=24.1/s critic=0.6749 actor=93.4232 actor_updated=1 alpha=0.0246
+2026-08-13 22:01:09,317 INFO mixed update 500/500 rate=24.2/s critic=1.1011 actor=106.1685 actor_updated=1 alpha=0.0270
+2026-08-13 22:01:09,329 INFO epoch=152/190 reward=-8136.35671 online=80999 rollout=3.84s train=20.69s
+2026-08-13 22:01:22,031 INFO mixed update 250/500 rate=23.4/s critic=0.1513 actor=91.3614 actor_updated=1 alpha=0.0283
+2026-08-13 22:01:34,782 INFO mixed update 500/500 rate=23.3/s critic=0.4467 actor=80.1958 actor_updated=1 alpha=0.0270
+2026-08-13 22:01:34,805 INFO epoch=153/190 reward=-7387.47000 online=81499 rollout=3.99s train=21.47s
+2026-08-13 22:01:51,862 INFO mixed update 250/500 rate=20.2/s critic=0.1671 actor=100.0815 actor_updated=1 alpha=0.0255
+2026-08-13 22:02:06,616 INFO mixed update 500/500 rate=20.7/s critic=0.1667 actor=102.7519 actor_updated=1 alpha=0.0239
+2026-08-13 22:02:06,628 INFO epoch=154/190 reward=-8959.27146 online=82000 rollout=7.66s train=24.15s
+2026-08-13 22:02:26,177 INFO mixed update 250/500 rate=24.3/s critic=0.1155 actor=101.1150 actor_updated=1 alpha=0.0248
+2026-08-13 22:02:38,227 INFO mixed update 500/500 rate=24.3/s critic=2.2463 actor=97.0935 actor_updated=1 alpha=0.0256
+2026-08-13 22:02:38,242 INFO epoch=155/190 reward=-18575.18400 online=82500 rollout=10.98s train=20.62s
+2026-08-13 22:02:51,849 INFO mixed update 250/500 rate=24.1/s critic=0.1456 actor=109.3397 actor_updated=1 alpha=0.0265
+2026-08-13 22:03:03,846 INFO mixed update 500/500 rate=24.1/s critic=0.2347 actor=103.7804 actor_updated=1 alpha=0.0259
+2026-08-13 22:03:03,860 INFO epoch=156/190 reward=-335.07615 online=82999 rollout=3.36s train=20.73s
+2026-08-13 22:03:15,958 INFO mixed update 250/500 rate=24.1/s critic=1.4973 actor=112.3969 actor_updated=1 alpha=0.0254
+2026-08-13 22:03:28,003 INFO mixed update 500/500 rate=24.0/s critic=1.2157 actor=98.1613 actor_updated=1 alpha=0.0250
+2026-08-13 22:03:28,016 INFO epoch=157/190 reward=-700.97018 online=83502 rollout=3.32s train=20.82s
+2026-08-13 22:03:40,212 INFO mixed update 250/500 rate=23.8/s critic=0.7015 actor=116.2355 actor_updated=1 alpha=0.0260
+2026-08-13 22:03:52,135 INFO mixed update 500/500 rate=23.9/s critic=0.2034 actor=105.1796 actor_updated=1 alpha=0.0264
+2026-08-13 22:03:52,148 INFO epoch=158/190 reward=-589.26253 online=84001 rollout=3.24s train=20.88s
+2026-08-13 22:04:04,159 INFO mixed update 250/500 rate=24.2/s critic=0.2258 actor=95.5578 actor_updated=1 alpha=0.0272
+2026-08-13 22:04:15,976 INFO mixed update 500/500 rate=24.3/s critic=0.1178 actor=92.3214 actor_updated=1 alpha=0.0266
+2026-08-13 22:04:15,989 INFO epoch=159/190 reward=-616.38755 online=84499 rollout=3.25s train=20.58s
+2026-08-13 22:04:27,992 INFO mixed update 250/500 rate=24.0/s critic=0.4010 actor=90.0167 actor_updated=1 alpha=0.0263
+2026-08-13 22:04:39,893 INFO mixed update 500/500 rate=24.2/s critic=0.3602 actor=112.7639 actor_updated=1 alpha=0.0284
+2026-08-13 22:04:39,904 INFO epoch=160/190 reward=-618.85458 online=85001 rollout=3.26s train=20.65s
+2026-08-13 22:04:53,346 INFO mixed update 250/500 rate=24.6/s critic=0.9506 actor=107.2433 actor_updated=1 alpha=0.0288
+2026-08-13 22:05:05,242 INFO mixed update 500/500 rate=24.4/s critic=0.7233 actor=97.1638 actor_updated=1 alpha=0.0297
+2026-08-13 22:05:05,254 INFO epoch=161/190 reward=-630.62725 online=85500 rollout=3.25s train=20.47s
+2026-08-13 22:05:17,002 INFO mixed update 250/500 rate=24.8/s critic=0.8734 actor=92.2386 actor_updated=1 alpha=0.0293
+2026-08-13 22:05:29,486 INFO mixed update 500/500 rate=24.6/s critic=0.5807 actor=104.7353 actor_updated=1 alpha=0.0282
+2026-08-13 22:05:29,500 INFO epoch=162/190 reward=-624.33200 online=86000 rollout=3.90s train=20.33s
+2026-08-13 22:05:41,411 INFO mixed update 250/500 rate=24.3/s critic=0.4244 actor=102.9153 actor_updated=1 alpha=0.0266
+2026-08-13 22:05:53,319 INFO mixed update 500/500 rate=24.3/s critic=0.2667 actor=97.0609 actor_updated=1 alpha=0.0271
+2026-08-13 22:05:53,332 INFO epoch=163/190 reward=-702.56914 online=86499 rollout=3.28s train=20.54s
+2026-08-13 22:06:05,086 INFO mixed update 250/500 rate=24.9/s critic=0.5503 actor=91.5058 actor_updated=1 alpha=0.0275
+2026-08-13 22:06:17,065 INFO mixed update 500/500 rate=24.6/s critic=0.5922 actor=111.6641 actor_updated=1 alpha=0.0279
+2026-08-13 22:06:17,077 INFO epoch=164/190 reward=-1029.69000 online=86999 rollout=3.40s train=20.33s
+2026-08-13 22:06:29,157 INFO mixed update 250/500 rate=24.3/s critic=0.1927 actor=102.9703 actor_updated=1 alpha=0.0289
+2026-08-13 22:06:41,147 INFO mixed update 500/500 rate=24.2/s critic=0.7602 actor=94.4812 actor_updated=1 alpha=0.0290
+2026-08-13 22:06:41,159 INFO epoch=165/190 reward=-1224.87849 online=87501 rollout=3.42s train=20.65s
+2026-08-13 22:06:55,537 INFO mixed update 250/500 rate=24.6/s critic=0.4517 actor=121.0654 actor_updated=1 alpha=0.0276
+2026-08-13 22:07:07,384 INFO mixed update 500/500 rate=24.5/s critic=1.0233 actor=83.4403 actor_updated=1 alpha=0.0287
+2026-08-13 22:07:07,397 INFO epoch=166/190 reward=-1670.47390 online=87999 rollout=4.03s train=20.37s
+2026-08-13 22:07:19,584 INFO mixed update 250/500 rate=24.1/s critic=0.6261 actor=89.1521 actor_updated=1 alpha=0.0310
+2026-08-13 22:07:31,409 INFO mixed update 500/500 rate=24.3/s critic=1.2885 actor=111.8505 actor_updated=1 alpha=0.0321
+2026-08-13 22:07:31,422 INFO epoch=167/190 reward=-1594.59600 online=88499 rollout=3.45s train=20.56s
+2026-08-13 22:07:43,637 INFO mixed update 250/500 rate=24.0/s critic=0.1346 actor=93.2357 actor_updated=1 alpha=0.0340
+2026-08-13 22:07:55,813 INFO mixed update 500/500 rate=23.9/s critic=0.3551 actor=102.9165 actor_updated=1 alpha=0.0328
+2026-08-13 22:07:55,826 INFO epoch=168/190 reward=-1896.34331 online=89000 rollout=3.50s train=20.88s
+2026-08-13 22:08:08,671 INFO mixed update 250/500 rate=24.3/s critic=1.2268 actor=112.4456 actor_updated=1 alpha=0.0300
+2026-08-13 22:08:20,835 INFO mixed update 500/500 rate=24.1/s critic=0.3971 actor=91.8137 actor_updated=1 alpha=0.0297
+2026-08-13 22:08:20,848 INFO epoch=169/190 reward=-2374.00000 online=89499 rollout=4.29s train=20.71s
+2026-08-13 22:08:32,971 INFO mixed update 250/500 rate=24.4/s critic=0.1503 actor=83.8402 actor_updated=1 alpha=0.0291
+2026-08-13 22:08:44,833 INFO mixed update 500/500 rate=24.5/s critic=0.6718 actor=95.5656 actor_updated=1 alpha=0.0279
+2026-08-13 22:08:44,846 INFO epoch=170/190 reward=-2011.71000 online=89999 rollout=3.54s train=20.44s
+2026-08-13 22:08:59,821 INFO mixed update 250/500 rate=24.5/s critic=3.7492 actor=112.7948 actor_updated=1 alpha=0.0284
+2026-08-13 22:09:11,613 INFO mixed update 500/500 rate=24.6/s critic=0.9401 actor=100.1148 actor_updated=1 alpha=0.0286
+2026-08-13 22:09:11,626 INFO epoch=171/190 reward=-1899.82800 online=90499 rollout=4.23s train=20.36s
+2026-08-13 22:09:23,628 INFO mixed update 250/500 rate=24.6/s critic=2.0111 actor=104.2756 actor_updated=1 alpha=0.0289
+2026-08-13 22:09:35,918 INFO mixed update 500/500 rate=24.3/s critic=2.6870 actor=102.9028 actor_updated=1 alpha=0.0320
+2026-08-13 22:09:35,932 INFO epoch=172/190 reward=-1979.84064 online=91001 rollout=3.69s train=20.61s
+2026-08-13 22:09:48,294 INFO mixed update 250/500 rate=23.8/s critic=0.3079 actor=91.8196 actor_updated=1 alpha=0.0343
+2026-08-13 22:10:00,621 INFO mixed update 500/500 rate=23.7/s critic=2.1077 actor=102.3219 actor_updated=1 alpha=0.0341
+2026-08-13 22:10:00,634 INFO epoch=173/190 reward=-1904.00401 online=91500 rollout=3.59s train=21.10s
+2026-08-13 22:10:13,683 INFO mixed update 250/500 rate=24.1/s critic=0.1332 actor=92.7184 actor_updated=1 alpha=0.0335
+2026-08-13 22:10:25,855 INFO mixed update 500/500 rate=24.0/s critic=0.3560 actor=107.6183 actor_updated=1 alpha=0.0318
+2026-08-13 22:10:25,868 INFO epoch=174/190 reward=-2074.33267 online=91999 rollout=4.39s train=20.84s
+2026-08-13 22:10:38,210 INFO mixed update 250/500 rate=24.0/s critic=0.5514 actor=101.1211 actor_updated=1 alpha=0.0334
+2026-08-13 22:10:50,378 INFO mixed update 500/500 rate=24.0/s critic=1.6596 actor=95.9776 actor_updated=1 alpha=0.0336
+2026-08-13 22:10:50,391 INFO epoch=175/190 reward=-2187.43513 online=92500 rollout=3.65s train=20.86s
+2026-08-13 22:11:05,256 INFO mixed update 250/500 rate=24.4/s critic=1.6651 actor=107.4784 actor_updated=1 alpha=0.0328
+2026-08-13 22:11:18,231 INFO mixed update 500/500 rate=24.3/s critic=1.1757 actor=95.1298 actor_updated=1 alpha=0.0340
+2026-08-13 22:11:18,244 INFO epoch=176/190 reward=-2211.32265 online=92999 rollout=4.51s train=20.58s
+2026-08-13 22:11:30,698 INFO mixed update 250/500 rate=23.8/s critic=0.6822 actor=116.0499 actor_updated=1 alpha=0.0347
+2026-08-13 22:11:43,103 INFO mixed update 500/500 rate=23.7/s critic=1.2578 actor=109.7496 actor_updated=1 alpha=0.0336
+2026-08-13 22:11:43,115 INFO epoch=177/190 reward=-2512.65400 online=93499 rollout=3.73s train=21.13s
+2026-08-13 22:11:55,428 INFO mixed update 250/500 rate=24.1/s critic=0.4386 actor=111.7865 actor_updated=1 alpha=0.0320
+2026-08-13 22:12:07,430 INFO mixed update 500/500 rate=24.3/s critic=0.2193 actor=91.4921 actor_updated=1 alpha=0.0305
+2026-08-13 22:12:07,442 INFO epoch=178/190 reward=-2890.92400 online=93999 rollout=3.74s train=20.57s
+2026-08-13 22:12:21,861 INFO mixed update 250/500 rate=23.2/s critic=0.1780 actor=88.0417 actor_updated=1 alpha=0.0325
+2026-08-13 22:12:35,279 INFO mixed update 500/500 rate=22.9/s critic=2.3597 actor=109.9058 actor_updated=1 alpha=0.0336
+2026-08-13 22:12:35,296 INFO epoch=179/190 reward=-4583.50699 online=94500 rollout=6.04s train=21.80s
+2026-08-13 22:12:49,957 INFO mixed update 250/500 rate=21.1/s critic=0.2822 actor=100.2344 actor_updated=1 alpha=0.0347
+2026-08-13 22:13:02,059 INFO mixed update 500/500 rate=22.5/s critic=1.2072 actor=90.2882 actor_updated=1 alpha=0.0346
+2026-08-13 22:13:02,073 INFO epoch=180/190 reward=-2978.00601 online=94999 rollout=4.58s train=22.18s
+2026-08-13 22:13:18,249 INFO mixed update 250/500 rate=24.0/s critic=1.3366 actor=109.8845 actor_updated=1 alpha=0.0347
+2026-08-13 22:13:31,693 INFO mixed update 500/500 rate=24.2/s critic=1.0737 actor=99.3550 actor_updated=1 alpha=0.0335
+2026-08-13 22:13:31,707 INFO epoch=181/190 reward=-1972.90400 online=95499 rollout=5.27s train=20.64s
+2026-08-13 22:13:52,856 INFO mixed update 250/500 rate=22.8/s critic=0.1543 actor=109.5318 actor_updated=1 alpha=0.0340
+2026-08-13 22:14:05,409 INFO mixed update 500/500 rate=23.5/s critic=0.1567 actor=91.0188 actor_updated=1 alpha=0.0317
+2026-08-13 22:14:05,422 INFO epoch=182/190 reward=-3361.55600 online=95999 rollout=12.45s train=21.25s
+2026-08-13 22:14:18,053 INFO mixed update 250/500 rate=23.3/s critic=0.3537 actor=94.5547 actor_updated=1 alpha=0.0317
+2026-08-13 22:14:30,451 INFO mixed update 500/500 rate=23.4/s critic=0.2453 actor=98.0408 actor_updated=1 alpha=0.0328
+2026-08-13 22:14:30,465 INFO epoch=183/190 reward=-431.30200 online=96499 rollout=3.66s train=21.37s
+2026-08-13 22:14:43,533 INFO mixed update 250/500 rate=22.7/s critic=0.8917 actor=94.1190 actor_updated=1 alpha=0.0323
+2026-08-13 22:14:56,853 INFO mixed update 500/500 rate=22.4/s critic=1.5337 actor=104.6006 actor_updated=1 alpha=0.0336
+2026-08-13 22:14:56,866 INFO epoch=184/190 reward=-726.34400 online=96999 rollout=4.11s train=22.28s
+2026-08-13 22:15:08,747 INFO mixed update 250/500 rate=24.3/s critic=0.1779 actor=97.5244 actor_updated=1 alpha=0.0329
+2026-08-13 22:15:20,808 INFO mixed update 500/500 rate=24.2/s critic=0.7975 actor=102.1610 actor_updated=1 alpha=0.0320
+2026-08-13 22:15:20,820 INFO epoch=185/190 reward=-892.86800 online=97499 rollout=3.26s train=20.68s
+2026-08-13 22:15:34,543 INFO mixed update 250/500 rate=24.3/s critic=1.0245 actor=96.7283 actor_updated=1 alpha=0.0345
+2026-08-13 22:15:46,516 INFO mixed update 500/500 rate=24.1/s critic=0.5410 actor=104.0842 actor_updated=1 alpha=0.0350
+2026-08-13 22:15:46,529 INFO epoch=186/190 reward=-809.62400 online=97999 rollout=3.22s train=20.74s
+2026-08-13 22:15:58,478 INFO mixed update 250/500 rate=24.4/s critic=0.3142 actor=108.8599 actor_updated=1 alpha=0.0350
+2026-08-13 22:16:10,421 INFO mixed update 500/500 rate=24.2/s critic=1.3928 actor=115.3167 actor_updated=1 alpha=0.0333
+2026-08-13 22:16:10,433 INFO epoch=187/190 reward=-885.00000 online=98499 rollout=3.24s train=20.66s
+2026-08-13 22:16:22,404 INFO mixed update 250/500 rate=24.3/s critic=0.2735 actor=112.3950 actor_updated=1 alpha=0.0311
+2026-08-13 22:16:34,390 INFO mixed update 500/500 rate=24.2/s critic=0.2432 actor=94.0275 actor_updated=1 alpha=0.0313
+2026-08-13 22:16:34,403 INFO epoch=188/190 reward=-876.64600 online=98999 rollout=3.26s train=20.70s
+2026-08-13 22:16:46,574 INFO mixed update 250/500 rate=23.7/s critic=0.2634 actor=89.0133 actor_updated=1 alpha=0.0313
+2026-08-13 22:16:58,642 INFO mixed update 500/500 rate=23.8/s critic=0.6148 actor=101.3300 actor_updated=1 alpha=0.0292
+2026-08-13 22:16:58,654 INFO epoch=189/190 reward=-864.35529 online=99500 rollout=3.27s train=20.97s
+2026-08-13 22:17:11,613 INFO mixed update 250/500 rate=23.9/s critic=2.3005 actor=103.2148 actor_updated=1 alpha=0.0289
+2026-08-13 22:17:23,272 INFO mixed update 500/500 rate=24.4/s critic=0.3545 actor=109.6847 actor_updated=1 alpha=0.0288
+2026-08-13 22:17:23,283 INFO epoch=190/190 reward=-870.22244 online=99999 rollout=4.16s train=20.46s
+2026-08-13 22:17:27,353 INFO completed {'schema_version': 'transit-training-summary-v8', 'run_dir': '/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_sensitivity/h2oplus-lambda0p5_seed5102', 'completed_utc': '2026-08-13T14:17:27.352731+00:00', 'method': 'h2oplus-lambda0p5', 'run_signature': '630bee3a0d3c3072184ff1a5a13435953b274c242dd94e64093d27a7b013b279', 'mdp_version': 'v7', 'method_protocol': 'transit-adapted H2O+ with the mixed-backup coefficient fixed to 0.5 for source-default and sensitivity analysis', 'method_profile': {'description': 'transit-adapted H2O+ with the mixed-backup coefficient fixed to 0.5 for source-default and sensitivity analysis', 'reference': 'https://doi.org/10.1109/ICRA55743.2025.11127503', 'reference_implementation': 'https://github.com/t6-thu/H2Oplus', 'reference_commit': '02171768283d307244700c69003423704db83b05', 'offline_objective': 'iql', 'online_update_mode': 'mixed', 'online_backup': 'h2oplus', 'use_ratio_correction': True, 'ensemble_size': 2, 'target_subset_size': 2, 'batch_size': 256, 'utd_ratio': 1, 'actor_update_interval': 1, 'actor_batch_mode': 'latest', 'actor_q_reduction': 'min-all', 'actor_learning_rate': 0.0003, 'critic_learning_rate': 0.0003, 'value_learning_rate': 0.0003, 'alpha_learning_rate': 0.0003, 'target_entropy': -1.0, 'initial_temperature': 1.0, 'backup_entropy': True, 'online_fraction': 0.5, 'bootstrap_probability': 1.0, 'offline_cql_alpha': 0.0, 'mixed_backup_lambda': 0.5, 'iql_expectile': 0.7, 'iql_advantage_temperature': 3.0, 'default_offline_updates': 50000, 'default_warmup_events': 5000, 'default_ratio_pretrain_updates': 1000, 'ratio_update_interval': 4, 'cql_max_target_backup': False, 'activation': 'relu', 'actor_layer_norm': False, 'critic_layer_norm': False, 'value_layer_norm': False, 'offline_initializer': None, 'gradient_clip_norm': None, 'online_update_order': 'actor-before-critic', 'warmup_action_mode': 'policy', 'critic_loss': 'mse', 'huber_delta': 1.0, 'target_subset_replacement': False, 'cql_penalty_subset_size': None, 'cql_penalty_subset_replacement': False, 'offline_update_order': 'critic-before-actor', 'temperature_state_source': 'actor', 'offline_temperature_action_samples': 1}, 'protocol_resolution': {'defaults_applied': {}, 'overrides': {'offline_updates': {'profile': 50000, 'effective': 50000}, 'warmup_events': {'profile': 5000, 'effective': 5000}, 'ratio_pretrain_updates': {'profile': 1000, 'effective': 1000}, 'utd_ratio': {'profile': 1, 'effective': 1}, 'batch_size': {'profile': 256, 'effective': 256}, 'ensemble_size': {'profile': 2, 'effective': 2}, 'online_fraction': {'profile': 0.5, 'effective': 0.5}, 'offline_cql_alpha': {'profile': 0.0, 'effective': 0.0}, 'target_entropy': {'profile': -1.0, 'effective': 0.0}, 'initial_temperature': {'profile': 1.0, 'effective': 1.0}, 'critic_loss': {'profile': 'mse', 'effective': 'huber'}, 'huber_delta': {'profile': 1.0, 'effective': 1.0}, 'iql_advantage_temperature': {'profile': 3.0, 'effective': 3.0}, 'ratio_update_interval': {'profile': 4, 'effective': 4}, 'updates_per_epoch': {'profile': 500, 'effective': 500}}}, 'seed': 5102, 'start_epoch': 0, 'completed_epochs': 190, 'offline_metrics': {'train/offline_terminal_rows': 0.0, 'train/offline_terminal_abs_td': 0.0, 'train/offline_nonterminal_abs_td': 0.39886942505836487, 'train/offline_terminal_loss_fraction': 0.0, 'train/offline_max_abs_td': 2.1390762329101562, 'train/update': 50000.0, 'train/online_critic_update': 0.0, 'train/critic_loss': 0.12797996401786804, 'train/offline_td_loss': 0.12797996401786804, 'train/sim_td_loss': 0.0, 'train/cql_penalty': 0.0, 'train/value_loss': 0.10240631550550461, 'train/value_advantage': -0.19379153847694397, 'train/actor_updated': 1.0, 'train/actor_loss': 0.2022731751203537, 'train/alpha_loss': 0.0, 'train/alpha': 1.0, 'train/q_data_mean': -42.919517517089844, 'train/critic_grad_norm': 87.06478881835938, 'train/value_grad_norm': 43.83890151977539, 'train/actor_grad_norm': 0.8137857913970947}, 'offline_initializer_consumed': {'path': '/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_core/h2oplus_seed5102/checkpoints/offline_initializer.pt', 'sha256': '64db2b807871eefdea3175f058ca2f2910bafa3da4fe2b4836c18eb9a45734d6', 'bytes': 19085939, 'schema_version': 'transit-offline-initializer-v7-v1', 'source_method': 'h2oplus', 'source_run_name': 'h2oplus_seed5102', 'source_run_signature': '02e86029322bf2c4d6e6e67c858085df6549938b66239d4cb6a897ae9085f827', 'source_training_seed': 5102, 'offline_updates': 50000}, 'offline_initializer_produced': None, 'warmup_metrics': {'events': 5000, 'transitions': 4999, 'episodes_started': 1, 'demand_scale_episode_starts': {'0.75': 1, '1': 0, '1.25': 0}, 'current_demand_scale': 0.75, 'discarded_pending_total': 0, 'trip_boundaries_total': 0, 'maximum_simultaneous_decisions': 8, 'blocked_simultaneous_batch_size': 0, 'hard_event_cap_reached': False, 'mean_reward': -676.502900580116, 'mean_delta_t': 1.509501900380076, 'mean_hold_seconds': 3.2936981767416, 'online_buffer_size': 4999, 'action_mode': 'policy'}, 'ratio_metrics': {'ratio/loss': 0.5685080885887146, 'ratio/joint_loss': 0.27508607506752014, 'ratio/state_action_loss': 0.29342201352119446, 'ratio/joint_auc': 0.94732666015625, 'ratio/joint_accuracy': 0.892578125, 'ratio/joint_brier': 0.07910509407520294, 'ratio/joint_real_logit_mean': 2.0247559547424316, 'ratio/joint_sim_logit_mean': -1.567293405532837, 'ratio/state_action_auc': 0.9430694580078125, 'ratio/state_action_accuracy': 0.880859375, 'ratio/state_action_brier': 0.08641104400157928, 'ratio/state_action_real_logit_mean': 2.0675809383392334, 'ratio/state_action_sim_logit_mean': -1.4102332592010498, 'ratio/validation_available': 0.0}, 'final_ratio_validation': {'ratio/validation_loss': 0.9749301671981812, 'ratio/validation_joint_loss': 0.49714821577072144, 'ratio/validation_state_action_loss': 0.4777819514274597, 'ratio/validation_joint_auc': 0.902313232421875, 'ratio/validation_joint_accuracy': 0.8359375, 'ratio/validation_joint_brier': 0.13422748446464539, 'ratio/validation_joint_real_logit_mean': 4.86034631729126, 'ratio/validation_joint_sim_logit_mean': -2.078948497772217, 'ratio/validation_state_action_auc': 0.89141845703125, 'ratio/validation_state_action_accuracy': 0.80078125, 'ratio/validation_state_action_brier': 0.14062067866325378, 'ratio/validation_state_action_real_logit_mean': 4.210364818572998, 'ratio/validation_state_action_sim_logit_mean': -1.973673701286316, 'ratio/validation_weight_min': 0.026859747245907784, 'ratio/validation_weight_max': 1.0, 'ratio/validation_weight_mean': 0.6889153122901917, 'ratio/validation_ess_fraction': 0.8163452744483948, 'ratio/validation_raw_ess_fraction': 0.039034608751535416, 'ratio/validation_clip_fraction': 0.41015625, 'ratio/validation_low_clip_fraction': 0.0, 'ratio/validation_high_clip_fraction': 0.41015625, 'ratio/validation_log_weight_mean': -0.10527496784925461, 'ratio/validation_log_weight_std': 1.284084677696228, 'ratio/validation_available': 1.0}, 'simulator_decision_event_cap': 100000, 'simulator_decision_events': 100000, 'simulator_decision_event_underfill': 0, 'maximum_simultaneous_decisions': 8, 'final_blocked_simultaneous_batch_size': 0, 'online_buffer_size': 99999, 'total_updates': 145000, 'checkpoint': {'path': '/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_sensitivity/h2oplus-lambda0p5_seed5102/checkpoints/latest.pt', 'sha256': 'cba63f32818cab7bd7b4b06b22ee6cf647bea9a3f086b5dc640e173a559c5cd2'}, 'final_policy': {'path': '/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_sensitivity/h2oplus-lambda0p5_seed5102/checkpoints/final_actor.pt', 'sha256': 'aebce507d0e35afcce744915336c9518ce8f125f51395c2bdbb425da304ed341', 'source_training_checkpoint_sha256': 'cba63f32818cab7bd7b4b06b22ee6cf647bea9a3f086b5dc640e173a559c5cd2'}, 'timings_sec': {'data_load': 28.346908877021633, 'provenance_audit': 1.0678526859846897, 'model_init': 4.148147584986873, 'offline_initializer_restore': 0.07920066302176565, 'device_cache': 1.067934933991637, 'checkpoint': 76.39610475697555, 'simulator_init': 8.244071673951112, 'online_warmup_rollout': 23.46317599399481, 'ratio_pretraining': 31.19729705998907, 'online_rollout': 795.3569138332387, 'online_training': 3988.842879756179}, 'max_rss_mb': 9305.61328125, 'max_cuda_memory_mb': 6175.55859375}
+/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_training_v7r1/workspace/experiment_output_smdp_v7/formal_v7/server/h2oplus_sensitivity/h2oplus-lambda0p5_seed5102

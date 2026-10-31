@@ -1,0 +1,161 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v12/gate_gpu_v1/server_baselines/wsrl_seed9151/checkpoints/latest.pt",
+    "sha256": "d25655064539da20772581ee98833e7a87e12e3968a453b27a3192435f2c6c31"
+  },
+  "completed_epochs": 3,
+  "completed_utc": "2026-08-08T11:49:31.660045+00:00",
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 512.9833984375,
+  "max_rss_mb": 4680.33984375,
+  "mdp_version": "v6",
+  "method": "wsrl",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "aggregate",
+    "actor_layer_norm": true,
+    "actor_learning_rate": 0.0001,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 4,
+    "alpha_learning_rate": 0.0001,
+    "backup_entropy": false,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": true,
+    "critic_layer_norm": true,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 250000,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 5000,
+    "description": "WSRL fine-tuning with the paper-supported CQL initialization variant: frozen-policy warmup, online-only replay, ten critics, and critic UTD 4",
+    "ensemble_size": 10,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 5.0,
+    "offline_initializer": "cql",
+    "offline_objective": "cql",
+    "online_backup": "sac",
+    "online_fraction": 0.0,
+    "online_update_mode": "online-only",
+    "ratio_update_interval": 4,
+    "reference": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/504491292cb71e7681eedfe0e602b72f-Abstract-Conference.html",
+    "reference_commit": "ad4dc1248a138bc15d6e053f2d1dba1b8cfbaca2",
+    "reference_implementation": "https://github.com/zhouzypaul/wsrl",
+    "target_entropy": 0.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "utd_ratio": 4,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "WSRL fine-tuning with the paper-supported CQL initialization variant: frozen-policy warmup, online-only replay, ten critics, and critic UTD 4",
+  "offline_metrics": {
+    "train/actor_grad_norm": 4.327610492706299,
+    "train/actor_loss": -0.6959019899368286,
+    "train/actor_updated": 1.0,
+    "train/alpha": 0.9991977214813232,
+    "train/alpha_loss": -0.0004215338849462569,
+    "train/cql_penalty": 0.8600496649742126,
+    "train/critic_grad_norm": 5.5738396644592285,
+    "train/critic_loss": 4.314782619476318,
+    "train/offline_td_loss": 0.01453453954309225,
+    "train/online_critic_update": 0.0,
+    "train/q_data_mean": 0.11438965797424316,
+    "train/sim_td_loss": 0.0,
+    "train/update": 8.0,
+    "train/value_advantage": 0.0,
+    "train/value_grad_norm": 0.0,
+    "train/value_loss": 0.0
+  },
+  "online_buffer_size": 63,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "ensemble_size": {
+        "effective": 10,
+        "profile": 10
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 5.0,
+        "profile": 5.0
+      },
+      "offline_updates": {
+        "effective": 8,
+        "profile": 250000
+      },
+      "online_fraction": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "updates_per_epoch": {
+        "effective": 64,
+        "profile": 64
+      },
+      "utd_ratio": {
+        "effective": 4,
+        "profile": 4
+      },
+      "warmup_events": {
+        "effective": 16,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v12/gate_gpu_v1/server_baselines/wsrl_seed9151",
+  "run_signature": "1c4ac65eaa6e85676625f8c9e59bd214913de91619addc0ad240a093a6bb483c",
+  "schema_version": "transit-training-summary-v7",
+  "seed": 9151,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 1.3272039506118745,
+    "data_load": 13.535505535081029,
+    "device_cache": 0.002449920168146491,
+    "model_init": 2.4295318918302655,
+    "offline_pretraining": 25.205775250913575,
+    "online_rollout": 0.531985147157684,
+    "online_training": 21.47520305798389,
+    "online_warmup_rollout": 4.44766078190878,
+    "provenance_audit": 0.7747804191894829,
+    "simulator_init": 4.589530081022531
+  },
+  "total_updates": 200,
+  "warmup_metrics": {
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 16,
+    "maximum_simultaneous_decisions": 1,
+    "mean_delta_t": 23.533333333333335,
+    "mean_hold_seconds": 6.157013811171055,
+    "mean_reward": -0.0014602666666666667,
+    "online_buffer_size": 15,
+    "transitions": 15,
+    "trip_boundaries_total": 0
+  }
+}

@@ -1,0 +1,12 @@
+{"event": "v20_formal_dispatch_started", "expected_results": 1350, "utc": "2026-08-28T02:16:39.582346+00:00", "workers": 12}
+{"error": "FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v20_formal_confirmation_evaluation_v1/workspace/H2Oplus/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml'", "event": "v20_formal_dispatch_failed", "utc": "2026-08-28T02:16:41.515132+00:00"}
+Traceback (most recent call last):
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v20_formal_confirmation_evaluation_v1/workspace/H2Oplus/reproducibility/run_h2oplus_v20_formal_confirmation_dispatch.py", line 600, in <module>
+    raise SystemExit(main())
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v20_formal_confirmation_evaluation_v1/workspace/H2Oplus/reproducibility/run_h2oplus_v20_formal_confirmation_dispatch.py", line 511, in main
+    evidence = verify_inputs(args)
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v20_formal_confirmation_evaluation_v1/workspace/H2Oplus/reproducibility/run_h2oplus_v20_formal_confirmation_dispatch.py", line 204, in verify_inputs
+    if path.stat().st_size != row["bytes"] or sha256(path) != row["sha256"]:
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/pathlib.py", line 1198, in stat
+    return self._accessor.stat(self)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v20_formal_confirmation_evaluation_v1/workspace/H2Oplus/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml'

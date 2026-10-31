@@ -1,0 +1,38 @@
+2026-08-17 23:18:12,513 INFO loaded shared IQL initializer=/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/reproducibility/h2oplus_v10_initializers/h2oplus_seed6201.pt source_signature=f962e74285e9ea83d5cfcc8d857cb431a1164d8731414a262600e84b468f766f
+2026-08-17 23:18:13,287 INFO run=/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/remote_results/h2oplus_v10_shared_prefix_seed6201 method=h2oplus device=cuda:0 offline_rows=3284718 simulator=67d5869a90a761068b2ba954d79b5c34f3f42516f573c7efd51e788498cde6c9
+  Loaded line 102S: 15-dim obs, 19 segs, 35 trips
+  Loaded line 102X: 15-dim obs, 18 segs, 31 trips
+  Loaded line 122S: 15-dim obs, 17 segs, 33 trips
+  Loaded line 122X: 15-dim obs, 17 segs, 32 trips
+  Loaded line 311S: 15-dim obs, 20 segs, 28 trips
+  Loaded line 311X: 15-dim obs, 21 segs, 26 trips
+  Loaded line 406S: 15-dim obs, 19 segs, 28 trips
+  Loaded line 406X: 15-dim obs, 19 segs, 28 trips
+  Loaded line 705S: 15-dim obs, 23 segs, 25 trips
+  Loaded line 705X: 15-dim obs, 23 segs, 21 trips
+  Loaded line 7S: 15-dim obs, 12 segs, 52 trips
+  Loaded line 7X: 15-dim obs, 12 segs, 50 trips
+2026-08-17 23:18:43,980 INFO warmup rollout {'events': 5002, 'transitions': 5001, 'episodes_started': 1, 'demand_scale_episode_starts': {'0.75': 1, '1': 0, '1.25': 0}, 'current_demand_scale': 0.75, 'discarded_pending_total': 0, 'trip_boundaries_total': 0, 'maximum_simultaneous_decisions': 6, 'blocked_simultaneous_batch_size': 0, 'hard_event_cap_reached': False, 'mean_reward': -676.0143971205758, 'mean_delta_t': 1.5146970605878824, 'mean_hold_seconds': 3.823805053154977, 'online_buffer_size': 5001, 'action_mode': 'policy'}
+2026-08-17 23:19:05,101 INFO ratio pretraining {'ratio/loss': 0.5343535542488098, 'ratio/joint_loss': 0.26321011781692505, 'ratio/state_action_loss': 0.27114343643188477, 'ratio/joint_auc': 0.9369659423828125, 'ratio/joint_accuracy': 0.912109375, 'ratio/joint_brier': 0.07432082295417786, 'ratio/joint_real_logit_mean': 2.0900561809539795, 'ratio/joint_sim_logit_mean': -1.8634148836135864, 'ratio/state_action_auc': 0.9315338134765625, 'ratio/state_action_accuracy': 0.908203125, 'ratio/state_action_brier': 0.07620760798454285, 'ratio/state_action_real_logit_mean': 1.969439148902893, 'ratio/state_action_sim_logit_mean': -1.8569960594177246, 'ratio/validation_available': 0.0}
+Traceback (most recent call last):
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/SimpleSAC/train_transit_v10_delayed.py", line 1049, in <module>
+    main()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/SimpleSAC/train_transit_v10_delayed.py", line 1044, in main
+    base.main("v7")
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/SimpleSAC/train_transit_v3.py", line 2751, in main
+    rollout_metrics, train_metrics = run_interleaved_epoch(
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/SimpleSAC/train_transit_v3.py", line 1707, in run_interleaved_epoch
+    train_to(target_updates)
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/SimpleSAC/train_transit_v3.py", line 1598, in train_to
+    metrics = _run_update(
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/SimpleSAC/train_transit_v3.py", line 1521, in _run_update
+    return trainer.update(
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/SimpleSAC/transit_v10/trainer.py", line 186, in update
+    metrics = super().update(
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/SimpleSAC/transit_v3/trainer.py", line 1360, in update
+    self._update_actor_for_batch(
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/SimpleSAC/transit_v3/trainer.py", line 1176, in _update_actor_for_batch
+    actor_states = self._actor_states(offline_batch, online_batch)
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/h2oplus_v10_delayed_pilot_v1/workspace/SimpleSAC/transit_v10/trainer.py", line 135, in _actor_states
+    return TransitH2OTrainer._actor_states(self, offline_batch, online_batch)
+TypeError: _actor_states() takes 2 positional arguments but 3 were given

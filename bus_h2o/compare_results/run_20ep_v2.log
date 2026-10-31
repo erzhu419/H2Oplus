@@ -1,0 +1,985 @@
+nohup: ignoring input
+[compare_envs] episodes=20  skip_sumo=False
+
+=== SIM EPISODES ===
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 102X: 15-dim obs, 9 segs, 31 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 122S: 15-dim obs, 16 segs, 33 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 122X: 15-dim obs, 16 segs, 32 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 311S: 15-dim obs, 15 segs, 28 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 311X: 15-dim obs, 15 segs, 26 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 406S: 15-dim obs, 15 segs, 56 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 705S: 15-dim obs, 18 segs, 25 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 705X: 15-dim obs, 18 segs, 21 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 7S: 15-dim obs, 12 segs, 87 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 7X: 15-dim obs, 12 segs, 50 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Ep   1: stops= 4836  board= 26102  wall=31.4s
+  Ep   2: stops= 4836  board= 26205  wall=30.9s
+  Ep   3: stops= 4836  board= 26105  wall=32.1s
+  Ep   4: stops= 4836  board= 26214  wall=33.0s
+  Ep   5: stops= 4836  board= 26042  wall=30.5s
+  Ep   6: stops= 4836  board= 26092  wall=29.9s
+  Ep   7: stops= 4836  board= 26177  wall=35.2s
+  Ep   8: stops= 4836  board= 26324  wall=33.4s
+  Ep   9: stops= 4836  board= 26274  wall=44.7s
+  Ep  10: stops= 4836  board= 26125  wall=62.1s
+  Ep  11: stops= 4836  board= 25961  wall=47.7s
+  Ep  12: stops= 4836  board= 26223  wall=43.1s
+  Ep  13: stops= 4836  board= 25981  wall=69.7s
+  Ep  14: stops= 4836  board= 26143  wall=125.7s
+  Ep  15: stops= 4836  board= 26129  wall=48.2s
+  Ep  16: stops= 4836  board= 26252  wall=47.1s
+  Ep  17: stops= 4836  board= 26183  wall=61.0s
+  Ep  18: stops= 4836  board= 26127  wall=49.9s
+  Ep  19: stops= 4836  board= 26196  wall=35.5s
+  Ep  20: stops= 4836  board= 26012  wall=46.2s
+Sim CSVs → /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/compare_results/sim_stop_metrics.csv, /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/compare_results/sim_episode_metrics.csv
+
+=== SUMO EPISODES ===
+Using libsumo as traci as requested by environment variable.
+Warning: c_8_subfunction_for_gurobi_test module not found, some functionality may be limited
+Warning: gurobipy module not found, optimization functionality may be limited
+Warning: gurobipy module not found, optimization functionality may be limited
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (829ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (23ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 1: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (757ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (12ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 2: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (1377ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (11ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 3: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (1088ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (8ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 4: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (623ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (5ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 5: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (590ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (8ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 6: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (707ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (11ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 7: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (658ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (6ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 8: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (790ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (8ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 9: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (823ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (4ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 10: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (647ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (4ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 11: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (368ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (3ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 12: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (367ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (4ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 13: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (852ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (20ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 14: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (711ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (11ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 15: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (442ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (5ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 16: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (1816ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (18ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 17: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (1500ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (13ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 18: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (833ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (7ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 19: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Simulation ended at time: 0.00.
+Reason: Libsumo issued load command.
+Statistics (avg of 0):
+ RouteLength: 0.00
+ Speed: 0.00
+ Duration: 0.00
+ WaitingTime: 0.00
+ TimeLoss: 0.00
+ DepartDelay: 0.00
+ DepartDelayWaiting: 0.00
+Pedestrian Statistics (avg of 2 walks):
+ RouteLength: 0.10
+ Duration: 0.00
+ TimeLoss: 0.00
+Ride Statistics (avg of 3 rides):
+ WaitingTime: 0.00
+ RouteLength: 0.00
+ Duration: 0.00
+ Aborted: 3
+Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (539ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (6ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+  Ep 20: ERROR — [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+Traceback (most recent call last):
+  File "compare_envs.py", line 518, in main
+    stop_rows, ep_sum = run_sumo_episode(bridge, ep + 1)
+  File "compare_envs.py", line 243, in run_sumo_episode
+    bridge.reset()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 134, in reset
+    self._load_objects()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py", line 231, in _load_objects
+    result = f_8_create_obj.create_obj_fun()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py", line 42, in create_obj_fun
+    lane_file = ET.parse(lane_obj_xml_path)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 1202, in parse
+    tree.parse(source, parser)
+  File "/home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/xml/etree/ElementTree.py", line 584, in parse
+    source = open(source, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: '/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/initialize_obj/save_obj_lane.add.xml'
+SUMO CSVs → /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/compare_results/sumo_stop_metrics.csv, /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/compare_results/sumo_episode_metrics.csv
+
+Generating analysis report...
+Report → /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/compare_results/analysis_report.md
+
+--- SUMMARY ---
+# Sim vs SUMO Zero-Control Comparison
+
+## Episode-Level Summary
+
+| Metric | Sim | SUMO |
+|--------|-----|------|
+| Episodes | 20 | 0 |
+| Avg total_boarded | 26143.4 | nan |
+| Avg total_alighted | 8160.0 | nan |
+| Avg full_load_events | 3218.8 | nan |
+| Avg wall_sec | 46.9 | nan |
+| Avg speed_low_frac | 0.556 | nan |
+| Avg speed_med_frac | 0.444 | nan |
+| Avg speed_high_frac | 0.0 | nan |
+| Avg trip_records | 4836.0 | nan |
+
+## Per-Stop Travel Time (segment avg, top-20 by deviation)
+
+
+## Potential Bugs
+
+- ⚠️ **Sim**: board (26143) vs alight (8160) diverge >20% → potential passenger leak
+
+---
+*Generated by compare_envs.py*
+

@@ -1,0 +1,110 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/rlpd_seed5101/checkpoints/latest.pt",
+    "sha256": "962f08d2cd6c9b41d0149751a8b908608296a34a961d16acae5b0c0bcc5ba405"
+  },
+  "completed_epochs": 5,
+  "completed_utc": "2026-08-03T16:34:29.402786+00:00",
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 186.93115234375,
+  "max_rss_mb": 1707.27734375,
+  "mdp_version": "v4",
+  "method": "rlpd",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "mean-all",
+    "actor_update_interval": 20,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": true,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 0,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 5000,
+    "description": "official state-based RLPD protocol: random initialization, 50/50 prior/online replay, ten critics, and UTD 20",
+    "ensemble_size": 10,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "none",
+    "online_backup": "sac",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "reference": "https://proceedings.mlr.press/v202/ball23a.html",
+    "reference_commit": "c90fd4baf28c9c9ef40a81460a2e395092844f88",
+    "reference_implementation": "https://github.com/ikostrikov/rlpd",
+    "target_entropy": -0.5,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "utd_ratio": 20,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "official state-based RLPD protocol: random initialization, 50/50 prior/online replay, ten critics, and UTD 20",
+  "offline_metrics": {},
+  "online_buffer_size": 1689,
+  "protocol_resolution": {
+    "defaults_applied": {
+      "batch_size": 256,
+      "ensemble_size": 10,
+      "initial_temperature": 1.0,
+      "iql_advantage_temperature": 3.0,
+      "offline_cql_alpha": 0.0,
+      "online_fraction": 0.5,
+      "target_entropy": -0.5,
+      "updates_per_epoch": 5120,
+      "utd_ratio": 20
+    },
+    "overrides": {
+      "offline_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "warmup_events": {
+        "effective": 500,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/rlpd_seed5101",
+  "run_signature": "02796efceedbe1f55d798d7fba29de132fafde4bec55040eb2b65e45f938dbcb",
+  "schema_version": "transit-training-summary-v5",
+  "seed": 5101,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 1.8579515119927237,
+    "data_load": 0.7103514839982381,
+    "device_cache": 0.01841816899832338,
+    "model_init": 0.9864126320026116,
+    "online_rollout": 5.892964674043469,
+    "online_training": 320.08361643203534,
+    "online_warmup_rollout": 3.053544772999885,
+    "provenance_audit": 0.17950988100346876,
+    "simulator_init": 2.8893405769995297
+  },
+  "total_updates": 25600,
+  "warmup_metrics": {
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 500,
+    "mean_delta_t": 68.16122004357298,
+    "mean_hold_seconds": 4.308288128852844,
+    "mean_reward": -0.07985441560052392,
+    "online_buffer_size": 459,
+    "transitions": 459,
+    "trip_boundaries_total": 0
+  }
+}

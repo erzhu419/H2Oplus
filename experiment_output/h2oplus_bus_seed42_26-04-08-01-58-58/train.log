@@ -1,0 +1,52 @@
+01:58:58 [INFO] ============================================================
+01:58:58 [INFO] H2O+ Bus Training
+01:58:58 [INFO] ============================================================
+01:58:58 [INFO] Log directory: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-01-58-58
+01:58:58 [INFO] Seed: 42, Device: cpu
+01:58:58 [INFO] Snapshot reset: False, JTT: False
+01:58:58 [INFO] Config saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-01-58-58/config.json
+01:59:08 [INFO] Route length set to 13149.8 m
+01:59:08 [INFO] Loading offline data: file=/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5, dir=None
+01:59:19 [INFO] Loaded 3,104,419 offline transitions, max buffer size 7,761,047, valid snapshots: 0
+01:59:19 [INFO] Offline reward stats: mean=-118.49, std=133.81
+01:59:19 [INFO] Snapshot reset DISABLED (use_snapshot_reset=False)
+01:59:19 [INFO] Creating MultiLineSimEnv from /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env
+01:59:22 [INFO] Traffic signal model (per line):
+01:59:22 [INFO]   102S: 31 signals, green_frac=0.37, cycle=90s
+01:59:22 [INFO]   102X: 26 signals, green_frac=0.37, cycle=90s
+01:59:22 [INFO]   122S: 26 signals, green_frac=0.39, cycle=90s
+01:59:22 [INFO]   122X: 26 signals, green_frac=0.39, cycle=90s
+01:59:22 [INFO]   311S: 36 signals, green_frac=0.40, cycle=90s
+01:59:22 [INFO]   311X: 36 signals, green_frac=0.40, cycle=90s
+01:59:22 [INFO]   406S: 30 signals, green_frac=0.39, cycle=90s
+01:59:22 [INFO]   406X: 29 signals, green_frac=0.40, cycle=90s
+01:59:22 [INFO]   705S: 35 signals, green_frac=0.40, cycle=90s
+01:59:22 [INFO]   705X: 34 signals, green_frac=0.40, cycle=90s
+01:59:22 [INFO]   7S: 17 signals, green_frac=0.39, cycle=90s
+01:59:22 [INFO]   7X: 17 signals, green_frac=0.38, cycle=90s
+01:59:22 [INFO] Online env: SIM (MultiLineSimEnv)
+01:59:22 [INFO] EmbeddingLayer output_dim=29, cont_features=12, internal_state_dim=41
+01:59:22 [INFO] Loading ensemble offline checkpoint: ../experiment_output/offline_ensemble/offline_ensemble_final.pt
+01:59:22 [INFO]   Policy loaded from ensemble checkpoint (partial match OK)
+01:59:22 [INFO]   Q-function loaded from ensemble checkpoint
+01:59:22 [INFO] Using H2OPlusEnsemble: E=5, β=-2.0
+01:59:22 [INFO] JTT DISABLED (use_jtt=False)
+01:59:22 [INFO] Starting training for 300 epochs
+01:59:22 [INFO]   rollout_events/epoch=100, train_steps/epoch=200, eval_period=10, checkpoint_period=50
+01:59:24 [DEBUG] [Epoch 0] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+01:59:37 [DEBUG] [Epoch 0] Train: steps=200/200, sim_ratio=0.10, avg_ploss=-1.3628856565058232, avg_qloss=242.56560146331788, avg_dloss=6.652545437216759
+01:59:39 [INFO] [Epoch 1/300] avg_return=-7160.31, avg_len=94, online_buf=93, train=200/200, sim_ratio=0.10, disc_active=False, disc_acc(R/S)=0.549/0.835, phase=main, IS_ratio=1.0, disc_loss=2.0306074619293213, mean_w=0.0000, trunc=0
+01:59:39 [INFO] New best checkpoint (ep1, return=-7160.3): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-01-58-58/checkpoint_best.pt
+01:59:41 [DEBUG] [Epoch 1] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+01:59:56 [DEBUG] [Epoch 1] Train: steps=200/200, sim_ratio=0.18, avg_ploss=-1.1970270961523055, avg_qloss=65.05946643829346, avg_dloss=1.3889865946769715
+01:59:58 [DEBUG] [Epoch 2] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+02:00:07 [DEBUG] [Epoch 2] Train: steps=200/200, sim_ratio=0.26, avg_ploss=-1.393205018043518, avg_qloss=68.03938207626342, avg_dloss=1.181616435647011
+02:00:09 [DEBUG] [Epoch 3] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+02:00:19 [DEBUG] [Epoch 3] Train: steps=200/200, sim_ratio=0.34, avg_ploss=-1.538097047805786, avg_qloss=70.61339502334594, avg_dloss=1.1083463674783707
+02:00:20 [DEBUG] [Epoch 4] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+02:00:35 [DEBUG] [Epoch 4] Train: steps=200/200, sim_ratio=0.42, avg_ploss=-1.7851029598712922, avg_qloss=75.3361528968811, avg_dloss=1.0802552139759063
+02:00:40 [DEBUG] [Epoch 5] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+02:00:55 [DEBUG] [Epoch 5] Train: steps=200/200, sim_ratio=0.50, avg_ploss=-2.0412530863285063, avg_qloss=77.92138116836549, avg_dloss=1.059388768672943
+02:00:58 [DEBUG] [Epoch 6] Rollout: events=100, trans=93, trunc=0, mean_w=0.3124, disc=True, resets(jtt/uni/fresh)=0/0/1
+02:01:07 [DEBUG] [Epoch 6] Train: steps=200/200, sim_ratio=0.50, avg_ploss=-2.0571857941150666, avg_qloss=79.2503715133667, avg_dloss=1.0472411561012267
+02:01:10 [DEBUG] [Epoch 7] Rollout: events=101, trans=94, trunc=0, mean_w=0.2850, disc=True, resets(jtt/uni/fresh)=0/0/1

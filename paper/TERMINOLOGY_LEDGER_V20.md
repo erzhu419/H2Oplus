@@ -36,7 +36,7 @@ argument. Subscripts identify components or indices, not new meanings.
 | $x^{\mathrm{raw}}_{m,j},x_{m,j}$ | Raw event observation and deduplicated local event vector |
 | $s^{\mathrm{raw}}_k,s_k,s'$ | Packed raw state, canonical state, and successor state |
 | $a,a_k,a^+$ | Normalized action, token action, and conditional positive-branch action |
-| $\tau_k,\tau_{\max},\Delta t_k$ | Executed hold, hold cap, and transition elapsed time |
+| $\tau_k,\tau_{\max},\Delta t_k$ | Executed additional hold (excluding passenger-exchange dwell), hold cap, and transition elapsed time |
 | $z_k,\Gamma_k$ | Terminal indicator and continuation factor |
 | $N_{\mathrm{w}},N_{\mathrm{v}}$ | System waiting and in-vehicle passenger counts |
 | $\omega_{\mathrm{w}},\omega_{\mathrm{v}}$ | Fixed waiting and in-vehicle passenger-time weights |
@@ -47,6 +47,7 @@ argument. Subscripts identify components or indices, not new meanings.
 | $J_{\mathrm{tgt}},\mathbb{E}$ | Expected target return and expectation operator |
 | $\pi,\pi_\phi,\phi$ | Admissible policy, learned hurdle policy, and actor parameters |
 | $p^+_\phi,g_\phi,\mu_\phi,\sigma_\phi,\zeta$ | Positive-branch probability, gate logit, latent normal mean, standard deviation, and latent coordinate |
+| $\widetilde a,\epsilon_{\mathrm{fp}}$ | Positive-hold likelihood input after endpoint projection, and single-precision machine epsilon; neither changes the stored or executed action |
 | $\delta_{-1},f_\phi,\varpi_\phi,\mathfrak{n}_\phi,\mathbb{I}$ | No-hold point mass, conditional action density, mixed-measure density, latent normal density, and indicator |
 | $\theta_i,\bar\theta_i,i,\bar Q_{\min},V_\nu,\nu,A,w_{\mathrm{IQL}}$ | Online and target critic parameters, critic-head index, target critic minimum, value function, value parameters, advantage, and actor regression weight |
 | $\kappa_r,\eta_{\mathrm{ent}},B_{\mathrm{SAC}},B_{\mathrm{mix}},y_k$ | Trainer reward scale, entropy temperature, SAC bootstrap, mixed bootstrap, and critic training target |

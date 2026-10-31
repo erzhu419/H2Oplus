@@ -1,0 +1,143 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v12/gate_gpu_v1/server_baselines/sac-mixed_seed9151/checkpoints/latest.pt",
+    "sha256": "5ee8ba52056ec374a3220ae1f0a1864a6d63a8e81b419bc591ce20b0f805a216"
+  },
+  "completed_epochs": 3,
+  "completed_utc": "2026-08-08T11:54:15.274390+00:00",
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 49.28759765625,
+  "max_rss_mb": 4579.86328125,
+  "mdp_version": "v6",
+  "method": "sac-mixed",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 0,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 5000,
+    "description": "randomly initialized SAC matched to the transit H2O+ actor and critic architecture, with balanced target/simulator replay",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.0,
+    "offline_initializer": null,
+    "offline_objective": "none",
+    "online_backup": "sac",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "ratio_update_interval": 4,
+    "reference": "https://proceedings.mlr.press/v80/haarnoja18b.html",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "randomly initialized SAC matched to the transit H2O+ actor and critic architecture, with balanced target/simulator replay",
+  "offline_metrics": {},
+  "online_buffer_size": 63,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "online_fraction": {
+        "effective": 0.5,
+        "profile": 0.5
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": -1.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 16,
+        "profile": 16
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 16,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v12/gate_gpu_v1/server_baselines/sac-mixed_seed9151",
+  "run_signature": "9b36bce5359ce0ed98ca67136dd77f2536ce8421db137113e5b4e0609af9b764",
+  "schema_version": "transit-training-summary-v7",
+  "seed": 9151,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 1.041035216068849,
+    "data_load": 13.440333429025486,
+    "device_cache": 0.0030373570043593645,
+    "model_init": 2.652794293127954,
+    "online_rollout": 0.49644009582698345,
+    "online_training": 19.141789017943665,
+    "online_warmup_rollout": 4.803059234982356,
+    "provenance_audit": 0.7370546718593687,
+    "simulator_init": 4.4153729469981045
+  },
+  "total_updates": 48,
+  "warmup_metrics": {
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 16,
+    "maximum_simultaneous_decisions": 1,
+    "mean_delta_t": 22.666666666666668,
+    "mean_hold_seconds": 2.9193251207470894,
+    "mean_reward": -0.001396133333333333,
+    "online_buffer_size": 15,
+    "transitions": 15,
+    "trip_boundaries_total": 0
+  }
+}

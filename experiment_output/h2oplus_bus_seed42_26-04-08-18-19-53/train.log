@@ -1,0 +1,271 @@
+18:19:53 [INFO] ============================================================
+18:19:53 [INFO] H2O+ Bus Training
+18:19:53 [INFO] ============================================================
+18:19:53 [INFO] Log directory: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-18-19-53
+18:19:53 [INFO] Seed: 42, Device: cuda
+18:19:53 [INFO] Snapshot reset: True, JTT: False
+18:19:53 [INFO] Config saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-18-19-53/config.json
+18:20:02 [INFO] Route length set to 13149.8 m
+18:20:02 [INFO] Loading offline data: file=/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5, dir=None
+18:20:14 [INFO] Loaded 3,104,419 offline transitions, max buffer size 9,313,257, valid snapshots: 0
+18:20:14 [INFO] Offline reward stats: mean=-118.49, std=133.81
+18:20:14 [INFO] Creating MultiLineSimEnv from /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env
+18:20:16 [INFO] Traffic signal model (per line):
+18:20:16 [INFO]   102S: 31 signals, green_frac=0.37, cycle=90s
+18:20:16 [INFO]   102X: 26 signals, green_frac=0.37, cycle=90s
+18:20:16 [INFO]   122S: 26 signals, green_frac=0.39, cycle=90s
+18:20:16 [INFO]   122X: 26 signals, green_frac=0.39, cycle=90s
+18:20:16 [INFO]   311S: 36 signals, green_frac=0.40, cycle=90s
+18:20:16 [INFO]   311X: 36 signals, green_frac=0.40, cycle=90s
+18:20:16 [INFO]   406S: 30 signals, green_frac=0.39, cycle=90s
+18:20:16 [INFO]   406X: 29 signals, green_frac=0.40, cycle=90s
+18:20:16 [INFO]   705S: 35 signals, green_frac=0.40, cycle=90s
+18:20:16 [INFO]   705X: 34 signals, green_frac=0.40, cycle=90s
+18:20:16 [INFO]   7S: 17 signals, green_frac=0.39, cycle=90s
+18:20:16 [INFO]   7X: 17 signals, green_frac=0.38, cycle=90s
+18:20:16 [INFO] Online env: SIM (MultiLineSimEnv)
+18:20:16 [INFO] EmbeddingLayer output_dim=29, cont_features=12, internal_state_dim=41
+18:20:17 [INFO] Using H2OPlusBus (twin-Q + V)
+18:20:17 [INFO] JTT DISABLED (use_jtt=False)
+18:20:17 [INFO] Pretraining for 5000 steps (offline only)...
+18:24:00 [INFO] Pretrain done in 223.5s: policy_loss=-7.0923, qf1_loss=136.1281, qf2_loss=132.7731
+18:24:00 [INFO] Starting training for 300 epochs
+18:24:00 [INFO]   rollout_events/epoch=100, train_steps/epoch=500, eval_period=10, checkpoint_period=50
+18:24:02 [DEBUG] [Epoch 0] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:24:46 [DEBUG] [Epoch 0] Train: steps=500/500, sim_ratio=0.10, avg_ploss=6.00867169713974, avg_qloss=130.63159617614747, avg_dloss=11.754532247543334
+18:24:50 [INFO] [Epoch 1/300] avg_return=-7447.77, avg_len=94, online_buf=93, train=500/500, sim_ratio=0.10, disc_active=False, disc_acc(R/S)=0.927/0.920, phase=main, IS_ratio=0.5564418435096741, disc_loss=10.058463096618652, mean_w=0.0000, trunc=0
+18:24:50 [INFO] New best checkpoint (ep1, return=-7447.8): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-18-19-53/checkpoint_best.pt
+18:24:52 [DEBUG] [Epoch 1] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:25:39 [DEBUG] [Epoch 1] Train: steps=500/500, sim_ratio=0.11, avg_ploss=4.361320861160755, avg_qloss=118.0118069152832, avg_dloss=10.195384841918946
+18:25:41 [DEBUG] [Epoch 2] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:26:29 [DEBUG] [Epoch 2] Train: steps=500/500, sim_ratio=0.12, avg_ploss=3.7442777128741147, avg_qloss=112.56986486816406, avg_dloss=9.207240949630737
+18:26:32 [DEBUG] [Epoch 3] Rollout: events=105, trans=97, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:27:18 [DEBUG] [Epoch 3] Train: steps=500/500, sim_ratio=0.12, avg_ploss=3.456164106041193, avg_qloss=110.93942295837402, avg_dloss=8.215922229766846
+18:27:20 [DEBUG] [Epoch 4] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:28:09 [DEBUG] [Epoch 4] Train: steps=500/500, sim_ratio=0.13, avg_ploss=3.124457238652045, avg_qloss=108.77826998901367, avg_dloss=7.578638194084167
+18:28:11 [DEBUG] [Epoch 5] Rollout: events=101, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:28:58 [DEBUG] [Epoch 5] Train: steps=500/500, sim_ratio=0.14, avg_ploss=2.8297434358745814, avg_qloss=108.50961224365234, avg_dloss=6.5635057888031
+18:29:00 [DEBUG] [Epoch 6] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:29:48 [DEBUG] [Epoch 6] Train: steps=500/500, sim_ratio=0.15, avg_ploss=2.3690756647959352, avg_qloss=105.62380621337891, avg_dloss=6.24015495967865
+18:29:50 [DEBUG] [Epoch 7] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:30:38 [DEBUG] [Epoch 7] Train: steps=500/500, sim_ratio=0.16, avg_ploss=2.1296313786953687, avg_qloss=104.79987789916993, avg_dloss=5.440700094223023
+18:30:40 [DEBUG] [Epoch 8] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:31:29 [DEBUG] [Epoch 8] Train: steps=500/500, sim_ratio=0.16, avg_ploss=1.751464435132686, avg_qloss=105.4942661895752, avg_dloss=4.488541204452515
+18:31:31 [DEBUG] [Epoch 9] Rollout: events=104, trans=96, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:32:17 [DEBUG] [Epoch 9] Train: steps=500/500, sim_ratio=0.17, avg_ploss=1.4833931803554297, avg_qloss=104.32396745300294, avg_dloss=4.705843644142151
+18:32:22 [INFO] [Epoch 10/300] avg_return=-9023.63, avg_len=95, online_buf=943, train=500/500, sim_ratio=0.17, disc_active=False, disc_acc(R/S)=0.994/0.867, phase=main, IS_ratio=0.7769712209701538, disc_loss=4.198115348815918, mean_w=0.0000, trunc=0
+18:32:24 [DEBUG] [Epoch 10] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:33:12 [DEBUG] [Epoch 10] Train: steps=500/500, sim_ratio=0.18, avg_ploss=1.2465002226149664, avg_qloss=103.74135719299316, avg_dloss=4.3329524664878845
+18:33:14 [DEBUG] [Epoch 11] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:34:00 [DEBUG] [Epoch 11] Train: steps=500/500, sim_ratio=0.19, avg_ploss=1.0299766367301344, avg_qloss=102.81478662109375, avg_dloss=3.7582698826789858
+18:34:03 [DEBUG] [Epoch 12] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:34:51 [DEBUG] [Epoch 12] Train: steps=500/500, sim_ratio=0.20, avg_ploss=0.9252896415484138, avg_qloss=102.64189636230469, avg_dloss=3.313237452983856
+18:34:53 [DEBUG] [Epoch 13] Rollout: events=103, trans=96, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:35:39 [DEBUG] [Epoch 13] Train: steps=500/500, sim_ratio=0.20, avg_ploss=1.0455917979534715, avg_qloss=104.76095109558105, avg_dloss=3.36580735206604
+18:35:41 [DEBUG] [Epoch 14] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:36:30 [DEBUG] [Epoch 14] Train: steps=500/500, sim_ratio=0.21, avg_ploss=0.5836192234670743, avg_qloss=100.72817031860352, avg_dloss=3.521660222530365
+18:36:32 [DEBUG] [Epoch 15] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:37:18 [DEBUG] [Epoch 15] Train: steps=500/500, sim_ratio=0.22, avg_ploss=0.3237251451192424, avg_qloss=100.24494831848145, avg_dloss=2.901023848056793
+18:37:20 [DEBUG] [Epoch 16] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:38:08 [DEBUG] [Epoch 16] Train: steps=500/500, sim_ratio=0.23, avg_ploss=0.14580376761892694, avg_qloss=102.84637463378907, avg_dloss=2.796883623123169
+18:38:10 [DEBUG] [Epoch 17] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:38:56 [DEBUG] [Epoch 17] Train: steps=500/500, sim_ratio=0.24, avg_ploss=-0.08664283709740266, avg_qloss=99.32107737731934, avg_dloss=2.9066169209480286
+18:38:58 [DEBUG] [Epoch 18] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:39:45 [DEBUG] [Epoch 18] Train: steps=500/500, sim_ratio=0.24, avg_ploss=-0.09023386711429339, avg_qloss=99.86992546081542, avg_dloss=3.0878917989730836
+18:39:47 [DEBUG] [Epoch 19] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:40:34 [DEBUG] [Epoch 19] Train: steps=500/500, sim_ratio=0.25, avg_ploss=-0.1326343467887491, avg_qloss=98.74846411132812, avg_dloss=2.5531362771987913
+18:40:38 [INFO] [Epoch 20/300] avg_return=-8225.51, avg_len=94, online_buf=1887, train=500/500, sim_ratio=0.25, disc_active=False, disc_acc(R/S)=0.983/0.999, phase=main, IS_ratio=0.521251916885376, disc_loss=2.5312886238098145, mean_w=0.0000, trunc=0
+18:40:40 [DEBUG] [Epoch 20] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:41:27 [DEBUG] [Epoch 20] Train: steps=500/500, sim_ratio=0.26, avg_ploss=0.0925158643387258, avg_qloss=98.61361582946778, avg_dloss=2.531767964363098
+18:41:30 [DEBUG] [Epoch 21] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:42:15 [DEBUG] [Epoch 21] Train: steps=500/500, sim_ratio=0.27, avg_ploss=0.20712309297325554, avg_qloss=100.6690121307373, avg_dloss=2.6541847114562986
+18:42:17 [DEBUG] [Epoch 22] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:42:55 [DEBUG] [Epoch 22] Train: steps=500/500, sim_ratio=0.28, avg_ploss=0.147993247073784, avg_qloss=99.76669303894043, avg_dloss=2.729508771419525
+18:42:57 [DEBUG] [Epoch 23] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:43:43 [DEBUG] [Epoch 23] Train: steps=500/500, sim_ratio=0.28, avg_ploss=0.3436948215011507, avg_qloss=101.16744525146484, avg_dloss=2.358414991378784
+18:43:47 [DEBUG] [Epoch 24] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:44:32 [DEBUG] [Epoch 24] Train: steps=500/500, sim_ratio=0.29, avg_ploss=0.08691016338369809, avg_qloss=98.16359512329102, avg_dloss=2.3198936195373534
+18:44:34 [DEBUG] [Epoch 25] Rollout: events=103, trans=96, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:45:19 [DEBUG] [Epoch 25] Train: steps=500/500, sim_ratio=0.30, avg_ploss=0.13400365814229007, avg_qloss=99.4924874420166, avg_dloss=2.2846460819244383
+18:45:21 [DEBUG] [Epoch 26] Rollout: events=104, trans=97, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:46:09 [DEBUG] [Epoch 26] Train: steps=500/500, sim_ratio=0.31, avg_ploss=0.028393600990995766, avg_qloss=100.06147988891601, avg_dloss=2.256635804653168
+18:46:11 [DEBUG] [Epoch 27] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:46:59 [DEBUG] [Epoch 27] Train: steps=500/500, sim_ratio=0.32, avg_ploss=0.08063924839487299, avg_qloss=99.93599787902832, avg_dloss=2.232842071056366
+18:47:02 [DEBUG] [Epoch 28] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:47:51 [DEBUG] [Epoch 28] Train: steps=500/500, sim_ratio=0.32, avg_ploss=0.2817506937565049, avg_qloss=101.48039916992188, avg_dloss=2.2094824500083923
+18:47:53 [DEBUG] [Epoch 29] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:48:39 [DEBUG] [Epoch 29] Train: steps=500/500, sim_ratio=0.33, avg_ploss=0.33853814280754885, avg_qloss=101.06029875183106, avg_dloss=2.9026376934051514
+18:48:43 [INFO] [Epoch 30/300] avg_return=-10335.76, avg_len=96, online_buf=2831, train=500/500, sim_ratio=0.33, disc_active=False, disc_acc(R/S)=0.089/1.000, phase=main, IS_ratio=0.3514590263366699, disc_loss=2.2804863452911377, mean_w=0.0000, trunc=0
+18:48:45 [DEBUG] [Epoch 30] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:49:34 [DEBUG] [Epoch 30] Train: steps=500/500, sim_ratio=0.34, avg_ploss=0.31693527731555515, avg_qloss=100.19924827575683, avg_dloss=2.4409958863258363
+18:49:36 [DEBUG] [Epoch 31] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:50:23 [DEBUG] [Epoch 31] Train: steps=500/500, sim_ratio=0.35, avg_ploss=0.41343850616412237, avg_qloss=99.20320796203613, avg_dloss=2.3483134541511537
+18:50:25 [DEBUG] [Epoch 32] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:51:12 [DEBUG] [Epoch 32] Train: steps=500/500, sim_ratio=0.36, avg_ploss=0.2977286009849049, avg_qloss=99.68642994689941, avg_dloss=2.5994817323684694
+18:51:14 [DEBUG] [Epoch 33] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:52:01 [DEBUG] [Epoch 33] Train: steps=500/500, sim_ratio=0.36, avg_ploss=0.3693728461014689, avg_qloss=99.14150108337402, avg_dloss=2.1772069697380068
+18:52:03 [DEBUG] [Epoch 34] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:52:52 [DEBUG] [Epoch 34] Train: steps=500/500, sim_ratio=0.37, avg_ploss=0.4482461856425507, avg_qloss=98.6913939819336, avg_dloss=2.1296077151298523
+18:52:55 [DEBUG] [Epoch 35] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:53:44 [DEBUG] [Epoch 35] Train: steps=500/500, sim_ratio=0.38, avg_ploss=0.3146716212090105, avg_qloss=98.95262701416016, avg_dloss=2.139744704723358
+18:53:46 [DEBUG] [Epoch 36] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:54:35 [DEBUG] [Epoch 36] Train: steps=500/500, sim_ratio=0.39, avg_ploss=0.44853397890366614, avg_qloss=97.89675469970703, avg_dloss=2.4923616547584535
+18:54:37 [DEBUG] [Epoch 37] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:55:25 [DEBUG] [Epoch 37] Train: steps=500/500, sim_ratio=0.40, avg_ploss=0.41961046613845976, avg_qloss=98.83255192565917, avg_dloss=2.111978011608124
+18:55:27 [DEBUG] [Epoch 38] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:56:17 [DEBUG] [Epoch 38] Train: steps=500/500, sim_ratio=0.40, avg_ploss=0.39617953449767085, avg_qloss=98.64040556335449, avg_dloss=2.09605908536911
+18:56:19 [DEBUG] [Epoch 39] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:57:06 [DEBUG] [Epoch 39] Train: steps=500/500, sim_ratio=0.41, avg_ploss=0.4860184902336914, avg_qloss=99.76534788513183, avg_dloss=2.11522416639328
+18:57:10 [INFO] [Epoch 40/300] avg_return=-8658.19, avg_len=93, online_buf=3774, train=500/500, sim_ratio=0.41, disc_active=False, disc_acc(R/S)=0.995/1.000, phase=main, IS_ratio=0.5065111517906189, disc_loss=2.0768368244171143, mean_w=0.0000, trunc=0
+18:57:14 [DEBUG] [Epoch 40] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:58:02 [DEBUG] [Epoch 40] Train: steps=500/500, sim_ratio=0.42, avg_ploss=0.750151458953973, avg_qloss=100.15112007141113, avg_dloss=2.3556482319831846
+18:58:05 [DEBUG] [Epoch 41] Rollout: events=103, trans=96, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:58:52 [DEBUG] [Epoch 41] Train: steps=500/500, sim_ratio=0.43, avg_ploss=0.778358264955692, avg_qloss=99.5763303527832, avg_dloss=2.6028657174110412
+18:58:56 [DEBUG] [Epoch 42] Rollout: events=103, trans=96, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+18:59:44 [DEBUG] [Epoch 42] Train: steps=500/500, sim_ratio=0.44, avg_ploss=0.7693604842685163, avg_qloss=98.21901832580566, avg_dloss=2.2386103610992434
+18:59:46 [DEBUG] [Epoch 43] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+19:00:34 [DEBUG] [Epoch 43] Train: steps=500/500, sim_ratio=0.44, avg_ploss=0.8444271319613327, avg_qloss=97.92569319152832, avg_dloss=2.1389541540145873
+19:00:37 [DEBUG] [Epoch 44] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+19:01:25 [DEBUG] [Epoch 44] Train: steps=500/500, sim_ratio=0.45, avg_ploss=0.7505252966280095, avg_qloss=98.54513655090332, avg_dloss=2.052500806808472
+19:01:27 [DEBUG] [Epoch 45] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+19:02:18 [DEBUG] [Epoch 45] Train: steps=500/500, sim_ratio=0.46, avg_ploss=0.6916728207228007, avg_qloss=97.47110848999023, avg_dloss=2.043280090808868
+19:02:20 [DEBUG] [Epoch 46] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+19:03:08 [DEBUG] [Epoch 46] Train: steps=500/500, sim_ratio=0.47, avg_ploss=0.7506831372887828, avg_qloss=98.34698907470703, avg_dloss=2.037492097854614
+19:03:10 [DEBUG] [Epoch 47] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+19:03:58 [DEBUG] [Epoch 47] Train: steps=500/500, sim_ratio=0.48, avg_ploss=0.7670468298124615, avg_qloss=100.64616870117187, avg_dloss=2.0365379886627197
+19:04:00 [DEBUG] [Epoch 48] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+19:04:48 [DEBUG] [Epoch 48] Train: steps=500/500, sim_ratio=0.48, avg_ploss=0.9068818572405726, avg_qloss=98.47199151611328, avg_dloss=2.0263943128585815
+19:04:51 [DEBUG] [Epoch 49] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+19:05:40 [DEBUG] [Epoch 49] Train: steps=500/500, sim_ratio=0.49, avg_ploss=0.7238006075556186, avg_qloss=100.66816731262207, avg_dloss=2.018033717393875
+19:05:44 [INFO] [Epoch 50/300] avg_return=-9940.52, avg_len=94, online_buf=4719, train=500/500, sim_ratio=0.49, disc_active=False, disc_acc(R/S)=0.995/1.000, phase=main, IS_ratio=0.5259300470352173, disc_loss=2.0197269916534424, mean_w=0.0000, trunc=0
+19:05:44 [INFO] Checkpoint saved: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-18-19-53/checkpoint_epoch50.pt
+19:05:46 [DEBUG] [Epoch 50] Rollout: events=104, trans=97, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+19:06:34 [DEBUG] [Epoch 50] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.6938352182209492, avg_qloss=100.94540885925294, avg_dloss=2.012290872097015
+19:06:37 [DEBUG] [Epoch 51] Rollout: events=100, trans=93, trunc=0, mean_w=0.4197, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:07:24 [DEBUG] [Epoch 51] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.6718689215928316, avg_qloss=97.59498272705078, avg_dloss=2.00859957575798
+19:07:27 [DEBUG] [Epoch 52] Rollout: events=101, trans=94, trunc=0, mean_w=0.4127, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:08:13 [DEBUG] [Epoch 52] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.6140524645969272, avg_qloss=101.04071257019044, avg_dloss=2.0048759570121764
+19:08:16 [DEBUG] [Epoch 53] Rollout: events=101, trans=94, trunc=0, mean_w=0.4070, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:09:03 [DEBUG] [Epoch 53] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.6778256780654192, avg_qloss=101.5008351135254, avg_dloss=1.9992194397449494
+19:09:06 [DEBUG] [Epoch 54] Rollout: events=101, trans=94, trunc=0, mean_w=0.4367, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:09:54 [DEBUG] [Epoch 54] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.7198528814017773, avg_qloss=100.63556829071045, avg_dloss=2.0778369708061217
+19:09:56 [DEBUG] [Epoch 55] Rollout: events=101, trans=94, trunc=0, mean_w=0.6423, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:10:46 [DEBUG] [Epoch 55] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.640293937370181, avg_qloss=101.92667805480957, avg_dloss=2.038567169189453
+19:10:49 [DEBUG] [Epoch 56] Rollout: events=102, trans=95, trunc=0, mean_w=0.4393, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:11:38 [DEBUG] [Epoch 56] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.7175843923687935, avg_qloss=100.9619423828125, avg_dloss=1.9946616778373718
+19:11:41 [DEBUG] [Epoch 57] Rollout: events=104, trans=97, trunc=0, mean_w=0.3519, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:12:30 [DEBUG] [Epoch 57] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.4693627617359161, avg_qloss=99.82727700805664, avg_dloss=1.9942662851810455
+19:12:33 [DEBUG] [Epoch 58] Rollout: events=100, trans=93, trunc=0, mean_w=0.3517, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:13:20 [DEBUG] [Epoch 58] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.5194643130302429, avg_qloss=101.19563870239257, avg_dloss=2.4321611993312837
+19:13:23 [DEBUG] [Epoch 59] Rollout: events=101, trans=94, trunc=0, mean_w=1.3570, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:14:12 [DEBUG] [Epoch 59] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.5901928571313619, avg_qloss=98.33409205627441, avg_dloss=2.473041011571884
+19:14:16 [INFO] [Epoch 60/300] avg_return=-8977.11, avg_len=94, online_buf=5664, train=500/500, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.989/1.000, phase=main, IS_ratio=0.44833993911743164, disc_loss=2.0115513801574707, mean_w=1.3570, trunc=0
+19:14:19 [DEBUG] [Epoch 60] Rollout: events=103, trans=96, trunc=0, mean_w=0.2952, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:14:57 [DEBUG] [Epoch 60] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.5208012421801687, avg_qloss=98.2952087097168, avg_dloss=1.9936885397434234
+19:15:00 [DEBUG] [Epoch 61] Rollout: events=102, trans=95, trunc=0, mean_w=0.4264, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:15:48 [DEBUG] [Epoch 61] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.6924395909160376, avg_qloss=101.36340914916993, avg_dloss=1.9791674964427948
+19:15:51 [DEBUG] [Epoch 62] Rollout: events=101, trans=94, trunc=0, mean_w=0.3796, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:16:37 [DEBUG] [Epoch 62] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.7637082798182965, avg_qloss=101.19664614868164, avg_dloss=1.9742801041603089
+19:16:40 [DEBUG] [Epoch 63] Rollout: events=103, trans=96, trunc=0, mean_w=0.4035, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:17:27 [DEBUG] [Epoch 63] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.6970128684192896, avg_qloss=100.70998254394532, avg_dloss=2.10922566986084
+19:17:29 [DEBUG] [Epoch 64] Rollout: events=103, trans=96, trunc=0, mean_w=0.2412, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:18:16 [DEBUG] [Epoch 64] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.7022311184480786, avg_qloss=101.0086626739502, avg_dloss=1.990715791463852
+19:18:19 [DEBUG] [Epoch 65] Rollout: events=102, trans=95, trunc=0, mean_w=0.4092, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:19:08 [DEBUG] [Epoch 65] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.4861813809275627, avg_qloss=98.52503646850586, avg_dloss=1.9665026297569275
+19:19:11 [DEBUG] [Epoch 66] Rollout: events=100, trans=93, trunc=0, mean_w=0.4091, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:19:58 [DEBUG] [Epoch 66] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.3752165371030569, avg_qloss=100.21956452941895, avg_dloss=2.1767191383838655
+19:20:03 [DEBUG] [Epoch 67] Rollout: events=133, trans=133, trunc=3, mean_w=0.1438, disc=True, resets(jtt/uni/fresh)=0/0/3
+19:20:50 [DEBUG] [Epoch 67] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.35436613273620604, avg_qloss=101.8698505859375, avg_dloss=2.0424540438652037
+19:20:53 [DEBUG] [Epoch 68] Rollout: events=101, trans=94, trunc=0, mean_w=0.3858, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:21:42 [DEBUG] [Epoch 68] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.09219843338429928, avg_qloss=99.53088148498536, avg_dloss=1.9652802336215973
+19:21:45 [DEBUG] [Epoch 69] Rollout: events=100, trans=93, trunc=0, mean_w=0.3457, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:22:33 [DEBUG] [Epoch 69] Train: steps=500/500, sim_ratio=0.50, avg_ploss=-0.09924318346381188, avg_qloss=98.63124842834473, avg_dloss=2.0094710471630095
+19:22:37 [INFO] [Epoch 70/300] avg_return=-10534.06, avg_len=94, online_buf=6649, train=500/500, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.980/1.000, phase=main, IS_ratio=0.5036566257476807, disc_loss=1.969547986984253, mean_w=0.3457, trunc=0
+19:22:40 [DEBUG] [Epoch 70] Rollout: events=101, trans=94, trunc=0, mean_w=0.3663, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:23:27 [DEBUG] [Epoch 70] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.006674584455788135, avg_qloss=99.7564446258545, avg_dloss=1.9959871678352357
+19:23:32 [DEBUG] [Epoch 71] Rollout: events=101, trans=94, trunc=0, mean_w=0.3626, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:24:19 [DEBUG] [Epoch 71] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.12266706024110317, avg_qloss=101.5470491027832, avg_dloss=2.1016976454257965
+19:24:22 [DEBUG] [Epoch 72] Rollout: events=101, trans=94, trunc=0, mean_w=0.6208, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:25:11 [DEBUG] [Epoch 72] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.24926559158414602, avg_qloss=99.65457861328125, avg_dloss=2.1805234353542327
+19:25:14 [DEBUG] [Epoch 73] Rollout: events=101, trans=94, trunc=0, mean_w=0.5259, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:26:00 [DEBUG] [Epoch 73] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.19558244454860688, avg_qloss=102.10283198547363, avg_dloss=1.9631130752563477
+19:26:03 [DEBUG] [Epoch 74] Rollout: events=101, trans=94, trunc=0, mean_w=0.3353, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:26:51 [DEBUG] [Epoch 74] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.015093521788716317, avg_qloss=98.50645457458496, avg_dloss=1.957723096847534
+19:26:55 [DEBUG] [Epoch 75] Rollout: events=101, trans=94, trunc=0, mean_w=0.3231, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:27:43 [DEBUG] [Epoch 75] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.062894979134202, avg_qloss=99.47647225952149, avg_dloss=1.9545094940662384
+19:27:46 [DEBUG] [Epoch 76] Rollout: events=101, trans=94, trunc=0, mean_w=0.3458, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:28:34 [DEBUG] [Epoch 76] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.2581100958287716, avg_qloss=101.16196151733398, avg_dloss=1.9530038466453552
+19:28:38 [DEBUG] [Epoch 77] Rollout: events=102, trans=95, trunc=0, mean_w=0.3835, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:29:25 [DEBUG] [Epoch 77] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.2641759445294738, avg_qloss=100.58848187255859, avg_dloss=1.9932376072406768
+19:29:28 [DEBUG] [Epoch 78] Rollout: events=101, trans=94, trunc=0, mean_w=0.3882, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:30:17 [DEBUG] [Epoch 78] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.24642888604104518, avg_qloss=99.10409071350098, avg_dloss=1.9754681656360626
+19:30:20 [DEBUG] [Epoch 79] Rollout: events=100, trans=93, trunc=0, mean_w=0.3521, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:31:08 [DEBUG] [Epoch 79] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.2945940642207861, avg_qloss=103.20301509094239, avg_dloss=1.9482650558948518
+19:31:12 [INFO] [Epoch 80/300] avg_return=-8537.95, avg_len=95, online_buf=7589, train=500/500, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.997/1.000, phase=main, IS_ratio=0.5167768001556396, disc_loss=1.9565190076828003, mean_w=0.3521, trunc=0
+19:31:15 [DEBUG] [Epoch 80] Rollout: events=101, trans=94, trunc=0, mean_w=0.3383, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:32:04 [DEBUG] [Epoch 80] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.1442074385136366, avg_qloss=99.75041560363769, avg_dloss=1.9468846778869628
+19:32:07 [DEBUG] [Epoch 81] Rollout: events=103, trans=96, trunc=0, mean_w=0.3488, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:32:54 [DEBUG] [Epoch 81] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.21176810053735973, avg_qloss=100.16462881469727, avg_dloss=1.9453714709281922
+19:32:59 [DEBUG] [Epoch 82] Rollout: events=102, trans=95, trunc=0, mean_w=0.3330, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:33:47 [DEBUG] [Epoch 82] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.1371395809650421, avg_qloss=97.93918092346192, avg_dloss=1.943912225008011
+19:33:50 [DEBUG] [Epoch 83] Rollout: events=103, trans=96, trunc=0, mean_w=0.3357, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:34:36 [DEBUG] [Epoch 83] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.11323428112268448, avg_qloss=99.49307089233399, avg_dloss=1.9461286630630492
+19:34:41 [DEBUG] [Epoch 84] Rollout: events=100, trans=93, trunc=0, mean_w=0.3094, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:35:27 [DEBUG] [Epoch 84] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.1511508556753397, avg_qloss=98.84589085388184, avg_dloss=1.945149745464325
+19:35:30 [DEBUG] [Epoch 85] Rollout: events=103, trans=96, trunc=0, mean_w=0.3245, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:36:18 [DEBUG] [Epoch 85] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.11489596401154994, avg_qloss=101.37939962768554, avg_dloss=1.9500510182380677
+19:36:22 [DEBUG] [Epoch 86] Rollout: events=102, trans=95, trunc=0, mean_w=0.2813, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:37:10 [DEBUG] [Epoch 86] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.24030082506686448, avg_qloss=101.32481875610351, avg_dloss=2.398463449001312
+19:37:12 [DEBUG] [Epoch 87] Rollout: events=100, trans=93, trunc=0, mean_w=0.3487, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:38:01 [DEBUG] [Epoch 87] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.19140023567527534, avg_qloss=99.92020472717284, avg_dloss=1.960270617723465
+19:38:04 [DEBUG] [Epoch 88] Rollout: events=100, trans=93, trunc=0, mean_w=0.2636, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:38:51 [DEBUG] [Epoch 88] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.21901439362764358, avg_qloss=99.22981069946289, avg_dloss=1.9800648636817932
+19:38:54 [DEBUG] [Epoch 89] Rollout: events=100, trans=93, trunc=0, mean_w=0.3448, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:39:44 [DEBUG] [Epoch 89] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.003913375109434128, avg_qloss=98.41729885864258, avg_dloss=1.9899544115066528
+19:39:49 [INFO] [Epoch 90/300] avg_return=-7888.40, avg_len=94, online_buf=8533, train=500/500, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.833/1.000, phase=main, IS_ratio=0.4196102023124695, disc_loss=1.9875237941741943, mean_w=0.3448, trunc=0
+19:39:51 [DEBUG] [Epoch 90] Rollout: events=101, trans=94, trunc=0, mean_w=0.2289, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:40:40 [DEBUG] [Epoch 90] Train: steps=500/500, sim_ratio=0.50, avg_ploss=-0.026508504778146744, avg_qloss=100.56271990966796, avg_dloss=1.941962592124939
+19:40:43 [DEBUG] [Epoch 91] Rollout: events=100, trans=93, trunc=0, mean_w=0.3246, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:41:31 [DEBUG] [Epoch 91] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.1399560363739729, avg_qloss=100.90093043518067, avg_dloss=1.9361299130916596
+19:41:34 [DEBUG] [Epoch 92] Rollout: events=101, trans=94, trunc=0, mean_w=0.3199, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:42:21 [DEBUG] [Epoch 92] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.14383431500941515, avg_qloss=99.66211457824707, avg_dloss=1.9359135954380036
+19:42:24 [DEBUG] [Epoch 93] Rollout: events=101, trans=94, trunc=0, mean_w=0.3109, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:43:11 [DEBUG] [Epoch 93] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.17762307150661946, avg_qloss=100.3313387451172, avg_dloss=1.9329764885902405
+19:43:15 [DEBUG] [Epoch 94] Rollout: events=101, trans=94, trunc=0, mean_w=0.3183, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:44:04 [DEBUG] [Epoch 94] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.09152446781098843, avg_qloss=100.18284519958496, avg_dloss=1.9321972711086273
+19:44:08 [DEBUG] [Epoch 95] Rollout: events=101, trans=94, trunc=0, mean_w=0.3389, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:44:55 [DEBUG] [Epoch 95] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.04690666156262159, avg_qloss=98.32489105224609, avg_dloss=1.9326246063709258
+19:44:58 [DEBUG] [Epoch 96] Rollout: events=101, trans=94, trunc=0, mean_w=0.3638, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:45:49 [DEBUG] [Epoch 96] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.20874855792522432, avg_qloss=99.55912704467774, avg_dloss=1.934550489425659
+19:45:52 [DEBUG] [Epoch 97] Rollout: events=100, trans=93, trunc=0, mean_w=0.2788, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:46:33 [DEBUG] [Epoch 97] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.15601812870800494, avg_qloss=100.25357035827636, avg_dloss=1.9697775497436523
+19:46:36 [DEBUG] [Epoch 98] Rollout: events=102, trans=95, trunc=0, mean_w=0.5942, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:47:25 [DEBUG] [Epoch 98] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.28483677696436643, avg_qloss=99.91396478271484, avg_dloss=2.3501298351287843
+19:47:29 [DEBUG] [Epoch 99] Rollout: events=100, trans=93, trunc=0, mean_w=0.2924, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:48:16 [DEBUG] [Epoch 99] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.18908663737773895, avg_qloss=99.5205898590088, avg_dloss=1.9308572857379913
+19:48:21 [INFO] [Epoch 100/300] avg_return=-7580.76, avg_len=94, online_buf=9471, train=500/500, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.994/1.000, phase=main, IS_ratio=0.5160176753997803, disc_loss=1.9330432415008545, mean_w=0.2924, trunc=0
+19:48:21 [INFO] Checkpoint saved: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-18-19-53/checkpoint_epoch100.pt
+19:48:24 [DEBUG] [Epoch 100] Rollout: events=101, trans=94, trunc=0, mean_w=0.3113, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:49:13 [DEBUG] [Epoch 100] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.08882700653374195, avg_qloss=99.87944503784179, avg_dloss=1.9255575847625732
+19:49:15 [DEBUG] [Epoch 101] Rollout: events=101, trans=94, trunc=0, mean_w=0.3260, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:50:06 [DEBUG] [Epoch 101] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.11316516345739365, avg_qloss=100.84871406555176, avg_dloss=1.9241690726280212
+19:50:09 [DEBUG] [Epoch 102] Rollout: events=101, trans=94, trunc=0, mean_w=0.3086, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:50:58 [DEBUG] [Epoch 102] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.06865524227917194, avg_qloss=100.07020491027832, avg_dloss=1.9234138605594635
+19:51:00 [DEBUG] [Epoch 103] Rollout: events=100, trans=93, trunc=0, mean_w=0.3201, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:51:49 [DEBUG] [Epoch 103] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.028508907303214072, avg_qloss=99.59717533874512, avg_dloss=1.9222019445896148
+19:51:52 [DEBUG] [Epoch 104] Rollout: events=103, trans=96, trunc=0, mean_w=0.3138, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:52:42 [DEBUG] [Epoch 104] Train: steps=500/500, sim_ratio=0.50, avg_ploss=-0.12662700267136098, avg_qloss=98.88949816894531, avg_dloss=1.9244640655517578
+19:52:45 [DEBUG] [Epoch 105] Rollout: events=104, trans=97, trunc=0, mean_w=0.2925, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:53:37 [DEBUG] [Epoch 105] Train: steps=500/500, sim_ratio=0.50, avg_ploss=0.032170557126402856, avg_qloss=100.49999305725098, avg_dloss=1.926118989944458
+19:53:40 [DEBUG] [Epoch 106] Rollout: events=100, trans=93, trunc=0, mean_w=0.3481, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:54:26 [DEBUG] [Epoch 106] Train: steps=500/500, sim_ratio=0.50, avg_ploss=-0.09688234494626521, avg_qloss=100.12560718536378, avg_dloss=1.9279818723201751
+19:54:29 [DEBUG] [Epoch 107] Rollout: events=101, trans=94, trunc=0, mean_w=0.3080, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:55:17 [DEBUG] [Epoch 107] Train: steps=500/500, sim_ratio=0.50, avg_ploss=-0.20494758436083793, avg_qloss=100.06191386413575, avg_dloss=1.9319204668998717
+19:55:20 [DEBUG] [Epoch 108] Rollout: events=101, trans=94, trunc=0, mean_w=0.3629, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:56:07 [DEBUG] [Epoch 108] Train: steps=500/500, sim_ratio=0.50, avg_ploss=-0.21632891143858432, avg_qloss=100.47126232910156, avg_dloss=1.9315775492191314
+19:56:11 [DEBUG] [Epoch 109] Rollout: events=102, trans=95, trunc=0, mean_w=0.3333, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:57:00 [DEBUG] [Epoch 109] Train: steps=500/500, sim_ratio=0.50, avg_ploss=-0.369197546184063, avg_qloss=100.73707528686523, avg_dloss=2.176013872385025
+19:57:04 [INFO] [Epoch 110/300] avg_return=-8015.55, avg_len=96, online_buf=10415, train=500/500, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.952, phase=main, IS_ratio=0.7862679362297058, disc_loss=2.3237195014953613, mean_w=0.3333, trunc=0
+19:57:07 [DEBUG] [Epoch 110] Rollout: events=100, trans=93, trunc=0, mean_w=0.7310, disc=True, resets(jtt/uni/fresh)=0/0/1
+19:57:55 [DEBUG] [Epoch 110] Train: steps=500/500, sim_ratio=0.50, avg_ploss=-0.3167692881375551, avg_qloss=100.01844921875, avg_dloss=1.9786811780929565
+19:57:58 [DEBUG] [Epoch 111] Rollout: events=102, trans=95, trunc=0, mean_w=0.3192, disc=True, resets(jtt/uni/fresh)=0/0/1

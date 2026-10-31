@@ -1,0 +1,47 @@
+nohup: ignoring input
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+[compare_envs] episodes=20  skip_sumo=False
+
+=== SIM EPISODES ===
+  Loaded line 102X: 15-dim obs, 9 segs, 31 trips
+  Loaded line 122S: 15-dim obs, 16 segs, 33 trips
+  Loaded line 122X: 15-dim obs, 16 segs, 32 trips
+  Loaded line 311S: 15-dim obs, 15 segs, 28 trips
+  Loaded line 311X: 15-dim obs, 15 segs, 26 trips
+  Loaded line 406S: 15-dim obs, 15 segs, 56 trips
+  Loaded line 705S: 15-dim obs, 18 segs, 25 trips
+  Loaded line 705X: 15-dim obs, 18 segs, 21 trips
+  Loaded line 7S: 15-dim obs, 12 segs, 87 trips
+  Loaded line 7X: 15-dim obs, 12 segs, 50 trips
+  Ep   1: stops= 4836  board= 26033  wall=22.3s
+  Ep   2: stops= 4836  board= 26393  wall=22.2s
+  Ep   3: stops= 4836  board= 26201  wall=23.6s
+  Ep   4: stops= 4836  board= 26309  wall=24.3s
+  Ep   5: stops= 4836  board= 26045  wall=28.7s
+  Ep   6: stops= 4836  board= 26325  wall=25.5s
+  Ep   7: stops= 4836  board= 25954  wall=24.8s
+  Ep   8: stops= 4836  board= 26363  wall=26.1s
+  Ep   9: stops= 4836  board= 26441  wall=25.9s
+  Ep  10: stops= 4836  board= 26253  wall=26.2s
+  Ep  11: stops= 4836  board= 26185  wall=28.1s
+  Ep  12: stops= 4836  board= 26025  wall=28.8s
+  Ep  13: stops= 4836  board= 26072  wall=28.4s
+  Ep  14: stops= 4836  board= 26204  wall=29.8s
+  Ep  15: stops= 4836  board= 26243  wall=28.0s
+  Ep  16: stops= 4836  board= 26268  wall=32.3s
+  Ep  17: stops= 4836  board= 26239  wall=27.2s
+  Ep  18: stops= 4836  board= 26081  wall=26.6s
+  Ep  19: stops= 4836  board= 26113  wall=33.5s
+  Ep  20: stops= 4836  board= 25925  wall=28.2s
+Sim CSVs → /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/compare_results/sim_stop_metrics.csv, /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/compare_results/sim_episode_metrics.csv
+
+=== SUMO EPISODES ===
+Traceback (most recent call last):
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/compare_envs.py", line 549, in <module>
+    main()
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/compare_envs.py", line 503, in main
+    from SUMO_ruiguang.online_control.rl_bridge import SumoRLBridge
+ModuleNotFoundError: No module named 'SUMO_ruiguang'

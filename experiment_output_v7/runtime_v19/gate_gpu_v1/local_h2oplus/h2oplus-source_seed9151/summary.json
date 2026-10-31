@@ -1,0 +1,169 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v19/gate_gpu_v1/local_h2oplus/h2oplus-source_seed9151/checkpoints/latest.pt",
+    "sha256": "04303e2adc2aede9b4857468e8bbc9641e37ac3c75f7960b654a4a77e2605b93"
+  },
+  "completed_epochs": 3,
+  "completed_utc": "2026-08-08T15:49:37.386011+00:00",
+  "final_blocked_simultaneous_batch_size": 0,
+  "final_ratio_validation": {
+    "ratio/validation_available": 0.0
+  },
+  "max_cuda_memory_mb": 282.693359375,
+  "max_rss_mb": 1567.1875,
+  "maximum_simultaneous_decisions": 2,
+  "mdp_version": "v6",
+  "method": "h2oplus-source",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 0,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 1000,
+    "description": "paper/source-aligned H2O+ control: no separate offline warm start, one initial simulator rollout, online value learning from target data, and per-update conditional dynamics-ratio training",
+    "ensemble_size": 2,
+    "gradient_clip_norm": null,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 1.0,
+    "iql_expectile": 0.5,
+    "mixed_backup_lambda": 0.1,
+    "offline_cql_alpha": 0.0,
+    "offline_initializer": null,
+    "offline_objective": "none",
+    "online_backup": "h2oplus",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "ratio_update_interval": 1,
+    "reference": "https://doi.org/10.1109/ICRA55743.2025.11127503",
+    "reference_commit": "02171768283d307244700c69003423704db83b05",
+    "reference_implementation": "https://github.com/t6-thu/H2Oplus",
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": true,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "paper/source-aligned H2O+ control: no separate offline warm start, one initial simulator rollout, online value learning from target data, and per-update conditional dynamics-ratio training",
+  "offline_metrics": {},
+  "online_buffer_size": 63,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "online_fraction": {
+        "effective": 0.5,
+        "profile": 0.5
+      },
+      "ratio_pretrain_updates": {
+        "effective": 4,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 1,
+        "profile": 1
+      },
+      "target_entropy": {
+        "effective": -1.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 16,
+        "profile": 16
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 16,
+        "profile": 1000
+      }
+    }
+  },
+  "ratio_metrics": {
+    "ratio/joint_accuracy": 0.986328125,
+    "ratio/joint_auc": 0.99786376953125,
+    "ratio/joint_brier": 0.24281829595565796,
+    "ratio/joint_loss": 0.6787824630737305,
+    "ratio/joint_real_logit_mean": 0.034498780965805054,
+    "ratio/joint_sim_logit_mean": -0.023426037281751633,
+    "ratio/loss": 1.3634364604949951,
+    "ratio/state_action_accuracy": 0.962890625,
+    "ratio/state_action_auc": 0.9981689453125,
+    "ratio/state_action_brier": 0.24575355648994446,
+    "ratio/state_action_loss": 0.6846539974212646,
+    "ratio/state_action_real_logit_mean": 0.012551618739962578,
+    "ratio/state_action_sim_logit_mean": -0.021594448015093803,
+    "ratio/validation_available": 0.0
+  },
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v19/gate_gpu_v1/local_h2oplus/h2oplus-source_seed9151",
+  "run_signature": "58365fee341f03e44b3c1f62917ffbd74857d47457ba9c8b4d9d717218c9ae83",
+  "schema_version": "transit-training-summary-v7",
+  "seed": 9151,
+  "simulator_decision_event_cap": 64,
+  "simulator_decision_event_underfill": 0,
+  "simulator_decision_events": 64,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 3.164186575988424,
+    "data_load": 16.433251214999473,
+    "device_cache": 0.023390698996081483,
+    "model_init": 3.5345382820014493,
+    "online_rollout": 1.4924889039975824,
+    "online_training": 52.090747830006876,
+    "online_warmup_rollout": 6.303251418998116,
+    "provenance_audit": 1.1531841960022575,
+    "ratio_pretraining": 12.277047873998526,
+    "simulator_init": 7.501168668997707
+  },
+  "total_updates": 48,
+  "warmup_metrics": {
+    "blocked_simultaneous_batch_size": 0,
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 16,
+    "hard_event_cap_reached": false,
+    "maximum_simultaneous_decisions": 1,
+    "mean_delta_t": 22.666666666666668,
+    "mean_hold_seconds": 2.9193251207470894,
+    "mean_reward": -0.001396133333333333,
+    "online_buffer_size": 15,
+    "transitions": 15,
+    "trip_boundaries_total": 0
+  }
+}

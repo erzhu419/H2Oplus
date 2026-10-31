@@ -1,0 +1,114 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/cql_seed5101/checkpoints/latest.pt",
+    "sha256": "a5a0dc3b4ed0da76df89844beb5df27237a2645b5983a6a9bb968323570b0934"
+  },
+  "completed_epochs": 0,
+  "completed_utc": "2026-08-03T16:39:34.442425+00:00",
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 194.02880859375,
+  "max_rss_mb": 1738.8203125,
+  "mdp_version": "v4",
+  "method": "cql",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": true,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 250000,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 0,
+    "description": "offline-only Conservative Q-Learning",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 5.0,
+    "offline_objective": "cql",
+    "online_backup": "sac",
+    "online_fraction": 0.0,
+    "online_update_mode": "none",
+    "reference": "https://proceedings.neurips.cc/paper/2020/hash/0d2b2061826a5df3221116a5085a6052-Abstract.html",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "offline-only Conservative Q-Learning",
+  "offline_metrics": {
+    "train/actor_grad_norm": 0.0992138683795929,
+    "train/actor_loss": 0.41787204146385193,
+    "train/actor_updated": 1.0,
+    "train/alpha": 0.5660613179206848,
+    "train/alpha_loss": -0.7095563411712646,
+    "train/cql_penalty": 0.7083685398101807,
+    "train/critic_grad_norm": 5.815697193145752,
+    "train/critic_loss": 4.725875377655029,
+    "train/offline_td_loss": 1.1840325593948364,
+    "train/online_critic_update": 0.0,
+    "train/q_data_mean": -0.9765158891677856,
+    "train/sim_td_loss": 0.0,
+    "train/update": 2000.0,
+    "train/value_advantage": 0.0,
+    "train/value_grad_norm": 0.0,
+    "train/value_loss": 0.0
+  },
+  "online_buffer_size": 0,
+  "protocol_resolution": {
+    "defaults_applied": {
+      "batch_size": 256,
+      "ensemble_size": 2,
+      "initial_temperature": 1.0,
+      "iql_advantage_temperature": 3.0,
+      "offline_cql_alpha": 5.0,
+      "online_fraction": 0.0,
+      "target_entropy": -1.0,
+      "updates_per_epoch": 0,
+      "utd_ratio": 1
+    },
+    "overrides": {
+      "offline_updates": {
+        "effective": 2000,
+        "profile": 250000
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "warmup_events": {
+        "effective": 0,
+        "profile": 0
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/cql_seed5101",
+  "run_signature": "614f0a88c44cdf5b81f49ef6cc77b88b9fb88de2e7656a64eaa050deb50269e3",
+  "schema_version": "transit-training-summary-v5",
+  "seed": 5101,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 0.040614898003696,
+    "data_load": 0.6953512219988625,
+    "device_cache": 0.015612286995747127,
+    "model_init": 0.7902996830016491,
+    "offline_pretraining": 46.829590846005885,
+    "provenance_audit": 0.10694340399641078
+  },
+  "total_updates": 2000,
+  "warmup_metrics": {}
+}

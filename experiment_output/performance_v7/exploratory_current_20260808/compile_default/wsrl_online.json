@@ -1,0 +1,208 @@
+{
+  "allow_external_gpu_processes": true,
+  "allow_shared_gpu": false,
+  "chunk_updates_per_second": {
+    "maximum": 74.09616021535686,
+    "median": 66.72192554406273,
+    "minimum": 62.42975969301773
+  },
+  "chunks": [
+    {
+      "seconds": 0.2699195200111717,
+      "updates": 20
+    },
+    {
+      "seconds": 0.29975154099520296,
+      "updates": 20
+    },
+    {
+      "seconds": 0.31560674399952404,
+      "updates": 20
+    },
+    {
+      "seconds": 0.3203600349952467,
+      "updates": 20
+    },
+    {
+      "seconds": 0.27758854000421707,
+      "updates": 20
+    }
+  ],
+  "compile_mode": "default",
+  "compile_networks": true,
+  "compiled_modules": [
+    "actor_encoder",
+    "actor_mlp",
+    "critic_encoder",
+    "critic_ensemble",
+    "ratio_encoder",
+    "ratio_joint_mlp",
+    "ratio_state_action_mlp",
+    "target_critic_encoder",
+    "target_critic_ensemble"
+  ],
+  "compiler_config": {
+    "cuda_graphs_enabled": false,
+    "dynamo_limits": {
+      "accumulated_cache_size_limit": 256,
+      "cache_size_limit": 32,
+      "recompile_limit": 32
+    },
+    "mode": "default",
+    "mode_options": {},
+    "triton_backend_hash": "B8701FB66B65CEB6C4898B5A365116B4D5AB09302676EA108360BA76E712912B"
+  },
+  "created_utc": "2026-08-09T02:07:46.386481+00:00",
+  "dataset": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v7/formal_v2_pilot_r2/transit_smdp_v7_pilot_r2.h5",
+  "dataset_sha256": "79be101afdc2d13180b4f9cc296fa5a03c4e368680443b17756b6b604bdc39a9",
+  "device_cache": {
+    "bytes": 1231778164,
+    "observation_storage_dtype": "float32",
+    "offline_rows": 656915,
+    "online_rows": 8192
+  },
+  "device_cache_mode": "float32",
+  "disclosure": "performance-only benchmark; online rows are copied offline rows and outputs are not valid policy checkpoints or scientific results",
+  "max_canonical_processes_per_gpu": 1,
+  "max_offline_rows": 0,
+  "mdp_version": "v7",
+  "measured_seconds": 1.4832263800053624,
+  "measured_updates": 100,
+  "method": "wsrl",
+  "phase": "online",
+  "resources": {
+    "cuda": {
+      "final_free_bytes": 5958008832,
+      "initial_free_bytes": 7440695296,
+      "setup": {
+        "allocated_bytes": 1248156160,
+        "peak_allocated_bytes": 1248156160,
+        "peak_reserved_bytes": 1251999744,
+        "reserved_bytes": 1251999744
+      },
+      "total_bytes": 8585216000,
+      "training": {
+        "allocated_bytes": 1288637440,
+        "peak_allocated_bytes": 1423356416,
+        "peak_reserved_bytes": 1447034880,
+        "reserved_bytes": 1447034880
+      }
+    },
+    "max_rss_bytes": 5490860032
+  },
+  "runtime": {
+    "host": {
+      "cc_environment": null,
+      "compiler": {
+        "configured": null,
+        "path": "/usr/bin/x86_64-linux-gnu-gcc-11"
+      },
+      "cpath_environment": null,
+      "cpu_threads": 8,
+      "cuda_visible_devices": null,
+      "device": "cuda:0",
+      "float32_matmul_precision": "high",
+      "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "libc": {
+        "name": "glibc",
+        "version": "2.35"
+      },
+      "nvidia_smi": "/usr/lib/wsl/lib/nvidia-smi",
+      "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+      "python_executable": "/usr/bin/python3",
+      "torch_distribution_version": "2.8.0"
+    },
+    "required": {
+      "compiler": {
+        "sha256": "821af3c74506283c179ca413bb33e6b528805a4dd8a5c09df125e5ad560a9e89",
+        "version": "x86_64-linux-gnu-gcc-11 (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0"
+      },
+      "packages": {
+        "gymnasium": "1.2.0",
+        "h5py": "3.16.0",
+        "matplotlib": "3.10.5",
+        "numpy": "2.2.6",
+        "openpyxl": "3.1.5",
+        "pandas": "2.3.1",
+        "psutil": "7.2.2",
+        "pytest": "9.0.3",
+        "torch": "2.8.0+cu128"
+      },
+      "python_cache_tag": "cpython-310",
+      "python_implementation": "CPython",
+      "python_version": "3.10.12",
+      "torch_binary_sha256": {
+        "cuda_library": "84027b0ac8e637f9ebc80a3a19d1e9c341f0429a100382233c45ce5224581dfe",
+        "python_extension": "7ebf704b024577720e8ace3c37bfff24fc333c8796d8655911c2af74984a0169"
+      },
+      "torch_cuda_version": "12.8"
+    }
+  },
+  "schema_version": "transit-training-kernel-benchmark-v3",
+  "seed": 9101,
+  "setup_seconds": 8.307343922002474,
+  "source_sha256": {
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/train_transit_v3.py": "37d4b866909b33bdaa50c025255834396450a973e9baabeb1af3aa2494f5c7c8",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/domain_ratio.py": "d57dea4f747be2961316a8672d51bf161573c22aecf8599305265159db9de09b",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/networks.py": "81def5e1652ec5d51d11b150040417dafabc5558b42d070284d5bbef4bde4753",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/protocols.py": "07d9c3cf3a6202c18b1bc44cc39ed90aa5e3a52d9f30c62a92fb15bcbf6c3f2f",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/replay_buffer.py": "3c7fa81d3e614cf3cecb3424447b6b7f9e149373de52bc67e8bf01dca8627fe7",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/trainer.py": "2007c6e7ccd9deb0895e16d28eb124241b9cf76f6b4b037b0a0d81bcfadfc15c",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/networks.py": "4441a8009f189a3c4bbe231c0991d9a4f9b9c82747a11937ea65a45b93c5172e",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v7/networks.py": "b3a0151d81840e248ff4e85e80debdde3a2e30fd82a689cf93bfe7eec9b8cb5b",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v7/replay_buffer.py": "ec0d96d1e8a0796d8ced6eb0aa162289a39ed00a6e0e24ae32feef7ea1ca7e29",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v7/sampler.py": "3bcd1ea6934e6457a16f071d978c8f674d89c944925b0f54c16ff1b2a998c708",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v7/trainer.py": "57f142451d93db456ef05c8d7d497c32d78fc21f8697f08544ddbc9d9cbbb6d2",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v7.py": "459520496888ebf8b13eb456858fe0c6cab4e400e6af9fef22d07f738a6e2376",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/benchmark_training_kernel_v4.py": "637687f7644335470fca81865f9701e64acb735ad7ae7b9d316a3fb1c8da49e5"
+  },
+  "trainer_config": {
+    "activation": "relu",
+    "actor_layer_norm": true,
+    "actor_learning_rate": 0.0001,
+    "actor_q_reduction": "min-all",
+    "alpha_learning_rate": 0.0001,
+    "backup_entropy": false,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": true,
+    "cql_n_actions": 10,
+    "critic_layer_norm": true,
+    "critic_learning_rate": 0.0003,
+    "critic_loss": "huber",
+    "ensemble_size": 10,
+    "gradient_clip_norm": null,
+    "hidden_dim": 256,
+    "huber_delta": 1.0,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "iql_max_weight": 100.0,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 5.0,
+    "offline_objective": "cql",
+    "online_actor_batch_mode": "aggregate",
+    "online_actor_update_interval": 4,
+    "online_backup": "sac",
+    "online_cql_alpha": 0.0,
+    "online_fraction": 0.0,
+    "online_update_order": "critic-before-actor",
+    "ratio_learning_rate": 0.0001,
+    "ratio_max_weight": 1.0,
+    "ratio_min_weight": 1e-05,
+    "ratio_update_interval": 4,
+    "reward_scale": 0.0001,
+    "soft_target_rate": 0.005,
+    "target_entropy": 0.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "updates_per_second": 67.42059158874889,
+  "warmup_seconds": 42.69675976000144,
+  "warmup_updates": 50
+}

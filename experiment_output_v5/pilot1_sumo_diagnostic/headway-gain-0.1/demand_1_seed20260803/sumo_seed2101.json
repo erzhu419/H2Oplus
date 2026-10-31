@@ -1,0 +1,969 @@
+{
+  "contract": {
+    "discount_gamma_per_minute": 0.99,
+    "episode_seconds": 24000.0,
+    "in_vehicle_time_value": 1.0,
+    "max_base_dwell_seconds": 130.0,
+    "max_demand_capacity_ratio": 2.0,
+    "max_headway_ratio": 5.0,
+    "max_hold_seconds": 60.0,
+    "max_queue_capacity_ratio": 2.0,
+    "max_scheduled_headway_seconds": 720.0,
+    "nominal_bus_capacity": 50.0,
+    "reward_unit_passenger_seconds": 60.0,
+    "waiting_time_value": 2.0
+  },
+  "contract_schema": "transit-smdp-v4",
+  "created_utc": "2026-08-03T16:48:38.249074+00:00",
+  "dataset": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/transit_smdp_v4_formal_v1.h5",
+    "sha256": "4edbeea63f57c00fcd90f81ed2c159e00652415bcc9ce8b6f3919f2d7889f11b"
+  },
+  "episode": {
+    "configured_seconds": 24000.0,
+    "discarded_pending": 123,
+    "evaluation_horizon_seconds": 6000,
+    "events": 3035,
+    "observed_end_time_seconds": 6000.0,
+    "station_wraparounds": 0,
+    "stopped_by_event_limit": false,
+    "stopped_by_time_limit": true,
+    "transitions": 2912
+  },
+  "evaluation_job": {
+    "max_events": 0,
+    "max_sim_time_seconds": 6000,
+    "signature": "417908f8a747b47fde2def65c2e409d4bc2894ddfe070f7578c1eafb609c776e"
+  },
+  "event_log": null,
+  "inference_seconds_per_decision": {
+    "max": 0.001091052996343933,
+    "mean": 4.98487393443106e-05,
+    "min": 9.501333503673473e-06,
+    "n": 3035,
+    "p50": 5.38019958185032e-05,
+    "p90": 7.549900474259629e-05,
+    "p95": 8.714130453881802e-05,
+    "std": 3.830078212408028e-05
+  },
+  "method": "headway-gain-0.1",
+  "objective": {
+    "cumulative_holding_cost": 242.9268341064453,
+    "cumulative_total_cost": 314.8633728027344,
+    "cumulative_waiting_cost": 71.93651580810547,
+    "holding_cost": {
+      "max": 2.2750003337860107,
+      "mean": 0.08342268038029363,
+      "min": 0.0,
+      "n": 2912,
+      "p50": 0.0,
+      "p90": 0.2800000816583633,
+      "p95": 0.4558500587940211,
+      "std": 0.21387067701692916
+    },
+    "total_cost": {
+      "max": 2.3431742191314697,
+      "mean": 0.10812615356476668,
+      "min": 0.0,
+      "n": 2912,
+      "p50": 0.019196758046746254,
+      "p90": 0.31977672576904315,
+      "p95": 0.5359741479158396,
+      "std": 0.23273633639485855
+    },
+    "units": "generalized passenger-minutes",
+    "waiting_cost": {
+      "max": 0.842546820640564,
+      "mean": 0.02470347333920094,
+      "min": 0.0,
+      "n": 2912,
+      "p50": 0.005426218267530203,
+      "p90": 0.06903901398181916,
+      "p95": 0.09977002814412117,
+      "std": 0.05448379799194118
+    }
+  },
+  "operations": {
+    "cumulative_smdp_reward": -314.8633591806006,
+    "decision_events": 3035,
+    "delta_t_seconds": {
+      "max": 407.0,
+      "mean": 73.60714285714286,
+      "min": 27.0,
+      "n": 2912,
+      "p50": 61.0,
+      "p90": 112.90000000000009,
+      "p95": 146.0,
+      "std": 41.644223495489484
+    },
+    "discount": {
+      "max": 0.9954875707626343,
+      "mean": 0.9877699444090927,
+      "min": 0.9340972900390625,
+      "n": 2912,
+      "p50": 0.989834189414978,
+      "p90": 0.9931557774543762,
+      "p95": 0.9938214421272278,
+      "std": 0.006814620316177039
+    },
+    "headway": {
+      "backward_ratio": {
+        "max": 1.525,
+        "mean": 1.0056827281965521,
+        "min": 0.6705555386013455,
+        "n": 3035,
+        "p50": 1.0,
+        "p90": 1.1104166666666666,
+        "p95": 1.1485416666666661,
+        "std": 0.08644188032660129
+      },
+      "bunching_rate": 0.0,
+      "forward_ratio": {
+        "max": 1.525,
+        "mean": 1.0128880241452896,
+        "min": 0.6705555386013455,
+        "n": 2580,
+        "p50": 1.0018518518518518,
+        "p90": 1.1354166666666667,
+        "p95": 1.1966666666666668,
+        "std": 0.1031110449702761
+      },
+      "large_gap_rate": 0.0007751937984496124,
+      "normalized_absolute_error": {
+        "max": 0.5249999999999999,
+        "mean": 0.06366340612569635,
+        "min": 0.0,
+        "n": 5615,
+        "p50": 0.050000000000000044,
+        "p90": 0.15000000000000002,
+        "p95": 0.20755556742350273,
+        "std": 0.07044451583247266
+      },
+      "valid_backward_events": 3035,
+      "valid_forward_events": 2580
+    },
+    "hold_seconds": {
+      "max": 13.600001335144043,
+      "mean": 0.9848748537029034,
+      "min": 0.0,
+      "n": 3035,
+      "p50": 0.0,
+      "p90": 3.0500006675720215,
+      "p95": 4.049999713897705,
+      "std": 1.6123895378168767
+    },
+    "nonzero_hold_rate": 0.4919275123558484,
+    "per_line": {
+      "102S": {
+        "decision_events": 299,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.525,
+            "mean": 1.0189392954808179,
+            "min": 0.7361111111111112,
+            "n": 299,
+            "p50": 1.0,
+            "p90": 1.178,
+            "p95": 1.2179999999999995,
+            "std": 0.1312567481571703
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.525,
+            "mean": 1.025037118206094,
+            "min": 0.7222222222222222,
+            "n": 260,
+            "p50": 1.0027777777777778,
+            "p90": 1.2003333333333333,
+            "p95": 1.2546666844685872,
+            "std": 0.13757301639856973
+          },
+          "large_gap_rate": 0.007692307692307693,
+          "normalized_absolute_error": {
+            "max": 0.5249999999999999,
+            "mean": 0.07674445608336017,
+            "min": 0.0,
+            "n": 559,
+            "p50": 0.01904761904761898,
+            "p90": 0.2305555555555555,
+            "p95": 0.2583888922797309,
+            "std": 0.11211432304018254
+          },
+          "valid_backward_events": 299,
+          "valid_forward_events": 260
+        },
+        "hold_seconds": {
+          "max": 13.600001335144043,
+          "mean": 1.1584113880144713,
+          "min": 0.0,
+          "n": 299,
+          "p50": 0.0,
+          "p90": 3.2900004386901833,
+          "p95": 5.075000619888297,
+          "std": 2.4780585833354265
+        },
+        "total_hold_seconds": 346.3650050163269
+      },
+      "102X": {
+        "decision_events": 191,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.1962962962962962,
+            "mean": 1.0027148781339494,
+            "min": 0.771904790969122,
+            "n": 191,
+            "p50": 1.0,
+            "p90": 1.1302083333333333,
+            "p95": 1.139444457160102,
+            "std": 0.08497250975280794
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.1962962962962962,
+            "mean": 1.0089228117435454,
+            "min": 0.771904790969122,
+            "n": 155,
+            "p50": 1.0,
+            "p90": 1.1461481391059027,
+            "p95": 1.1714814814814813,
+            "std": 0.10633672872372646
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.228095209030878,
+            "mean": 0.07082374752247796,
+            "min": 0.0,
+            "n": 346,
+            "p50": 0.0625,
+            "p90": 0.15000000000000002,
+            "p95": 0.17407407407407405,
+            "std": 0.06350689620334274
+          },
+          "valid_backward_events": 191,
+          "valid_forward_events": 155
+        },
+        "hold_seconds": {
+          "max": 6.55000114440918,
+          "mean": 1.1347644822135645,
+          "min": 0.0,
+          "n": 191,
+          "p50": 0.0,
+          "p90": 3.200000524520874,
+          "p95": 4.827499866485596,
+          "std": 1.6415379875738751
+        },
+        "total_hold_seconds": 216.74001610279083
+      },
+      "122S": {
+        "decision_events": 330,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.2833333333333334,
+            "mean": 1.0055809590998837,
+            "min": 0.7388888888888889,
+            "n": 330,
+            "p50": 1.0,
+            "p90": 1.1208333333333333,
+            "p95": 1.1978611225552032,
+            "std": 0.08806475256330483
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.2833333333333334,
+            "mean": 1.017665288574695,
+            "min": 0.7388888888888889,
+            "n": 295,
+            "p50": 1.0027777777777778,
+            "p90": 1.1520833333333333,
+            "p95": 1.2216666666666667,
+            "std": 0.10634683713951192
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.28333333333333344,
+            "mean": 0.06423796821715339,
+            "min": 0.0,
+            "n": 625,
+            "p50": 0.036111111111111205,
+            "p90": 0.1816666920979817,
+            "p95": 0.22857142857142865,
+            "std": 0.07381356400510737
+          },
+          "valid_backward_events": 330,
+          "valid_forward_events": 295
+        },
+        "hold_seconds": {
+          "max": 7.439999103546143,
+          "mean": 0.9023636481978676,
+          "min": 0.0,
+          "n": 330,
+          "p50": 0.0,
+          "p90": 3.0500006675720215,
+          "p95": 3.854999899864198,
+          "std": 1.4168188578435716
+        },
+        "total_hold_seconds": 297.7800039052963
+      },
+      "122X": {
+        "decision_events": 202,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.2940476190476191,
+            "mean": 1.0076356401502025,
+            "min": 0.8691666666666666,
+            "n": 202,
+            "p50": 1.0,
+            "p90": 1.084848484848485,
+            "p95": 1.0938636363636365,
+            "std": 0.06086711878393308
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.2971428280784971,
+            "mean": 1.0135267826768002,
+            "min": 0.8691666666666666,
+            "n": 166,
+            "p50": 1.0018518518518518,
+            "p90": 1.0924242424242425,
+            "p95": 1.1217592592592593,
+            "std": 0.07407531309356667
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.2971428280784971,
+            "mean": 0.04253145358821595,
+            "min": 0.0,
+            "n": 368,
+            "p50": 0.01689813684534147,
+            "p90": 0.10166666666666668,
+            "p95": 0.11948148148148142,
+            "std": 0.05288702550791214
+          },
+          "valid_backward_events": 202,
+          "valid_forward_events": 166
+        },
+        "hold_seconds": {
+          "max": 4.9250006675720215,
+          "mean": 0.9477970912905023,
+          "min": 0.0,
+          "n": 202,
+          "p50": 0.0,
+          "p90": 2.9480005502700806,
+          "p95": 3.0500006675720215,
+          "std": 1.2849990782907983
+        },
+        "total_hold_seconds": 191.45501244068146
+      },
+      "311S": {
+        "decision_events": 261,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.3333333333333333,
+            "mean": 0.9977986828595532,
+            "min": 0.6705555386013455,
+            "n": 261,
+            "p50": 1.0,
+            "p90": 1.0893939393939394,
+            "p95": 1.1277777777777778,
+            "std": 0.0807961875335407
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.3333333333333333,
+            "mean": 1.0058763596052556,
+            "min": 0.6705555386013455,
+            "n": 219,
+            "p50": 1.0,
+            "p90": 1.1277777777777778,
+            "p95": 1.1935,
+            "std": 0.10369723381822607
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.33333333333333326,
+            "mean": 0.05823831071971375,
+            "min": 0.0,
+            "n": 480,
+            "p50": 0.026818200313683704,
+            "p90": 0.14047619047619042,
+            "p95": 0.19500000000000006,
+            "std": 0.07111219554028805
+          },
+          "valid_backward_events": 261,
+          "valid_forward_events": 219
+        },
+        "hold_seconds": {
+          "max": 8.910001754760742,
+          "mean": 0.9264368654667646,
+          "min": 0.0,
+          "n": 261,
+          "p50": 0.0,
+          "p90": 2.950000762939453,
+          "p95": 4.950000762939453,
+          "std": 1.6756317178098117
+        },
+        "total_hold_seconds": 241.80002188682556
+      },
+      "311X": {
+        "decision_events": 239,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.258888922797309,
+            "mean": 1.0118707941499545,
+            "min": 0.7429999796549479,
+            "n": 239,
+            "p50": 1.0,
+            "p90": 1.140625,
+            "p95": 1.1570208104451496,
+            "std": 0.09683402047540758
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.258888922797309,
+            "mean": 1.021042256453629,
+            "min": 0.7429999796549479,
+            "n": 196,
+            "p50": 1.0511904761904762,
+            "p90": 1.1411458333333333,
+            "p95": 1.2145833333333333,
+            "std": 0.11160366214523716
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.258888922797309,
+            "mean": 0.07917677714512497,
+            "min": 0.0,
+            "n": 435,
+            "p50": 0.0671428862072172,
+            "p90": 0.15608333333333335,
+            "p95": 0.24527774386935763,
+            "std": 0.06879389050902235
+          },
+          "valid_backward_events": 239,
+          "valid_forward_events": 196
+        },
+        "hold_seconds": {
+          "max": 7.710000991821289,
+          "mean": 1.2548118201259788,
+          "min": 0.0,
+          "n": 239,
+          "p50": 0.0,
+          "p90": 3.279000616073609,
+          "p95": 3.6090000391006463,
+          "std": 1.7018756413890406
+        },
+        "total_hold_seconds": 299.90002501010895
+      },
+      "406S": {
+        "decision_events": 275,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.3,
+            "mean": 1.0045440475551939,
+            "min": 0.8154761904761905,
+            "n": 275,
+            "p50": 1.0,
+            "p90": 1.0785714285714285,
+            "p95": 1.0869494047619048,
+            "std": 0.07654105977860341
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.3,
+            "mean": 1.0137415930568643,
+            "min": 0.7119047619047619,
+            "n": 236,
+            "p50": 1.028174603174603,
+            "p90": 1.0869791666666666,
+            "p95": 1.249285734267462,
+            "std": 0.10241371375585441
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.30000000000000004,
+            "mean": 0.06505965993969681,
+            "min": 0.0,
+            "n": 511,
+            "p50": 0.05714285714285716,
+            "p90": 0.13809523809523805,
+            "p95": 0.15285717192150294,
+            "std": 0.061951189010142176
+          },
+          "valid_backward_events": 275,
+          "valid_forward_events": 236
+        },
+        "hold_seconds": {
+          "max": 8.249999046325684,
+          "mean": 0.9535091079365123,
+          "min": 0.0,
+          "n": 275,
+          "p50": 0.12000024318695068,
+          "p90": 3.1250006675720208,
+          "p95": 4.397499465942384,
+          "std": 1.5631599284327395
+        },
+        "total_hold_seconds": 262.2150046825409
+      },
+      "406X": {
+        "decision_events": 114,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.096969696969697,
+            "mean": 0.9972984876512501,
+            "min": 0.9424242424242424,
+            "n": 114,
+            "p50": 1.0,
+            "p90": 1.0470000000000002,
+            "p95": 1.0817954415986033,
+            "std": 0.03434646312500806
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.0972727457682292,
+            "mean": 1.002456339544693,
+            "min": 0.9424242424242424,
+            "n": 74,
+            "p50": 0.9860294117647059,
+            "p90": 1.0855605801669035,
+            "p95": 1.0947348484848485,
+            "std": 0.045632533432314826
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.0972727457682292,
+            "mean": 0.027573386476720498,
+            "min": 0.0,
+            "n": 188,
+            "p50": 0.025000000000000022,
+            "p90": 0.05757575757575761,
+            "p95": 0.09340909090909098,
+            "std": 0.02771680583851991
+          },
+          "valid_backward_events": 114,
+          "valid_forward_events": 74
+        },
+        "hold_seconds": {
+          "max": 4.749999046325684,
+          "mean": 0.6180701789103056,
+          "min": 0.0,
+          "n": 114,
+          "p50": 0.0,
+          "p90": 1.8100000619888315,
+          "p95": 3.8699998855590807,
+          "std": 1.192121515936775
+        },
+        "total_hold_seconds": 70.46000039577484
+      },
+      "705S": {
+        "decision_events": 312,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.261111111111111,
+            "mean": 1.0172672209761033,
+            "min": 0.8458333333333333,
+            "n": 312,
+            "p50": 1.0,
+            "p90": 1.1155238196963357,
+            "p95": 1.13484375,
+            "std": 0.07007596093030756
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.261111111111111,
+            "mean": 1.0203213009627712,
+            "min": 0.7033333333333334,
+            "n": 266,
+            "p50": 1.013611111111111,
+            "p90": 1.1211458206176759,
+            "p95": 1.1341145833333333,
+            "std": 0.0803726655267265
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.29666666666666663,
+            "mean": 0.05818839915601322,
+            "min": 0.0,
+            "n": 578,
+            "p50": 0.05833333333333335,
+            "p90": 0.1233333333333333,
+            "p95": 0.13541666666666674,
+            "std": 0.050729064446188646
+          },
+          "valid_backward_events": 312,
+          "valid_forward_events": 266
+        },
+        "hold_seconds": {
+          "max": 6.34999942779541,
+          "mean": 0.8505930759203739,
+          "min": 0.0,
+          "n": 312,
+          "p50": 0.4450008273124695,
+          "p90": 2.1709997534751992,
+          "p95": 2.74350037574768,
+          "std": 1.0763852033331114
+        },
+        "total_hold_seconds": 265.3850396871567
+      },
+      "705X": {
+        "decision_events": 127,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.085952395484561,
+            "mean": 1.0051801810413534,
+            "min": 0.8708333333333333,
+            "n": 127,
+            "p50": 1.0,
+            "p90": 1.0677380952380953,
+            "p95": 1.0734523809523808,
+            "std": 0.04018876565255317
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.085952395484561,
+            "mean": 1.0071006233070414,
+            "min": 0.8674999660915799,
+            "n": 79,
+            "p50": 1.0033333672417535,
+            "p90": 1.0716666666666665,
+            "p95": 1.0738333347865512,
+            "std": 0.05322054560223385
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.13250003390842013,
+            "mean": 0.027252933723734326,
+            "min": 0.0,
+            "n": 206,
+            "p50": 0.005902777777777757,
+            "p90": 0.07404763357979904,
+            "p95": 0.11256944868299698,
+            "std": 0.03687994636707011
+          },
+          "valid_backward_events": 127,
+          "valid_forward_events": 79
+        },
+        "hold_seconds": {
+          "max": 8.180002212524414,
+          "mean": 0.8518897858191663,
+          "min": 0.0,
+          "n": 127,
+          "p50": 0.0,
+          "p90": 3.216000032424927,
+          "p95": 6.281999731063841,
+          "std": 1.854252652678983
+        },
+        "total_hold_seconds": 108.19000279903412
+      },
+      "7S": {
+        "decision_events": 393,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.2806667073567708,
+            "mean": 0.9955209925217179,
+            "min": 0.7222222222222222,
+            "n": 393,
+            "p50": 1.0,
+            "p90": 1.1333333333333333,
+            "p95": 1.188,
+            "std": 0.10229758630489891
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.2806667073567708,
+            "mean": 1.0036425219497427,
+            "min": 0.7222222222222222,
+            "n": 367,
+            "p50": 0.97,
+            "p90": 1.1846666666666668,
+            "p95": 1.2018666381835938,
+            "std": 0.12084104762771683
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.2806667073567708,
+            "mean": 0.08676001346878141,
+            "min": 0.0,
+            "n": 760,
+            "p50": 0.08666666666666667,
+            "p90": 0.19500000000000006,
+            "p95": 0.21333333333333337,
+            "std": 0.07018460673411923
+          },
+          "valid_backward_events": 393,
+          "valid_forward_events": 367
+        },
+        "hold_seconds": {
+          "max": 7.799999713897705,
+          "mean": 1.1138931998163082,
+          "min": 0.0,
+          "n": 393,
+          "p50": 0.19999980926513672,
+          "p90": 3.540000200271607,
+          "p95": 4.749999046325684,
+          "std": 1.6075730946615507
+        },
+        "total_hold_seconds": 437.76002752780914
+      },
+      "7X": {
+        "decision_events": 292,
+        "headway": {
+          "backward_ratio": {
+            "max": 1.23,
+            "mean": 1.0006587345717461,
+            "min": 0.89,
+            "n": 292,
+            "p50": 1.0,
+            "p90": 1.0688095238095239,
+            "p95": 1.1263333333333332,
+            "std": 0.06393514123842932
+          },
+          "bunching_rate": 0.0,
+          "forward_ratio": {
+            "max": 1.2444444444444445,
+            "mean": 1.006601118831575,
+            "min": 0.85,
+            "n": 267,
+            "p50": 1.000925925925926,
+            "p90": 1.1026666666666667,
+            "p95": 1.1829666951497395,
+            "std": 0.08087712951523282
+          },
+          "large_gap_rate": 0.0,
+          "normalized_absolute_error": {
+            "max": 0.24444444444444446,
+            "mean": 0.0505444961722463,
+            "min": 0.0,
+            "n": 559,
+            "p50": 0.050000000000000044,
+            "p90": 0.1053333333333333,
+            "p95": 0.17333333333333334,
+            "std": 0.05207374752575165
+          },
+          "valid_backward_events": 292,
+          "valid_forward_events": 267
+        },
+        "hold_seconds": {
+          "max": 5.100000381469727,
+          "mean": 0.8597432244313906,
+          "min": 0.0,
+          "n": 292,
+          "p50": 0.04999995231628418,
+          "p90": 2.8500008583068848,
+          "p95": 3.6270006537437434,
+          "std": 1.2138604199914602
+        },
+        "total_hold_seconds": 251.04502153396606
+      }
+    },
+    "same_trip_transitions": 2912,
+    "smdp_reward": {
+      "max": -0.0,
+      "mean": -0.10812615356476668,
+      "min": -2.3431742191314697,
+      "n": 2912,
+      "p50": -0.019196758046746254,
+      "p90": -0.0,
+      "p95": 0.0,
+      "std": 0.23273633639485858
+    },
+    "total_hold_seconds": 2989.0951809883118
+  },
+  "passenger_welfare": {
+    "accrued_generalized_passenger_seconds": 2111767.0,
+    "accrued_generalized_seconds_per_departed_passenger": 1326.4868090452262,
+    "in_vehicle_time_value": 1.0,
+    "waiting_time_value": 2.0
+  },
+  "passengers": {
+    "accrued_in_vehicle_seconds_per_departed_passenger": 636.7757537688442,
+    "accrued_in_vehicle_seconds_total": 1013747.0,
+    "accrued_wait_plus_in_vehicle_seconds_per_departed_passenger": 981.6312814070352,
+    "accrued_wait_plus_in_vehicle_seconds_total": 1562757.0,
+    "accrued_wait_seconds_per_departed_passenger": 344.85552763819095,
+    "accrued_wait_seconds_total": 549010.0,
+    "completed_journey_seconds": {
+      "max": 5640.34,
+      "mean": 1192.037063197026,
+      "min": 93.46000000000004,
+      "n": 807,
+      "p50": 951.7200000000003,
+      "p90": 2544.216,
+      "p95": 3099.1059999999998,
+      "std": 895.1056565196224
+    },
+    "completed_leg_in_vehicle_seconds": {
+      "max": 2990.0,
+      "mean": 703.8776223776224,
+      "min": 23.0,
+      "n": 858,
+      "p50": 602.0,
+      "p90": 1366.9,
+      "p95": 1723.0,
+      "std": 526.047149448268
+    },
+    "completed_leg_total_seconds": {
+      "max": 5623.0,
+      "mean": 1138.6561771561771,
+      "min": 72.0,
+      "n": 858,
+      "p50": 910.5,
+      "p90": 2403.900000000001,
+      "p95": 3040.249999999999,
+      "std": 871.436356093447
+    },
+    "completed_leg_wait_seconds": {
+      "max": 5400.0,
+      "mean": 434.7785547785548,
+      "min": 10.0,
+      "n": 858,
+      "p50": 230.0,
+      "p90": 1060.0,
+      "p95": 1865.999999999999,
+      "std": 627.6499555145517
+    },
+    "completed_legs": 858,
+    "completed_passengers": 807,
+    "completion_rate": 0.5069095477386935,
+    "departed_passengers": 1592,
+    "invalid_leg_records": 0,
+    "ongoing_legs": 745,
+    "state_counts_at_horizon": {
+      "Bus": 603,
+      "Lane": 40,
+      "Stop": 142
+    },
+    "unfinished_passengers": 785
+  },
+  "policy": {
+    "gain": 0.1,
+    "hold_seconds": "clip(gain*((H_b-T_b)-(H_f-T_f))/2, 0, 60)",
+    "type": "schedule-adjusted-headway-balance"
+  },
+  "raw_state_names": [
+    "line_id",
+    "station_index",
+    "sim_time_seconds",
+    "forward_headway_seconds",
+    "backward_headway_seconds",
+    "target_forward_headway_seconds",
+    "target_backward_headway_seconds",
+    "eligible_stranded_passengers",
+    "onboard_passengers",
+    "eligible_arrival_rate_per_second",
+    "base_dwell_seconds",
+    "forward_bus_present",
+    "backward_bus_present",
+    "bus_capacity"
+  ],
+  "runtime": {
+    "device": "cpu",
+    "numpy_version": "2.2.6",
+    "python_version": "3.10.12",
+    "sumo_backend": "libsumo",
+    "sumo_version": "Eclipse SUMO sumo 1.27.1",
+    "torch_interop_threads": 1,
+    "torch_intraop_threads": 1,
+    "torch_version": "2.8.0+cu128",
+    "wall_time_seconds": 153.398760115997
+  },
+  "scenario": {
+    "created_utc": "2026-08-03T09:10:41.589722+00:00",
+    "demand_scale": 1.0,
+    "manifest": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/manifest.json",
+    "manifest_sha256": "3a87e327cabce2cf09dc9564a6c3bc06db46b0349d72efa044fb07d9ac7194eb",
+    "passenger_objects": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passenger_objects.add.xml",
+    "passenger_routes": [
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_direct.rou.xml",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_transfer.rou.xml"
+    ],
+    "runtime_input_sha256": {
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passenger_objects.add.xml": "2d21cfbecf043c3a66877256f3b368d51b2951509111c29a5a00551c28783223",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_direct.rou.xml": "8e0c532f26abbd110890be362421041a85edff4f3aba65a13e670b190d2fd7bc",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_transfer.rou.xml": "8c8b99f15a951ebc92d97ac5009e4c0eca5b9659f85d273c3cbf6a1d5c608d8b",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/scenario.sumocfg": "c7f2381c6689aa044e8da2e5eae7892685e563b0da2ac87fcd5de24d9c982582",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/b_network/3_bus_station.add.xml": "5dc252e76de744add0b6e4d561536546da91a4de83829b5e668360cded29c909",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/b_network/5g_changsha_bus_network_with_signal_d.net.xml": "498b59d067d94b44ff5f204e1fd3df1860d29ad74dfe5586cc71713a7b1cdd9b",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/c_social_vehicle_rou/5_design_social_vehicle.rou.xml": "a9a03ad19c3fb33f4834c908054de314760c5eddf099ec25f4a34f6aa029b8d3",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml": "71ee6c18edfcc661f6a7f6d2753b041345c79ce8640025a8f9109e7f2bb62101",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/d_bus_rou/2_bus_timetable.rou.xml": "d3a95542ec58c6347e42b59f0e7839b1f78ff4e13f753eaacebef3bed2b8c680"
+    },
+    "scaled_person_counts": [
+      14211,
+      868
+    ],
+    "scaled_total_persons": 15079,
+    "scenario_sha256": {
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passenger_objects.add.xml": "2d21cfbecf043c3a66877256f3b368d51b2951509111c29a5a00551c28783223",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_direct.rou.xml": "8e0c532f26abbd110890be362421041a85edff4f3aba65a13e670b190d2fd7bc",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/passengers_transfer.rou.xml": "8c8b99f15a951ebc92d97ac5009e4c0eca5b9659f85d273c3cbf6a1d5c608d8b",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/scenario.sumocfg": "c7f2381c6689aa044e8da2e5eae7892685e563b0da2ac87fcd5de24d9c982582"
+    },
+    "schema_version": "transit-passenger-demand-v1",
+    "scope": "passengers only; social traffic and bus timetable are unchanged",
+    "selection_seed": 20260803,
+    "source_person_counts": [
+      14211,
+      868
+    ],
+    "source_sha256": {
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml": "ed15a19b482a2b8e31180ce42cce86f9daa496597de1e596dca9dc72146b859d",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml": "053498bc893e6d79da7efd5eaae96bdf747dcccf865eb5515983d9c8f05c50a0",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/control_sim_traci_period.sumocfg": "49b2b97e0e6ea41af100cfe5cc169f75f98eca5a7d6540a9b77e62c434c07023",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_passenger.add.xml": "405b6e0d8dd00fe5b03aecd4d67d58076bf33d0c68bc05b1a807ff4aa76fd3ef"
+    },
+    "source_total_persons": 15079,
+    "sumo_config": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/evaluation_scenarios/demand_1_seed20260803/scenario.sumocfg"
+  },
+  "schema_version": "transit-evaluation-v4",
+  "service": {
+    "active_trips_at_horizon": 0,
+    "completed_trip_duration_seconds": {
+      "max": 3406.0,
+      "mean": 2359.530612244898,
+      "min": 1678.0,
+      "n": 49,
+      "p50": 2545.0,
+      "p90": 3215.6,
+      "p95": 3312.0,
+      "std": 620.2725577666381
+    },
+    "completed_trips": 49,
+    "completion_rate": 0.3951612903225806,
+    "departed_trips": 124
+  },
+  "source_sha256": {
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/evaluate_transit_v4.py": "3b9d55ce5091b8b92f2c0ba7ab4a9791c6489f171714ad3a3949647e30ed7cac",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/domain_ratio.py": "4fccb6c0262062d47333b1c8c10b15d347627bf95542f9a76a1cc3f614e517c1",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/evaluation.py": "2419ebc3a56d95e0048f1a2b462ae4da3d5575ee295a8ef2e40de971769b573e",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/networks.py": "c88df413ab33583721a1fbb4eafce2b1e939b5a4dae74f2ca673322e7b31e3cc",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/trainer.py": "0a8311ae7508160023612d1895684cc0f470e84f8a8d313a04f3f39afe05a20a",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/networks.py": "c0d1a1dd42aac8f84d8150d5367366417e31f042304540a921b4002346dfc223",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/policies.py": "f1cf7a5dbdda7360ce17deb687f13591dd4457d1bd0436ac87b04a18c25767f6",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/trainer.py": "a03c1a86f49bed6925f09fc839404a56777bdc9b04b8dbf2edf92e806a211a72",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/common/data_utils.py": "ed1ec95396889cf5b0b589a8b8ccfdb4ab7b8b6d7d4f7d8dbaed22033b04c4b8",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/all_lines_sumo_env.py": "fcbaf16a9b08afb2e29f8af3c15b9fe3436f568b88e08e7dda9e9f08e031ccbc",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/sumo_gym_env.py": "986327641afc39ff95c8f14cc8b839d6b5ad2bd81c122a60d3d5d4bb7877ae16",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml": "7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/d_8_compute_running_time.py": "46ee8472607754ce7e99023f860ed5e5206b1803dfbc33292198e26e32afa709",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/e_8_gurobi_test_considerbusnum_V3.py": "973a6d099d1880c1d93acbdd9312d08633276f4dea554ed6701087a938b9897c",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py": "f4d5feefa32b5a2e787fcb01f33ba73e3dd77d49db729d5c60cfd57b77c66012",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py": "6c42129c9c014317d58a41ecc57759c4abc2dc88133a17514d171a27edcb2068",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_env.py": "3dbcda82e179bcc904b64d213816ea5ece681a0034564e17e87e00d03598bed5",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_provenance.py": "6237c36c226f22d7c51da416d67e4ecd428a66f3cc369ad6b38019e2ae29b151",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v4.py": "93653993801abd6e9054bc82c1f50e29ef471a99823dcd49f0275703aa2ec368",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml": "1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_lane.add.xml": "6d083e597fc8b19cfde874488a4c0921abee738ea3ea1ba1f154611f7f9ccc03",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_line.add.xml": "3436791192adf67e927873637a61718471dabe1afc03b1b679db4ba0327560aa",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_signal.add.xml": "4ee961a5d9263b9fc2c8e5ced272f7bb06c80636ffe15bf2b7fae0fa013a4240",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_stop.add.xml": "afd2d4099971465258e5acc86943ae34ef9191638b72665516b4888687c392b8",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/bus.py": "a088753355fb1a392a870add678346af0a709c0a5d7097e88ec37a801b43d29e",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/lane.py": "6320f73be0ef0efa8dafc7eaf7a8f951f04232210dda5d6b06681ccb264a8ab1",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/line.py": "1f4e8f15b8e225a8647326e163594d5b7fac286d39103a6ca3b124265359f0ff",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/passenger.py": "ea973ae4919dd30e0b1274dea5a128b3ee49d241313c9c65d15f01df91afaf06",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/signal.py": "f4257a80c31bc9fd6558ec432bd91d44a2a957fdaa7f1f753819a837cd6b9c1e",
+    "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/stop.py": "ec04c67bcc68a793dabc6553f68ac1012b9b77ddd1abb5152336b3c1da3033d8"
+  },
+  "sumo_seed": 2101
+}

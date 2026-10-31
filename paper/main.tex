@@ -46,6 +46,8 @@
 \crefname{remark}{Remark}{Remarks}
 \crefname{algorithm}{Algorithm}{Algorithms}
 \crefname{equation}{Eq.}{Eqs.}
+\crefname{subappendix}{Appendix}{Appendices}
+\Crefname{subappendix}{Appendix}{Appendices}
 
 \begin{document}
 
@@ -83,6 +85,8 @@ Bus holding control \sep offline-to-online reinforcement learning \sep completio
 
 \clearpage
 \appendix
+% Keep the class's appendix heading prefix out of subsection reference numbers.
+\renewcommand{\thesubsection}{\Alph{section}.\arabic{subsection}}
 \numberwithin{equation}{section}
 \numberwithin{table}{section}
 \numberwithin{figure}{section}

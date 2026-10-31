@@ -1,0 +1,134 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v12/gate_gpu_v1/server_baselines/bc_seed9151/checkpoints/latest.pt",
+    "sha256": "9c4c01f9e371c48f0d223b718cb078e9db7b185baa51bdf36257b3d5612ef41a"
+  },
+  "completed_epochs": 0,
+  "completed_utc": "2026-08-08T12:05:01.135785+00:00",
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 41.7109375,
+  "max_rss_mb": 4468.3671875,
+  "mdp_version": "v6",
+  "method": "bc",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 100000,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 0,
+    "description": "offline-only maximum-likelihood behavior cloning",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.0,
+    "offline_initializer": null,
+    "offline_objective": "bc",
+    "online_backup": "sac",
+    "online_fraction": 0.0,
+    "online_update_mode": "none",
+    "ratio_update_interval": 4,
+    "reference": "https://proceedings.mlr.press/v15/ross11a.html",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "offline-only maximum-likelihood behavior cloning",
+  "offline_metrics": {
+    "train/action_log_probability": -2.282994270324707,
+    "train/actor_grad_norm": 5.346709728240967,
+    "train/actor_loss": 2.282994270324707,
+    "train/update": 8.0
+  },
+  "online_buffer_size": 0,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 8,
+        "profile": 100000
+      },
+      "online_fraction": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": -1.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 0,
+        "profile": 0
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 0,
+        "profile": 0
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v12/gate_gpu_v1/server_baselines/bc_seed9151",
+  "run_signature": "90bcc6303148c02aba07b0bee0913768d8a414e4c34dc42d8e31e4fc574b5133",
+  "schema_version": "transit-training-summary-v7",
+  "seed": 9151,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 0.08660744200460613,
+    "data_load": 13.178103046957403,
+    "device_cache": 0.0031686078291386366,
+    "model_init": 2.7802078779786825,
+    "offline_pretraining": 5.4003517320379615,
+    "provenance_audit": 0.7114035109989345
+  },
+  "total_updates": 8,
+  "warmup_metrics": {}
+}

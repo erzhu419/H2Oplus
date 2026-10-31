@@ -51,6 +51,15 @@ otherwise returns $a=-1$. Physical holds are obtained through
 continuous branch strictly inside $(-1,1)$ by clipping at floating-point
 precision; the operational transform can still apply the exact 60-s cap.
 
+For offline actor regression, a logged positive-hold action $a>-1$ is evaluated
+at $\widetilde a=\clip(a,-1+\epsilon_{\mathrm{fp}},1-\epsilon_{\mathrm{fp}})$,
+where $\widetilde a$ is the likelihood input and
+$\epsilon_{\mathrm{fp}}=2^{-23}$ is the single-precision machine epsilon.
+Thus a logged $a=1$ (60 s) is projected inward for likelihood evaluation only;
+its stored action and physical hold are unchanged. Exact no-hold actions retain
+their point-mass likelihood. The density and median in \Cref{prop:hurdle}
+describe the ideal distribution before numerical clipping.
+
 The critic has two independently parameterized heads, with two target heads
 updated by Polyak averaging at rate 0.005. The actor, critic, and value heads
 each use two 256-unit hidden layers after the structured encoder. Further
@@ -76,9 +85,10 @@ w_{\mathrm{IQL}}(s,a)=
 \min\left\{\exp\left(3A(s,a)\right),100\right\}.
 \label{eq:iql_weight}
 \end{equation}
-Here $w_{\mathrm{IQL}}$ is the capped regression weight. The mixed-measure
-log likelihood $\log\varpi_{\phi}(a\mid s)$ from \Cref{eq:hurdle_policy} is
-used for advantage-weighted actor regression.
+Here $w_{\mathrm{IQL}}$ is the capped regression weight. Advantage-weighted
+actor regression uses $\log\varpi_{\phi}(\widetilde a\mid s)$ for positive
+holds, with the endpoint projection defined above, and
+$\log(1-p^+_{\phi}(s))$ for exact no-hold actions.
 
 After a 5,000-event frozen-policy warmup, training continued in the calibrated
 online simulator with 50/50 target and simulator critic minibatches and a
@@ -93,8 +103,10 @@ B_{\mathrm{SAC}}(s')=
 \end{equation}
 where $\eta_{\mathrm{ent}}>0$ is the learned entropy temperature and the
 expectation is over the hurdle policy. The discrete gate is summed exactly and
-the continuous branch uses one reparameterized sample per state. The online Bellman bootstrap
-mixed the fixed IQL value and entropy-regularized SAC bootstrap as
+the continuous branch uses one reparameterized sample per state.
+Following the mixed-value construction of H2O+~\citep{niu2025h2oplus},
+the online Bellman bootstrap combines the fixed IQL value and the
+entropy-regularized SAC bootstrap as
 \begin{equation}
 B_{\mathrm{mix}}(s')=0.1V_{\nu}(s')+0.9B_{\mathrm{SAC}}(s').
 \label{eq:mixed_backup}

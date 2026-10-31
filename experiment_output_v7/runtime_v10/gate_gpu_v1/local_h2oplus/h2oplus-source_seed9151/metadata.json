@@ -1,0 +1,436 @@
+{
+  "arguments": {
+    "allow_external_gpu_processes": true,
+    "allow_shared_gpu": false,
+    "batch_size": 256,
+    "checkpoint_every": 1,
+    "compile_mode": "default",
+    "compile_networks": true,
+    "cpu_threads": 8,
+    "cql_n_actions": 10,
+    "dataset": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v6_gate_runtime_v10/workspace/bus_h2o/datasets_v6/transit_smdp_v6_formal_v1.h5",
+    "device": "cuda:0",
+    "device_cache_observation_dtype": "float16",
+    "ensemble_size": 2,
+    "epochs": 3,
+    "events_per_epoch": 16,
+    "hidden_dim": 256,
+    "initial_temperature": 1.0,
+    "interaction_chunk_events": 16,
+    "iql_advantage_temperature": 1.0,
+    "log_every": 1,
+    "max_offline_rows": 4096,
+    "method": "h2oplus-source",
+    "no_device_cache": false,
+    "offline_checkpoint_every": 8,
+    "offline_cql_alpha": 0.0,
+    "offline_updates": 0,
+    "online_capacity": 256,
+    "online_fraction": 0.5,
+    "output_root": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v10/gate_gpu_v1/local_h2oplus",
+    "ratio_pretrain_updates": 4,
+    "ratio_update_interval": 1,
+    "resource_interval": 1.0,
+    "resume": null,
+    "reward_scale": 1.0,
+    "run_name": "h2oplus-source_seed9151",
+    "run_signature": "cf4b6ae3de64ba5b155975677b5d8ae3fd1b7b5adcda1e3062778679a1e60a60",
+    "seed": 9151,
+    "sim_demand_scale": 1.0,
+    "sim_env": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v6_gate_runtime_v10/workspace/bus_h2o/calibrated_env",
+    "target_entropy": -1.0,
+    "updates_per_epoch": 16,
+    "utd_ratio": 1,
+    "warmup_events": 16
+  },
+  "contract_config": {
+    "discount_gamma_per_minute": 1.0,
+    "episode_seconds": 24000.0,
+    "in_vehicle_time_value": 1.0,
+    "max_base_dwell_seconds": 130.0,
+    "max_demand_capacity_ratio": 2.0,
+    "max_headway_ratio": 5.0,
+    "max_hold_seconds": 60.0,
+    "max_queue_capacity_ratio": 2.0,
+    "max_scheduled_headway_seconds": 720.0,
+    "max_simultaneous_decisions": 16,
+    "max_system_capacity_fraction": 1.25,
+    "nominal_bus_capacity": 50.0,
+    "nominal_system_capacity": 20000.0,
+    "reward_unit_passenger_seconds": 1000000.0,
+    "waiting_time_value": 2.0
+  },
+  "dataset": {
+    "offline_rows": 4096,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v6_gate_runtime_v10/workspace/bus_h2o/datasets_v6/transit_smdp_v6_formal_v1.h5",
+    "sha256": "da6b5ebd5dfd4ce582907d5bb009c6741b385e9d7ac75bfcbe310754abced709"
+  },
+  "effective_schedule": {
+    "actor_updates_per_epoch": 16,
+    "critic_updates_per_epoch": 16,
+    "events_per_epoch": 16,
+    "interaction_chunk_events": 16,
+    "offline_updates": 0,
+    "online_epochs": 3,
+    "update_mode": "mixed",
+    "utd_ratio": 1
+  },
+  "git": {
+    "commit": "cdaafcc0c4613c4a006669afd790c368a7190a1e",
+    "status": "M ../../../../SimpleSAC/bus_replay_buffer.py\n M ../../../../SimpleSAC/bus_sampler.py\n M ../../../../SimpleSAC/eval_with_metrics.py\n M ../../../../SimpleSAC/h2o+_bus_main.py\n M ../../../../SimpleSAC/h2o+_main.py\n M ../../../../SimpleSAC/h2oplus_bus.py\n M ../../../../SimpleSAC/h2oplus_ensemble.py\n M ../../../../SimpleSAC/mixed_replay_buffer.py\n D ../../../../SimpleSAC/run_full_experiments.sh\n M ../../../../SimpleSAC/train_offline_ensemble.py\n M ../../../../SimpleSAC/utils.py\n M ../../../../bus_h2o/calibrate_speeds.py\n M ../../../../bus_h2o/common/data_utils.py\n M ../../../../bus_h2o/data/extract_sumo_network.py\n M ../../../../bus_h2o/envs/sumo_gym_env.py\n M ../../../../bus_h2o/sim_core/bus.py\n M ../../../../bus_h2o/sim_core/route.py\n M ../../../../bus_h2o/sim_core/sim.py\n M ../../../../bus_h2o/sumo_env/case/f_8_create_obj.py\n M ../../../../bus_h2o/sumo_env/rl_bridge.py\n M ../../../../bus_h2o/sumo_env/rl_env.py\n M ../../../../bus_h2o/sumo_env/sumo_snapshot.py\n M ../../../../bus_h2o/train_discriminator.py\n M ../../../../bus_h2o/train_sim.py\n M ../../../../collect_policy/merge_v2_lazy.py\n M ../../../../viskit/logging.py\n?? ../../../../SimpleSAC/aggregate_multiseed.py\n?? ../../../../SimpleSAC/check_bc_checkpoints.py\n?? ../../../../SimpleSAC/deploy/\n?? ../../../../SimpleSAC/dispatch_r3_evals.py\n?? ../../../../SimpleSAC/dispatch_r3_nosnap_evals.py\n?? ../../../../SimpleSAC/eval_daganzo.py\n?? ../../../../SimpleSAC/evaluate_simulator_v4.py\n?? ../../../../SimpleSAC/evaluate_transit_v3.py\n?? ../../../../SimpleSAC/evaluate_transit_v4.py\n?? ../../../../SimpleSAC/evaluate_transit_v5.py\n?? ../../../../SimpleSAC/evaluate_transit_v6.py\n?? ../../../../SimpleSAC/paired_analysis.py\n?? ../../../../SimpleSAC/r3_rlpd_missing_eval_supervisor.py\n?? ../../../../SimpleSAC/rollout_sim_for_verification.py\n?? ../../../../SimpleSAC/run_bc_queue.sh\n?? ../../../../SimpleSAC/run_full_experiments_H2O+.sh\n?? ../../../../SimpleSAC/run_h2oplus_minimal_ablation.sh\n?? ../../../../SimpleSAC/run_multiseed_eval.sh\n?? ../../../../SimpleSAC/run_p4_hold_calibration.sh\n?? ../../../../SimpleSAC/train_awac_bus.py\n?? ../../../../SimpleSAC/train_bc.py\n?? ../../../../SimpleSAC/train_iql_bus.py\n?? ../../../../SimpleSAC/train_td3bc_bus.py\n?? ../../../../SimpleSAC/train_transit_v3.py\n?? ../../../../SimpleSAC/train_transit_v4.py\n?? ../../../../SimpleSAC/train_transit_v5.py\n?? ../../../../SimpleSAC/train_transit_v6.py\n?? ../../../../SimpleSAC/transit_v3/\n?? ../../../../SimpleSAC/transit_v4/\n?? ../../../../SimpleSAC/transit_v5/\n?? ../../../../SimpleSAC/transit_v6/\n?? ../../../../SimpleSAC/verify_assumption1.py\n?? ../../../../bus_h2o/calibrated_env/fidelity_audit_v6_pilot.json\n?? ../../../../bus_h2o/calibrated_env/segment_runtime_calibration_v4.json\n?? ../../../../bus_h2o/calibrated_env/simulator_demand_calibration.json\n?? ../../../../bus_h2o/daganzo_policy.py\n?? ../../../../bus_h2o/datasets_v3/\n?? ../../../../bus_h2o/datasets_v4/\n?? ../../../../bus_h2o/datasets_v5/\n?? ../../../../bus_h2o/datasets_v6/\n?? ../../../../bus_h2o/envs/all_lines_sim_env.py\n?? ../../../../bus_h2o/envs/all_lines_sumo_env.py\n?? ../../../../bus_h2o/evaluation_scenarios/\n?? ../../../../bus_h2o/mdp_contract.py\n?? ../../../../bus_h2o/mdp_contract_v4.py\n?? ../../../../bus_h2o/mdp_contract_v5.py\n?? ../../../../bus_h2o/mdp_contract_v6.py\n?? ../../../../bus_h2o/passenger_time.py\n?? ../../../../bus_h2o/sumo_provenance.py\n?? ../../../../bus_h2o/training_scenarios_v5/\n?? ../../../../bus_h2o/training_scenarios_v6/\n?? ../../../../collect_policy/build_canonical_v3.py\n?? ../../../../collect_policy/build_transit_v4_dataset.py\n?? ../../../../collect_policy/build_transit_v5_dataset.py\n?? ../../../../collect_policy/build_transit_v6_dataset.py\n?? ../../../../collect_policy/collect_transit_v4.py\n?? ../../../../collect_policy/collect_transit_v5.py\n?? ../../../../collect_policy/collect_transit_v6.py\n?? ../../../../collect_policy/rebuild_lazy_snapshot_index.sh\n?? ../../../../collect_policy/validate_lazy_snapshot_index.py\n?? ../../../../experiment_output_v5/\n?? ../../../../experiment_output_v6/\n?? ../../../../experiment_output_v7/\n?? ../../../../paper/\n?? ../../../"
+  },
+  "hardware": {
+    "compiled_modules": [
+      "actor_encoder",
+      "actor_mlp",
+      "critic_encoder",
+      "critic_ensemble",
+      "ratio_encoder",
+      "ratio_joint_mlp",
+      "ratio_state_action_mlp",
+      "target_critic_encoder",
+      "target_critic_ensemble",
+      "value_encoder",
+      "value_mlp"
+    ],
+    "compiler_config": {
+      "cuda_graphs_enabled": false,
+      "dynamo_limits": {
+        "accumulated_cache_size_limit": 256,
+        "cache_size_limit": 32
+      },
+      "mode": "default",
+      "mode_options": {},
+      "triton_backend_hash": "54CDB008D0F4B4A2D7130E280FB53EAA48F9B082BF27939AE9D81C1CADCEC331"
+    },
+    "cpu_threads": 8,
+    "device": "cuda:0",
+    "device_cache": {
+      "bytes": 4587520,
+      "observation_storage_dtype": "float16",
+      "offline_rows": 4096,
+      "online_rows": 0
+    },
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.17",
+    "python": "3.8.20 (default, Oct  3 2024, 15:24:27) \n[GCC 11.2.0]",
+    "runtime_fingerprint": {
+      "host": {
+        "cc_environment": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+        "compiler": {
+          "configured": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc",
+          "cpath": {
+            "entries": [
+              {
+                "crypt_h_sha256": "01023ab9ad67da6d459273369681d1a7279932f7b3f7cdd73a2967caac9651a7",
+                "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v6_gate_runtime_v10/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include"
+              }
+            ],
+            "value": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v6_gate_runtime_v10/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include"
+          },
+          "path": "/home/erzhu419/anaconda3/envs/LSTM-RL/bin/x86_64-conda-linux-gnu-gcc"
+        },
+        "cpath_environment": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v6_gate_runtime_v10/workspace/reproducibility/toolchain/libxcrypt-4.4.36-hd590300_1/include",
+        "cpu_threads": 8,
+        "cuda_visible_devices": "0",
+        "device": "cuda:0",
+        "float32_matmul_precision": "high",
+        "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+        "libc": {
+          "name": "glibc",
+          "version": "2.35"
+        },
+        "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.17",
+        "python_executable": "/home/erzhu419/.conda/envs/h2oplus-v6/bin/python",
+        "torch_distribution_version": "2.4.1+cu121"
+      },
+      "required": {
+        "compiler": {
+          "cpath": {
+            "entries": [
+              {
+                "crypt_h_sha256": "01023ab9ad67da6d459273369681d1a7279932f7b3f7cdd73a2967caac9651a7"
+              }
+            ]
+          },
+          "sha256": "c742442e35732bc1536aea1ef4e840e7e5e54e47df2bf65932ef5fc09c03972d",
+          "version": "x86_64-conda-linux-gnu-gcc (conda-forge gcc 12.1.0-17) 12.1.0"
+        },
+        "packages": {
+          "gymnasium": "1.1.1",
+          "h5py": "3.11.0",
+          "matplotlib": "3.7.5",
+          "numpy": "1.24.4",
+          "openpyxl": "3.1.5",
+          "pandas": "2.0.3",
+          "psutil": "6.0.0",
+          "pytest": "8.3.3",
+          "torch": "2.4.1+cu121"
+        },
+        "python_cache_tag": "cpython-38",
+        "python_implementation": "CPython",
+        "python_version": "3.8.20",
+        "torch_binary_sha256": {
+          "cuda_library": "bee5f6c2f6b5dbff9b6a84a0dd33ab67b4adc739401c49c5295b83f268293a8f",
+          "python_extension": "43f30e2f5a1f3da2d63d3dcd67aca919fb5dc9863f2f8f7c4a9434c4483c1b8e"
+        },
+        "torch_cuda_version": "12.1"
+      }
+    },
+    "torch": "2.4.1+cu121"
+  },
+  "mdp_version": "v6",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 0,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 1000,
+    "description": "paper/source-aligned H2O+ control: no separate offline warm start, one initial simulator rollout, online value learning from target data, and per-update conditional dynamics-ratio training",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 1.0,
+    "iql_expectile": 0.5,
+    "mixed_backup_lambda": 0.1,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "none",
+    "online_backup": "h2oplus",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "ratio_update_interval": 1,
+    "reference": "https://doi.org/10.1109/ICRA55743.2025.11127503",
+    "reference_commit": "02171768283d307244700c69003423704db83b05",
+    "reference_implementation": "https://github.com/t6-thu/H2Oplus",
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": true,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "paper/source-aligned H2O+ control: no separate offline warm start, one initial simulator rollout, online value learning from target data, and per-update conditional dynamics-ratio training",
+  "protocol_fidelity": "explicit-overrides",
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "online_fraction": {
+        "effective": 0.5,
+        "profile": 0.5
+      },
+      "ratio_pretrain_updates": {
+        "effective": 4,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 1,
+        "profile": 1
+      },
+      "target_entropy": {
+        "effective": -1.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 16,
+        "profile": 16
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 16,
+        "profile": 1000
+      }
+    }
+  },
+  "run_signature": "cf4b6ae3de64ba5b155975677b5d8ae3fd1b7b5adcda1e3062778679a1e60a60",
+  "schema_version": "transit-training-run-v7",
+  "simulator": {
+    "aggregate_sha256": "fdc62696d470d3621de43aa14682fd2cacc90eaccf0bf7d8a5e7815efb2083e7",
+    "calibration_report": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v6_gate_runtime_v10/workspace/bus_h2o/calibrated_env/simulator_demand_calibration.json",
+      "sha256": "f99321ad63d642a688b14432286bd6aa2f674d3f04f4537b22a83d0b19efc052",
+      "source_bus_objects_sha256": "1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd",
+      "source_manifest_sha256": "3a87e327cabce2cf09dc9564a6c3bc06db46b0349d72efa044fb07d9ac7194eb"
+    },
+    "demand_scale": 1.0,
+    "line_ids": [
+      "102S",
+      "102X",
+      "122S",
+      "122X",
+      "311S",
+      "311X",
+      "406S",
+      "406X",
+      "705S",
+      "705X",
+      "7S",
+      "7X"
+    ],
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v6_gate_runtime_v10/workspace/bus_h2o/calibrated_env",
+    "runtime_files_sha256": {
+      "config.json": "799a5372909960b52faef03433ba8d989471a878b39359095af5e2108a445dd5",
+      "data/102S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "15b46236c03b1a715c5f4da9f6deba3a2b006113ba4ac87dec64e83c25576e4c",
+      "data/102S/route_news.xlsx:route_news.xlsx": "5b7772d04df0ba7998d401a2bbc20a911c607cbd721724d399b834e661827890",
+      "data/102S/stop_news.xlsx:stop_news.xlsx": "9118bac6bf65d93fafdc9ae87b5c7545fa893cd7ab50d1aba3be7c59c7898e3b",
+      "data/102S/time_table.xlsx:time_table_sumo.xlsx": "8236fd19c5d0e209a0802121b4cec1743c2013426c7cd3d81dcbb6e1df211d46",
+      "data/102X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "e0013ec59f539d5eb8f9249a9816449c68de766a8702caf7bf8758fee55661e9",
+      "data/102X/route_news.xlsx:route_news.xlsx": "ed8d10b4fa3b179f4cf329668bb721608cf975cb6f2275e42ced2c8bc245d470",
+      "data/102X/stop_news.xlsx:stop_news.xlsx": "d48e81b47d57933062c16b9f71dc2f9a42916956cab17bc41fcd1382f0617caf",
+      "data/102X/time_table.xlsx:time_table_sumo.xlsx": "04aced205c8be145b3343835a783d195f91ddfca38ad00b515a5c8d5c3338e8f",
+      "data/122S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "37d7b7c257c43ebbc56dddcd6437aa60764c51a970ea32a3f8d26ed5d21c970e",
+      "data/122S/route_news.xlsx:route_news.xlsx": "86ab7bc8302adf75af8f297b349995b2b8918a7b7f4ffa3b3c62b2a97d7b308f",
+      "data/122S/stop_news.xlsx:stop_news.xlsx": "63a81bdfaf2be9c746a6c6e0e5c72397f91c588e9a7d5b4185bf2315fc0b4502",
+      "data/122S/time_table.xlsx:time_table_sumo.xlsx": "6a312c7743adeea3034ea050eee33c73cdb5d057646d0c585f2cbebef83dcb04",
+      "data/122X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "6da40a00e48fb8c28b76d565cab75fb402f3c68c7a54afe998b85ef91439aa03",
+      "data/122X/route_news.xlsx:route_news.xlsx": "f0d71e267e9a5faeb6d0c20e397162c93806199d2330873d8464b1c7127612e1",
+      "data/122X/stop_news.xlsx:stop_news.xlsx": "2d13f33708ee54597826cdd58be38034d6663417ed0540f25de20eaae79f8236",
+      "data/122X/time_table.xlsx:time_table_sumo.xlsx": "d54bc2a70c64330103dc1d3b78a52eece11c35fa9fd93ec8fd59368a48a3ebfa",
+      "data/311S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "fa675c933aca48fb32af345b30ad913557ddad05d9626bd6c33cebb5bc44e37c",
+      "data/311S/route_news.xlsx:route_news.xlsx": "d57f0a552d0e4afdb838f210bf0042bc28d6fc3501b2e05f30ccd1936a708a48",
+      "data/311S/stop_news.xlsx:stop_news.xlsx": "6925498e62b7de4b38a92078f6b9d23cb48a4d864fe29b221041cfd74d2a9415",
+      "data/311S/time_table.xlsx:time_table_sumo.xlsx": "f624caa5676fe5e7ae74007325d91dc399e5e412f6bd4ad2ebb1c4c1c446cc49",
+      "data/311X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "3f27dc6cbbbb3a2bc5ffec815cff4176f60ba6aa927cbc354a015102534d4711",
+      "data/311X/route_news.xlsx:route_news.xlsx": "81752b4974d12ab26d2257f6b11cdb3a3da6c5ef45f751b888ddf2ccc50f2a6b",
+      "data/311X/stop_news.xlsx:stop_news.xlsx": "b97079a37f2ffd1750d5826ce8d3e01b5eb5bae06bcb6ed43148b001d12b8ac2",
+      "data/311X/time_table.xlsx:time_table_sumo.xlsx": "30441ccfce11239fc8709613008c6a56c09a5e1772aeb479610333e9c691b012",
+      "data/406S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "e7ffee3227a3fd6974c89ffb5b8a0b0a9cfb843942cd27cc2f530acc5913c7c5",
+      "data/406S/route_news.xlsx:route_news.xlsx": "a1ada5087bd771e8c924d1a0b8257b6268ab819804b38e356cfef328f3dd638d",
+      "data/406S/stop_news.xlsx:stop_news.xlsx": "0110b0b59124eb06547a2f9d7d6a2743caaf05b27bd16062b07060eba864dc58",
+      "data/406S/time_table.xlsx:time_table_sumo.xlsx": "dc3c40612f3eed931410894e911fcf6d56fbd001bf52287200a65fda48b195ad",
+      "data/406X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "fc2897a328074717559d730c259534b35340c2d68815c693576357395a79dd9f",
+      "data/406X/route_news.xlsx:route_news.xlsx": "9179aef23690a6a430b9ec2480f5a5988d1f93ae57c8c7289743ed59a2b31614",
+      "data/406X/stop_news.xlsx:stop_news.xlsx": "96324ee727a3eb7ea40807a5234dd6784908ffe53fde9644676ee087d6823346",
+      "data/406X/time_table.xlsx:time_table_sumo.xlsx": "cc7d5052e245d379326f7abd065a6ae5293d32ab456bd03bc6f9fb5e799a1223",
+      "data/705S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "ec26b32d307247364accede1c6fa4066729bc4b385b04e7d4d9e9d1ca8c19cb8",
+      "data/705S/route_news.xlsx:route_news.xlsx": "86095ad1ef31d6c3743d757d20a98dc94d6c4e730814978139ddf7e1e384ae0b",
+      "data/705S/stop_news.xlsx:stop_news.xlsx": "7ce640ac922a46cb749a5f92f837b94efe2f2f9c19060e6dc5e4c4319f0b562b",
+      "data/705S/time_table.xlsx:time_table_sumo.xlsx": "5480ff3884e2d3a88383e2fedc67450797af9bf03119849a5d826a966ae42621",
+      "data/705X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "47dcec820fd69715fc4fd6e705b1ae0f1940fd046d9036106b476003db681a3b",
+      "data/705X/route_news.xlsx:route_news.xlsx": "ecc57d37a2331a6aab50291f162bec20855aae8a40896ffe13785310952efdd2",
+      "data/705X/stop_news.xlsx:stop_news.xlsx": "e54543d95ff784f5dbabcec0ae9ec9aeae1e059c7c24c1c02b274c184a7381d2",
+      "data/705X/time_table.xlsx:time_table_sumo.xlsx": "3aa3ea5b40f4a7376a2d3bcb013a626b6a4d6451be7a9166cfbc6bc7a1b587ed",
+      "data/7S/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "010f6c60afd08845d10cd6b4411f811564abf52e63994b92293913768ede3665",
+      "data/7S/route_news.xlsx:route_news.xlsx": "8884242230d3bd53f9c328a6675ae27e261e3364d83299648afaa57c037dadb9",
+      "data/7S/stop_news.xlsx:stop_news.xlsx": "3d5d9cdc9a136360475872c19fcb982d743887c154e52e5d7c49a28504ed9a0b",
+      "data/7S/time_table.xlsx:time_table_sumo.xlsx": "9e01b4fba0a6b272aee6b8c92aec6a5bdd896305a62ede2da1c75ae797859183",
+      "data/7X/passenger_OD.xlsx:passenger_OD_sumo.xlsx": "d592c41cb7f106954596d106d6f9d79706e649011203bc447f36557ead661ccf",
+      "data/7X/route_news.xlsx:route_news.xlsx": "fcc10534c19c45a89e7a731095d68811c23cd17e910eb60911013101f19e9496",
+      "data/7X/stop_news.xlsx:stop_news.xlsx": "dc91b497e557d8cf819f006f45f24590a102e38c32c2ba29a4486be02ec67710",
+      "data/7X/time_table.xlsx:time_table_sumo.xlsx": "b048e44e9acb8b0250c6157acadf7a8d45b4f3fa8b8240e128e361b961f55cdd",
+      "repository:bus_h2o/network_data/a_sorted_busline_edge.xml": "7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332",
+      "segment_runtime_calibration_v4.json": "4ba0aca950229c3a972c0a59b487435ff08c5d4d74f4275daa6f4feba9485219"
+    },
+    "runtime_sha256": "8b25fea869717454b46af0cbae30528c741e36cecd25ab7694e946b233ebf7c5",
+    "schema_version": "transit-simulator-inputs-v1"
+  },
+  "source_sha256": {
+    "SimpleSAC/train_transit_v3.py": "fb2e2c275533a6500afc4490a6aa367fac931feee3003a2113e485f3847746d8",
+    "SimpleSAC/train_transit_v6.py": "82295c71062c005dd7c4e3cd74de46623529a22e292098cf035fcd71621c67eb",
+    "SimpleSAC/transit_v3/domain_ratio.py": "d57dea4f747be2961316a8672d51bf161573c22aecf8599305265159db9de09b",
+    "SimpleSAC/transit_v3/networks.py": "82d07bb082e543ded1cb6d811b37eb783e098bbd9cc33ae341c7f9a47ed26b7b",
+    "SimpleSAC/transit_v3/protocols.py": "7e830de0787b8dab3bf44b35c88c6631659756531edaf654d24fb19a4b2bc218",
+    "SimpleSAC/transit_v3/replay_buffer.py": "3c7fa81d3e614cf3cecb3424447b6b7f9e149373de52bc67e8bf01dca8627fe7",
+    "SimpleSAC/transit_v3/sampler.py": "b2c603368488b3c4eb5e440facefc357e81bc9eb72eb6a87f36149b1bf8b32dc",
+    "SimpleSAC/transit_v3/trainer.py": "d70a09c5ed5ea207ee5d5a1836a09ac0f2197955265bed28d377980b9e1cdaeb",
+    "SimpleSAC/transit_v4/networks.py": "4441a8009f189a3c4bbe231c0991d9a4f9b9c82747a11937ea65a45b93c5172e",
+    "SimpleSAC/transit_v6/networks.py": "4a7d2ecaafd9f769d536b683e96444533392a3be0045a104dd006d136458a26d",
+    "SimpleSAC/transit_v6/replay_buffer.py": "791e7d5a96ba40aba9e8eef2f58a3850a3c6bb221f9031ca6d9a294e3ea937eb",
+    "SimpleSAC/transit_v6/sampler.py": "c093fe36d02c6c2dc2b34672ce46cdb9a151c4be0b5f7b6afcc13c639597da60",
+    "SimpleSAC/transit_v6/trainer.py": "2260baceb57521fb1c6df46dc81caef3e04ffd350c7eefea3104c0188bfaccc7",
+    "bus_h2o/envs/all_lines_sim_env.py": "c7ca9cbbb25964606cbcf0386141204455aa70232eff3378b2cb3bfdefff3bba",
+    "bus_h2o/mdp_contract.py": "da6788ce23518d73d92b6b7bbdf6f602eec2b06bee22fe1e1963f90152a54fb8",
+    "bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+    "bus_h2o/mdp_contract_v5.py": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a",
+    "bus_h2o/mdp_contract_v6.py": "8dfc95373b039b2c239602ee7a4bda5acdde58d5760c04be3a20e425138fb4c1",
+    "bus_h2o/passenger_time.py": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7",
+    "bus_h2o/sim_core/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "bus_h2o/sim_core/bus.py": "3e1232bc5c3525f7f0b20d7d2ef838fe4da0a874257e4519565af4a5cced9784",
+    "bus_h2o/sim_core/co_line_scheduler.py": "07b9480fc53d96b80cd86c6a3f594c8ea4a13b01939715f9f106b9537546a69b",
+    "bus_h2o/sim_core/passenger.py": "583ff63e20d6331709e456e10a354f77d96840a5a4bd9c9c43986ac92cd1e55c",
+    "bus_h2o/sim_core/route.py": "e5d4468c15205b4fdccc067ac312359ddf8d3e687b2751b6bd188a65f5c12223",
+    "bus_h2o/sim_core/sim.py": "0e6f1b6afce393621dff850b5280b7ea119ee0dc2e89091baee9fe53cc64bbde",
+    "bus_h2o/sim_core/station.py": "4aff4c4d8cbfe6c39c3cbd93535956b6cb7a771ada3acbe38967997ef2996f82",
+    "bus_h2o/sim_core/timetable.py": "a2bc21860562149f1988820c62727baeb03312f8d2e933eecadfce025763dc9c",
+    "bus_h2o/sim_core/visualize.py": "c35f989d5c9ce37808d92fba1a7ddc9013dbdb24b0fcc735e4e4013cd3e0c34f",
+    "reproducibility/build_simulator_demand.py": "c2cac54dbaf250c515a353044a9e3d8dfa93cca49f23b5ffbbc936a56a4c8a1d",
+    "reproducibility/build_simulator_runtime_calibration_v4.py": "e18d57f437aee42cd37e3a91038bc758f0ffa505e8847d82e33ac924aea084f7"
+  },
+  "started_utc": "2026-08-08T08:38:06.842799+00:00",
+  "trainer_config": {
+    "activation": "relu",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "cql_n_actions": 10,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "ensemble_size": 2,
+    "gradient_clip_norm": 10.0,
+    "hidden_dim": 256,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 1.0,
+    "iql_expectile": 0.5,
+    "iql_max_weight": 100.0,
+    "mixed_backup_lambda": 0.1,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "none",
+    "online_actor_batch_mode": "latest",
+    "online_actor_update_interval": 1,
+    "online_backup": "h2oplus",
+    "online_cql_alpha": 0.0,
+    "online_fraction": 0.5,
+    "ratio_learning_rate": 0.0001,
+    "ratio_max_weight": 1.0,
+    "ratio_min_weight": 1e-05,
+    "ratio_update_interval": 1,
+    "reward_scale": 1.0,
+    "soft_target_rate": 0.005,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": true,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  }
+}

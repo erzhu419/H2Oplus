@@ -1,0 +1,108 @@
+{
+  "allow_shared_gpu": false,
+  "chunk_updates_per_second": {
+    "maximum": 37.00123320188413,
+    "median": 36.67226783709801,
+    "minimum": 33.63003374859166
+  },
+  "chunks": [
+    {
+      "seconds": 0.10907424699689727,
+      "updates": 4
+    },
+    {
+      "seconds": 0.10810450500866864,
+      "updates": 4
+    },
+    {
+      "seconds": 0.11894130198925268,
+      "updates": 4
+    }
+  ],
+  "compile_networks": false,
+  "compiled_modules": [],
+  "created_utc": "2026-08-03T18:36:03.474133+00:00",
+  "dataset": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/v5_matrix_smoke_v1/dataset.h5",
+  "dataset_sha256": "33d00a4694105ac688b29a0ae634e72226142f3c0fb532b8e441eb4862efece1",
+  "device_cache": {
+    "bytes": 147288,
+    "offline_rows": 59,
+    "online_rows": 1024
+  },
+  "disclosure": "performance-only benchmark; online rows are copied offline rows and outputs are not valid policy checkpoints or scientific results",
+  "mdp_version": "v5",
+  "measured_seconds": 0.3361200539948186,
+  "measured_updates": 12,
+  "method": "h2oplus",
+  "phase": "online",
+  "runtime": {
+    "cpu_threads": 2,
+    "device": "cpu",
+    "float32_matmul_precision": "high",
+    "gpu": null,
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+    "torch": "2.8.0+cu128"
+  },
+  "schema_version": "transit-training-kernel-benchmark-v1",
+  "seed": 9101,
+  "setup_seconds": 1.0977063899917994,
+  "source_sha256": {
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/train_transit_v3.py": "ef2fd56366c0c8f8a30d9b291ec33fa51e002f0d73482d53062c411f99c4aeac",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/domain_ratio.py": "4fccb6c0262062d47333b1c8c10b15d347627bf95542f9a76a1cc3f614e517c1",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/networks.py": "c88df413ab33583721a1fbb4eafce2b1e939b5a4dae74f2ca673322e7b31e3cc",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/protocols.py": "38384073d519cc6c78c0ff8d22e950f3c3cfd6e88b6e1794f3c5d45d11af35a8",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/replay_buffer.py": "f3c5c33709fc1a040332c26499d79094b0af1e4b95757e06ae5d6c5eded885c9",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/trainer.py": "0a8311ae7508160023612d1895684cc0f470e84f8a8d313a04f3f39afe05a20a",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/networks.py": "fc7f771adcf0cede45299bdca2cb0c7aa420e7e34697f0071cf6cc6683680cc3",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v5/networks.py": "acd339df42a9ef5ecf9c470be6d50e45249a0eb538116410abfa0abc19a6cd96",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v5/replay_buffer.py": "ada4727c3f6603ca781c46a5334a389052550de7257242ecc91e86b11fc112c3",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v5/trainer.py": "0c515200c11353806f7de7ff543301218782bb8299ed92774caa6948a2a3cd65",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/benchmark_training_kernel_v4.py": "fc16dcbf476ed2416804d1954fe9917249fa9d54d52d6e157966c2e888ee7c0f"
+  },
+  "trainer_config": {
+    "activation": "relu",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "cql_n_actions": 10,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "ensemble_size": 2,
+    "gradient_clip_norm": 10.0,
+    "hidden_dim": 256,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "iql_max_weight": 100.0,
+    "mixed_backup_lambda": 0.1,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "iql",
+    "online_actor_batch_mode": "latest",
+    "online_actor_update_interval": 1,
+    "online_backup": "h2oplus",
+    "online_cql_alpha": 0.0,
+    "online_fraction": 0.5,
+    "ratio_learning_rate": 0.0001,
+    "ratio_max_weight": 1.0,
+    "ratio_min_weight": 1e-05,
+    "ratio_update_interval": 4,
+    "reward_scale": 1.0,
+    "soft_target_rate": 0.005,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": true,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "updates_per_second": 35.70152943086515,
+  "warmup_seconds": 0.20778973599954043,
+  "warmup_updates": 4
+}

@@ -1,0 +1,145 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/gate_cpu_v1/cql_seed9151/checkpoints/latest.pt",
+    "sha256": "197f8147ec7dd171f2ce01dd8c52ae090d8db2b6ae4bb2b42d7e9ff4dfe25cb7"
+  },
+  "completed_epochs": 0,
+  "completed_utc": "2026-08-08T05:08:41.958637+00:00",
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 0.0,
+  "max_rss_mb": 1044.859375,
+  "mdp_version": "v6",
+  "method": "cql",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": true,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 250000,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 0,
+    "description": "offline-only Conservative Q-Learning",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 5.0,
+    "offline_objective": "cql",
+    "online_backup": "sac",
+    "online_fraction": 0.0,
+    "online_update_mode": "none",
+    "ratio_update_interval": 4,
+    "reference": "https://proceedings.neurips.cc/paper/2020/hash/0d2b2061826a5df3221116a5085a6052-Abstract.html",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "offline-only Conservative Q-Learning",
+  "offline_metrics": {
+    "train/actor_grad_norm": 0.43680649995803833,
+    "train/actor_loss": -0.5987203121185303,
+    "train/actor_updated": 1.0,
+    "train/alpha": 0.9976015686988831,
+    "train/alpha_loss": -0.0032963224221020937,
+    "train/cql_penalty": 0.8839119076728821,
+    "train/critic_grad_norm": 3.9916231632232666,
+    "train/critic_loss": 6.86416482925415,
+    "train/offline_td_loss": 2.4446053504943848,
+    "train/online_critic_update": 0.0,
+    "train/q_data_mean": 0.027890285477042198,
+    "train/sim_td_loss": 0.0,
+    "train/update": 8.0,
+    "train/value_advantage": 0.0,
+    "train/value_grad_norm": 0.0,
+    "train/value_loss": 0.0
+  },
+  "online_buffer_size": 0,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 5.0,
+        "profile": 5.0
+      },
+      "offline_updates": {
+        "effective": 8,
+        "profile": 250000
+      },
+      "online_fraction": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": -1.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 0,
+        "profile": 0
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 0,
+        "profile": 0
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/gate_cpu_v1/cql_seed9151",
+  "run_signature": "2bd58b359dfbc465b3eaf78d9c3720ae4ca4da90e6a86aa7655da1910dd056ed",
+  "schema_version": "transit-training-summary-v7",
+  "seed": 9151,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 0.03987268899982155,
+    "data_load": 15.311534487000245,
+    "device_cache": 0.0002454230016155634,
+    "model_init": 1.1138131320003595,
+    "offline_pretraining": 1.2253267359992606,
+    "provenance_audit": 0.49146730699976615
+  },
+  "total_updates": 8,
+  "warmup_metrics": {}
+}

@@ -1,0 +1,677 @@
+{
+  "actions": {
+    "exact_max_hold_rate": 0.0,
+    "exact_no_hold_rate": 1.0,
+    "hold_seconds": {
+      "finite": 59,
+      "mean": 0.0,
+      "n": 59,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.0,
+        "25": 0.0,
+        "5": 0.0,
+        "50": 0.0,
+        "75": 0.0,
+        "95": 0.0,
+        "99": 0.0
+      },
+      "std": 0.0
+    }
+  },
+  "attributes": {
+    "action_dim": 1,
+    "action_semantics": "mixed measure: a=-1 is an exact zero-hold atom; -1<a<=1 maps linearly to (0,60] holding seconds; speed ratio is fixed at 1",
+    "build_provenance": "{\"builder\": {\"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/build_transit_v5_dataset.py\", \"sha256\": \"07231221a97abfa1c5018172102b6c45f86a79645d37c0d444c002a146d10d28\"}, \"derivation_signature\": \"97ef0dea5c19c46960334f48f2970b2a5a06907cc1a4e179e1c24455d051f3e3\", \"mdp_contract\": {\"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py\", \"sha256\": \"712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a\"}, \"measurement_resolution_correction\": {\"fields\": {\"next_observations.backward_headway_seconds\": {\"corrected_values\": 0, \"minimum_source_seconds\": 442.0}, \"next_observations.forward_headway_seconds\": {\"corrected_values\": 0, \"minimum_source_seconds\": 360.0}, \"observations.backward_headway_seconds\": {\"corrected_values\": 0, \"minimum_source_seconds\": 442.0}, \"observations.forward_headway_seconds\": {\"corrected_values\": 0, \"minimum_source_seconds\": 360.0}}, \"rule\": \"negative headways within the SUMO one-second measurement resolution are simultaneous events and are mapped to zero; lower values fail\", \"tolerance_seconds\": 1.0, \"total_corrected_values\": 0}, \"passenger_time\": {\"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py\", \"sha256\": \"433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7\"}, \"runtime\": {\"h5py\": \"3.16.0\", \"numpy\": \"2.2.6\", \"python\": \"3.10.12\"}, \"source_shard_sha256\": [\"f1c5f6a3526f28599e406e8693f8d36c730b012c166b3b4f931feccc502282e1\"], \"transform_version\": \"transit-smdp-v5-derived-transform-v1\"}",
+    "collection_matrix": "{\"collector_sha256\": \"76b675d5d0e903d955e7671eccaa951044908cd149febce96b9f8899b8f7db6f\", \"environment_design\": \"paired\", \"independent_environment_blocks\": 1, \"jobs\": 1, \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/v5_matrix_smoke_v1/matrix_manifest.json\", \"policies\": [\"zero\"], \"runner_sha256\": \"1d5e4c1a3bd14257f88e6715aa6964df35619bc9f5eced1945aa2b29e903d612\", \"sha256\": \"62e368fe23c8abd4b09bb274df9e1f1e16234e4b0b7c2366e71464c5580e46da\", \"source_sha256\": {\"/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/evaluation.py\": \"2419ebc3a56d95e0048f1a2b462ae4da3d5575ee295a8ef2e40de971769b573e\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/policies.py\": \"f1cf7a5dbdda7360ce17deb687f13591dd4457d1bd0436ac87b04a18c25767f6\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/common/data_utils.py\": \"ed1ec95396889cf5b0b589a8b8ccfdb4ab7b8b6d7d4f7d8dbaed22033b04c4b8\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/all_lines_sumo_env.py\": \"fcbaf16a9b08afb2e29f8af3c15b9fe3436f568b88e08e7dda9e9f08e031ccbc\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/sumo_gym_env.py\": \"53b855e4bf3e689c97549a4bdc83300ffbf146d389fa4175ac9a8a10ff8b8d6a\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py\": \"467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py\": \"712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml\": \"7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py\": \"433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/d_8_compute_running_time.py\": \"46ee8472607754ce7e99023f860ed5e5206b1803dfbc33292198e26e32afa709\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/e_8_gurobi_test_considerbusnum_V3.py\": \"973a6d099d1880c1d93acbdd9312d08633276f4dea554ed6701087a938b9897c\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py\": \"f4d5feefa32b5a2e787fcb01f33ba73e3dd77d49db729d5c60cfd57b77c66012\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py\": \"71962b6a10836b38421fc3d4eb25f6e7cc5b5cc828a71f3d746352fa93760ef9\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_env.py\": \"3dbcda82e179bcc904b64d213816ea5ece681a0034564e17e87e00d03598bed5\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_provenance.py\": \"a07e01652e6dcb029f40a5b8996b02ad0c6fc2b05bcab7178440eb315e197daa\", \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v5.py\": \"76b675d5d0e903d955e7671eccaa951044908cd149febce96b9f8899b8f7db6f\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml\": \"1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_lane.add.xml\": \"6d083e597fc8b19cfde874488a4c0921abee738ea3ea1ba1f154611f7f9ccc03\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_line.add.xml\": \"3436791192adf67e927873637a61718471dabe1afc03b1b679db4ba0327560aa\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_signal.add.xml\": \"4ee961a5d9263b9fc2c8e5ced272f7bb06c80636ffe15bf2b7fae0fa013a4240\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_stop.add.xml\": \"afd2d4099971465258e5acc86943ae34ef9191638b72665516b4888687c392b8\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/__init__.py\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/bus.py\": \"a088753355fb1a392a870add678346af0a709c0a5d7097e88ec37a801b43d29e\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/lane.py\": \"6320f73be0ef0efa8dafc7eaf7a8f951f04232210dda5d6b06681ccb264a8ab1\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/line.py\": \"1f4e8f15b8e225a8647326e163594d5b7fac286d39103a6ca3b124265359f0ff\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/passenger.py\": \"ea973ae4919dd30e0b1274dea5a128b3ee49d241313c9c65d15f01df91afaf06\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/signal.py\": \"f4257a80c31bc9fd6558ec432bd91d44a2a957fdaa7f1f753819a837cd6b9c1e\", \"/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/stop.py\": \"ec04c67bcc68a793dabc6553f68ac1012b9b77ddd1abb5152336b3c1da3033d8\"}, \"study_stage\": \"pilot\", \"sumo_version\": \"Eclipse SUMO sumo 1.27.1\"}",
+    "config": "{\"discount_gamma_per_minute\": 0.99, \"episode_seconds\": 24000.0, \"in_vehicle_time_value\": 1.0, \"max_base_dwell_seconds\": 130.0, \"max_demand_capacity_ratio\": 2.0, \"max_headway_ratio\": 5.0, \"max_hold_seconds\": 60.0, \"max_queue_capacity_ratio\": 2.0, \"max_scheduled_headway_seconds\": 720.0, \"max_system_capacity_fraction\": 1.25, \"nominal_bus_capacity\": 50.0, \"nominal_system_capacity\": 20000.0, \"reward_unit_passenger_seconds\": 100000.0, \"waiting_time_value\": 2.0}",
+    "content_signature": "901d93f980d1edd841680d65b0196770d18ca76cd378ffc2695d462d25ac77a5",
+    "created_utc": "2026-08-03T18:24:45.421616+00:00",
+    "derivation_signature": "97ef0dea5c19c46960334f48f2970b2a5a06907cc1a4e179e1c24455d051f3e3",
+    "discount_semantics": "nonterminal: 0.99 ** (delta_t_seconds / 60); terminal: 0",
+    "n_transitions": 59,
+    "policy_names": "{\"zero\": 0}",
+    "raw_state_dim": 16,
+    "raw_state_names": "[\"line_id\", \"station_index\", \"sim_time_seconds\", \"forward_headway_seconds\", \"backward_headway_seconds\", \"target_forward_headway_seconds\", \"target_backward_headway_seconds\", \"eligible_stranded_passengers\", \"onboard_passengers\", \"eligible_arrival_rate_per_second\", \"base_dwell_seconds\", \"forward_bus_present\", \"backward_bus_present\", \"bus_capacity\", \"system_waiting_passengers\", \"system_in_vehicle_passengers\"]",
+    "reward_aggregation_warning": "agent-centric time intervals overlap; row costs must not be summed to estimate episode passenger welfare",
+    "reward_semantics": "negative system-wide generalized passenger time accrued between successive decision epochs of the same bus, divided by 100000 passenger-seconds",
+    "scenario_manifest_hashes": "{\"019449e45e1d111aeec9a0944d7fb1dc8051ab52991d6922a4fe84ff6a1c4a67\": 0}",
+    "schema_version": "transit-smdp-v5",
+    "source_shards": "[{\"job_signature\": \"3184cbd37db3ae86df313510b03ba6839620efa141707cbae166d9bbb5ab6409\", \"path\": \"/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/v5_matrix_smoke_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz\", \"sha256\": \"f1c5f6a3526f28599e406e8693f8d36c730b012c166b3b4f931feccc502282e1\"}]",
+    "split_names": "{\"test\": 2, \"train\": 0, \"validation\": 1}",
+    "state_dim": 15,
+    "state_names": "[\"line_id\", \"station_progress\", \"episode_progress\", \"forward_headway_ratio\", \"backward_headway_ratio\", \"target_forward_headway_fraction\", \"target_backward_headway_fraction\", \"eligible_stranded_fraction\", \"onboard_fraction\", \"eligible_demand_per_headway_fraction\", \"base_dwell_fraction\", \"forward_bus_present\", \"backward_bus_present\", \"system_waiting_fraction\", \"system_in_vehicle_fraction\"]",
+    "station_max_by_line": "[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 18.0, 16.0]",
+    "transition_semantics": "same bus at its next downstream decision; terminal rows end at the route terminal or fixed evaluation horizon"
+  },
+  "by_policy": {
+    "zero": {
+      "episodes": 1,
+      "exact_no_hold_rate": 1.0,
+      "hold_seconds": {
+        "finite": 59,
+        "mean": 0.0,
+        "n": 59,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 0.0,
+          "25": 0.0,
+          "5": 0.0,
+          "50": 0.0,
+          "75": 0.0,
+          "95": 0.0,
+          "99": 0.0
+        },
+        "std": 0.0
+      },
+      "in_vehicle_passenger_seconds": {
+        "finite": 59,
+        "mean": 110.84745762711864,
+        "n": 59,
+        "percentiles": {
+          "0": 0.0,
+          "1": 0.0,
+          "100": 363.0,
+          "25": 35.5,
+          "5": 0.0,
+          "50": 104.0,
+          "75": 172.0,
+          "95": 284.99999999999994,
+          "99": 325.3000000000001
+        },
+        "std": 88.36438686720854
+      },
+      "reward": {
+        "finite": 59,
+        "mean": -0.03998610198249156,
+        "n": 59,
+        "percentiles": {
+          "0": -0.10672999918460846,
+          "1": -0.10158540025353431,
+          "100": -0.0008800000068731606,
+          "25": -0.05054999887943268,
+          "5": -0.07861400321125984,
+          "50": -0.03953000158071518,
+          "75": -0.025899999774992466,
+          "95": -0.0034920000238344087,
+          "99": -0.0018312000588048222
+        },
+        "std": 0.023253437380423573
+      },
+      "rows": 59,
+      "wait_passenger_seconds": {
+        "finite": 59,
+        "mean": 1943.8813559322034,
+        "n": 59,
+        "percentiles": {
+          "0": 44.0,
+          "1": 91.56,
+          "100": 5228.0,
+          "25": 1284.0,
+          "5": 174.6,
+          "50": 1875.0,
+          "75": 2460.0,
+          "95": 3810.2999999999993,
+          "99": 4948.4400000000005
+        },
+        "std": 1126.228746442487
+      }
+    }
+  },
+  "dataset": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/v5_matrix_smoke_v1/dataset.h5",
+  "dataset_sha256": "33d00a4694105ac688b29a0ae634e72226142f3c0fb532b8e441eb4862efece1",
+  "datasets": {
+    "actions": {
+      "dtype": "float32",
+      "shape": [
+        59,
+        1
+      ]
+    },
+    "delta_t_seconds": {
+      "dtype": "float32",
+      "shape": [
+        59
+      ]
+    },
+    "demand_scale": {
+      "dtype": "float32",
+      "shape": [
+        59
+      ]
+    },
+    "discounts": {
+      "dtype": "float32",
+      "shape": [
+        59
+      ]
+    },
+    "episode_id": {
+      "dtype": "int64",
+      "shape": [
+        59
+      ]
+    },
+    "in_vehicle_cost": {
+      "dtype": "float32",
+      "shape": [
+        59
+      ]
+    },
+    "in_vehicle_passenger_seconds": {
+      "dtype": "float32",
+      "shape": [
+        59
+      ]
+    },
+    "next_observations": {
+      "dtype": "float32",
+      "shape": [
+        59,
+        15
+      ]
+    },
+    "observations": {
+      "dtype": "float32",
+      "shape": [
+        59,
+        15
+      ]
+    },
+    "policy_id": {
+      "dtype": "int8",
+      "shape": [
+        59
+      ]
+    },
+    "policy_seed": {
+      "dtype": "int32",
+      "shape": [
+        59
+      ]
+    },
+    "raw_next_observations": {
+      "dtype": "float32",
+      "shape": [
+        59,
+        16
+      ]
+    },
+    "raw_observations": {
+      "dtype": "float32",
+      "shape": [
+        59,
+        16
+      ]
+    },
+    "rewards": {
+      "dtype": "float32",
+      "shape": [
+        59
+      ]
+    },
+    "scenario_id": {
+      "dtype": "int16",
+      "shape": [
+        59
+      ]
+    },
+    "source_shard_id": {
+      "dtype": "int16",
+      "shape": [
+        59
+      ]
+    },
+    "split_id": {
+      "dtype": "uint8",
+      "shape": [
+        59
+      ]
+    },
+    "sumo_seed": {
+      "dtype": "int32",
+      "shape": [
+        59
+      ]
+    },
+    "terminals": {
+      "dtype": "uint8",
+      "shape": [
+        59
+      ]
+    },
+    "trajectory_id": {
+      "dtype": "int64",
+      "shape": [
+        59
+      ]
+    },
+    "wait_passenger_seconds": {
+      "dtype": "float32",
+      "shape": [
+        59
+      ]
+    },
+    "waiting_cost": {
+      "dtype": "float32",
+      "shape": [
+        59
+      ]
+    }
+  },
+  "delta_t_seconds": {
+    "finite": 59,
+    "mean": 65.62711864406779,
+    "n": 59,
+    "percentiles": {
+      "0": 21.0,
+      "1": 26.8,
+      "100": 168.0,
+      "25": 46.5,
+      "5": 39.6,
+      "50": 53.0,
+      "75": 76.0,
+      "95": 120.09999999999982,
+      "99": 156.98000000000002
+    },
+    "std": 29.205814550568434
+  },
+  "disclosures": [
+    "Agent-centric reward intervals overlap across buses; transition rewards must not be summed to estimate episode passenger welfare.",
+    "The dataset is training-only; selection and testing require disjoint demand realizations and SUMO seeds."
+  ],
+  "episodes": 1,
+  "errors": [],
+  "in_vehicle_passenger_seconds": {
+    "finite": 59,
+    "mean": 110.84745762711864,
+    "n": 59,
+    "percentiles": {
+      "0": 0.0,
+      "1": 0.0,
+      "100": 363.0,
+      "25": 35.5,
+      "5": 0.0,
+      "50": 104.0,
+      "75": 172.0,
+      "95": 284.99999999999994,
+      "99": 325.3000000000001
+    },
+    "std": 88.36438686720854
+  },
+  "logical_content_signature": "901d93f980d1edd841680d65b0196770d18ca76cd378ffc2695d462d25ac77a5",
+  "logical_content_signature_matches": true,
+  "matrix": {
+    "policies": 1,
+    "scenarios": 1,
+    "splits": [
+      0
+    ],
+    "sumo_seeds": [
+      1101
+    ]
+  },
+  "passed": true,
+  "reconstruction_max_absolute_error": {
+    "delta_t_seconds": 0.0,
+    "discounts": 0.0,
+    "in_vehicle_cost": 0.0,
+    "next_observations": 0.0,
+    "observations": 0.0,
+    "reward_identity": 0.0,
+    "waiting_cost": 0.0
+  },
+  "rewards": {
+    "finite": 59,
+    "mean": -0.03998610198249156,
+    "n": 59,
+    "percentiles": {
+      "0": -0.10672999918460846,
+      "1": -0.10158540025353431,
+      "100": -0.0008800000068731606,
+      "25": -0.05054999887943268,
+      "5": -0.07861400321125984,
+      "50": -0.03953000158071518,
+      "75": -0.025899999774992466,
+      "95": -0.0034920000238344087,
+      "99": -0.0018312000588048222
+    },
+    "std": 0.023253437380423573
+  },
+  "rows": 59,
+  "schema_version": "transit-smdp-v5-audit-v1",
+  "source_integrity": {
+    "all_ledger_errors_within_tolerance": true,
+    "content_mismatches": [],
+    "declared_shards": 1,
+    "duplicate_matrix_cells": 0,
+    "episode_welfare_by_policy": {
+      "zero": {
+        "finite": 1,
+        "mean": 1073.8,
+        "n": 1,
+        "percentiles": {
+          "0": 1073.8,
+          "1": 1073.8,
+          "100": 1073.8,
+          "25": 1073.8,
+          "5": 1073.8,
+          "50": 1073.8,
+          "75": 1073.8,
+          "95": 1073.8,
+          "99": 1073.8
+        },
+        "std": 0.0
+      }
+    },
+    "hash_mismatches": [],
+    "ledger_errors": [
+      {
+        "in_vehicle_seconds": 0.0,
+        "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/v5_matrix_smoke_v1/zero/demand_1_jitter120s_seed1201/sumo_seed1101.npz",
+        "reward": 0.0,
+        "wait_seconds": 0.0
+      }
+    ],
+    "metadata_mismatches": [],
+    "missing": [],
+    "unique_matrix_cells": 1,
+    "verified": true
+  },
+  "state": {
+    "backward_bus_present": {
+      "exact_zero_rate": 0.0,
+      "finite": 59,
+      "mean": 1.0,
+      "n": 59,
+      "percentiles": {
+        "0": 1.0,
+        "1": 1.0,
+        "100": 1.0,
+        "25": 1.0,
+        "5": 1.0,
+        "50": 1.0,
+        "75": 1.0,
+        "95": 1.0,
+        "99": 1.0
+      },
+      "std": 0.0
+    },
+    "backward_headway_ratio": {
+      "exact_zero_rate": 0.0,
+      "finite": 59,
+      "mean": 0.9996186403904931,
+      "n": 59,
+      "percentiles": {
+        "0": 0.9208333492279053,
+        "1": 0.923250013589859,
+        "100": 1.1041666269302368,
+        "25": 1.0,
+        "5": 0.9416666626930237,
+        "50": 1.0,
+        "75": 1.0,
+        "95": 1.0549999475479126,
+        "99": 1.0775832843780517
+      },
+      "std": 0.031213976203923625
+    },
+    "base_dwell_fraction": {
+      "exact_zero_rate": 0.0,
+      "finite": 59,
+      "mean": 0.03076923079788685,
+      "n": 59,
+      "percentiles": {
+        "0": 0.03076923079788685,
+        "1": 0.03076923079788685,
+        "100": 0.03076923079788685,
+        "25": 0.03076923079788685,
+        "5": 0.03076923079788685,
+        "50": 0.03076923079788685,
+        "75": 0.03076923079788685,
+        "95": 0.03076923079788685,
+        "99": 0.03076923079788685
+      },
+      "std": 0.0
+    },
+    "eligible_demand_per_headway_fraction": {
+      "exact_zero_rate": 0.4745762711864407,
+      "finite": 59,
+      "mean": 0.001302848694356695,
+      "n": 59,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.006666666828095913,
+        "25": 0.0,
+        "5": 0.0,
+        "50": 0.0009375629597343504,
+        "75": 0.002208791032899171,
+        "95": 0.004307692404836416,
+        "99": 0.005893333638086917
+      },
+      "std": 0.0016008245562627152
+    },
+    "eligible_stranded_fraction": {
+      "exact_zero_rate": 1.0,
+      "finite": 59,
+      "mean": 0.0,
+      "n": 59,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.0,
+        "25": 0.0,
+        "5": 0.0,
+        "50": 0.0,
+        "75": 0.0,
+        "95": 0.0,
+        "99": 0.0
+      },
+      "std": 0.0
+    },
+    "episode_progress": {
+      "exact_zero_rate": 0.0,
+      "finite": 59,
+      "mean": 0.030873587607579717,
+      "n": 59,
+      "percentiles": {
+        "0": 0.0006249999860301614,
+        "1": 0.0007458333391696214,
+        "100": 0.04912500083446503,
+        "25": 0.021083333529531956,
+        "5": 0.006775000179186464,
+        "50": 0.032875001430511475,
+        "75": 0.042270833626389503,
+        "95": 0.04802916720509529,
+        "99": 0.04876250118017197
+      },
+      "std": 0.013359259278382598
+    },
+    "forward_bus_present": {
+      "exact_zero_rate": 0.6101694915254238,
+      "finite": 59,
+      "mean": 0.3898305084745763,
+      "n": 59,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 1.0,
+        "25": 0.0,
+        "5": 0.0,
+        "50": 0.0,
+        "75": 1.0,
+        "95": 1.0,
+        "99": 1.0
+      },
+      "std": 0.48771168033688667
+    },
+    "forward_headway_ratio": {
+      "exact_zero_rate": 0.0,
+      "finite": 59,
+      "mean": 0.9956426509356094,
+      "n": 59,
+      "percentiles": {
+        "0": 0.9208333492279053,
+        "1": 0.9220416641235352,
+        "100": 1.1041666269302368,
+        "25": 1.0,
+        "5": 0.9399999976158142,
+        "50": 1.0,
+        "75": 1.0,
+        "95": 1.0549999475479126,
+        "99": 1.0775832843780517
+      },
+      "std": 0.033917913428692235
+    },
+    "line_id": {
+      "exact_zero_rate": 0.0,
+      "finite": 59,
+      "mean": 10.40677966101695,
+      "n": 59,
+      "percentiles": {
+        "0": 10.0,
+        "1": 10.0,
+        "100": 11.0,
+        "25": 10.0,
+        "5": 10.0,
+        "50": 10.0,
+        "75": 11.0,
+        "95": 11.0,
+        "99": 11.0
+      },
+      "std": 0.49123311004031994
+    },
+    "onboard_fraction": {
+      "exact_zero_rate": 0.5423728813559322,
+      "finite": 59,
+      "mean": 0.009491525211576687,
+      "n": 59,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.03999999910593033,
+        "25": 0.0,
+        "5": 0.0,
+        "50": 0.0,
+        "75": 0.019999999552965164,
+        "95": 0.019999999552965164,
+        "99": 0.028399999365210565
+      },
+      "std": 0.0106442834692733
+    },
+    "station_progress": {
+      "exact_zero_rate": 0.0847457627118644,
+      "finite": 59,
+      "mean": 0.3951271204751427,
+      "n": 59,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 1.0,
+        "25": 0.1458333358168602,
+        "5": 0.0,
+        "50": 0.3333333432674408,
+        "75": 0.6111111044883728,
+        "95": 0.938194441795349,
+        "99": 1.0
+      },
+      "std": 0.2940660392982454
+    },
+    "system_in_vehicle_fraction": {
+      "at_configured_cap": 0,
+      "exact_zero_rate": 0.288135593220339,
+      "finite": 59,
+      "mean": 8.559321990321485e-05,
+      "n": 59,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.0002500000118743628,
+        "25": 0.0,
+        "5": 0.0,
+        "50": 9.999999747378752e-05,
+        "75": 0.0001250000022992026,
+        "95": 0.00019999999494757503,
+        "99": 0.0002500000118743628
+      },
+      "std": 7.25158360273657e-05
+    },
+    "system_waiting_fraction": {
+      "at_configured_cap": 0,
+      "exact_zero_rate": 0.03389830508474576,
+      "finite": 59,
+      "mean": 0.0015245762757115438,
+      "n": 59,
+      "percentiles": {
+        "0": 0.0,
+        "1": 0.0,
+        "100": 0.002300000051036477,
+        "25": 0.0012000000569969416,
+        "5": 9.499999760009815e-05,
+        "50": 0.0017500000540167093,
+        "75": 0.00215000007301569,
+        "95": 0.0022499999031424522,
+        "99": 0.0022709999652579427
+      },
+      "std": 0.0006983863229361092
+    },
+    "target_backward_headway_fraction": {
+      "exact_zero_rate": 0.0,
+      "finite": 59,
+      "mean": 0.7344632805404017,
+      "n": 59,
+      "percentiles": {
+        "0": 0.6666666865348816,
+        "1": 0.6666666865348816,
+        "100": 0.8333333134651184,
+        "25": 0.6666666865348816,
+        "5": 0.6666666865348816,
+        "50": 0.6666666865348816,
+        "75": 0.8333333134651184,
+        "95": 0.8333333134651184,
+        "99": 0.8333333134651184
+      },
+      "std": 0.08187216548686997
+    },
+    "target_forward_headway_fraction": {
+      "exact_zero_rate": 0.0,
+      "finite": 59,
+      "mean": 0.5847457657426091,
+      "n": 59,
+      "percentiles": {
+        "0": 0.5,
+        "1": 0.5,
+        "100": 0.8333333134651184,
+        "25": 0.5,
+        "5": 0.5,
+        "50": 0.5,
+        "75": 0.6666666865348816,
+        "95": 0.8333333134651184,
+        "99": 0.8333333134651184
+      },
+      "std": 0.11633480261005731
+    }
+  },
+  "trajectories": 5,
+  "trajectory_group_conflicts": 0,
+  "trajectory_terminal_count_errors": 0,
+  "wait_passenger_seconds": {
+    "finite": 59,
+    "mean": 1943.8813559322034,
+    "n": 59,
+    "percentiles": {
+      "0": 44.0,
+      "1": 91.56,
+      "100": 5228.0,
+      "25": 1284.0,
+      "5": 174.6,
+      "50": 1875.0,
+      "75": 2460.0,
+      "95": 3810.2999999999993,
+      "99": 4948.4400000000005
+    },
+    "std": 1126.228746442487
+  }
+}

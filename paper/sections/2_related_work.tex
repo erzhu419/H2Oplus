@@ -23,8 +23,9 @@ online data shift the state--action distribution and bootstrap errors
 propagate. Balanced replay with a pessimistic critic ensemble is one
 stabilization route: it prioritizes online and near-on-policy offline samples
 ~\citep{lee2022balanced}, rather than simply fixing a 50/50 replay split.
-Calibrated Q-learning (Cal-QL) constrains conservative values to a reference
-policy's scale~\citep{nakamoto2023calql}. Policy expansion (PEX) retains an
+Calibrated Q-learning (Cal-QL) prevents excessive pessimism by requiring
+policy-averaged conservative estimates to stay above a reference policy's
+value~\citep{nakamoto2023calql}. Policy expansion (PEX) retains an
 offline policy and adaptively composes it with a newly learned policy
 ~\citep{zhang2023pex}. Reinforcement learning with prior data (RLPD) mixes
 prior and newly collected replay while learning from random initialization

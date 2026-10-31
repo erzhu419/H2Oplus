@@ -1,0 +1,153 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/smoke/formal-compile-checkpoint-v1/checkpoints/latest.pt",
+    "sha256": "79614ffa85fb11089c0d646fdc9c7ce169a9a1a3642926a9d2494d119bbb9d4e"
+  },
+  "completed_epochs": 2,
+  "completed_utc": "2026-08-08T04:50:05.247600+00:00",
+  "final_ratio_validation": {
+    "ratio/validation_available": 0.0
+  },
+  "max_cuda_memory_mb": 0.0,
+  "max_rss_mb": 2043.96484375,
+  "mdp_version": "v6",
+  "method": "h2oplus",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 50000,
+    "default_ratio_pretrain_updates": 1000,
+    "default_warmup_events": 5000,
+    "description": "transit-adapted H2O+: IQL warm start, frozen-policy simulator warmup, H2O+ mixed value backup, balanced target/simulator replay, and pretrained conditional dynamics-ratio correction",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.1,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "iql",
+    "online_backup": "h2oplus",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "ratio_update_interval": 4,
+    "reference": "https://doi.org/10.1109/ICRA55743.2025.11127503",
+    "reference_commit": "02171768283d307244700c69003423704db83b05",
+    "reference_implementation": "https://github.com/t6-thu/H2Oplus",
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": true,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "transit-adapted H2O+: IQL warm start, frozen-policy simulator warmup, H2O+ mixed value backup, balanced target/simulator replay, and pretrained conditional dynamics-ratio correction",
+  "offline_metrics": {
+    "train/actor_grad_norm": 4.666261672973633,
+    "train/actor_loss": 2.3404645919799805,
+    "train/actor_updated": 1.0,
+    "train/alpha": 1.0,
+    "train/alpha_loss": 0.0,
+    "train/cql_penalty": 0.0,
+    "train/critic_grad_norm": 0.0009915729751810431,
+    "train/critic_loss": 1.2139494174334686e-05,
+    "train/offline_td_loss": 1.2139494174334686e-05,
+    "train/online_critic_update": 0.0,
+    "train/q_data_mean": -0.0029370319098234177,
+    "train/sim_td_loss": 0.0,
+    "train/update": 2.0,
+    "train/value_advantage": 0.00014266853395383805,
+    "train/value_grad_norm": 0.0001997638028115034,
+    "train/value_loss": 1.5892851479293313e-08
+  },
+  "online_buffer_size": 63,
+  "protocol_resolution": {
+    "defaults_applied": {
+      "batch_size": 256,
+      "ensemble_size": 2,
+      "initial_temperature": 1.0,
+      "iql_advantage_temperature": 3.0,
+      "offline_cql_alpha": 0.0,
+      "online_fraction": 0.5,
+      "ratio_update_interval": 4,
+      "target_entropy": -1.0,
+      "utd_ratio": 1
+    },
+    "overrides": {
+      "offline_updates": {
+        "effective": 2,
+        "profile": 50000
+      },
+      "ratio_pretrain_updates": {
+        "effective": 2,
+        "profile": 1000
+      },
+      "updates_per_epoch": {
+        "effective": 4,
+        "profile": 16
+      },
+      "warmup_events": {
+        "effective": 32,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {
+    "ratio/joint_accuracy": 0.572265625,
+    "ratio/joint_auc": 1.0,
+    "ratio/joint_brier": 0.24863067269325256,
+    "ratio/joint_loss": 0.6904085874557495,
+    "ratio/joint_real_logit_mean": -0.001520632766187191,
+    "ratio/joint_sim_logit_mean": -0.012519016861915588,
+    "ratio/loss": 1.3816170692443848,
+    "ratio/state_action_accuracy": 0.51171875,
+    "ratio/state_action_auc": 0.997589111328125,
+    "ratio/state_action_brier": 0.2490306943655014,
+    "ratio/state_action_loss": 0.69120854139328,
+    "ratio/state_action_real_logit_mean": -0.0061258589848876,
+    "ratio/state_action_sim_logit_mean": -0.0139418113976717,
+    "ratio/validation_available": 0.0
+  },
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/smoke/formal-compile-checkpoint-v1",
+  "run_signature": null,
+  "schema_version": "transit-training-summary-v7",
+  "seed": 42,
+  "start_epoch": 1,
+  "timings_sec": {
+    "checkpoint": 1.1136896930020157,
+    "checkpoint_restore": 0.022453538000263507,
+    "data_load": 18.33572105300118,
+    "device_cache": 0.0033054809991881484,
+    "model_init": 4.309298954000042,
+    "offline_pretraining": 20.019672730999446,
+    "online_rollout": 4.110624024000572,
+    "online_training": 13.300421591000486,
+    "online_warmup_rollout": 3.0294230899999093,
+    "provenance_audit": 0.8207842220017483,
+    "ratio_pretraining": 7.479664810000031,
+    "simulator_init": 4.782908190998569
+  },
+  "total_updates": 10,
+  "warmup_metrics": {
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 32,
+    "maximum_simultaneous_decisions": 2,
+    "mean_delta_t": 18.225806451612904,
+    "mean_hold_seconds": 3.9781454503536224,
+    "mean_reward": -0.0013067096774193546,
+    "online_buffer_size": 31,
+    "transitions": 31,
+    "trip_boundaries_total": 0
+  }
+}

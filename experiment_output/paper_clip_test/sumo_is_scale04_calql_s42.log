@@ -1,0 +1,646 @@
+[INFO] ============================================================
+I0429 10:09:18.269757 130005241182016 h2o+_bus_main.py:265] ============================================================
+[INFO] H2O+ Bus Training
+I0429 10:09:18.270561 130005241182016 h2o+_bus_main.py:266] H2O+ Bus Training
+[INFO] ============================================================
+I0429 10:09:18.270689 130005241182016 h2o+_bus_main.py:267] ============================================================
+[INFO] Log directory: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18
+I0429 10:09:18.270754 130005241182016 h2o+_bus_main.py:268] Log directory: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18
+[INFO] Seed: 42, Device: cuda
+I0429 10:09:18.270818 130005241182016 h2o+_bus_main.py:269] Seed: 42, Device: cuda
+[INFO] Snapshot reset: False, JTT: False
+I0429 10:09:18.270900 130005241182016 h2o+_bus_main.py:270] Snapshot reset: False, JTT: False
+[INFO] Config saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/config.json
+I0429 10:09:18.271255 130005241182016 h2o+_bus_main.py:275] Config saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/config.json
+wandb: Currently logged in as: erzhu419 (erzhu419-central-south-university). Use `wandb login --relogin` to force relogin
+wandb: - Waiting for wandb.init()...wandb: \ Waiting for wandb.init()...wandb: wandb version 0.26.1 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.16.6
+wandb: Run data is saved locally in ./experiment_output/2da7d10147854f18b9b2dee6db671a16/wandb/run-20260429_100920-2da7d10147854f18b9b2dee6db671a16
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run 2da7d10147854f18b9b2dee6db671a16
+wandb: ⭐️ View project at https://wandb.ai/erzhu419-central-south-university/H2O%2B
+wandb: 🚀 View run at https://wandb.ai/erzhu419-central-south-university/H2O%2B/runs/2da7d10147854f18b9b2dee6db671a16
+[INFO] Route length set to 13149.8 m
+I0429 10:09:30.822591 130005241182016 h2o+_bus_main.py:300] Route length set to 13149.8 m
+[INFO] Loading offline data: file=/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5, dir=None
+I0429 10:09:30.823256 130005241182016 h2o+_bus_main.py:305] Loading offline data: file=/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5, dir=None
+I0429 10:09:30.823664 130005241182016 bus_replay_buffer.py:90] [BusMixedReplayBuffer] Loading merged file /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5
+I0429 10:09:39.238178 130005241182016 bus_replay_buffer.py:121] [BusMixedReplayBuffer] Loaded 3,104,419 offline transitions from merged file
+I0429 10:09:39.238808 130005241182016 bus_replay_buffer.py:213] [BusMixedReplayBuffer] Renormalizing offline z_t/z_t1 density channel (absolute → fractional)
+I0429 10:09:47.443565 130005241182016 bus_replay_buffer.py:316] [BusMixedReplayBuffer] Applied tanh penalty to 3,104,419 offline rewards: mean_penalty=5.83, max=40.00, nonzero=859,267/3,104,419
+[INFO] Loaded 3,104,419 offline transitions, max buffer size 7,761,047, valid snapshots: 0
+I0429 10:09:48.582138 130005241182016 h2o+_bus_main.py:322] Loaded 3,104,419 offline transitions, max buffer size 7,761,047, valid snapshots: 0
+[INFO] Offline reward stats: mean=-118.49, std=133.81
+I0429 10:09:48.591470 130005241182016 h2o+_bus_main.py:328] Offline reward stats: mean=-118.49, std=133.81
+[INFO] Snapshot reset DISABLED (use_snapshot_reset=False)
+I0429 10:09:48.592305 130005241182016 h2o+_bus_main.py:355] Snapshot reset DISABLED (use_snapshot_reset=False)
+[INFO] Creating SumoGymEnv (SUMO online rollout, zero dynamics gap)
+I0429 10:09:48.592756 130005241182016 h2o+_bus_main.py:359] Creating SumoGymEnv (SUMO online rollout, zero dynamics gap)
+[INFO]   sumo_dir=/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control, max_steps=18000
+I0429 10:09:48.593194 130005241182016 h2o+_bus_main.py:360]   sumo_dir=/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control, max_steps=18000
+[INFO] Online env: SUMO (via SumoRLBridge)
+I0429 10:09:48.768033 130005241182016 h2o+_bus_main.py:368] Online env: SUMO (via SumoRLBridge)
+[INFO] EmbeddingLayer output_dim=29, cont_features=12, internal_state_dim=41
+I0429 10:09:48.771490 130005241182016 h2o+_bus_main.py:399] EmbeddingLayer output_dim=29, cont_features=12, internal_state_dim=41
+[INFO] Using ContrastiveDynamicsDiscriminator (delta-based, action-invariant)
+I0429 10:09:48.775168 130005241182016 h2o+_bus_main.py:421] Using ContrastiveDynamicsDiscriminator (delta-based, action-invariant)
+[INFO] Loading ensemble offline checkpoint: /home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/../experiment_output/offline_ensemble/offline_ensemble_final.pt
+I0429 10:09:49.376682 130005241182016 h2o+_bus_main.py:463] Loading ensemble offline checkpoint: /home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/../experiment_output/offline_ensemble/offline_ensemble_final.pt
+[INFO]   Policy loaded from ensemble checkpoint (partial match OK)
+I0429 10:09:49.377580 130005241182016 h2o+_bus_main.py:467]   Policy loaded from ensemble checkpoint (partial match OK)
+[INFO]   Q-function loaded from ensemble checkpoint
+I0429 10:09:49.381462 130005241182016 h2o+_bus_main.py:474]   Q-function loaded from ensemble checkpoint
+[INFO] Using H2OPlusEnsemble: E=5, β=-2.0
+I0429 10:09:50.483113 130005241182016 h2o+_bus_main.py:492] Using H2OPlusEnsemble: E=5, β=-2.0
+[INFO] JTT DISABLED (use_jtt=False)
+I0429 10:09:50.505348 130005241182016 h2o+_bus_main.py:554] JTT DISABLED (use_jtt=False)
+[INFO] Starting training for 200 epochs
+I0429 10:09:50.506033 130005241182016 h2o+_bus_main.py:631] Starting training for 200 epochs
+[INFO]   rollout_events/epoch=100, train_steps/epoch=100, eval_period=10, checkpoint_period=50
+I0429 10:09:50.506332 130005241182016 h2o+_bus_main.py:632]   rollout_events/epoch=100, train_steps/epoch=100, eval_period=10, checkpoint_period=50
+gym_xml_path:  /home/erzhu419/anaconda3/envs/LSTM-RL/lib/python3.8/site-packages/gym/envs/mujoco/assets
+H2O+ Bus Training:   0%|          | 0/200 [00:00<?, ?it/s]Warning: Ignoring attribute 'attributes' for option 'fcd-output'
+Loading net-file from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/5g_changsha_bus_network_with_signal_d.net.xml' ... done (646ms).
+Loading additional-files from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../b_network/3_bus_station.add.xml' ... done (9ms).
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../c_social_vehicle_rou/5_design_social_vehicle_add_addline_lesscar.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../d_bus_rou/2_bus_timetable.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_period_workday_passenger_VC_0805.rou.xml'
+Loading route-files incrementally from '/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/../e_passenger_rou/3_modified_transfer_passenger_0805.rou.xml'
+Loading done.
+Simulation version 1.25.0 started via libsumo with time: 0.00.
+I0429 10:10:13.699441 130005241182016 h2o+_bus_main.py:686] [Epoch 0] Rollout: events=111, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+I0429 10:10:16.212136 130005241182016 h2o+_bus_main.py:756] [Epoch 0] Train: steps=100/100, sim_ratio=0.10, avg_ploss=-1.023805746436119, avg_qloss=101.43689682006836, avg_dloss=5.378684988021851
+[INFO] [Epoch 1/200] avg_return=-3185.08, avg_len=90, online_buf=94, train=100/100, sim_ratio=0.10, disc_active=False, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=1.0, disc_loss=5.450774669647217, mean_w=0.0000, trunc=0
+I0429 10:10:35.539488 130005241182016 h2o+_bus_main.py:792] [Epoch 1/200] avg_return=-3185.08, avg_len=90, online_buf=94, train=100/100, sim_ratio=0.10, disc_active=False, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=1.0, disc_loss=5.450774669647217, mean_w=0.0000, trunc=0
+[INFO] New best checkpoint (ep1, return=-3185.1): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_best.pt
+I0429 10:10:35.929161 130005241182016 h2o+_bus_main.py:856] New best checkpoint (ep1, return=-3185.1): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_best.pt
+H2O+ Bus Training:   0%|          | 1/200 [00:45<2:30:38, 45.42s/it]I0429 10:10:54.925331 130005241182016 h2o+_bus_main.py:686] [Epoch 1] Rollout: events=105, trans=90, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+I0429 10:10:59.132693 130005241182016 h2o+_bus_main.py:756] [Epoch 1] Train: steps=100/100, sim_ratio=0.18, avg_ploss=-2.0678173780441282, avg_qloss=90.6577215576172, avg_dloss=5.962110052108764
+H2O+ Bus Training:   1%|          | 2/200 [01:08<1:46:45, 32.35s/it]I0429 10:11:16.465801 130005241182016 h2o+_bus_main.py:686] [Epoch 2] Rollout: events=106, trans=89, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+I0429 10:11:20.933262 130005241182016 h2o+_bus_main.py:756] [Epoch 2] Train: steps=100/100, sim_ratio=0.26, avg_ploss=-3.0581675291061403, avg_qloss=82.74299739837646, avg_dloss=6.292627243995667
+H2O+ Bus Training:   2%|▏         | 3/200 [01:30<1:30:24, 27.53s/it]I0429 10:11:38.530344 130005241182016 h2o+_bus_main.py:686] [Epoch 3] Rollout: events=103, trans=88, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+I0429 10:11:40.581027 130005241182016 h2o+_bus_main.py:756] [Epoch 3] Train: steps=100/100, sim_ratio=0.34, avg_ploss=-3.771989803314209, avg_qloss=81.042964553833, avg_dloss=6.507960534095764
+H2O+ Bus Training:   2%|▏         | 4/200 [01:50<1:19:46, 24.42s/it]I0429 10:11:59.705090 130005241182016 h2o+_bus_main.py:686] [Epoch 4] Rollout: events=105, trans=89, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+I0429 10:12:03.858492 130005241182016 h2o+_bus_main.py:756] [Epoch 4] Train: steps=100/100, sim_ratio=0.42, avg_ploss=-4.542023830413818, avg_qloss=78.3791173171997, avg_dloss=6.370828700065613
+H2O+ Bus Training:   2%|▎         | 5/200 [02:13<1:18:01, 24.01s/it]I0429 10:12:19.823189 130005241182016 h2o+_bus_main.py:686] [Epoch 5] Rollout: events=103, trans=89, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+I0429 10:12:23.611523 130005241182016 h2o+_bus_main.py:756] [Epoch 5] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.398414182662964, avg_qloss=76.32060974121094, avg_dloss=6.1999747896194455
+H2O+ Bus Training:   3%|▎         | 6/200 [02:33<1:12:56, 22.56s/it]I0429 10:12:42.252540 130005241182016 h2o+_bus_main.py:686] [Epoch 6] Rollout: events=104, trans=90, trunc=0, mean_w=0.9947, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:12:46.193880 130005241182016 h2o+_bus_main.py:756] [Epoch 6] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.400242290496826, avg_qloss=74.33612442016602, avg_dloss=6.165768246650696
+H2O+ Bus Training:   4%|▎         | 7/200 [02:55<1:12:35, 22.57s/it]I0429 10:13:05.342869 130005241182016 h2o+_bus_main.py:686] [Epoch 7] Rollout: events=109, trans=94, trunc=0, mean_w=0.9943, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:13:09.502095 130005241182016 h2o+_bus_main.py:756] [Epoch 7] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.404892911911011, avg_qloss=77.71053310394286, avg_dloss=6.114864296913147
+H2O+ Bus Training:   4%|▍         | 8/200 [03:18<1:12:58, 22.80s/it]I0429 10:13:27.446835 130005241182016 h2o+_bus_main.py:686] [Epoch 8] Rollout: events=104, trans=89, trunc=0, mean_w=0.9913, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:13:31.686386 130005241182016 h2o+_bus_main.py:756] [Epoch 8] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.631901512145996, avg_qloss=79.31730171203613, avg_dloss=6.071001863479614
+H2O+ Bus Training:   4%|▍         | 9/200 [03:41<1:11:58, 22.61s/it]I0429 10:13:47.919868 130005241182016 h2o+_bus_main.py:686] [Epoch 9] Rollout: events=103, trans=92, trunc=0, mean_w=0.9876, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:13:52.003195 130005241182016 h2o+_bus_main.py:756] [Epoch 9] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.490989599227905, avg_qloss=77.49263107299805, avg_dloss=5.991602301597595
+[INFO] [Epoch 10/200] avg_return=-2025.43, avg_len=91, online_buf=904, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=1.0, disc_loss=5.969917297363281, mean_w=0.9876, trunc=0
+I0429 10:14:10.057451 130005241182016 h2o+_bus_main.py:792] [Epoch 10/200] avg_return=-2025.43, avg_len=91, online_buf=904, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=1.0, disc_loss=5.969917297363281, mean_w=0.9876, trunc=0
+[INFO] New best checkpoint (ep10, return=-2025.4): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_best.pt
+I0429 10:14:10.070152 130005241182016 h2o+_bus_main.py:856] New best checkpoint (ep10, return=-2025.4): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_best.pt
+H2O+ Bus Training:   5%|▌         | 10/200 [04:19<1:27:01, 27.48s/it]I0429 10:14:25.332116 130005241182016 h2o+_bus_main.py:686] [Epoch 10] Rollout: events=106, trans=94, trunc=0, mean_w=0.9755, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:14:29.631027 130005241182016 h2o+_bus_main.py:756] [Epoch 10] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.6573113918304445, avg_qloss=79.13096920013427, avg_dloss=5.9003299665451046
+H2O+ Bus Training:   6%|▌         | 11/200 [04:39<1:18:55, 25.06s/it]I0429 10:14:45.901078 130005241182016 h2o+_bus_main.py:686] [Epoch 11] Rollout: events=109, trans=95, trunc=0, mean_w=0.9403, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:14:49.933565 130005241182016 h2o+_bus_main.py:756] [Epoch 11] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.746651391983033, avg_qloss=79.47998813629151, avg_dloss=5.728107051849365
+H2O+ Bus Training:   6%|▌         | 12/200 [04:59<1:13:58, 23.61s/it]I0429 10:15:07.820754 130005241182016 h2o+_bus_main.py:686] [Epoch 12] Rollout: events=102, trans=92, trunc=0, mean_w=0.8522, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:15:09.028505 130005241182016 h2o+_bus_main.py:756] [Epoch 12] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.637641229629517, avg_qloss=79.6837232208252, avg_dloss=5.587375674247742
+H2O+ Bus Training:   6%|▋         | 13/200 [05:18<1:09:19, 22.24s/it]I0429 10:15:28.440129 130005241182016 h2o+_bus_main.py:686] [Epoch 13] Rollout: events=105, trans=91, trunc=0, mean_w=0.8774, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:15:32.249909 130005241182016 h2o+_bus_main.py:756] [Epoch 13] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.775743589401245, avg_qloss=78.26348125457764, avg_dloss=5.491821584701538
+H2O+ Bus Training:   7%|▋         | 14/200 [05:41<1:09:52, 22.54s/it]I0429 10:15:48.552241 130005241182016 h2o+_bus_main.py:686] [Epoch 14] Rollout: events=102, trans=91, trunc=0, mean_w=0.8547, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:15:52.347195 130005241182016 h2o+_bus_main.py:756] [Epoch 14] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.920011625289917, avg_qloss=78.49506443023682, avg_dloss=5.361284852027893
+H2O+ Bus Training:   8%|▊         | 15/200 [06:01<1:07:13, 21.80s/it]I0429 10:16:07.556828 130005241182016 h2o+_bus_main.py:686] [Epoch 15] Rollout: events=102, trans=90, trunc=0, mean_w=0.8318, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:16:11.780876 130005241182016 h2o+_bus_main.py:756] [Epoch 15] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7663473129272464, avg_qloss=78.29888580322266, avg_dloss=5.242706632614135
+H2O+ Bus Training:   8%|▊         | 16/200 [06:21<1:04:40, 21.09s/it]I0429 10:16:30.154020 130005241182016 h2o+_bus_main.py:686] [Epoch 16] Rollout: events=107, trans=93, trunc=0, mean_w=0.8575, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:16:34.680377 130005241182016 h2o+_bus_main.py:756] [Epoch 16] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.782040367126465, avg_qloss=78.37588214874268, avg_dloss=5.132268409729004
+H2O+ Bus Training:   8%|▊         | 17/200 [06:44<1:05:58, 21.63s/it]I0429 10:16:51.835040 130005241182016 h2o+_bus_main.py:686] [Epoch 17] Rollout: events=108, trans=94, trunc=0, mean_w=0.8540, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:16:55.915975 130005241182016 h2o+_bus_main.py:756] [Epoch 17] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.8864768409729, avg_qloss=79.02306701660156, avg_dloss=5.030298056602478
+H2O+ Bus Training:   9%|▉         | 18/200 [07:05<1:05:15, 21.51s/it]I0429 10:17:12.440286 130005241182016 h2o+_bus_main.py:686] [Epoch 18] Rollout: events=101, trans=91, trunc=0, mean_w=0.8559, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:17:16.812354 130005241182016 h2o+_bus_main.py:756] [Epoch 18] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.766616325378418, avg_qloss=76.82669342041015, avg_dloss=4.891584010124206
+H2O+ Bus Training:  10%|▉         | 19/200 [07:26<1:04:20, 21.33s/it]I0429 10:17:35.907795 130005241182016 h2o+_bus_main.py:686] [Epoch 19] Rollout: events=103, trans=90, trunc=0, mean_w=0.7986, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:17:37.534928 130005241182016 h2o+_bus_main.py:756] [Epoch 19] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.746179828643799, avg_qloss=81.06469532012939, avg_dloss=4.756216650009155
+[INFO] [Epoch 20/200] avg_return=-1958.22, avg_len=93, online_buf=1825, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=1.0, disc_loss=4.651177883148193, mean_w=0.7986, trunc=0
+I0429 10:17:55.575080 130005241182016 h2o+_bus_main.py:792] [Epoch 20/200] avg_return=-1958.22, avg_len=93, online_buf=1825, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=1.0, disc_loss=4.651177883148193, mean_w=0.7986, trunc=0
+[INFO] New best checkpoint (ep20, return=-1958.2): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_best.pt
+I0429 10:17:55.588664 130005241182016 h2o+_bus_main.py:856] New best checkpoint (ep20, return=-1958.2): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_best.pt
+H2O+ Bus Training:  10%|█         | 20/200 [08:05<1:19:42, 26.57s/it]I0429 10:18:11.582365 130005241182016 h2o+_bus_main.py:686] [Epoch 20] Rollout: events=102, trans=92, trunc=0, mean_w=0.7640, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:18:14.933238 130005241182016 h2o+_bus_main.py:756] [Epoch 20] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.946377248764038, avg_qloss=79.18444118499755, avg_dloss=4.6352682781219485
+H2O+ Bus Training:  10%|█         | 21/200 [08:24<1:12:47, 24.40s/it]I0429 10:18:32.915246 130005241182016 h2o+_bus_main.py:686] [Epoch 21] Rollout: events=104, trans=93, trunc=0, mean_w=0.7831, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:18:36.537662 130005241182016 h2o+_bus_main.py:756] [Epoch 21] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.795634708404541, avg_qloss=76.32479026794434, avg_dloss=4.492358226776123
+H2O+ Bus Training:  11%|█         | 22/200 [08:46<1:09:53, 23.56s/it]I0429 10:18:52.737057 130005241182016 h2o+_bus_main.py:686] [Epoch 22] Rollout: events=105, trans=93, trunc=0, mean_w=0.7416, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:18:56.812318 130005241182016 h2o+_bus_main.py:756] [Epoch 22] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.765965690612793, avg_qloss=79.49034355163575, avg_dloss=4.427481675148011
+H2O+ Bus Training:  12%|█▏        | 23/200 [09:06<1:06:35, 22.57s/it]I0429 10:19:12.824673 130005241182016 h2o+_bus_main.py:686] [Epoch 23] Rollout: events=103, trans=91, trunc=0, mean_w=0.7055, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:19:17.056889 130005241182016 h2o+_bus_main.py:756] [Epoch 23] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-6.003495111465454, avg_qloss=78.00677577972412, avg_dloss=4.293891196250915
+H2O+ Bus Training:  12%|█▏        | 24/200 [09:26<1:04:10, 21.88s/it]I0429 10:19:34.928851 130005241182016 h2o+_bus_main.py:686] [Epoch 24] Rollout: events=108, trans=93, trunc=0, mean_w=0.7878, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:19:36.722056 130005241182016 h2o+_bus_main.py:756] [Epoch 24] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.818175106048584, avg_qloss=81.28389656066895, avg_dloss=4.237129867076874
+H2O+ Bus Training:  12%|█▎        | 25/200 [09:46<1:01:52, 21.21s/it]I0429 10:19:55.933984 130005241182016 h2o+_bus_main.py:686] [Epoch 25] Rollout: events=105, trans=94, trunc=0, mean_w=0.7592, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:19:59.528129 130005241182016 h2o+_bus_main.py:756] [Epoch 25] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7771436309814455, avg_qloss=83.89545188903809, avg_dloss=4.166461281776428
+H2O+ Bus Training:  13%|█▎        | 26/200 [10:09<1:02:54, 21.69s/it]I0429 10:20:14.993131 130005241182016 h2o+_bus_main.py:686] [Epoch 26] Rollout: events=105, trans=95, trunc=0, mean_w=0.7515, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:20:18.802872 130005241182016 h2o+_bus_main.py:756] [Epoch 26] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.995461530685425, avg_qloss=81.2164389038086, avg_dloss=3.9967812371253966
+H2O+ Bus Training:  14%|█▎        | 27/200 [10:28<1:00:27, 20.97s/it]I0429 10:20:34.612593 130005241182016 h2o+_bus_main.py:686] [Epoch 27] Rollout: events=103, trans=93, trunc=0, mean_w=0.7039, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:20:38.790226 130005241182016 h2o+_bus_main.py:756] [Epoch 27] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.764748516082764, avg_qloss=77.57997035980225, avg_dloss=3.9970060324668886
+H2O+ Bus Training:  14%|█▍        | 28/200 [10:48<59:15, 20.67s/it]  I0429 10:20:57.612204 130005241182016 h2o+_bus_main.py:686] [Epoch 28] Rollout: events=104, trans=92, trunc=0, mean_w=0.7878, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:21:01.403287 130005241182016 h2o+_bus_main.py:756] [Epoch 28] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.729789085388184, avg_qloss=82.69393783569336, avg_dloss=3.8222329378128053
+H2O+ Bus Training:  14%|█▍        | 29/200 [11:10<1:00:34, 21.25s/it]I0429 10:21:17.402343 130005241182016 h2o+_bus_main.py:686] [Epoch 29] Rollout: events=106, trans=92, trunc=0, mean_w=0.6861, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:21:21.329348 130005241182016 h2o+_bus_main.py:756] [Epoch 29] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.988783683776855, avg_qloss=79.16273334503174, avg_dloss=3.8838537311553956
+[INFO] [Epoch 30/200] avg_return=-1970.98, avg_len=90, online_buf=2753, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=1.0, disc_loss=4.106996059417725, mean_w=0.6861, trunc=0
+I0429 10:21:36.405541 130005241182016 h2o+_bus_main.py:792] [Epoch 30/200] avg_return=-1970.98, avg_len=90, online_buf=2753, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=1.0, disc_loss=4.106996059417725, mean_w=0.6861, trunc=0
+H2O+ Bus Training:  15%|█▌        | 30/200 [11:45<1:11:54, 25.38s/it]I0429 10:21:59.040729 130005241182016 h2o+_bus_main.py:686] [Epoch 30] Rollout: events=104, trans=92, trunc=0, mean_w=0.8167, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:22:04.070009 130005241182016 h2o+_bus_main.py:756] [Epoch 30] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.743219804763794, avg_qloss=80.24414764404297, avg_dloss=3.7876411128044127
+H2O+ Bus Training:  16%|█▌        | 31/200 [12:13<1:13:24, 26.06s/it]I0429 10:22:23.256202 130005241182016 h2o+_bus_main.py:686] [Epoch 31] Rollout: events=109, trans=94, trunc=0, mean_w=0.7647, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:22:28.407588 130005241182016 h2o+_bus_main.py:756] [Epoch 31] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.8201194190979, avg_qloss=79.52528301239013, avg_dloss=3.752617757320404
+H2O+ Bus Training:  16%|█▌        | 32/200 [12:37<1:11:31, 25.55s/it]I0429 10:22:45.766970 130005241182016 h2o+_bus_main.py:686] [Epoch 32] Rollout: events=109, trans=95, trunc=0, mean_w=0.7672, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:22:49.841202 130005241182016 h2o+_bus_main.py:756] [Epoch 32] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.934303016662597, avg_qloss=84.28597347259522, avg_dloss=3.6075377321243285
+H2O+ Bus Training:  16%|█▋        | 33/200 [12:59<1:07:40, 24.31s/it]I0429 10:23:11.280354 130005241182016 h2o+_bus_main.py:686] [Epoch 33] Rollout: events=104, trans=92, trunc=0, mean_w=0.7935, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:23:16.794195 130005241182016 h2o+_bus_main.py:756] [Epoch 33] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.83786937713623, avg_qloss=80.2947004699707, avg_dloss=3.723243229389191
+H2O+ Bus Training:  17%|█▋        | 34/200 [13:26<1:09:27, 25.10s/it]I0429 10:23:36.436323 130005241182016 h2o+_bus_main.py:686] [Epoch 34] Rollout: events=102, trans=91, trunc=0, mean_w=0.6991, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:23:40.471011 130005241182016 h2o+_bus_main.py:756] [Epoch 34] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.702545804977417, avg_qloss=83.77959838867187, avg_dloss=3.5723417019844055
+H2O+ Bus Training:  18%|█▊        | 35/200 [13:49<1:07:51, 24.68s/it]I0429 10:24:01.405187 130005241182016 h2o+_bus_main.py:686] [Epoch 35] Rollout: events=107, trans=94, trunc=0, mean_w=0.7310, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:24:03.343243 130005241182016 h2o+_bus_main.py:756] [Epoch 35] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.973401565551757, avg_qloss=79.62472888946533, avg_dloss=3.443733389377594
+H2O+ Bus Training:  18%|█▊        | 36/200 [14:12<1:05:58, 24.14s/it]I0429 10:24:23.963163 130005241182016 h2o+_bus_main.py:686] [Epoch 36] Rollout: events=103, trans=93, trunc=0, mean_w=0.7514, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:24:28.043317 130005241182016 h2o+_bus_main.py:756] [Epoch 36] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.788832321166992, avg_qloss=80.55329246520996, avg_dloss=3.461641616821289
+H2O+ Bus Training:  18%|█▊        | 37/200 [14:37<1:06:01, 24.30s/it]I0429 10:24:45.877140 130005241182016 h2o+_bus_main.py:686] [Epoch 37] Rollout: events=108, trans=95, trunc=0, mean_w=0.7190, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:24:49.844488 130005241182016 h2o+_bus_main.py:756] [Epoch 37] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.851258907318115, avg_qloss=76.988666305542, avg_dloss=3.4352132511138915
+H2O+ Bus Training:  19%|█▉        | 38/200 [14:59<1:03:35, 23.55s/it]I0429 10:25:06.602369 130005241182016 h2o+_bus_main.py:686] [Epoch 38] Rollout: events=104, trans=94, trunc=0, mean_w=0.6918, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:25:10.542923 130005241182016 h2o+_bus_main.py:756] [Epoch 38] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-6.037790660858154, avg_qloss=81.15789485931397, avg_dloss=3.3114469909667967
+H2O+ Bus Training:  20%|█▉        | 39/200 [15:20<1:00:54, 22.70s/it]I0429 10:25:29.128364 130005241182016 h2o+_bus_main.py:686] [Epoch 39] Rollout: events=103, trans=90, trunc=0, mean_w=0.6823, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:25:30.443419 130005241182016 h2o+_bus_main.py:756] [Epoch 39] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7750543594360355, avg_qloss=81.3356388092041, avg_dloss=3.306430711746216
+[INFO] [Epoch 40/200] avg_return=-2076.20, avg_len=94, online_buf=3683, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.004, phase=main, IS_ratio=1.0, disc_loss=3.6183297634124756, mean_w=0.6823, trunc=0
+I0429 10:25:48.826091 130005241182016 h2o+_bus_main.py:792] [Epoch 40/200] avg_return=-2076.20, avg_len=94, online_buf=3683, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.004, phase=main, IS_ratio=1.0, disc_loss=3.6183297634124756, mean_w=0.6823, trunc=0
+H2O+ Bus Training:  20%|██        | 40/200 [15:58<1:12:59, 27.37s/it]I0429 10:26:04.052468 130005241182016 h2o+_bus_main.py:686] [Epoch 40] Rollout: events=102, trans=91, trunc=0, mean_w=0.7376, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:26:07.589327 130005241182016 h2o+_bus_main.py:756] [Epoch 40] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.853575296401978, avg_qloss=80.41580307006836, avg_dloss=3.3430043268203735
+H2O+ Bus Training:  20%|██        | 41/200 [16:17<1:05:41, 24.79s/it]I0429 10:26:25.968553 130005241182016 h2o+_bus_main.py:686] [Epoch 41] Rollout: events=106, trans=92, trunc=0, mean_w=0.7797, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:26:29.465731 130005241182016 h2o+_bus_main.py:756] [Epoch 41] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-6.030244197845459, avg_qloss=82.40497142791747, avg_dloss=3.400874226093292
+H2O+ Bus Training:  21%|██        | 42/200 [16:38<1:02:58, 23.92s/it]I0429 10:26:46.942260 130005241182016 h2o+_bus_main.py:686] [Epoch 42] Rollout: events=110, trans=96, trunc=0, mean_w=0.7895, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:26:50.855667 130005241182016 h2o+_bus_main.py:756] [Epoch 42] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.82636869430542, avg_qloss=80.00761333465576, avg_dloss=3.202020568847656
+H2O+ Bus Training:  22%|██▏       | 43/200 [17:00<1:00:35, 23.16s/it]I0429 10:27:09.607421 130005241182016 h2o+_bus_main.py:686] [Epoch 43] Rollout: events=109, trans=95, trunc=0, mean_w=0.7547, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:27:15.884115 130005241182016 h2o+_bus_main.py:756] [Epoch 43] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.757788105010986, avg_qloss=81.18836978912354, avg_dloss=3.3159234428405764
+H2O+ Bus Training:  22%|██▏       | 44/200 [17:25<1:01:40, 23.72s/it]I0429 10:27:31.916555 130005241182016 h2o+_bus_main.py:686] [Epoch 44] Rollout: events=104, trans=93, trunc=0, mean_w=0.7391, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:27:36.090842 130005241182016 h2o+_bus_main.py:756] [Epoch 44] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-6.043260822296142, avg_qloss=79.7403726196289, avg_dloss=3.2474373507499696
+H2O+ Bus Training:  22%|██▎       | 45/200 [17:45<58:33, 22.67s/it]  I0429 10:27:54.065404 130005241182016 h2o+_bus_main.py:686] [Epoch 45] Rollout: events=102, trans=91, trunc=0, mean_w=0.7521, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:27:57.503038 130005241182016 h2o+_bus_main.py:756] [Epoch 45] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.836331806182861, avg_qloss=82.21354644775391, avg_dloss=3.270857768058777
+H2O+ Bus Training:  23%|██▎       | 46/200 [18:06<57:12, 22.29s/it]I0429 10:28:10.947236 130005241182016 h2o+_bus_main.py:686] [Epoch 46] Rollout: events=102, trans=92, trunc=0, mean_w=0.6207, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:28:16.946884 130005241182016 h2o+_bus_main.py:756] [Epoch 46] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.848955421447754, avg_qloss=81.01483222961426, avg_dloss=3.155582895278931
+H2O+ Bus Training:  24%|██▎       | 47/200 [18:26<54:39, 21.44s/it]I0429 10:28:36.715555 130005241182016 h2o+_bus_main.py:686] [Epoch 47] Rollout: events=105, trans=91, trunc=0, mean_w=0.6830, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:28:40.250052 130005241182016 h2o+_bus_main.py:756] [Epoch 47] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.994647464752197, avg_qloss=79.73141662597656, avg_dloss=3.052114014625549
+H2O+ Bus Training:  24%|██▍       | 48/200 [18:49<55:43, 22.00s/it]I0429 10:28:59.104969 130005241182016 h2o+_bus_main.py:686] [Epoch 48] Rollout: events=104, trans=93, trunc=0, mean_w=0.6940, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:29:01.718806 130005241182016 h2o+_bus_main.py:756] [Epoch 48] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.8186239242553714, avg_qloss=82.28465568542481, avg_dloss=3.142295792102814
+H2O+ Bus Training:  24%|██▍       | 49/200 [19:11<54:57, 21.84s/it]I0429 10:29:22.244595 130005241182016 h2o+_bus_main.py:686] [Epoch 49] Rollout: events=104, trans=93, trunc=0, mean_w=0.7293, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:29:26.206035 130005241182016 h2o+_bus_main.py:756] [Epoch 49] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.797118272781372, avg_qloss=83.41987239837647, avg_dloss=3.0769610524177553
+[INFO] [Epoch 50/200] avg_return=-2222.15, avg_len=93, online_buf=4610, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=1.0, disc_loss=2.9350879192352295, mean_w=0.7293, trunc=0
+I0429 10:29:41.454871 130005241182016 h2o+_bus_main.py:792] [Epoch 50/200] avg_return=-2222.15, avg_len=93, online_buf=4610, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=1.0, disc_loss=2.9350879192352295, mean_w=0.7293, trunc=0
+[INFO] Full-state checkpoint saved: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_epoch50.pt (+ buffer side-car)
+I0429 10:29:49.377299 130005241182016 h2o+_bus_main.py:866] Full-state checkpoint saved: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_epoch50.pt (+ buffer side-car)
+H2O+ Bus Training:  25%|██▌       | 50/200 [19:58<1:13:57, 29.58s/it]I0429 10:30:03.679685 130005241182016 h2o+_bus_main.py:686] [Epoch 50] Rollout: events=103, trans=93, trunc=0, mean_w=0.7476, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:30:07.984349 130005241182016 h2o+_bus_main.py:756] [Epoch 50] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.9588289546966555, avg_qloss=78.5491682434082, avg_dloss=2.9961475133895874
+H2O+ Bus Training:  26%|██▌       | 51/200 [20:17<1:05:17, 26.29s/it]I0429 10:30:25.849491 130005241182016 h2o+_bus_main.py:686] [Epoch 51] Rollout: events=106, trans=92, trunc=0, mean_w=0.7028, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:30:27.189654 130005241182016 h2o+_bus_main.py:756] [Epoch 51] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.854856281280518, avg_qloss=79.98341190338135, avg_dloss=3.0061109328269957
+H2O+ Bus Training:  26%|██▌       | 52/200 [20:36<59:36, 24.17s/it]  I0429 10:30:45.293741 130005241182016 h2o+_bus_main.py:686] [Epoch 52] Rollout: events=106, trans=96, trunc=0, mean_w=0.7040, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:30:49.848749 130005241182016 h2o+_bus_main.py:756] [Epoch 52] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7393804550170895, avg_qloss=81.30371437072753, avg_dloss=3.003957567214966
+H2O+ Bus Training:  26%|██▋       | 53/200 [20:59<58:05, 23.71s/it]I0429 10:31:04.515196 130005241182016 h2o+_bus_main.py:686] [Epoch 53] Rollout: events=110, trans=96, trunc=0, mean_w=0.6965, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:31:08.657846 130005241182016 h2o+_bus_main.py:756] [Epoch 53] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.908606986999512, avg_qloss=82.06663734436034, avg_dloss=2.988505039215088
+H2O+ Bus Training:  27%|██▋       | 54/200 [21:18<54:07, 22.24s/it]I0429 10:31:26.009934 130005241182016 h2o+_bus_main.py:686] [Epoch 54] Rollout: events=101, trans=91, trunc=0, mean_w=0.7466, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:31:27.537349 130005241182016 h2o+_bus_main.py:756] [Epoch 54] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.705075273513794, avg_qloss=81.71300888061523, avg_dloss=2.9680569314956666
+H2O+ Bus Training:  28%|██▊       | 55/200 [21:37<51:18, 21.23s/it]I0429 10:31:46.798576 130005241182016 h2o+_bus_main.py:686] [Epoch 55] Rollout: events=106, trans=95, trunc=0, mean_w=0.6892, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:31:51.187175 130005241182016 h2o+_bus_main.py:756] [Epoch 55] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.732961091995239, avg_qloss=82.02715084075928, avg_dloss=2.93636914730072
+H2O+ Bus Training:  28%|██▊       | 56/200 [22:00<52:41, 21.96s/it]I0429 10:32:06.179561 130005241182016 h2o+_bus_main.py:686] [Epoch 56] Rollout: events=104, trans=92, trunc=0, mean_w=0.7595, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:32:10.366293 130005241182016 h2o+_bus_main.py:756] [Epoch 56] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.934983863830566, avg_qloss=78.98750797271728, avg_dloss=3.069189667701721
+H2O+ Bus Training:  28%|██▊       | 57/200 [22:19<50:20, 21.12s/it]I0429 10:32:25.868681 130005241182016 h2o+_bus_main.py:686] [Epoch 57] Rollout: events=103, trans=93, trunc=0, mean_w=0.7512, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:32:30.175012 130005241182016 h2o+_bus_main.py:756] [Epoch 57] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.756628875732422, avg_qloss=80.75790920257569, avg_dloss=3.1405368041992188
+H2O+ Bus Training:  29%|██▉       | 58/200 [22:39<49:03, 20.73s/it]I0429 10:32:50.277917 130005241182016 h2o+_bus_main.py:686] [Epoch 58] Rollout: events=103, trans=92, trunc=0, mean_w=0.7107, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:32:54.443229 130005241182016 h2o+_bus_main.py:756] [Epoch 58] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.765395545959473, avg_qloss=77.78398509979247, avg_dloss=2.849698896408081
+H2O+ Bus Training:  30%|██▉       | 59/200 [23:03<51:12, 21.79s/it]I0429 10:33:09.659646 130005241182016 h2o+_bus_main.py:686] [Epoch 59] Rollout: events=108, trans=95, trunc=0, mean_w=0.7389, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:33:14.084126 130005241182016 h2o+_bus_main.py:756] [Epoch 59] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-6.012388591766357, avg_qloss=78.45050109863281, avg_dloss=2.9106851744651796
+[INFO] [Epoch 60/200] avg_return=-2221.15, avg_len=91, online_buf=5545, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.998/0.014, phase=main, IS_ratio=0.5074015855789185, disc_loss=2.8435397148132324, mean_w=0.7389, trunc=0
+I0429 10:33:27.993714 130005241182016 h2o+_bus_main.py:792] [Epoch 60/200] avg_return=-2221.15, avg_len=91, online_buf=5545, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.998/0.014, phase=main, IS_ratio=0.5074015855789185, disc_loss=2.8435397148132324, mean_w=0.7389, trunc=0
+H2O+ Bus Training:  30%|███       | 60/200 [23:37<59:04, 25.32s/it]I0429 10:33:47.343129 130005241182016 h2o+_bus_main.py:686] [Epoch 60] Rollout: events=104, trans=92, trunc=0, mean_w=0.6852, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:33:51.710844 130005241182016 h2o+_bus_main.py:756] [Epoch 60] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.720297889709473, avg_qloss=80.36295642852784, avg_dloss=2.773544228076935
+H2O+ Bus Training:  30%|███       | 61/200 [24:01<57:32, 24.84s/it]I0429 10:34:07.255211 130005241182016 h2o+_bus_main.py:686] [Epoch 61] Rollout: events=103, trans=93, trunc=0, mean_w=0.7295, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:34:11.399041 130005241182016 h2o+_bus_main.py:756] [Epoch 61] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.704895219802856, avg_qloss=80.17160121917725, avg_dloss=2.8566450119018554
+H2O+ Bus Training:  31%|███       | 62/200 [24:20<53:34, 23.29s/it]I0429 10:34:27.800130 130005241182016 h2o+_bus_main.py:686] [Epoch 62] Rollout: events=109, trans=95, trunc=0, mean_w=0.6573, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:34:32.505858 130005241182016 h2o+_bus_main.py:756] [Epoch 62] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.907225170135498, avg_qloss=78.71530632019044, avg_dloss=2.844270763397217
+H2O+ Bus Training:  32%|███▏      | 63/200 [24:42<51:41, 22.64s/it]I0429 10:34:51.738150 130005241182016 h2o+_bus_main.py:686] [Epoch 63] Rollout: events=104, trans=93, trunc=0, mean_w=0.7273, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:34:55.844083 130005241182016 h2o+_bus_main.py:756] [Epoch 63] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.737383556365967, avg_qloss=81.76821079254151, avg_dloss=2.786427626609802
+H2O+ Bus Training:  32%|███▏      | 64/200 [25:05<51:47, 22.85s/it]I0429 10:35:11.363123 130005241182016 h2o+_bus_main.py:686] [Epoch 64] Rollout: events=104, trans=92, trunc=0, mean_w=0.5494, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:35:16.014824 130005241182016 h2o+_bus_main.py:756] [Epoch 64] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.755613126754761, avg_qloss=81.60525295257568, avg_dloss=2.8627084374427794
+H2O+ Bus Training:  32%|███▎      | 65/200 [25:25<49:35, 22.04s/it]I0429 10:35:36.041598 130005241182016 h2o+_bus_main.py:686] [Epoch 65] Rollout: events=105, trans=92, trunc=0, mean_w=0.6254, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:35:40.564668 130005241182016 h2o+_bus_main.py:756] [Epoch 65] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.975214042663574, avg_qloss=82.0664400100708, avg_dloss=2.7777370047569274
+H2O+ Bus Training:  33%|███▎      | 66/200 [25:50<50:54, 22.80s/it]I0429 10:35:58.161628 130005241182016 h2o+_bus_main.py:686] [Epoch 66] Rollout: events=102, trans=92, trunc=0, mean_w=0.7103, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:36:03.371438 130005241182016 h2o+_bus_main.py:756] [Epoch 66] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.727408056259155, avg_qloss=79.58135936737061, avg_dloss=2.7328431248664855
+H2O+ Bus Training:  34%|███▎      | 67/200 [26:12<50:32, 22.80s/it]I0429 10:36:22.431143 130005241182016 h2o+_bus_main.py:686] [Epoch 67] Rollout: events=101, trans=91, trunc=0, mean_w=0.5846, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:36:24.273682 130005241182016 h2o+_bus_main.py:756] [Epoch 67] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.705771436691284, avg_qloss=80.28058605194092, avg_dloss=2.690346534252167
+H2O+ Bus Training:  34%|███▍      | 68/200 [26:33<48:54, 22.23s/it]I0429 10:36:44.502038 130005241182016 h2o+_bus_main.py:686] [Epoch 68] Rollout: events=102, trans=92, trunc=0, mean_w=0.6573, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:36:49.045840 130005241182016 h2o+_bus_main.py:756] [Epoch 68] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.8854334259033205, avg_qloss=80.48463668823243, avg_dloss=2.703582088947296
+H2O+ Bus Training:  34%|███▍      | 69/200 [26:58<50:12, 22.99s/it]I0429 10:37:07.659724 130005241182016 h2o+_bus_main.py:686] [Epoch 69] Rollout: events=103, trans=92, trunc=0, mean_w=0.6217, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:37:11.509833 130005241182016 h2o+_bus_main.py:756] [Epoch 69] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7575694274902345, avg_qloss=77.94785591125488, avg_dloss=2.6886055064201355
+[INFO] [Epoch 70/200] avg_return=-2102.41, avg_len=93, online_buf=6469, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.999/0.036, phase=main, IS_ratio=0.5006997585296631, disc_loss=2.9330978393554688, mean_w=0.6217, trunc=0
+I0429 10:37:27.381890 130005241182016 h2o+_bus_main.py:792] [Epoch 70/200] avg_return=-2102.41, avg_len=93, online_buf=6469, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.999/0.036, phase=main, IS_ratio=0.5006997585296631, disc_loss=2.9330978393554688, mean_w=0.6217, trunc=0
+H2O+ Bus Training:  35%|███▌      | 70/200 [27:36<59:47, 27.60s/it]I0429 10:37:49.007517 130005241182016 h2o+_bus_main.py:686] [Epoch 70] Rollout: events=104, trans=92, trunc=0, mean_w=0.6811, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:37:54.581175 130005241182016 h2o+_bus_main.py:756] [Epoch 70] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.703916606903076, avg_qloss=80.82637626647949, avg_dloss=2.6592044615745545
+H2O+ Bus Training:  36%|███▌      | 71/200 [28:04<59:04, 27.48s/it]I0429 10:38:14.527901 130005241182016 h2o+_bus_main.py:686] [Epoch 71] Rollout: events=101, trans=91, trunc=0, mean_w=0.6987, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:38:18.830516 130005241182016 h2o+_bus_main.py:756] [Epoch 71] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.883100509643555, avg_qloss=78.33138824462891, avg_dloss=2.7341829681396486
+H2O+ Bus Training:  36%|███▌      | 72/200 [28:28<56:33, 26.51s/it]I0429 10:38:34.774933 130005241182016 h2o+_bus_main.py:686] [Epoch 72] Rollout: events=102, trans=92, trunc=0, mean_w=0.6435, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:38:40.202924 130005241182016 h2o+_bus_main.py:756] [Epoch 72] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.6461927318573, avg_qloss=78.97527309417724, avg_dloss=2.734433124065399
+H2O+ Bus Training:  36%|███▋      | 73/200 [28:49<52:50, 24.97s/it]I0429 10:38:58.410289 130005241182016 h2o+_bus_main.py:686] [Epoch 73] Rollout: events=103, trans=93, trunc=0, mean_w=0.5573, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:39:03.715227 130005241182016 h2o+_bus_main.py:756] [Epoch 73] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.659466953277588, avg_qloss=82.7240877532959, avg_dloss=2.82682550907135
+H2O+ Bus Training:  37%|███▋      | 74/200 [29:13<51:30, 24.53s/it]I0429 10:39:22.954449 130005241182016 h2o+_bus_main.py:686] [Epoch 74] Rollout: events=105, trans=94, trunc=0, mean_w=0.5886, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:39:29.085028 130005241182016 h2o+_bus_main.py:756] [Epoch 74] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.831555938720703, avg_qloss=81.29904479980469, avg_dloss=2.7532644057273865
+H2O+ Bus Training:  38%|███▊      | 75/200 [29:38<51:37, 24.78s/it]I0429 10:39:49.884526 130005241182016 h2o+_bus_main.py:686] [Epoch 75] Rollout: events=105, trans=93, trunc=0, mean_w=0.6129, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:39:52.027123 130005241182016 h2o+_bus_main.py:756] [Epoch 75] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.772676582336426, avg_qloss=83.21131534576416, avg_dloss=2.7125454568862915
+H2O+ Bus Training:  38%|███▊      | 76/200 [30:01<50:04, 24.23s/it]I0429 10:40:18.567668 130005241182016 h2o+_bus_main.py:686] [Epoch 76] Rollout: events=105, trans=95, trunc=0, mean_w=0.5932, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:40:20.949522 130005241182016 h2o+_bus_main.py:756] [Epoch 76] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.840761489868164, avg_qloss=78.52749893188476, avg_dloss=2.592301046848297
+H2O+ Bus Training:  38%|███▊      | 77/200 [30:30<52:33, 25.64s/it]I0429 10:40:44.408143 130005241182016 h2o+_bus_main.py:686] [Epoch 77] Rollout: events=103, trans=93, trunc=0, mean_w=0.6880, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:40:49.994329 130005241182016 h2o+_bus_main.py:756] [Epoch 77] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.891652755737304, avg_qloss=80.53170749664307, avg_dloss=2.567614004611969
+H2O+ Bus Training:  39%|███▉      | 78/200 [30:59<54:12, 26.66s/it]I0429 10:41:10.959484 130005241182016 h2o+_bus_main.py:686] [Epoch 78] Rollout: events=104, trans=94, trunc=0, mean_w=0.6699, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:41:17.173843 130005241182016 h2o+_bus_main.py:756] [Epoch 78] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.687178173065186, avg_qloss=80.2425087738037, avg_dloss=2.559036614894867
+H2O+ Bus Training:  40%|███▉      | 79/200 [31:26<54:04, 26.82s/it]I0429 10:41:34.984531 130005241182016 h2o+_bus_main.py:686] [Epoch 79] Rollout: events=103, trans=93, trunc=0, mean_w=0.6296, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:41:39.434641 130005241182016 h2o+_bus_main.py:756] [Epoch 79] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.6634225749969485, avg_qloss=82.34441616058349, avg_dloss=2.473170874118805
+[INFO] [Epoch 80/200] avg_return=-2056.36, avg_len=91, online_buf=7399, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.105, phase=main, IS_ratio=0.47897738218307495, disc_loss=2.5728118419647217, mean_w=0.6296, trunc=0
+I0429 10:41:57.839039 130005241182016 h2o+_bus_main.py:792] [Epoch 80/200] avg_return=-2056.36, avg_len=91, online_buf=7399, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.105, phase=main, IS_ratio=0.47897738218307495, disc_loss=2.5728118419647217, mean_w=0.6296, trunc=0
+H2O+ Bus Training:  40%|████      | 80/200 [32:07<1:01:56, 30.97s/it]I0429 10:42:19.796444 130005241182016 h2o+_bus_main.py:686] [Epoch 80] Rollout: events=104, trans=92, trunc=0, mean_w=0.6190, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:42:25.168853 130005241182016 h2o+_bus_main.py:756] [Epoch 80] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.91280119895935, avg_qloss=77.95407962799072, avg_dloss=2.584666430950165
+H2O+ Bus Training:  40%|████      | 81/200 [32:34<59:15, 29.88s/it]  I0429 10:42:45.167193 130005241182016 h2o+_bus_main.py:686] [Epoch 81] Rollout: events=101, trans=91, trunc=0, mean_w=0.6318, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:42:49.689243 130005241182016 h2o+_bus_main.py:756] [Epoch 81] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.659180145263672, avg_qloss=86.85472801208496, avg_dloss=2.625028989315033
+H2O+ Bus Training:  41%|████      | 82/200 [32:59<55:35, 28.27s/it]I0429 10:43:05.586227 130005241182016 h2o+_bus_main.py:686] [Epoch 82] Rollout: events=104, trans=94, trunc=0, mean_w=0.6633, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:43:10.518013 130005241182016 h2o+_bus_main.py:756] [Epoch 82] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.618944053649902, avg_qloss=84.32453506469727, avg_dloss=2.4738850593566895
+H2O+ Bus Training:  42%|████▏     | 83/200 [33:20<50:46, 26.04s/it]I0429 10:43:28.709968 130005241182016 h2o+_bus_main.py:686] [Epoch 83] Rollout: events=105, trans=94, trunc=0, mean_w=0.6969, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:43:32.752297 130005241182016 h2o+_bus_main.py:756] [Epoch 83] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.887756195068359, avg_qloss=85.77876262664795, avg_dloss=2.6219426226615905
+H2O+ Bus Training:  42%|████▏     | 84/200 [33:42<48:08, 24.90s/it]I0429 10:43:49.469465 130005241182016 h2o+_bus_main.py:686] [Epoch 84] Rollout: events=104, trans=94, trunc=0, mean_w=0.7443, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:43:53.562173 130005241182016 h2o+_bus_main.py:756] [Epoch 84] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.735622291564941, avg_qloss=83.34129631042481, avg_dloss=2.504045979976654
+H2O+ Bus Training:  42%|████▎     | 85/200 [34:03<45:22, 23.67s/it]I0429 10:44:13.726018 130005241182016 h2o+_bus_main.py:686] [Epoch 85] Rollout: events=104, trans=94, trunc=0, mean_w=0.6577, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:44:16.633026 130005241182016 h2o+_bus_main.py:756] [Epoch 85] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.683697929382324, avg_qloss=81.82556728363038, avg_dloss=2.5383469581604006
+H2O+ Bus Training:  43%|████▎     | 86/200 [34:26<44:37, 23.49s/it]I0429 10:44:38.044199 130005241182016 h2o+_bus_main.py:686] [Epoch 86] Rollout: events=105, trans=91, trunc=0, mean_w=0.6628, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:44:43.155283 130005241182016 h2o+_bus_main.py:756] [Epoch 86] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.850571508407593, avg_qloss=80.78889263153076, avg_dloss=2.6204051780700683
+H2O+ Bus Training:  44%|████▎     | 87/200 [34:52<45:57, 24.40s/it]I0429 10:45:02.023199 130005241182016 h2o+_bus_main.py:686] [Epoch 87] Rollout: events=103, trans=93, trunc=0, mean_w=0.6216, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:45:06.615230 130005241182016 h2o+_bus_main.py:756] [Epoch 87] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.729840927124023, avg_qloss=82.99601112365723, avg_dloss=2.5646244525909423
+H2O+ Bus Training:  44%|████▍     | 88/200 [35:16<45:01, 24.12s/it]I0429 10:45:23.244408 130005241182016 h2o+_bus_main.py:686] [Epoch 88] Rollout: events=106, trans=95, trunc=0, mean_w=0.6423, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:45:28.230478 130005241182016 h2o+_bus_main.py:756] [Epoch 88] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.776222190856934, avg_qloss=79.7234069442749, avg_dloss=2.5581036758422853
+H2O+ Bus Training:  44%|████▍     | 89/200 [35:37<43:13, 23.37s/it]I0429 10:45:47.903903 130005241182016 h2o+_bus_main.py:686] [Epoch 89] Rollout: events=103, trans=91, trunc=0, mean_w=0.6686, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:45:52.720739 130005241182016 h2o+_bus_main.py:756] [Epoch 89] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.884283094406128, avg_qloss=81.62587001800537, avg_dloss=2.563613033294678
+[INFO] [Epoch 90/200] avg_return=-2173.90, avg_len=95, online_buf=8328, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.033, phase=main, IS_ratio=0.5060443878173828, disc_loss=2.5225255489349365, mean_w=0.6686, trunc=0
+I0429 10:46:14.571688 130005241182016 h2o+_bus_main.py:792] [Epoch 90/200] avg_return=-2173.90, avg_len=95, online_buf=8328, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.033, phase=main, IS_ratio=0.5060443878173828, disc_loss=2.5225255489349365, mean_w=0.6686, trunc=0
+H2O+ Bus Training:  45%|████▌     | 90/200 [36:24<55:28, 30.26s/it]I0429 10:46:29.824019 130005241182016 h2o+_bus_main.py:686] [Epoch 90] Rollout: events=104, trans=94, trunc=0, mean_w=0.6739, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:46:34.169627 130005241182016 h2o+_bus_main.py:756] [Epoch 90] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.721622047424316, avg_qloss=82.50809574127197, avg_dloss=2.4444466710090635
+H2O+ Bus Training:  46%|████▌     | 91/200 [36:43<49:09, 27.06s/it]I0429 10:46:51.111993 130005241182016 h2o+_bus_main.py:686] [Epoch 91] Rollout: events=104, trans=94, trunc=0, mean_w=0.6212, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:46:56.521057 130005241182016 h2o+_bus_main.py:756] [Epoch 91] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.740860710144043, avg_qloss=83.09069610595704, avg_dloss=2.560976942777634
+H2O+ Bus Training:  46%|████▌     | 92/200 [37:06<46:09, 25.65s/it]I0429 10:47:16.625526 130005241182016 h2o+_bus_main.py:686] [Epoch 92] Rollout: events=104, trans=92, trunc=0, mean_w=0.7143, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:47:17.694397 130005241182016 h2o+_bus_main.py:756] [Epoch 92] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.917402744293213, avg_qloss=79.82234951019286, avg_dloss=2.550557849407196
+H2O+ Bus Training:  46%|████▋     | 93/200 [37:27<43:20, 24.31s/it]I0429 10:47:36.799539 130005241182016 h2o+_bus_main.py:686] [Epoch 93] Rollout: events=102, trans=92, trunc=0, mean_w=0.5725, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:47:40.347375 130005241182016 h2o+_bus_main.py:756] [Epoch 93] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.709532127380371, avg_qloss=88.42684341430665, avg_dloss=2.4555934405326845
+H2O+ Bus Training:  47%|████▋     | 94/200 [37:49<42:03, 23.81s/it]I0429 10:47:54.726027 130005241182016 h2o+_bus_main.py:686] [Epoch 94] Rollout: events=100, trans=90, trunc=0, mean_w=0.6665, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:47:58.458274 130005241182016 h2o+_bus_main.py:756] [Epoch 94] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.686843433380127, avg_qloss=79.05462635040283, avg_dloss=2.4183344435691834
+H2O+ Bus Training:  48%|████▊     | 95/200 [38:07<38:40, 22.10s/it]I0429 10:48:14.789813 130005241182016 h2o+_bus_main.py:686] [Epoch 95] Rollout: events=106, trans=94, trunc=0, mean_w=0.6572, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:48:19.179557 130005241182016 h2o+_bus_main.py:756] [Epoch 95] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.887590932846069, avg_qloss=80.067921333313, avg_dloss=2.4761353087425233
+H2O+ Bus Training:  48%|████▊     | 96/200 [38:28<37:35, 21.69s/it]I0429 10:48:38.269574 130005241182016 h2o+_bus_main.py:686] [Epoch 96] Rollout: events=105, trans=94, trunc=0, mean_w=0.6328, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:48:42.312098 130005241182016 h2o+_bus_main.py:756] [Epoch 96] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.689264755249024, avg_qloss=84.42450611114502, avg_dloss=2.4760457277297974
+H2O+ Bus Training:  48%|████▊     | 97/200 [38:51<37:58, 22.12s/it]I0429 10:48:58.078589 130005241182016 h2o+_bus_main.py:686] [Epoch 97] Rollout: events=103, trans=92, trunc=0, mean_w=0.7272, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:49:02.555886 130005241182016 h2o+_bus_main.py:756] [Epoch 97] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.74794605255127, avg_qloss=80.14637229919434, avg_dloss=2.5482377576828004
+H2O+ Bus Training:  49%|████▉     | 98/200 [39:12<36:38, 21.56s/it]I0429 10:49:16.652560 130005241182016 h2o+_bus_main.py:686] [Epoch 98] Rollout: events=102, trans=92, trunc=0, mean_w=0.7035, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:49:20.590840 130005241182016 h2o+_bus_main.py:756] [Epoch 98] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.819741096496582, avg_qloss=82.63579429626465, avg_dloss=2.4271717476844787
+H2O+ Bus Training:  50%|████▉     | 99/200 [39:30<34:30, 20.50s/it]I0429 10:49:42.722655 130005241182016 h2o+_bus_main.py:686] [Epoch 99] Rollout: events=103, trans=93, trunc=0, mean_w=0.6885, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:49:44.126312 130005241182016 h2o+_bus_main.py:756] [Epoch 99] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.651019115447998, avg_qloss=83.63785873413086, avg_dloss=2.4542426800727846
+[INFO] [Epoch 100/200] avg_return=-2387.35, avg_len=93, online_buf=9255, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.999/0.015, phase=main, IS_ratio=0.5211474895477295, disc_loss=2.5824337005615234, mean_w=0.6885, trunc=0
+I0429 10:50:01.790915 130005241182016 h2o+_bus_main.py:792] [Epoch 100/200] avg_return=-2387.35, avg_len=93, online_buf=9255, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.999/0.015, phase=main, IS_ratio=0.5211474895477295, disc_loss=2.5824337005615234, mean_w=0.6885, trunc=0
+[INFO] Full-state checkpoint saved: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_epoch100.pt (+ buffer side-car)
+I0429 10:50:09.346333 130005241182016 h2o+_bus_main.py:866] Full-state checkpoint saved: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_epoch100.pt (+ buffer side-car)
+H2O+ Bus Training:  50%|█████     | 100/200 [40:18<48:17, 28.98s/it]I0429 10:50:26.954273 130005241182016 h2o+_bus_main.py:686] [Epoch 100] Rollout: events=105, trans=95, trunc=0, mean_w=0.7484, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:50:30.800944 130005241182016 h2o+_bus_main.py:756] [Epoch 100] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.692208499908447, avg_qloss=82.72856838226318, avg_dloss=2.4880899715423586
+H2O+ Bus Training:  50%|█████     | 101/200 [40:40<44:05, 26.72s/it]I0429 10:50:46.239304 130005241182016 h2o+_bus_main.py:686] [Epoch 101] Rollout: events=102, trans=92, trunc=0, mean_w=0.6748, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:50:49.940652 130005241182016 h2o+_bus_main.py:756] [Epoch 101] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.9412077522277835, avg_qloss=82.06241245269776, avg_dloss=2.4949699020385743
+H2O+ Bus Training:  51%|█████     | 102/200 [40:59<39:55, 24.45s/it]I0429 10:51:07.890325 130005241182016 h2o+_bus_main.py:686] [Epoch 102] Rollout: events=101, trans=91, trunc=0, mean_w=0.6834, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:51:13.756345 130005241182016 h2o+_bus_main.py:756] [Epoch 102] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.721717014312744, avg_qloss=80.7215930557251, avg_dloss=2.4765004253387453
+H2O+ Bus Training:  52%|█████▏    | 103/200 [41:23<39:12, 24.26s/it]I0429 10:51:27.780665 130005241182016 h2o+_bus_main.py:686] [Epoch 103] Rollout: events=105, trans=95, trunc=0, mean_w=0.6403, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:51:31.948936 130005241182016 h2o+_bus_main.py:756] [Epoch 103] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.759880380630493, avg_qloss=83.19533084869384, avg_dloss=2.3698214983940122
+H2O+ Bus Training:  52%|█████▏    | 104/200 [41:41<35:54, 22.44s/it]I0429 10:51:49.314587 130005241182016 h2o+_bus_main.py:686] [Epoch 104] Rollout: events=109, trans=96, trunc=0, mean_w=0.7383, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:51:52.667368 130005241182016 h2o+_bus_main.py:756] [Epoch 104] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.920009880065918, avg_qloss=79.15465354919434, avg_dloss=2.6633330178260803
+H2O+ Bus Training:  52%|█████▎    | 105/200 [42:02<34:42, 21.92s/it]I0429 10:52:11.053019 130005241182016 h2o+_bus_main.py:686] [Epoch 105] Rollout: events=103, trans=93, trunc=0, mean_w=0.6501, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:52:11.681228 130005241182016 h2o+_bus_main.py:756] [Epoch 105] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.720866041183472, avg_qloss=80.03636249542237, avg_dloss=2.490869767665863
+H2O+ Bus Training:  53%|█████▎    | 106/200 [42:21<32:58, 21.05s/it]I0429 10:52:29.744913 130005241182016 h2o+_bus_main.py:686] [Epoch 106] Rollout: events=104, trans=93, trunc=0, mean_w=0.5994, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:52:33.470057 130005241182016 h2o+_bus_main.py:756] [Epoch 106] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.73585241317749, avg_qloss=80.74801136016846, avg_dloss=2.356089026927948
+H2O+ Bus Training:  54%|█████▎    | 107/200 [42:42<32:58, 21.27s/it]I0429 10:52:47.472749 130005241182016 h2o+_bus_main.py:686] [Epoch 107] Rollout: events=104, trans=94, trunc=0, mean_w=0.6665, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:52:51.005696 130005241182016 h2o+_bus_main.py:756] [Epoch 107] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.859585428237915, avg_qloss=82.54793613433839, avg_dloss=2.3608996868133545
+H2O+ Bus Training:  54%|█████▍    | 108/200 [43:00<30:53, 20.15s/it]I0429 10:53:08.615370 130005241182016 h2o+_bus_main.py:686] [Epoch 108] Rollout: events=102, trans=92, trunc=0, mean_w=0.6097, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:53:11.987572 130005241182016 h2o+_bus_main.py:756] [Epoch 108] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.62991584777832, avg_qloss=85.1731156539917, avg_dloss=2.330002818107605
+H2O+ Bus Training:  55%|█████▍    | 109/200 [43:21<30:56, 20.40s/it]I0429 10:53:28.310523 130005241182016 h2o+_bus_main.py:686] [Epoch 109] Rollout: events=104, trans=94, trunc=0, mean_w=0.6831, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:53:32.028049 130005241182016 h2o+_bus_main.py:756] [Epoch 109] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.709094343185424, avg_qloss=80.14932708740234, avg_dloss=2.386430034637451
+[INFO] [Epoch 110/200] avg_return=-2238.76, avg_len=93, online_buf=10190, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.999/0.081, phase=main, IS_ratio=0.4865530729293823, disc_loss=2.3028106689453125, mean_w=0.6831, trunc=0
+I0429 10:53:47.002510 130005241182016 h2o+_bus_main.py:792] [Epoch 110/200] avg_return=-2238.76, avg_len=93, online_buf=10190, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.999/0.081, phase=main, IS_ratio=0.4865530729293823, disc_loss=2.3028106689453125, mean_w=0.6831, trunc=0
+H2O+ Bus Training:  55%|█████▌    | 110/200 [43:56<37:10, 24.78s/it]I0429 10:54:03.900208 130005241182016 h2o+_bus_main.py:686] [Epoch 110] Rollout: events=104, trans=94, trunc=0, mean_w=0.6379, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:54:07.646759 130005241182016 h2o+_bus_main.py:756] [Epoch 110] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.90165599822998, avg_qloss=79.86381824493408, avg_dloss=2.3640497589111327
+H2O+ Bus Training:  56%|█████▌    | 111/200 [44:17<34:55, 23.54s/it]I0429 10:54:22.328475 130005241182016 h2o+_bus_main.py:686] [Epoch 111] Rollout: events=101, trans=90, trunc=0, mean_w=0.7027, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:54:25.859395 130005241182016 h2o+_bus_main.py:756] [Epoch 111] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.713722171783448, avg_qloss=81.19954376220703, avg_dloss=2.398318979740143
+H2O+ Bus Training:  56%|█████▌    | 112/200 [44:35<32:11, 21.94s/it]I0429 10:54:40.233296 130005241182016 h2o+_bus_main.py:686] [Epoch 112] Rollout: events=103, trans=92, trunc=0, mean_w=0.6728, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:54:43.695575 130005241182016 h2o+_bus_main.py:756] [Epoch 112] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.643880414962768, avg_qloss=80.97164386749267, avg_dloss=2.4192090392112733
+H2O+ Bus Training:  56%|█████▋    | 113/200 [44:53<30:01, 20.71s/it]I0429 10:55:01.919322 130005241182016 h2o+_bus_main.py:686] [Epoch 113] Rollout: events=104, trans=94, trunc=0, mean_w=0.6368, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:55:05.920946 130005241182016 h2o+_bus_main.py:756] [Epoch 113] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.942387828826904, avg_qloss=80.89326797485352, avg_dloss=2.4687886166572572
+H2O+ Bus Training:  57%|█████▋    | 114/200 [45:15<30:20, 21.17s/it]I0429 10:55:18.184240 130005241182016 h2o+_bus_main.py:686] [Epoch 114] Rollout: events=101, trans=91, trunc=0, mean_w=0.6340, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:55:21.707585 130005241182016 h2o+_bus_main.py:756] [Epoch 114] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.659638748168946, avg_qloss=81.20397426605224, avg_dloss=2.3610750818252564
+H2O+ Bus Training:  57%|█████▊    | 115/200 [45:31<27:41, 19.55s/it]I0429 10:55:37.471482 130005241182016 h2o+_bus_main.py:686] [Epoch 115] Rollout: events=101, trans=91, trunc=0, mean_w=0.6522, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:55:38.400912 130005241182016 h2o+_bus_main.py:756] [Epoch 115] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.726987695693969, avg_qloss=77.68415458679199, avg_dloss=2.3583803081512453
+H2O+ Bus Training:  58%|█████▊    | 116/200 [45:47<26:10, 18.69s/it]I0429 10:55:55.701339 130005241182016 h2o+_bus_main.py:686] [Epoch 116] Rollout: events=107, trans=94, trunc=0, mean_w=0.7284, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:55:58.988468 130005241182016 h2o+_bus_main.py:756] [Epoch 116] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.857071199417114, avg_qloss=78.19646564483642, avg_dloss=2.4403898096084595
+H2O+ Bus Training:  58%|█████▊    | 117/200 [46:08<26:38, 19.26s/it]I0429 10:56:12.731988 130005241182016 h2o+_bus_main.py:686] [Epoch 117] Rollout: events=100, trans=90, trunc=0, mean_w=0.7235, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:56:16.463037 130005241182016 h2o+_bus_main.py:756] [Epoch 117] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.70403938293457, avg_qloss=81.84263080596924, avg_dloss=2.3208659076690674
+H2O+ Bus Training:  59%|█████▉    | 118/200 [46:25<25:35, 18.73s/it]I0429 10:56:32.919290 130005241182016 h2o+_bus_main.py:686] [Epoch 118] Rollout: events=104, trans=91, trunc=0, mean_w=0.7236, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:56:36.481113 130005241182016 h2o+_bus_main.py:756] [Epoch 118] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.696649551391602, avg_qloss=83.14678691864013, avg_dloss=2.362960206270218
+H2O+ Bus Training:  60%|█████▉    | 119/200 [46:45<25:48, 19.11s/it]I0429 10:56:49.666131 130005241182016 h2o+_bus_main.py:686] [Epoch 119] Rollout: events=100, trans=90, trunc=0, mean_w=0.6650, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:56:53.172834 130005241182016 h2o+_bus_main.py:756] [Epoch 119] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.913381595611572, avg_qloss=83.4415383529663, avg_dloss=2.3584782481193542
+[INFO] [Epoch 120/200] avg_return=-2460.38, avg_len=95, online_buf=11107, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=0.5243390798568726, disc_loss=2.702495813369751, mean_w=0.6650, trunc=0
+I0429 10:57:08.842833 130005241182016 h2o+_bus_main.py:792] [Epoch 120/200] avg_return=-2460.38, avg_len=95, online_buf=11107, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.000, phase=main, IS_ratio=0.5243390798568726, disc_loss=2.702495813369751, mean_w=0.6650, trunc=0
+H2O+ Bus Training:  60%|██████    | 120/200 [47:18<30:47, 23.09s/it]I0429 10:57:22.838583 130005241182016 h2o+_bus_main.py:686] [Epoch 120] Rollout: events=105, trans=95, trunc=0, mean_w=0.7394, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:57:26.815224 130005241182016 h2o+_bus_main.py:756] [Epoch 120] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.702192125320434, avg_qloss=79.30889766693116, avg_dloss=2.434232778549194
+H2O+ Bus Training:  60%|██████    | 121/200 [47:36<28:22, 21.55s/it]I0429 10:57:38.969269 130005241182016 h2o+_bus_main.py:686] [Epoch 121] Rollout: events=105, trans=95, trunc=0, mean_w=0.5887, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:57:43.055425 130005241182016 h2o+_bus_main.py:756] [Epoch 121] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.715305376052856, avg_qloss=81.47131145477294, avg_dloss=2.373731927871704
+H2O+ Bus Training:  61%|██████    | 122/200 [47:52<25:56, 19.96s/it]I0429 10:57:59.270156 130005241182016 h2o+_bus_main.py:686] [Epoch 122] Rollout: events=104, trans=94, trunc=0, mean_w=0.5959, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:58:02.640667 130005241182016 h2o+_bus_main.py:756] [Epoch 122] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.908063707351684, avg_qloss=81.20196617126464, avg_dloss=2.392375466823578
+H2O+ Bus Training:  62%|██████▏   | 123/200 [48:12<25:28, 19.85s/it]I0429 10:58:16.393925 130005241182016 h2o+_bus_main.py:686] [Epoch 123] Rollout: events=104, trans=93, trunc=0, mean_w=0.6725, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:58:19.940659 130005241182016 h2o+_bus_main.py:756] [Epoch 123] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.765423021316528, avg_qloss=81.78681365966797, avg_dloss=2.3487996089458467
+H2O+ Bus Training:  62%|██████▏   | 124/200 [48:29<24:10, 19.08s/it]I0429 10:58:36.115845 130005241182016 h2o+_bus_main.py:686] [Epoch 124] Rollout: events=102, trans=92, trunc=0, mean_w=0.6701, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:58:36.884638 130005241182016 h2o+_bus_main.py:756] [Epoch 124] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.73534143447876, avg_qloss=81.43042877197266, avg_dloss=2.255663013458252
+H2O+ Bus Training:  62%|██████▎   | 125/200 [48:46<23:03, 18.44s/it]I0429 10:58:52.354060 130005241182016 h2o+_bus_main.py:686] [Epoch 125] Rollout: events=103, trans=93, trunc=0, mean_w=0.6488, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:58:55.770602 130005241182016 h2o+_bus_main.py:756] [Epoch 125] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.869772415161133, avg_qloss=81.12972980499268, avg_dloss=2.3805109882354736
+H2O+ Bus Training:  63%|██████▎   | 126/200 [49:05<22:54, 18.57s/it]I0429 10:59:08.364333 130005241182016 h2o+_bus_main.py:686] [Epoch 126] Rollout: events=105, trans=95, trunc=0, mean_w=0.6180, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:59:12.134027 130005241182016 h2o+_bus_main.py:756] [Epoch 126] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.647478542327881, avg_qloss=81.4821384048462, avg_dloss=2.338641529083252
+H2O+ Bus Training:  64%|██████▎   | 127/200 [49:21<21:47, 17.91s/it]I0429 10:59:27.460559 130005241182016 h2o+_bus_main.py:686] [Epoch 127] Rollout: events=106, trans=96, trunc=0, mean_w=0.6915, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:59:30.894772 130005241182016 h2o+_bus_main.py:756] [Epoch 127] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.6413351249694825, avg_qloss=82.23063140869141, avg_dloss=2.35113730430603
+H2O+ Bus Training:  64%|██████▍   | 128/200 [49:40<21:47, 18.17s/it]I0429 10:59:44.909729 130005241182016 h2o+_bus_main.py:686] [Epoch 128] Rollout: events=103, trans=93, trunc=0, mean_w=0.7077, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 10:59:48.382741 130005241182016 h2o+_bus_main.py:756] [Epoch 128] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.943266286849975, avg_qloss=80.34787479400634, avg_dloss=2.5181389236450196
+H2O+ Bus Training:  64%|██████▍   | 129/200 [49:57<21:15, 17.96s/it]I0429 11:00:04.123125 130005241182016 h2o+_bus_main.py:686] [Epoch 129] Rollout: events=105, trans=93, trunc=0, mean_w=0.5580, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:00:04.730418 130005241182016 h2o+_bus_main.py:756] [Epoch 129] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.691384057998658, avg_qloss=81.5249153137207, avg_dloss=2.356689146757126
+[INFO] [Epoch 130/200] avg_return=-2344.33, avg_len=90, online_buf=12046, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.991/0.368, phase=main, IS_ratio=0.4669126272201538, disc_loss=2.2724874019622803, mean_w=0.5580, trunc=0
+I0429 11:00:19.343509 130005241182016 h2o+_bus_main.py:792] [Epoch 130/200] avg_return=-2344.33, avg_len=90, online_buf=12046, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.991/0.368, phase=main, IS_ratio=0.4669126272201538, disc_loss=2.2724874019622803, mean_w=0.5580, trunc=0
+H2O+ Bus Training:  65%|██████▌   | 130/200 [50:28<25:30, 21.86s/it]I0429 11:00:37.169205 130005241182016 h2o+_bus_main.py:686] [Epoch 130] Rollout: events=102, trans=92, trunc=0, mean_w=0.5854, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:00:41.487934 130005241182016 h2o+_bus_main.py:756] [Epoch 130] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7690346145629885, avg_qloss=80.22523097991943, avg_dloss=2.3077823269367217
+H2O+ Bus Training:  66%|██████▌   | 131/200 [50:50<25:14, 21.95s/it]I0429 11:01:01.911340 130005241182016 h2o+_bus_main.py:686] [Epoch 131] Rollout: events=107, trans=93, trunc=0, mean_w=0.6492, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:01:06.375020 130005241182016 h2o+_bus_main.py:756] [Epoch 131] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.9297081565856935, avg_qloss=82.31536231994629, avg_dloss=2.211531513929367
+H2O+ Bus Training:  66%|██████▌   | 132/200 [51:15<25:52, 22.83s/it]I0429 11:01:23.749247 130005241182016 h2o+_bus_main.py:686] [Epoch 132] Rollout: events=103, trans=93, trunc=0, mean_w=0.6573, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:01:27.850807 130005241182016 h2o+_bus_main.py:756] [Epoch 132] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.749158220291138, avg_qloss=80.62757209777833, avg_dloss=2.282054588794708
+H2O+ Bus Training:  66%|██████▋   | 133/200 [51:37<25:02, 22.42s/it]I0429 11:01:43.124496 130005241182016 h2o+_bus_main.py:686] [Epoch 133] Rollout: events=102, trans=92, trunc=0, mean_w=0.6537, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:01:47.159137 130005241182016 h2o+_bus_main.py:756] [Epoch 133] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.685274429321289, avg_qloss=82.46552665710449, avg_dloss=2.2478831577301026
+H2O+ Bus Training:  67%|██████▋   | 134/200 [51:56<23:38, 21.49s/it]I0429 11:02:03.142260 130005241182016 h2o+_bus_main.py:686] [Epoch 134] Rollout: events=104, trans=94, trunc=0, mean_w=0.5723, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:02:06.778892 130005241182016 h2o+_bus_main.py:756] [Epoch 134] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.887080268859863, avg_qloss=79.3327944946289, avg_dloss=2.3742689859867094
+H2O+ Bus Training:  68%|██████▊   | 135/200 [52:16<22:40, 20.93s/it]I0429 11:02:24.998556 130005241182016 h2o+_bus_main.py:686] [Epoch 135] Rollout: events=106, trans=94, trunc=0, mean_w=0.7117, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:02:29.413991 130005241182016 h2o+_bus_main.py:756] [Epoch 135] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.706764173507691, avg_qloss=81.74491096496583, avg_dloss=2.268375049829483
+H2O+ Bus Training:  68%|██████▊   | 136/200 [52:38<22:52, 21.44s/it]I0429 11:02:43.716868 130005241182016 h2o+_bus_main.py:686] [Epoch 136] Rollout: events=105, trans=95, trunc=0, mean_w=0.6942, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:02:48.177548 130005241182016 h2o+_bus_main.py:756] [Epoch 136] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.793504867553711, avg_qloss=81.74272487640381, avg_dloss=2.258967953920364
+H2O+ Bus Training:  68%|██████▊   | 137/200 [52:57<21:40, 20.64s/it]I0429 11:03:02.648268 130005241182016 h2o+_bus_main.py:686] [Epoch 137] Rollout: events=104, trans=94, trunc=0, mean_w=0.7441, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:03:06.117270 130005241182016 h2o+_bus_main.py:756] [Epoch 137] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.921132135391235, avg_qloss=80.88956638336181, avg_dloss=2.2481834864616395
+H2O+ Bus Training:  69%|██████▉   | 138/200 [53:15<20:29, 19.83s/it]I0429 11:03:22.924658 130005241182016 h2o+_bus_main.py:686] [Epoch 138] Rollout: events=101, trans=91, trunc=0, mean_w=0.7361, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:03:26.826786 130005241182016 h2o+_bus_main.py:756] [Epoch 138] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.72026104927063, avg_qloss=82.3722917175293, avg_dloss=2.2475664973258973
+H2O+ Bus Training:  70%|██████▉   | 139/200 [53:36<20:25, 20.09s/it]I0429 11:03:44.132422 130005241182016 h2o+_bus_main.py:686] [Epoch 139] Rollout: events=105, trans=93, trunc=0, mean_w=0.7071, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:03:48.058183 130005241182016 h2o+_bus_main.py:756] [Epoch 139] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.710988712310791, avg_qloss=79.17265632629395, avg_dloss=2.3008023524284362
+[INFO] [Epoch 140/200] avg_return=-2362.42, avg_len=95, online_buf=12977, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.997/0.130, phase=main, IS_ratio=0.4816608428955078, disc_loss=2.315424919128418, mean_w=0.7071, trunc=0
+I0429 11:04:01.822656 130005241182016 h2o+_bus_main.py:792] [Epoch 140/200] avg_return=-2362.42, avg_len=95, online_buf=12977, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.997/0.130, phase=main, IS_ratio=0.4816608428955078, disc_loss=2.315424919128418, mean_w=0.7071, trunc=0
+H2O+ Bus Training:  70%|███████   | 140/200 [54:11<24:33, 24.56s/it]I0429 11:04:18.489294 130005241182016 h2o+_bus_main.py:686] [Epoch 140] Rollout: events=104, trans=91, trunc=0, mean_w=0.6763, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:04:22.544775 130005241182016 h2o+_bus_main.py:756] [Epoch 140] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.899705581665039, avg_qloss=83.69250988006591, avg_dloss=2.2063541340827943
+H2O+ Bus Training:  70%|███████   | 141/200 [54:32<23:01, 23.41s/it]I0429 11:04:38.719793 130005241182016 h2o+_bus_main.py:686] [Epoch 141] Rollout: events=107, trans=95, trunc=0, mean_w=0.7317, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:04:42.790282 130005241182016 h2o+_bus_main.py:756] [Epoch 141] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.6567497825622555, avg_qloss=82.85609470367432, avg_dloss=2.3485004925727844
+H2O+ Bus Training:  71%|███████   | 142/200 [54:52<21:42, 22.46s/it]I0429 11:05:00.471165 130005241182016 h2o+_bus_main.py:686] [Epoch 142] Rollout: events=103, trans=93, trunc=0, mean_w=0.6298, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:05:02.009007 130005241182016 h2o+_bus_main.py:756] [Epoch 142] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.731449460983276, avg_qloss=79.99662300109863, avg_dloss=2.240666534900665
+H2O+ Bus Training:  72%|███████▏  | 143/200 [55:11<20:24, 21.49s/it]I0429 11:05:17.734570 130005241182016 h2o+_bus_main.py:686] [Epoch 143] Rollout: events=104, trans=94, trunc=0, mean_w=0.5970, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:05:21.613829 130005241182016 h2o+_bus_main.py:756] [Epoch 143] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.8473449802398685, avg_qloss=85.40177703857422, avg_dloss=2.304192887544632
+H2O+ Bus Training:  72%|███████▏  | 144/200 [55:31<19:31, 20.92s/it]I0429 11:05:35.744020 130005241182016 h2o+_bus_main.py:686] [Epoch 144] Rollout: events=101, trans=90, trunc=0, mean_w=0.7037, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:05:39.188987 130005241182016 h2o+_bus_main.py:756] [Epoch 144] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.707609987258911, avg_qloss=79.67101169586182, avg_dloss=2.408404059410095
+H2O+ Bus Training:  72%|███████▎  | 145/200 [55:48<18:15, 19.92s/it]I0429 11:05:56.298530 130005241182016 h2o+_bus_main.py:686] [Epoch 145] Rollout: events=104, trans=94, trunc=0, mean_w=0.7580, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:06:00.164254 130005241182016 h2o+_bus_main.py:756] [Epoch 145] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.760210838317871, avg_qloss=78.5600602722168, avg_dloss=2.4955502343177796
+H2O+ Bus Training:  73%|███████▎  | 146/200 [56:09<18:12, 20.24s/it]I0429 11:06:15.753228 130005241182016 h2o+_bus_main.py:686] [Epoch 146] Rollout: events=102, trans=92, trunc=0, mean_w=0.6184, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:06:19.381961 130005241182016 h2o+_bus_main.py:756] [Epoch 146] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.889628610610962, avg_qloss=83.05503498077393, avg_dloss=2.4009820199012757
+H2O+ Bus Training:  74%|███████▎  | 147/200 [56:28<17:36, 19.93s/it]I0429 11:06:32.254790 130005241182016 h2o+_bus_main.py:686] [Epoch 147] Rollout: events=106, trans=96, trunc=0, mean_w=0.6230, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:06:35.811414 130005241182016 h2o+_bus_main.py:756] [Epoch 147] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.624918146133423, avg_qloss=83.54353881835938, avg_dloss=2.3552544033527374
+H2O+ Bus Training:  74%|███████▍  | 148/200 [56:45<16:21, 18.88s/it]I0429 11:06:54.103882 130005241182016 h2o+_bus_main.py:686] [Epoch 148] Rollout: events=111, trans=97, trunc=0, mean_w=0.6402, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:06:57.777884 130005241182016 h2o+_bus_main.py:756] [Epoch 148] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.775721435546875, avg_qloss=81.72821327209472, avg_dloss=2.3147762417793274
+H2O+ Bus Training:  74%|███████▍  | 149/200 [57:07<16:50, 19.81s/it]I0429 11:07:12.377095 130005241182016 h2o+_bus_main.py:686] [Epoch 149] Rollout: events=107, trans=93, trunc=0, mean_w=0.6818, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:07:15.917199 130005241182016 h2o+_bus_main.py:756] [Epoch 149] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.9055986404418945, avg_qloss=83.09536033630371, avg_dloss=2.2917846751213076
+[INFO] [Epoch 150/200] avg_return=-2142.43, avg_len=94, online_buf=13912, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.998/0.091, phase=main, IS_ratio=0.48676180839538574, disc_loss=1.954623818397522, mean_w=0.6818, trunc=0
+I0429 11:07:30.118952 130005241182016 h2o+_bus_main.py:792] [Epoch 150/200] avg_return=-2142.43, avg_len=94, online_buf=13912, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.998/0.091, phase=main, IS_ratio=0.48676180839538574, disc_loss=1.954623818397522, mean_w=0.6818, trunc=0
+[INFO] Full-state checkpoint saved: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_epoch150.pt (+ buffer side-car)
+I0429 11:07:37.350219 130005241182016 h2o+_bus_main.py:866] Full-state checkpoint saved: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_epoch150.pt (+ buffer side-car)
+H2O+ Bus Training:  75%|███████▌  | 150/200 [57:46<21:26, 25.74s/it]I0429 11:07:54.736512 130005241182016 h2o+_bus_main.py:686] [Epoch 150] Rollout: events=105, trans=91, trunc=0, mean_w=0.6549, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:07:58.286287 130005241182016 h2o+_bus_main.py:756] [Epoch 150] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.733337478637695, avg_qloss=79.04819515228272, avg_dloss=2.2707357358932496
+H2O+ Bus Training:  76%|███████▌  | 151/200 [58:07<19:50, 24.30s/it]I0429 11:08:11.549216 130005241182016 h2o+_bus_main.py:686] [Epoch 151] Rollout: events=101, trans=91, trunc=0, mean_w=0.7123, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:08:15.499021 130005241182016 h2o+_bus_main.py:756] [Epoch 151] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.707163276672364, avg_qloss=78.60242565155029, avg_dloss=2.313723894357681
+H2O+ Bus Training:  76%|███████▌  | 152/200 [58:24<17:44, 22.17s/it]I0429 11:08:32.489201 130005241182016 h2o+_bus_main.py:686] [Epoch 152] Rollout: events=104, trans=94, trunc=0, mean_w=0.6228, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:08:36.504793 130005241182016 h2o+_bus_main.py:756] [Epoch 152] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.8732117176055905, avg_qloss=80.15490741729737, avg_dloss=2.233151012659073
+H2O+ Bus Training:  76%|███████▋  | 153/200 [58:45<17:05, 21.82s/it]I0429 11:08:55.031522 130005241182016 h2o+_bus_main.py:686] [Epoch 153] Rollout: events=104, trans=94, trunc=0, mean_w=0.6697, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:08:59.033748 130005241182016 h2o+_bus_main.py:756] [Epoch 153] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.808959894180298, avg_qloss=80.25452053070069, avg_dloss=2.2594474756717684
+H2O+ Bus Training:  77%|███████▋  | 154/200 [59:08<16:53, 22.03s/it]I0429 11:09:15.420834 130005241182016 h2o+_bus_main.py:686] [Epoch 154] Rollout: events=105, trans=94, trunc=0, mean_w=0.6469, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:09:18.925468 130005241182016 h2o+_bus_main.py:756] [Epoch 154] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.681930322647094, avg_qloss=77.56659358978271, avg_dloss=2.2928324794769286
+H2O+ Bus Training:  78%|███████▊  | 155/200 [59:28<16:02, 21.39s/it]I0429 11:09:33.674637 130005241182016 h2o+_bus_main.py:686] [Epoch 155] Rollout: events=102, trans=92, trunc=0, mean_w=0.7133, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:09:37.080156 130005241182016 h2o+_bus_main.py:756] [Epoch 155] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.936709156036377, avg_qloss=84.37134071350097, avg_dloss=2.3012938141822814
+H2O+ Bus Training:  78%|███████▊  | 156/200 [59:46<14:58, 20.42s/it]I0429 11:09:54.008599 130005241182016 h2o+_bus_main.py:686] [Epoch 156] Rollout: events=104, trans=94, trunc=0, mean_w=0.7443, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:09:57.970080 130005241182016 h2o+_bus_main.py:756] [Epoch 156] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.785480537414551, avg_qloss=81.08363246917725, avg_dloss=2.3323342192173
+H2O+ Bus Training:  78%|███████▊  | 157/200 [1:00:07<14:44, 20.56s/it]I0429 11:10:11.705361 130005241182016 h2o+_bus_main.py:686] [Epoch 157] Rollout: events=104, trans=94, trunc=0, mean_w=0.6951, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:10:15.380004 130005241182016 h2o+_bus_main.py:756] [Epoch 157] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.79875524520874, avg_qloss=80.21799541473389, avg_dloss=2.286448743343353
+H2O+ Bus Training:  79%|███████▉  | 158/200 [1:00:24<13:43, 19.62s/it]I0429 11:10:29.820183 130005241182016 h2o+_bus_main.py:686] [Epoch 158] Rollout: events=103, trans=93, trunc=0, mean_w=0.6725, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:10:33.841967 130005241182016 h2o+_bus_main.py:756] [Epoch 158] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.865494594573975, avg_qloss=79.43485942840576, avg_dloss=2.3202314603328706
+H2O+ Bus Training:  80%|███████▉  | 159/200 [1:00:43<13:10, 19.27s/it]I0429 11:10:51.416970 130005241182016 h2o+_bus_main.py:686] [Epoch 159] Rollout: events=103, trans=93, trunc=0, mean_w=0.6294, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:10:54.967364 130005241182016 h2o+_bus_main.py:756] [Epoch 159] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.731599311828614, avg_qloss=78.90638595581055, avg_dloss=2.233541579246521
+[INFO] [Epoch 160/200] avg_return=-2373.36, avg_len=96, online_buf=14842, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.997/0.103, phase=main, IS_ratio=0.4831089377403259, disc_loss=2.2234716415405273, mean_w=0.6294, trunc=0
+I0429 11:11:07.656715 130005241182016 h2o+_bus_main.py:792] [Epoch 160/200] avg_return=-2373.36, avg_len=96, online_buf=14842, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.997/0.103, phase=main, IS_ratio=0.4831089377403259, disc_loss=2.2234716415405273, mean_w=0.6294, trunc=0
+H2O+ Bus Training:  80%|████████  | 160/200 [1:01:17<15:45, 23.63s/it]I0429 11:11:24.094144 130005241182016 h2o+_bus_main.py:686] [Epoch 160] Rollout: events=104, trans=94, trunc=0, mean_w=0.6323, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:11:27.657764 130005241182016 h2o+_bus_main.py:756] [Epoch 160] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7107606124877925, avg_qloss=82.38949115753174, avg_dloss=2.2973998486995697
+H2O+ Bus Training:  80%|████████  | 161/200 [1:01:37<14:39, 22.54s/it]I0429 11:11:41.392209 130005241182016 h2o+_bus_main.py:686] [Epoch 161] Rollout: events=109, trans=99, trunc=0, mean_w=0.6788, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:11:45.282511 130005241182016 h2o+_bus_main.py:756] [Epoch 161] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.829054088592529, avg_qloss=79.91527095794677, avg_dloss=2.251586456298828
+H2O+ Bus Training:  81%|████████  | 162/200 [1:01:54<13:20, 21.07s/it]I0429 11:12:01.791856 130005241182016 h2o+_bus_main.py:686] [Epoch 162] Rollout: events=101, trans=91, trunc=0, mean_w=0.6936, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:12:05.455724 130005241182016 h2o+_bus_main.py:756] [Epoch 162] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.765769062042236, avg_qloss=78.48253387451172, avg_dloss=2.2233235239982605
+H2O+ Bus Training:  82%|████████▏ | 163/200 [1:02:14<12:49, 20.80s/it]I0429 11:12:24.420519 130005241182016 h2o+_bus_main.py:686] [Epoch 163] Rollout: events=104, trans=93, trunc=0, mean_w=0.6914, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:12:25.066231 130005241182016 h2o+_bus_main.py:756] [Epoch 163] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.701919031143189, avg_qloss=79.89264499664307, avg_dloss=2.2388125801086427
+H2O+ Bus Training:  82%|████████▏ | 164/200 [1:02:34<12:15, 20.44s/it]I0429 11:12:42.839460 130005241182016 h2o+_bus_main.py:686] [Epoch 164] Rollout: events=101, trans=91, trunc=0, mean_w=0.7060, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:12:47.067519 130005241182016 h2o+_bus_main.py:756] [Epoch 164] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.930561065673828, avg_qloss=84.20885635375977, avg_dloss=2.2652020967006683
+H2O+ Bus Training:  82%|████████▎ | 165/200 [1:02:56<12:11, 20.91s/it]I0429 11:13:01.556036 130005241182016 h2o+_bus_main.py:686] [Epoch 165] Rollout: events=103, trans=93, trunc=0, mean_w=0.6311, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:13:05.408337 130005241182016 h2o+_bus_main.py:756] [Epoch 165] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.699825572967529, avg_qloss=82.46342918395996, avg_dloss=2.339358364343643
+H2O+ Bus Training:  83%|████████▎ | 166/200 [1:03:14<11:24, 20.14s/it]I0429 11:13:22.739188 130005241182016 h2o+_bus_main.py:686] [Epoch 166] Rollout: events=102, trans=92, trunc=0, mean_w=0.5903, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:13:23.740905 130005241182016 h2o+_bus_main.py:756] [Epoch 166] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.741557579040528, avg_qloss=79.23324314117431, avg_dloss=2.3155309700965883
+H2O+ Bus Training:  84%|████████▎ | 167/200 [1:03:33<10:46, 19.60s/it]I0429 11:13:42.765616 130005241182016 h2o+_bus_main.py:686] [Epoch 167] Rollout: events=102, trans=92, trunc=0, mean_w=0.6611, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:13:47.146432 130005241182016 h2o+_bus_main.py:756] [Epoch 167] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.911149005889893, avg_qloss=80.6803252029419, avg_dloss=2.2612363183498383
+H2O+ Bus Training:  84%|████████▍ | 168/200 [1:03:56<11:03, 20.74s/it]I0429 11:14:03.118015 130005241182016 h2o+_bus_main.py:686] [Epoch 168] Rollout: events=104, trans=94, trunc=0, mean_w=0.5969, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:14:07.020295 130005241182016 h2o+_bus_main.py:756] [Epoch 168] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.721139307022095, avg_qloss=80.03438899993897, avg_dloss=2.2857877147197723
+H2O+ Bus Training:  84%|████████▍ | 169/200 [1:04:16<10:34, 20.48s/it]I0429 11:14:24.205676 130005241182016 h2o+_bus_main.py:686] [Epoch 169] Rollout: events=103, trans=93, trunc=0, mean_w=0.6550, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:14:24.909695 130005241182016 h2o+_bus_main.py:756] [Epoch 169] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7086100673675535, avg_qloss=80.30611557006836, avg_dloss=2.246683827638626
+[INFO] [Epoch 170/200] avg_return=-2506.89, avg_len=93, online_buf=15774, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.991/0.180, phase=main, IS_ratio=0.4771323800086975, disc_loss=2.190459966659546, mean_w=0.6550, trunc=0
+I0429 11:14:39.826615 130005241182016 h2o+_bus_main.py:792] [Epoch 170/200] avg_return=-2506.89, avg_len=93, online_buf=15774, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.991/0.180, phase=main, IS_ratio=0.4771323800086975, disc_loss=2.190459966659546, mean_w=0.6550, trunc=0
+H2O+ Bus Training:  85%|████████▌ | 170/200 [1:04:49<12:05, 24.18s/it]I0429 11:14:54.277426 130005241182016 h2o+_bus_main.py:686] [Epoch 170] Rollout: events=102, trans=92, trunc=0, mean_w=0.6050, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:14:58.165237 130005241182016 h2o+_bus_main.py:756] [Epoch 170] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.876338863372803, avg_qloss=76.80912197113037, avg_dloss=2.232143244743347
+H2O+ Bus Training:  86%|████████▌ | 171/200 [1:05:07<10:50, 22.43s/it]I0429 11:15:15.120217 130005241182016 h2o+_bus_main.py:686] [Epoch 171] Rollout: events=105, trans=92, trunc=0, mean_w=0.6709, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:15:18.691439 130005241182016 h2o+_bus_main.py:756] [Epoch 171] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.692262783050537, avg_qloss=79.90085762023926, avg_dloss=2.305422331094742
+H2O+ Bus Training:  86%|████████▌ | 172/200 [1:05:28<10:11, 21.86s/it]I0429 11:15:32.113850 130005241182016 h2o+_bus_main.py:686] [Epoch 172] Rollout: events=103, trans=91, trunc=0, mean_w=0.6647, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:15:35.499883 130005241182016 h2o+_bus_main.py:756] [Epoch 172] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.678170051574707, avg_qloss=83.18531352996825, avg_dloss=2.1795224261283876
+H2O+ Bus Training:  86%|████████▋ | 173/200 [1:05:44<09:09, 20.34s/it]I0429 11:15:52.119316 130005241182016 h2o+_bus_main.py:686] [Epoch 173] Rollout: events=102, trans=92, trunc=0, mean_w=0.5833, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:15:52.703369 130005241182016 h2o+_bus_main.py:756] [Epoch 173] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.912097911834717, avg_qloss=83.27202388763428, avg_dloss=2.159316694736481
+H2O+ Bus Training:  87%|████████▋ | 174/200 [1:06:02<08:24, 19.40s/it]I0429 11:16:09.213790 130005241182016 h2o+_bus_main.py:686] [Epoch 174] Rollout: events=103, trans=93, trunc=0, mean_w=0.6072, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:16:13.451055 130005241182016 h2o+_bus_main.py:756] [Epoch 174] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.793573150634765, avg_qloss=82.41225261688233, avg_dloss=2.2174220097064974
+H2O+ Bus Training:  88%|████████▊ | 175/200 [1:06:22<08:15, 19.80s/it]I0429 11:16:27.036972 130005241182016 h2o+_bus_main.py:686] [Epoch 175] Rollout: events=104, trans=94, trunc=0, mean_w=0.5951, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:16:30.650546 130005241182016 h2o+_bus_main.py:756] [Epoch 175] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.745978536605835, avg_qloss=79.01572807312012, avg_dloss=2.236036195755005
+H2O+ Bus Training:  88%|████████▊ | 176/200 [1:06:40<07:36, 19.02s/it]I0429 11:16:47.868954 130005241182016 h2o+_bus_main.py:686] [Epoch 176] Rollout: events=102, trans=92, trunc=0, mean_w=0.6282, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:16:51.533298 130005241182016 h2o+_bus_main.py:756] [Epoch 176] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.9372920799255375, avg_qloss=79.87645050048827, avg_dloss=2.1939796686172484
+H2O+ Bus Training:  88%|████████▊ | 177/200 [1:07:01<07:30, 19.58s/it]I0429 11:17:04.936428 130005241182016 h2o+_bus_main.py:686] [Epoch 177] Rollout: events=102, trans=92, trunc=0, mean_w=0.6797, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:17:08.494946 130005241182016 h2o+_bus_main.py:756] [Epoch 177] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7580477905273435, avg_qloss=77.20761291503906, avg_dloss=2.105022909641266
+H2O+ Bus Training:  89%|████████▉ | 178/200 [1:07:17<06:53, 18.79s/it]I0429 11:17:21.106063 130005241182016 h2o+_bus_main.py:686] [Epoch 178] Rollout: events=101, trans=91, trunc=0, mean_w=0.6383, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:17:24.820417 130005241182016 h2o+_bus_main.py:756] [Epoch 178] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.702974014282226, avg_qloss=81.17650730133056, avg_dloss=2.2095942091941834
+H2O+ Bus Training:  90%|████████▉ | 179/200 [1:07:34<06:19, 18.05s/it]I0429 11:17:39.869308 130005241182016 h2o+_bus_main.py:686] [Epoch 179] Rollout: events=103, trans=93, trunc=0, mean_w=0.6604, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:17:43.664108 130005241182016 h2o+_bus_main.py:756] [Epoch 179] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.911043586730957, avg_qloss=84.49835296630859, avg_dloss=2.0991692411899567
+[INFO] [Epoch 180/200] avg_return=-2446.04, avg_len=96, online_buf=16696, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.999/0.040, phase=main, IS_ratio=0.5020615458488464, disc_loss=2.258303165435791, mean_w=0.6604, trunc=0
+I0429 11:17:55.192972 130005241182016 h2o+_bus_main.py:792] [Epoch 180/200] avg_return=-2446.04, avg_len=96, online_buf=16696, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.999/0.040, phase=main, IS_ratio=0.5020615458488464, disc_loss=2.258303165435791, mean_w=0.6604, trunc=0
+H2O+ Bus Training:  90%|█████████ | 180/200 [1:08:04<07:14, 21.75s/it]I0429 11:18:10.279122 130005241182016 h2o+_bus_main.py:686] [Epoch 180] Rollout: events=101, trans=91, trunc=0, mean_w=0.6706, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:18:13.947986 130005241182016 h2o+_bus_main.py:756] [Epoch 180] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.689834642410278, avg_qloss=80.84738349914551, avg_dloss=2.184133327007294
+H2O+ Bus Training:  90%|█████████ | 181/200 [1:08:23<06:36, 20.85s/it]I0429 11:18:26.670323 130005241182016 h2o+_bus_main.py:686] [Epoch 181] Rollout: events=105, trans=93, trunc=0, mean_w=0.6276, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:18:30.395388 130005241182016 h2o+_bus_main.py:756] [Epoch 181] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7451414871215825, avg_qloss=79.57912761688232, avg_dloss=2.2783636379241945
+H2O+ Bus Training:  91%|█████████ | 182/200 [1:08:39<05:51, 19.53s/it]I0429 11:18:47.139346 130005241182016 h2o+_bus_main.py:686] [Epoch 182] Rollout: events=102, trans=92, trunc=0, mean_w=0.6378, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:18:50.873554 130005241182016 h2o+_bus_main.py:756] [Epoch 182] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.952203798294067, avg_qloss=77.86186569213868, avg_dloss=2.1865124070644377
+H2O+ Bus Training:  92%|█████████▏| 183/200 [1:09:00<05:36, 19.81s/it]I0429 11:19:03.020065 130005241182016 h2o+_bus_main.py:686] [Epoch 183] Rollout: events=101, trans=91, trunc=0, mean_w=0.5896, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:19:06.534152 130005241182016 h2o+_bus_main.py:756] [Epoch 183] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.690721693038941, avg_qloss=81.89080417633056, avg_dloss=2.1704687786102297
+H2O+ Bus Training:  92%|█████████▏| 184/200 [1:09:16<04:57, 18.57s/it]I0429 11:19:20.451046 130005241182016 h2o+_bus_main.py:686] [Epoch 184] Rollout: events=103, trans=92, trunc=0, mean_w=0.6671, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:19:23.940049 130005241182016 h2o+_bus_main.py:756] [Epoch 184] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.757238073348999, avg_qloss=79.36861236572265, avg_dloss=2.195935127735138
+H2O+ Bus Training:  92%|█████████▎| 185/200 [1:09:33<04:33, 18.22s/it]I0429 11:19:38.878006 130005241182016 h2o+_bus_main.py:686] [Epoch 185] Rollout: events=103, trans=93, trunc=0, mean_w=0.6144, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:19:42.957607 130005241182016 h2o+_bus_main.py:756] [Epoch 185] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.886862640380859, avg_qloss=78.73565071105958, avg_dloss=2.1672329187393187
+H2O+ Bus Training:  93%|█████████▎| 186/200 [1:09:52<04:18, 18.46s/it]I0429 11:19:54.854634 130005241182016 h2o+_bus_main.py:686] [Epoch 186] Rollout: events=103, trans=92, trunc=0, mean_w=0.6332, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:19:58.627485 130005241182016 h2o+_bus_main.py:756] [Epoch 186] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.754906568527222, avg_qloss=78.62614616394043, avg_dloss=2.18328867316246
+H2O+ Bus Training:  94%|█████████▎| 187/200 [1:10:08<03:49, 17.62s/it]I0429 11:20:14.075048 130005241182016 h2o+_bus_main.py:686] [Epoch 187] Rollout: events=101, trans=91, trunc=0, mean_w=0.6148, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:20:17.453716 130005241182016 h2o+_bus_main.py:756] [Epoch 187] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.740033903121948, avg_qloss=76.20759532928467, avg_dloss=2.061256276369095
+H2O+ Bus Training:  94%|█████████▍| 188/200 [1:10:26<03:35, 17.98s/it]I0429 11:20:31.217238 130005241182016 h2o+_bus_main.py:686] [Epoch 188] Rollout: events=105, trans=95, trunc=0, mean_w=0.6308, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:20:34.670526 130005241182016 h2o+_bus_main.py:756] [Epoch 188] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.892824983596801, avg_qloss=78.98053581237792, avg_dloss=2.268625372648239
+H2O+ Bus Training:  94%|█████████▍| 189/200 [1:10:44<03:15, 17.75s/it]I0429 11:20:49.626413 130005241182016 h2o+_bus_main.py:686] [Epoch 189] Rollout: events=107, trans=95, trunc=0, mean_w=0.5736, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:20:53.114756 130005241182016 h2o+_bus_main.py:756] [Epoch 189] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.662618341445923, avg_qloss=78.29383205413818, avg_dloss=2.136885451078415
+[INFO] [Epoch 190/200] avg_return=-2319.20, avg_len=96, online_buf=17621, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.997/0.159, phase=main, IS_ratio=0.4758353531360626, disc_loss=1.886918067932129, mean_w=0.5736, trunc=0
+I0429 11:21:08.779701 130005241182016 h2o+_bus_main.py:792] [Epoch 190/200] avg_return=-2319.20, avg_len=96, online_buf=17621, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=0.997/0.159, phase=main, IS_ratio=0.4758353531360626, disc_loss=1.886918067932129, mean_w=0.5736, trunc=0
+H2O+ Bus Training:  95%|█████████▌| 190/200 [1:11:18<03:46, 22.66s/it]I0429 11:21:20.948426 130005241182016 h2o+_bus_main.py:686] [Epoch 190] Rollout: events=100, trans=90, trunc=0, mean_w=0.6070, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:21:24.533401 130005241182016 h2o+_bus_main.py:756] [Epoch 190] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.729671401977539, avg_qloss=79.77674648284912, avg_dloss=2.152711774110794
+H2O+ Bus Training:  96%|█████████▌| 191/200 [1:11:34<03:05, 20.59s/it]I0429 11:21:40.824188 130005241182016 h2o+_bus_main.py:686] [Epoch 191] Rollout: events=102, trans=92, trunc=0, mean_w=0.6236, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:21:44.861112 130005241182016 h2o+_bus_main.py:756] [Epoch 191] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.887599906921387, avg_qloss=80.34221488952636, avg_dloss=2.255621359348297
+H2O+ Bus Training:  96%|█████████▌| 192/200 [1:11:54<02:44, 20.51s/it]I0429 11:21:57.925568 130005241182016 h2o+_bus_main.py:686] [Epoch 192] Rollout: events=102, trans=92, trunc=0, mean_w=0.6562, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:22:01.645996 130005241182016 h2o+_bus_main.py:756] [Epoch 192] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.806204204559326, avg_qloss=78.79143821716309, avg_dloss=2.3651041889190676
+H2O+ Bus Training:  96%|█████████▋| 193/200 [1:12:11<02:15, 19.39s/it]I0429 11:22:17.829085 130005241182016 h2o+_bus_main.py:686] [Epoch 193] Rollout: events=107, trans=94, trunc=0, mean_w=0.7585, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:22:18.297338 130005241182016 h2o+_bus_main.py:756] [Epoch 193] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.7880964279174805, avg_qloss=80.63441925048828, avg_dloss=2.1011020052433014
+H2O+ Bus Training:  97%|█████████▋| 194/200 [1:12:27<01:51, 18.57s/it]I0429 11:22:35.187003 130005241182016 h2o+_bus_main.py:686] [Epoch 194] Rollout: events=106, trans=96, trunc=0, mean_w=0.7247, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:22:39.017368 130005241182016 h2o+_bus_main.py:756] [Epoch 194] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.953939485549927, avg_qloss=77.40534229278565, avg_dloss=2.1523725855350495
+H2O+ Bus Training:  98%|█████████▊| 195/200 [1:12:48<01:36, 19.22s/it]I0429 11:22:55.112473 130005241182016 h2o+_bus_main.py:686] [Epoch 195] Rollout: events=104, trans=90, trunc=0, mean_w=0.6689, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:22:58.374637 130005241182016 h2o+_bus_main.py:756] [Epoch 195] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.719463005065918, avg_qloss=77.71225368499756, avg_dloss=2.2404501247406006
+H2O+ Bus Training:  98%|█████████▊| 196/200 [1:13:07<01:17, 19.26s/it]I0429 11:23:12.930324 130005241182016 h2o+_bus_main.py:686] [Epoch 196] Rollout: events=102, trans=92, trunc=0, mean_w=0.6821, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:23:16.174293 130005241182016 h2o+_bus_main.py:756] [Epoch 196] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.748071966171264, avg_qloss=79.40175174713134, avg_dloss=2.171214143037796
+H2O+ Bus Training:  98%|█████████▊| 197/200 [1:13:25<00:56, 18.82s/it]I0429 11:23:26.055051 130005241182016 h2o+_bus_main.py:686] [Epoch 197] Rollout: events=104, trans=93, trunc=0, mean_w=0.6706, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:23:28.872740 130005241182016 h2o+_bus_main.py:756] [Epoch 197] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.986546363830566, avg_qloss=81.87790264129639, avg_dloss=2.0870961952209472
+H2O+ Bus Training:  99%|█████████▉| 198/200 [1:13:38<00:33, 16.98s/it]I0429 11:23:40.915978 130005241182016 h2o+_bus_main.py:686] [Epoch 198] Rollout: events=104, trans=94, trunc=0, mean_w=0.6688, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:23:44.080902 130005241182016 h2o+_bus_main.py:756] [Epoch 198] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.751094560623169, avg_qloss=81.62057266235351, avg_dloss=2.113142817020416
+H2O+ Bus Training: 100%|█████████▉| 199/200 [1:13:53<00:16, 16.45s/it]I0429 11:23:53.248922 130005241182016 h2o+_bus_main.py:686] [Epoch 199] Rollout: events=106, trans=96, trunc=0, mean_w=0.7422, disc=True, resets(jtt/uni/fresh)=0/0/1
+I0429 11:23:55.858159 130005241182016 h2o+_bus_main.py:756] [Epoch 199] Train: steps=100/100, sim_ratio=0.50, avg_ploss=-5.774739418029785, avg_qloss=79.33128513336182, avg_dloss=2.2016186809539793
+[INFO] [Epoch 200/200] avg_return=-2562.72, avg_len=99, online_buf=18550, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.013, phase=main, IS_ratio=0.5211220979690552, disc_loss=2.2499618530273438, mean_w=0.7422, trunc=0
+I0429 11:24:06.418846 130005241182016 h2o+_bus_main.py:792] [Epoch 200/200] avg_return=-2562.72, avg_len=99, online_buf=18550, train=100/100, sim_ratio=0.50, disc_active=True, disc_acc(R/S)=1.000/0.013, phase=main, IS_ratio=0.5211220979690552, disc_loss=2.2499618530273438, mean_w=0.7422, trunc=0
+[INFO] Full-state checkpoint saved: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_epoch200.pt (+ buffer side-car)
+I0429 11:24:12.062397 130005241182016 h2o+_bus_main.py:866] Full-state checkpoint saved: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/checkpoint_epoch200.pt (+ buffer side-car)
+H2O+ Bus Training: 100%|██████████| 200/200 [1:14:21<00:00, 19.91s/it]H2O+ Bus Training: 100%|██████████| 200/200 [1:14:21<00:00, 22.31s/it]
+[INFO] Final model saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/model_final.pt
+I0429 11:24:12.071041 130005241182016 h2o+_bus_main.py:926] Final model saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/model_final.pt
+[INFO] Training complete!  CSV log: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/train_steps.csv  (20000 steps)
+I0429 11:24:12.071482 130005241182016 h2o+_bus_main.py:929] Training complete!  CSV log: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18/train_steps.csv  (20000 steps)
+[INFO] All outputs in: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18
+I0429 11:24:12.071785 130005241182016 h2o+_bus_main.py:933] All outputs in: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-29-10-09-18
+Using libsumo as traci as requested by environment variable.
+Warning: c_8_subfunction_for_gurobi_test module not found, some functionality may be limited
+Warning: gurobipy module not found, optimization functionality may be limited
+Warning: gurobipy module not found, optimization functionality may be limited
+wandb: - 0.005 MB of 0.005 MB uploadedwandb: \ 0.005 MB of 0.005 MB uploadedwandb: | 0.005 MB of 0.005 MB uploadedwandb: / 0.005 MB of 0.005 MB uploadedwandb: - 0.005 MB of 0.005 MB uploadedwandb: \ 0.025 MB of 0.175 MB uploaded (0.004 MB deduped)wandb: | 0.031 MB of 0.175 MB uploaded (0.004 MB deduped)wandb: / 0.175 MB of 0.175 MB uploaded (0.004 MB deduped)wandb: - 0.175 MB of 0.175 MB uploaded (0.004 MB deduped)wandb: \ 0.175 MB of 0.175 MB uploaded (0.004 MB deduped)wandb: 
+wandb: Run history:
+wandb:                      average_return ▁███▇▆▆▇▇▇▆▆▅▆▆▇▆▅▅▆▅
+wandb:                 average_traj_length ▁▂▃▁▄▃▂▃▂▅▃▃▅▁▅▄▆▃▆▆█
+wandb:                     batch_sim_ratio ▁███████████████████████████████████████
+wandb:                       disc_real_acc ██████▇▇██▇▇█▁▆▇▆▁▇▅█
+wandb:                        disc_sim_acc ▁▁▁▁▁▁▁▂▃▂▁▃▁█▃▃▃▄▂▄▁
+wandb:                discriminator_active ▁▁██████████████████████████████████████
+wandb:                               epoch ▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇███
+wandb:                          epoch_time ▅▃▃▃▄▅▆▅▄▄▃▅▃▄▅█▆▅▄▃▃▂▂▂▁▃▃▂▃▁▅▂▃▅▂▂▁▃▂▄
+wandb:                           eval_time ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁█
+wandb:                           h2o/alpha ▁▁▂▂▃▃▃▄▄▅▆▆▇▇▇█████████████████▇▇██▇▇▇▇
+wandb:                      h2o/alpha_loss █▇█▇▅▄▄▃▃▃▂▂▂▂▂▂▂▂▁▁▁▂▂▂▂▁▂▁▁▂▁▂▂▁▁▁▂▁▂▂
+wandb:                        h2o/cql_loss ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                       h2o/disc_loss ██▇▆▅▄▄▃▄▃▃▃▂▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▂▃▂▂▂▁▁▂▁▁▂▂
+wandb:             h2o/epoch_avg_disc_loss ██▇▆▅▅▄▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:           h2o/epoch_avg_policy_loss █▂▂▁▁▁▁▁▁▁▁▂▂▂▁▁▂▂▂▁▁▁▂▂▂▂▂▁▁▂▁▁▂▁▁▁▂▂▁▁
+wandb:         h2o/epoch_avg_real_qf1_loss █▁▃▂▁▅▃▃▄▄▃▄▃▃▂▃▆▄▄▃▄▄▃▄▄▄▄▃▅▅▃▃▃▃▄▁▄▁▃▃
+wandb:         h2o/epoch_avg_sqrt_IS_ratio ██████████▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                     h2o/jtt_updated ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                          h2o/log_pi ▁██▁▁▁▁▄▄▁▁▁▁▁▂▂▁▁▁▁▁▃▁▁▁▁▁▁▁▁▁▁▁▂▂▁▁▁▁▁
+wandb:               h2o/mean_real_rewards ▂▃▂▂▄▄▂▅▄▃▇▅▄▂▄▂▆▄▂▅▄▅▄▃▄▆▁▅█▅▄▄▂▄▄▅▃▆▄▄
+wandb:                     h2o/policy_loss █▂▂████▁▂█████▂▂████▂▂█████▂▁████▂▁█████
+wandb:                          h2o/q_mean ▁▂▃▄▅▃▁▅▅▃█▅▅▃▄▃▅▄▂▆▄▅▄▃▄▆▁▅█▆▄▆▂▅▅▇▄▇▄▄
+wandb:                           h2o/q_std █▇▇▄▄▄▅▂▃▄▄▄▃▄▄▄▃▁▃▄▃▂▂▂▃▅▃▃▃▃▂▁▂▄▂▂▂▁▂▂
+wandb:                   h2o/real_qf1_loss ▅▃▁▃▆▂▄▂▆▅▂▁▃▄▃▄▂▂▃▃▇▁▃▅▂▃▄▃▂▃▇▃▄▄█▃▄▃▂▄
+wandb:                    h2o/sim_qf1_loss █▃▃▃▂▃▂▃▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                   h2o/sqrt_IS_ratio ██████████▂▂▁▁▁▂▁▁▂▂▁▁▁▂▁▂▁▂▁▁▁▁▂▁▁▁▁▁▂▂
+wandb:                     h2o/total_steps ▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇███
+wandb:                  online_buffer_size ▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇███
+wandb:                rollout/fresh_resets ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:             rollout/jtt_past_warmup ▁███████████████████████████████████████
+wandb: rollout/jtt_priority_index_attached ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:             rollout/jtt_reset_ratio ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  rollout/jtt_resets ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:        rollout/jtt_valid_snap_count ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                      rollout/mean_w ▁▁█▇▇▇▇▆▇▇▆▆▆▅▆▆▆▆▆▆▆▆▆▆▅▆▆▇▅▆▆▆▆▆▅▆▅▆▇▇
+wandb:                  rollout/n_episodes ▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇███
+wandb:                    rollout/n_events ▅▃█▃▄▅█▆▆▃▆▆▃▂▂▃▂▃▄▃▃▄▂▁▅▆▃▄▄▆▄▄▄▃▃▃▂▂▆▆
+wandb:               rollout/n_transitions ▂▁▇▂▅▆▆▆▄▃▄▇▅▃▃▅▃▅▆▄▄▆▂▂▇█▄▆▆█▆▆▅▄▄▄▃▃▆█
+wandb:                 rollout/n_truncated ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:         rollout/snap_cache_hit_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:             rollout/snap_cache_hits ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:           rollout/snap_cache_misses ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:              rollout/uniform_resets ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                        rollout_time ▆▄▄▄▅▆▆▇▆▅▅▆▄▆▆█▆▆▅▄▄▃▄▃▂▄▄▄▄▃▆▃▆▆▅▃▂▄▄▁
+wandb:                  train_steps_actual ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 train_steps_skipped ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  train_steps_target ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                          train_time ▆▆▆▆▅▅▇▃▅▅▂▆▆▃▆█▇▇█▆▅▅▅▅▆▅▆▅▆▅▆▅▁▆▁▅▅▅▁▄
+wandb: 
+wandb: Run summary:
+wandb:                      average_return -2562.72253
+wandb:                 average_traj_length 99.0
+wandb:                     batch_sim_ratio 0.5
+wandb:                       disc_real_acc 1.0
+wandb:                        disc_sim_acc 0.01318
+wandb:                discriminator_active True
+wandb:                               epoch 199
+wandb:                          epoch_time 22.33615
+wandb:                           eval_time 10.56108
+wandb:                           h2o/alpha 0.39269
+wandb:                      h2o/alpha_loss -0.03842
+wandb:                        h2o/cql_loss 0
+wandb:                       h2o/disc_loss 2.24996
+wandb:             h2o/epoch_avg_disc_loss 2.20162
+wandb:           h2o/epoch_avg_policy_loss -5.77474
+wandb:         h2o/epoch_avg_real_qf1_loss 79.33129
+wandb:         h2o/epoch_avg_sqrt_IS_ratio 0.48429
+wandb:                     h2o/jtt_updated False
+wandb:                          h2o/log_pi 0
+wandb:               h2o/mean_real_rewards -0.06127
+wandb:                     h2o/policy_loss 0.0
+wandb:                          h2o/q_mean 4.91848
+wandb:                           h2o/q_std 1.4017
+wandb:                   h2o/real_qf1_loss 80.8213
+wandb:                    h2o/sim_qf1_loss 1.56947
+wandb:                   h2o/sqrt_IS_ratio 0.52112
+wandb:                     h2o/total_steps 20000
+wandb:                  h2o/training_phase main
+wandb:                  online_buffer_size 18550
+wandb:                rollout/fresh_resets 1
+wandb:             rollout/jtt_past_warmup True
+wandb: rollout/jtt_priority_index_attached False
+wandb:             rollout/jtt_reset_ratio 0.0
+wandb:                  rollout/jtt_resets 0
+wandb:             rollout/jtt_temperature inf
+wandb:        rollout/jtt_valid_snap_count 0
+wandb:                      rollout/mean_w 0.74218
+wandb:                  rollout/n_episodes 200
+wandb:                    rollout/n_events 106
+wandb:               rollout/n_transitions 96
+wandb:                 rollout/n_truncated 0
+wandb:         rollout/snap_cache_hit_rate 0.0
+wandb:             rollout/snap_cache_hits 0
+wandb:           rollout/snap_cache_misses 0
+wandb:              rollout/uniform_resets 0
+wandb:                        rollout_time 9.16664
+wandb:                  train_steps_actual 100
+wandb:                 train_steps_skipped False
+wandb:                  train_steps_target 100
+wandb:                          train_time 2.60843
+wandb: 
+wandb: 🚀 View run 2da7d10147854f18b9b2dee6db671a16 at: https://wandb.ai/erzhu419-central-south-university/H2O%2B/runs/2da7d10147854f18b9b2dee6db671a16
+wandb: ⭐️ View project at: https://wandb.ai/erzhu419-central-south-university/H2O%2B
+wandb: Synced 6 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./experiment_output/2da7d10147854f18b9b2dee6db671a16/wandb/run-20260429_100920-2da7d10147854f18b9b2dee6db671a16/logs

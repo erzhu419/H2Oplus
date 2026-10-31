@@ -1,0 +1,40 @@
+02:12:26 [INFO] ============================================================
+02:12:26 [INFO] H2O+ Bus Training
+02:12:26 [INFO] ============================================================
+02:12:26 [INFO] Log directory: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-05-05-02-12-26
+02:12:26 [INFO] Seed: 42, Device: cpu
+02:12:26 [INFO] Snapshot reset: True, JTT: False
+02:12:26 [INFO] Config saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-05-05-02-12-26/config.json
+02:12:36 [INFO] Route length set to 13149.8 m
+02:12:36 [INFO] Loading offline data: file=/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5, dir=None
+02:12:47 [INFO] Loaded 3,104,419 offline transitions, max buffer size 9,313,257, valid snapshots: 0
+02:12:47 [INFO] Offline reward stats: mean=-118.49, std=133.81
+02:12:47 [INFO] Creating MultiLineSimEnv from /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env
+02:12:49 [INFO] Traffic signal model (per line):
+02:12:49 [INFO]   102S: 31 signals, green_frac=0.37, cycle=90s
+02:12:49 [INFO]   102X: 26 signals, green_frac=0.37, cycle=90s
+02:12:49 [INFO]   122S: 26 signals, green_frac=0.39, cycle=90s
+02:12:49 [INFO]   122X: 26 signals, green_frac=0.39, cycle=90s
+02:12:49 [INFO]   311S: 36 signals, green_frac=0.40, cycle=90s
+02:12:49 [INFO]   311X: 36 signals, green_frac=0.40, cycle=90s
+02:12:49 [INFO]   406S: 30 signals, green_frac=0.39, cycle=90s
+02:12:49 [INFO]   406X: 29 signals, green_frac=0.40, cycle=90s
+02:12:49 [INFO]   705S: 35 signals, green_frac=0.40, cycle=90s
+02:12:49 [INFO]   705X: 34 signals, green_frac=0.40, cycle=90s
+02:12:49 [INFO]   7S: 17 signals, green_frac=0.39, cycle=90s
+02:12:49 [INFO]   7X: 17 signals, green_frac=0.38, cycle=90s
+02:12:49 [INFO] Online env: SIM (MultiLineSimEnv)
+02:12:49 [INFO] EmbeddingLayer output_dim=29, cont_features=12, internal_state_dim=41
+02:12:49 [INFO] Using H2OPlusBus (twin-Q + V)
+02:12:49 [INFO] JTT DISABLED (use_jtt=False)
+02:12:49 [INFO] Pretraining for 5000 steps (offline only)...
+02:15:56 [INFO] Pretrain done in 186.8s: policy_loss=-5.1098, qf1_loss=135.4154, qf2_loss=149.8807
+02:15:56 [INFO] Starting training for 1 epochs
+02:15:56 [INFO]   rollout_events/epoch=5, train_steps/epoch=5, eval_period=10, checkpoint_period=50
+02:15:58 [DEBUG] [Epoch 0] Rollout: events=104, trans=97, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+02:15:58 [DEBUG] [Epoch 0] Train: steps=5/5, sim_ratio=0.10, avg_ploss=8.08744010925293, avg_qloss=140.85289001464844, avg_dloss=9.476371765136719
+02:15:58 [INFO] [Epoch 1/1] avg_return=0.00, avg_len=0, online_buf=97, train=5/5, sim_ratio=0.10, disc_active=False, disc_acc(R/S)=0.772/0.008, phase=main, IS_ratio=2.2299551963806152, disc_loss=47.381858825683594, mean_w=0.0000, trunc=0
+02:15:58 [INFO] New best checkpoint (ep1, return=0.0): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-05-05-02-12-26/checkpoint_best.pt
+02:15:58 [INFO] Final model saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-05-05-02-12-26/model_final.pt
+02:15:58 [INFO] Training complete!  CSV log: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-05-05-02-12-26/train_steps.csv  (5005 steps)
+02:15:58 [INFO] All outputs in: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-05-05-02-12-26

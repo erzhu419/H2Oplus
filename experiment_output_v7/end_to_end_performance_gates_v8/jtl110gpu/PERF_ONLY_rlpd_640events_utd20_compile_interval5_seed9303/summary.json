@@ -1,0 +1,142 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/end_to_end_performance_gates_v8/jtl110gpu/PERF_ONLY_rlpd_640events_utd20_compile_interval5_seed9303/checkpoints/latest.pt",
+    "sha256": "2d07774cb70f10b1db99251ab95584ac1596c129a267f188d2bab53d67a97b38"
+  },
+  "completed_epochs": 1,
+  "completed_utc": "2026-08-08T08:19:31.589766+00:00",
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 3334.9970703125,
+  "max_rss_mb": 10682.16796875,
+  "mdp_version": "v6",
+  "method": "rlpd",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "mean-all",
+    "actor_update_interval": 20,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": true,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 0,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 5000,
+    "description": "official state-based RLPD protocol: random initialization, 50/50 prior/online replay, ten critics, and UTD 20",
+    "ensemble_size": 10,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "none",
+    "online_backup": "sac",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "ratio_update_interval": 4,
+    "reference": "https://proceedings.mlr.press/v202/ball23a.html",
+    "reference_commit": "c90fd4baf28c9c9ef40a81460a2e395092844f88",
+    "reference_implementation": "https://github.com/ikostrikov/rlpd",
+    "target_entropy": -0.5,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "utd_ratio": 20,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "official state-based RLPD protocol: random initialization, 50/50 prior/online replay, ten critics, and UTD 20",
+  "offline_metrics": {},
+  "online_buffer_size": 639,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "ensemble_size": {
+        "effective": 10,
+        "profile": 10
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "online_fraction": {
+        "effective": 0.5,
+        "profile": 0.5
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 250,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": -0.5,
+        "profile": -0.5
+      },
+      "updates_per_epoch": {
+        "effective": 10240,
+        "profile": 10240
+      },
+      "utd_ratio": {
+        "effective": 20,
+        "profile": 20
+      },
+      "warmup_events": {
+        "effective": 128,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/end_to_end_performance_gates_v8/jtl110gpu/PERF_ONLY_rlpd_640events_utd20_compile_interval5_seed9303",
+  "run_signature": null,
+  "schema_version": "transit-training-summary-v7",
+  "seed": 9303,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 0.6601504122372717,
+    "data_load": 18.138169745914638,
+    "device_cache": 0.6172707888763398,
+    "model_init": 2.0201825289987028,
+    "online_rollout": 3.004226120887324,
+    "online_training": 119.36494558048435,
+    "online_warmup_rollout": 7.201694797957316,
+    "provenance_audit": 0.6315931701101363,
+    "simulator_init": 3.1028888639993966
+  },
+  "total_updates": 10240,
+  "warmup_metrics": {
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 128,
+    "maximum_simultaneous_decisions": 2,
+    "mean_delta_t": 11.826771653543307,
+    "mean_hold_seconds": 3.2709466153755784,
+    "mean_reward": -0.0015308582677165353,
+    "online_buffer_size": 127,
+    "transitions": 127,
+    "trip_boundaries_total": 0
+  }
+}

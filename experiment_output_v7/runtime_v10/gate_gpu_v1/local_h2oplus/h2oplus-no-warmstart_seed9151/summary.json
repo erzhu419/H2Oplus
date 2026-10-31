@@ -1,0 +1,160 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v10/gate_gpu_v1/local_h2oplus/h2oplus-no-warmstart_seed9151/checkpoints/latest.pt",
+    "sha256": "737b2d3dcb9a5db7b28cda67c439c6145597e5bbbd2755035349d78933caa1a2"
+  },
+  "completed_epochs": 3,
+  "completed_utc": "2026-08-08T08:40:42.655072+00:00",
+  "final_ratio_validation": {
+    "ratio/validation_available": 0.0
+  },
+  "max_cuda_memory_mb": 70.9833984375,
+  "max_rss_mb": 1618.57421875,
+  "mdp_version": "v6",
+  "method": "h2oplus-no-warmstart",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 0,
+    "default_ratio_pretrain_updates": 1000,
+    "default_warmup_events": 5000,
+    "description": "H2O+ mixed value backup and conditional dynamics-ratio correction from random initialization, without IQL warm start",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.1,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "none",
+    "online_backup": "h2oplus",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "ratio_update_interval": 4,
+    "reference": "https://doi.org/10.1109/ICRA55743.2025.11127503",
+    "reference_commit": "02171768283d307244700c69003423704db83b05",
+    "reference_implementation": "https://github.com/t6-thu/H2Oplus",
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": true,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "H2O+ mixed value backup and conditional dynamics-ratio correction from random initialization, without IQL warm start",
+  "offline_metrics": {},
+  "online_buffer_size": 63,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "online_fraction": {
+        "effective": 0.5,
+        "profile": 0.5
+      },
+      "ratio_pretrain_updates": {
+        "effective": 4,
+        "profile": 1000
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": -1.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 16,
+        "profile": 16
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 16,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {
+    "ratio/joint_accuracy": 0.986328125,
+    "ratio/joint_auc": 0.9988861083984375,
+    "ratio/joint_brier": 0.24279329180717468,
+    "ratio/joint_loss": 0.6787324547767639,
+    "ratio/joint_real_logit_mean": 0.03464547544717789,
+    "ratio/joint_sim_logit_mean": -0.02348203957080841,
+    "ratio/loss": 1.3634560108184814,
+    "ratio/state_action_accuracy": 0.9609375,
+    "ratio/state_action_auc": 0.998931884765625,
+    "ratio/state_action_brier": 0.2457883358001709,
+    "ratio/state_action_loss": 0.6847236156463623,
+    "ratio/state_action_real_logit_mean": 0.012302322313189507,
+    "ratio/state_action_sim_logit_mean": -0.021562930196523666,
+    "ratio/validation_available": 0.0
+  },
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v10/gate_gpu_v1/local_h2oplus/h2oplus-no-warmstart_seed9151",
+  "run_signature": "db7b5a9d134ddc47fa86fa7cbcbb3d7f520991ba728e2c8153fe9d119e9eac7f",
+  "schema_version": "transit-training-summary-v7",
+  "seed": 9151,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 1.1389644060036517,
+    "data_load": 11.080284780000511,
+    "device_cache": 0.016406249000283424,
+    "model_init": 2.180667872999038,
+    "online_rollout": 0.9188852150036837,
+    "online_training": 24.10983632100033,
+    "online_warmup_rollout": 2.8557998569995107,
+    "provenance_audit": 0.5473873660012032,
+    "ratio_pretraining": 6.754904468998575,
+    "simulator_init": 2.884941511998477
+  },
+  "total_updates": 48,
+  "warmup_metrics": {
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 16,
+    "maximum_simultaneous_decisions": 1,
+    "mean_delta_t": 22.466666666666665,
+    "mean_hold_seconds": 2.9193251207470894,
+    "mean_reward": -0.0016064,
+    "online_buffer_size": 15,
+    "transitions": 15,
+    "trip_boundaries_total": 0
+  }
+}

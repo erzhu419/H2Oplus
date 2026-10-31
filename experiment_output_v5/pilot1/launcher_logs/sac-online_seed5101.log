@@ -1,0 +1,48 @@
+
+[2026-08-03T16:24:16.023570+00:00] signature=c9cca3c9da80c861a0b54c376874423426d070bb0c603ecc4b88de458a369d24 resume=None
+Traceback (most recent call last):
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/train_transit_v4.py", line 18, in <module>
+    main("v4")
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/train_transit_v3.py", line 1031, in main
+    lease = GPULease(args.device, args.allow_shared_gpu)
+  File "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/train_transit_v3.py", line 229, in __init__
+    raise RuntimeError(
+RuntimeError: GPU 0 is already used by compute processes [1322401]; use a free GPU or pass --allow-shared-gpu deliberately
+
+[2026-08-03T16:38:11.113641+00:00] signature=0c4ba1632a449d723964997d8896c669fc13bd2c39613f9863ca36708d8787a5 resume=None
+2026-08-04 00:38:14,343 INFO run=/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/sac-online_seed5101 method=sac-online device=cuda:0 offline_rows=942940 simulator=a8ac4b38a9973c92984e124ce1e1176f7f05e7e0527b0b67e94a76bb08b5bf75
+2026-08-04 00:38:20,540 INFO warmup rollout {'events': 500, 'transitions': 459, 'episodes_started': 1, 'discarded_pending_total': 0, 'trip_boundaries_total': 0, 'mean_reward': -0.07985441560052392, 'mean_delta_t': 68.16122004357298, 'mean_hold_seconds': 4.308288128852844, 'online_buffer_size': 459}
+2026-08-04 00:38:22,954 INFO online-only update 100/256 rate=56.3/s critic=0.9072 actor=-2.0218 actor_updated=1 alpha=0.9687
+2026-08-04 00:38:24,735 INFO online-only update 200/256 rate=63.1/s critic=0.1875 actor=-1.9598 actor_updated=1 alpha=0.9394
+2026-08-04 00:38:25,954 INFO online-only update 256/256 rate=64.0/s critic=0.6144 actor=-2.0018 actor_updated=1 alpha=0.9238
+2026-08-04 00:38:25,955 INFO epoch=1/5 reward=-0.36459 online=701 rollout=1.28s train=4.00s
+2026-08-04 00:38:28,056 INFO online-only update 100/256 rate=66.9/s critic=0.0948 actor=-2.1811 actor_updated=1 alpha=0.8969
+2026-08-04 00:38:29,714 INFO online-only update 200/256 rate=72.1/s critic=0.0673 actor=-2.3393 actor_updated=1 alpha=0.8710
+2026-08-04 00:38:30,759 INFO online-only update 256/256 rate=71.1/s critic=0.0891 actor=-2.4135 actor_updated=1 alpha=0.8569
+2026-08-04 00:38:30,760 INFO epoch=2/5 reward=-0.54170 online=944 rollout=1.07s train=3.60s
+2026-08-04 00:38:32,827 INFO online-only update 100/256 rate=70.9/s critic=0.0732 actor=-2.4713 actor_updated=1 alpha=0.8322
+2026-08-04 00:38:34,529 INFO online-only update 200/256 rate=75.0/s critic=0.1555 actor=-2.5522 actor_updated=1 alpha=0.8082
+2026-08-04 00:38:35,465 INFO online-only update 256/256 rate=75.6/s critic=0.1174 actor=-2.4396 actor_updated=1 alpha=0.7952
+2026-08-04 00:38:35,466 INFO epoch=3/5 reward=-0.75790 online=1190 rollout=1.18s train=3.39s
+2026-08-04 00:38:37,444 INFO online-only update 100/256 rate=71.2/s critic=0.1557 actor=-2.5603 actor_updated=1 alpha=0.7728
+2026-08-04 00:38:39,372 INFO online-only update 200/256 rate=75.1/s critic=0.1195 actor=-2.5705 actor_updated=1 alpha=0.7512
+2026-08-04 00:38:40,187 INFO online-only update 256/256 rate=76.6/s critic=0.1930 actor=-2.3707 actor_updated=1 alpha=0.7395
+2026-08-04 00:38:40,188 INFO epoch=4/5 reward=-0.69445 online=1436 rollout=1.24s train=3.34s
+2026-08-04 00:38:42,146 INFO online-only update 100/256 rate=76.4/s critic=0.1475 actor=-2.4275 actor_updated=1 alpha=0.7190
+2026-08-04 00:38:43,875 INFO online-only update 200/256 rate=78.6/s critic=0.1093 actor=-2.4969 actor_updated=1 alpha=0.6992
+2026-08-04 00:38:44,673 INFO online-only update 256/256 rate=79.8/s critic=0.2644 actor=-2.5084 actor_updated=1 alpha=0.6884
+2026-08-04 00:38:44,674 INFO epoch=5/5 reward=-0.52526 online=1687 rollout=1.13s train=3.21s
+2026-08-04 00:38:44,981 INFO completed {'schema_version': 'transit-training-summary-v5', 'run_dir': '/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/sac-online_seed5101', 'completed_utc': '2026-08-03T16:38:44.978660+00:00', 'method': 'sac-online', 'run_signature': '0c4ba1632a449d723964997d8896c669fc13bd2c39613f9863ca36708d8787a5', 'mdp_version': 'v4', 'method_protocol': 'randomly initialized online-only Soft Actor-Critic', 'method_profile': {'description': 'randomly initialized online-only Soft Actor-Critic', 'reference': 'https://proceedings.mlr.press/v80/haarnoja18b.html', 'reference_implementation': None, 'reference_commit': None, 'offline_objective': 'none', 'online_update_mode': 'online-only', 'online_backup': 'sac', 'use_ratio_correction': False, 'ensemble_size': 2, 'target_subset_size': 2, 'batch_size': 256, 'utd_ratio': 1, 'actor_update_interval': 1, 'actor_batch_mode': 'latest', 'actor_q_reduction': 'min-all', 'actor_learning_rate': 0.0003, 'critic_learning_rate': 0.0003, 'value_learning_rate': 0.0003, 'alpha_learning_rate': 0.0003, 'target_entropy': -1.0, 'initial_temperature': 1.0, 'backup_entropy': True, 'online_fraction': 0.0, 'bootstrap_probability': 1.0, 'offline_cql_alpha': 0.0, 'mixed_backup_lambda': 0.0, 'iql_expectile': 0.7, 'iql_advantage_temperature': 3.0, 'default_offline_updates': 0, 'default_warmup_events': 5000, 'default_ratio_pretrain_updates': 0, 'cql_max_target_backup': False, 'activation': 'relu', 'actor_layer_norm': False, 'critic_layer_norm': False, 'value_layer_norm': False}, 'protocol_resolution': {'defaults_applied': {'utd_ratio': 1, 'batch_size': 256, 'ensemble_size': 2, 'online_fraction': 0.0, 'offline_cql_alpha': 0.0, 'target_entropy': -1.0, 'initial_temperature': 1.0, 'iql_advantage_temperature': 3.0, 'updates_per_epoch': 256}, 'overrides': {'offline_updates': {'profile': 0, 'effective': 0}, 'warmup_events': {'profile': 5000, 'effective': 500}, 'ratio_pretrain_updates': {'profile': 0, 'effective': 0}}}, 'seed': 5101, 'start_epoch': 0, 'completed_epochs': 5, 'offline_metrics': {}, 'warmup_metrics': {'events': 500, 'transitions': 459, 'episodes_started': 1, 'discarded_pending_total': 0, 'trip_boundaries_total': 0, 'mean_reward': -0.07985441560052392, 'mean_delta_t': 68.16122004357298, 'mean_hold_seconds': 4.308288128852844, 'online_buffer_size': 459}, 'ratio_metrics': {}, 'final_ratio_validation': {}, 'online_buffer_size': 1687, 'total_updates': 1280, 'checkpoint': {'path': '/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/sac-online_seed5101/checkpoints/latest.pt', 'sha256': '5db17e0e3e1809641e78b661fbc48adaf28995b831c871d46816f648f6271374'}, 'timings_sec': {'data_load': 1.2636073859976023, 'provenance_audit': 0.13527850900572957, 'model_init': 0.7784546719994978, 'device_cache': 0.018837842995708343, 'checkpoint': 1.0083121990028303, 'simulator_init': 2.664384569005051, 'online_warmup_rollout': 3.521799711001222, 'online_rollout': 5.895139765962085, 'online_training': 17.538425480990554}, 'max_rss_mb': 1708.83203125, 'max_cuda_memory_mb': 138.96875}
+  Loaded line 102S: 15-dim obs, 19 segs, 35 trips
+  Loaded line 102X: 15-dim obs, 18 segs, 31 trips
+  Loaded line 122S: 15-dim obs, 17 segs, 33 trips
+  Loaded line 122X: 15-dim obs, 17 segs, 32 trips
+  Loaded line 311S: 15-dim obs, 20 segs, 28 trips
+  Loaded line 311X: 15-dim obs, 21 segs, 26 trips
+  Loaded line 406S: 15-dim obs, 19 segs, 28 trips
+  Loaded line 406X: 15-dim obs, 19 segs, 28 trips
+  Loaded line 705S: 15-dim obs, 23 segs, 25 trips
+  Loaded line 705X: 15-dim obs, 23 segs, 21 trips
+  Loaded line 7S: 15-dim obs, 12 segs, 52 trips
+  Loaded line 7X: 15-dim obs, 12 segs, 50 trips
+/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/sac-online_seed5101

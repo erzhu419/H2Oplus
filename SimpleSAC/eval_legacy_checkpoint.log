@@ -1,0 +1,81 @@
+nohup: ignoring input
+Checkpoint: /home/erzhu419/mine_code/sumo-rl/LSTM-RL-legacy/ensemble_version/best model/checkpoint_episode_39
+Sim env: /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env
+DETERMINISTIC: False
+Mode: ALL 12 LINES (matching SUMO eval_ep39.py)
+
+Creating MultiLineEnv (all lines)...
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 102S: 15-dim obs, 19 segs, 35 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 102X: 15-dim obs, 18 segs, 31 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 122S: 15-dim obs, 17 segs, 33 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 122X: 15-dim obs, 17 segs, 32 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 311S: 15-dim obs, 20 segs, 28 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 311X: 15-dim obs, 21 segs, 26 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 406S: 15-dim obs, 19 segs, 28 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 406X: 15-dim obs, 19 segs, 28 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 705S: 15-dim obs, 23 segs, 25 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 705X: 15-dim obs, 23 segs, 21 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 7S: 15-dim obs, 12 segs, 52 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Loaded line 7X: 15-dim obs, 12 segs, 50 trips
+[33mWARN: gym.spaces.Box autodetected dtype as <class 'numpy.float32'>. Please provide explicit dtype.[0m
+  Lines: ['102S', '102X', '122S', '122X', '311S', '311X', '406S', '406X', '705S', '705X', '7S', '7X']
+    102S: 35 trips, max_agent=25
+    102X: 31 trips, max_agent=25
+    122S: 33 trips, max_agent=25
+    122X: 32 trips, max_agent=25
+    311S: 28 trips, max_agent=25
+    311X: 26 trips, max_agent=25
+    406S: 28 trips, max_agent=25
+    406X: 28 trips, max_agent=25
+    705S: 25 trips, max_agent=25
+    705X: 21 trips, max_agent=21
+    7S: 52 trips, max_agent=25
+    7X: 50 trips, max_agent=25
+
+Embedding dims: {'line_id': 4, 'bus_id': 21, 'station_id': 1, 'time_period': 1, 'direction': 2}
+state_dim=41 (emb=29 + cont=12)
+Loaded policy checkpoint ✓
+Loaded state normalization ✓
+
+============================================================
+Starting eval on MultiLineEnv (ALL 12 LINES)
+============================================================
+
+============================================================
+RESULTS - MultiLineEnv ALL 12 LINES (Original Mapping)
+============================================================
+Total episode reward:  -2086479
+Total decision steps:  11383
+Duration:              24.3s
+Hold:  mean=32.27, std=10.59, range=[3.15, 58.83]
+Speed: mean=1.02, std=0.12, range=[0.80, 1.20]
+
+--- Per-line breakdown ---
+  102S  : reward=   -190498, steps= 1123
+  102X  : reward=   -178292, steps=  945
+  122S  : reward=   -157711, steps=  953
+  122X  : reward=   -141534, steps=  882
+  311S  : reward=   -180005, steps=  953
+  311X  : reward=   -187184, steps=  890
+  406S  : reward=   -196908, steps=  901
+  406X  : reward=   -204646, steps=  923
+  705S  : reward=   -201343, steps=  994
+  705X  : reward=   -108706, steps=  755
+  7S    : reward=   -183106, steps= 1083
+  7X    : reward=   -156545, steps=  981
+  TOTAL : reward=  -2086479, steps=11383
+
+Reference (SUMO, original mapping): ~-691K (12 lines, ~12000 steps)
+============================================================

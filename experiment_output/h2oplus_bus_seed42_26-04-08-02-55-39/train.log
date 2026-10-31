@@ -1,0 +1,38 @@
+02:55:39 [INFO] ============================================================
+02:55:39 [INFO] H2O+ Bus Training
+02:55:39 [INFO] ============================================================
+02:55:39 [INFO] Log directory: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-02-55-39
+02:55:39 [INFO] Seed: 42, Device: cpu
+02:55:39 [INFO] Snapshot reset: False, JTT: False
+02:55:39 [INFO] Config saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-02-55-39/config.json
+02:55:49 [INFO] Route length set to 13149.8 m
+02:55:49 [INFO] Loading offline data: file=/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5, dir=None
+02:56:06 [INFO] Loaded 3,104,419 offline transitions, max buffer size 7,761,047, valid snapshots: 0
+02:56:06 [INFO] Offline reward stats: mean=-118.49, std=133.81
+02:56:06 [INFO] Snapshot reset DISABLED (use_snapshot_reset=False)
+02:56:06 [INFO] Creating MultiLineSimEnv from /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env
+02:56:09 [INFO] Traffic signal model (per line):
+02:56:09 [INFO]   102S: 31 signals, green_frac=0.37, cycle=90s
+02:56:09 [INFO]   102X: 26 signals, green_frac=0.37, cycle=90s
+02:56:09 [INFO]   122S: 26 signals, green_frac=0.39, cycle=90s
+02:56:09 [INFO]   122X: 26 signals, green_frac=0.39, cycle=90s
+02:56:09 [INFO]   311S: 36 signals, green_frac=0.40, cycle=90s
+02:56:09 [INFO]   311X: 36 signals, green_frac=0.40, cycle=90s
+02:56:09 [INFO]   406S: 30 signals, green_frac=0.39, cycle=90s
+02:56:09 [INFO]   406X: 29 signals, green_frac=0.40, cycle=90s
+02:56:09 [INFO]   705S: 35 signals, green_frac=0.40, cycle=90s
+02:56:09 [INFO]   705X: 34 signals, green_frac=0.40, cycle=90s
+02:56:09 [INFO]   7S: 17 signals, green_frac=0.39, cycle=90s
+02:56:09 [INFO]   7X: 17 signals, green_frac=0.38, cycle=90s
+02:56:09 [INFO] Online env: SIM (MultiLineSimEnv)
+02:56:09 [INFO] EmbeddingLayer output_dim=29, cont_features=12, internal_state_dim=41
+02:56:09 [INFO] Using ContrastiveDynamicsDiscriminator (delta-based, action-invariant)
+02:56:09 [INFO] Loading ensemble offline checkpoint: ../experiment_output/offline_ensemble/offline_ensemble_final.pt
+02:56:09 [INFO]   Policy loaded from ensemble checkpoint (partial match OK)
+02:56:09 [INFO]   Q-function loaded from ensemble checkpoint
+02:56:10 [INFO] Using H2OPlusEnsemble: E=5, β=-2.0
+02:56:10 [INFO] JTT DISABLED (use_jtt=False)
+02:56:10 [INFO] Starting training for 300 epochs
+02:56:10 [INFO]   rollout_events/epoch=100, train_steps/epoch=100, eval_period=10, checkpoint_period=50
+02:56:11 [DEBUG] [Epoch 0] Rollout: events=101, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+02:56:16 [DEBUG] [Epoch 0] Train: steps=100/100, sim_ratio=0.10, avg_ploss=-0.7481415554881096, avg_qloss=255.92362411499025, avg_dloss=5.100661296844482

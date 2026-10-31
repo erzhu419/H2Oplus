@@ -2,6 +2,22 @@
 [H2O+](https://arxiv.org/abs/2309.12716) is An Improved Framework for Hybrid Offline-and-Online RL with Dynamics Gaps, which offers great flexibility to bridge various choices of offline and online learning methods, while also accounting for dynamics gaps between the real and simulation environment. Compared to [H2O](https://arxiv.org/abs/2206.13464), H2O+ gets rid of over-conservative offline RL backbone and enjoys explorative benefits of simulation environments. Through extensive simulation and real-world robotics experiments, we demonstrate superior performance and flexibility over advanced cross-domain online and offline RL algorithms, details of which can be seen in our [webpage](https://sites.google.com/view/h2oplusauthors/).
 
 
+## Bus Holding Study
+
+The transit adaptation and completion-aware controller are documented in the
+[complete T-ITS manuscript package](paper/TITS_Bus_Holding/README.txt).
+The [manuscript PDF](paper/TITS_Bus_Holding/TITS_Bus_Holding_Manuscript.pdf),
+LaTeX sources, figures, and compact result tables are included.
+
+Versioned protocols, analyses, closeouts, and historical run logs are under
+[reproducibility](reproducibility/README.md). Small training/evaluation logs and
+CSV/JSON summaries are also retained in their original `experiment_output*`,
+`SimpleSAC/experiment_output`, and `bus_h2o` directories. The 2026-10-31 archive
+adds existing text records up to 2 MiB each; it does not run new experiments.
+Large datasets, checkpoints, raw event/trajectory dumps, deployment copies,
+and local credentials are excluded. Historical invalid/diagnostic records retain
+their original status and are not interchangeable with confirmation evidence.
+
 ## Installation and Setups
 To install the dependencies, run the command:
 ```python

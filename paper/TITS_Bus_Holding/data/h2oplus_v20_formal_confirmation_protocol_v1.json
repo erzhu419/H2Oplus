@@ -1,0 +1,204 @@
+{
+  "analysis": {
+    "aulc_claim_forbidden": true,
+    "candidate": "h2oplus-v19-completion-safety-quarter-load-sixty",
+    "candidate_replacement_forbidden": true,
+    "comparison_controls": [
+      "h2oplus-v14-terminal-quarter",
+      "h2oplus",
+      "sac-online",
+      "h2oplus-v10-delayed-actor",
+      "h2oplus-v11-actor-hold",
+      "h2oplus-v12-actor-ramp",
+      "h2oplus-v13-proximal-strong"
+    ],
+    "completion_endpoint": "passengers.completion_rate",
+    "completion_test": "exact-paired-block-sign-test-with-margin",
+    "direct_behavior_parent": "h2oplus-v19-completion-safety-baseline",
+    "eight_of_ten_one_sided_sign_pvalue": 0.0546875,
+    "endpoint_only": true,
+    "formal_effect_claim_limited_to_direct_parent": true,
+    "independent_analysis_unit": "formal-environment-block",
+    "minimum_block_wins": 9,
+    "multiplicity": "intersection-union: primary superiority and completion noninferiority must both pass; supportive controls do not expand the confirmatory claim",
+    "nine_of_ten_one_sided_sign_pvalue": 0.0107421875,
+    "one_sided_alpha": 0.025,
+    "primary_direction": "lower-is-better",
+    "primary_endpoint": "passenger_welfare.accrued_generalized_seconds_per_departed_passenger",
+    "primary_test": "exact-paired-block-sign-test",
+    "sac_robustness_control": "sac-online",
+    "submission_authorized": false,
+    "ties_count_as_nonwins": true,
+    "within_block_average_over_training_seeds_and_demand_scales": true
+  },
+  "analysis_gates": {
+    "all_1350_results_valid": true,
+    "all_ten_135_job_matrix_manifests_complete": true,
+    "candidate_completion_noninferior_at_each_demand_scale": true,
+    "candidate_completion_noninferiority_blocks_vs_direct_parent_at_least": 9,
+    "candidate_completion_noninferiority_margin_per_control": 0.003,
+    "candidate_completion_noninferiority_margin_vs_direct_parent": 0.003,
+    "candidate_mean_primary_change_vs_direct_parent_less_than_seconds": 0,
+    "candidate_mean_primary_lower_than_every_comparison_control": true,
+    "candidate_primary_better_at_each_demand_scale": true,
+    "candidate_primary_block_wins_vs_direct_parent_at_least": 9,
+    "candidate_primary_block_wins_vs_sac_at_least": 9,
+    "parent_artifact_integrity_passed": true,
+    "parent_training_stability_passed": true
+  },
+  "authorization": {
+    "bytes": 1317,
+    "path": "reproducibility/h2oplus_v20_formal_confirmation_preparation_authorization_v1.json",
+    "sha256": "7a7b79f029a5437a80a31637c1bc057571849623b9b04a92a67bcf66586882c9"
+  },
+  "created_utc": "2026-08-28T01:26:52.258811+00:00",
+  "data_environment_evidence": {
+    "data_environment_audit": {
+      "bytes": 17446,
+      "path": "reproducibility/h2oplus_v17_data_environment_convergence_audit_v1.json",
+      "sha256": "ff5210e82913c456314ba1e47a1f3400e0e5bdb58fce2f14d8e9bc1cdd0c95e9"
+    },
+    "data_environment_verification": {
+      "bytes": 955,
+      "path": "reproducibility/h2oplus_v17_data_environment_convergence_verification_v1.json",
+      "sha256": "925fa9ace1af907bd50042718ba9d7492a892a8e8a2a863b567091540af62390"
+    }
+  },
+  "dataset": {
+    "bytes": 589504302,
+    "path": "bus_h2o/datasets_v7/formal_v2_full/transit_smdp_v7_formal_v2.h5",
+    "sha256": "6724dc9fd00f983d93fe5216bf559ccbdf4bbb70f1f31b7fc1b5146387b93899"
+  },
+  "environment": {
+    "bytes": 22417,
+    "path": "reproducibility/h2oplus_v20_formal_confirmation_environment_v1.json",
+    "sha256": "50b831923b76a81c773cf7dc19dcc2e10c729ea8fc7b3be6982fc01b7c3cc141"
+  },
+  "evaluation": {
+    "cpu_cores": 12,
+    "demand_realization_seeds": [
+      8201,
+      8202,
+      8203,
+      8204,
+      8205,
+      8206,
+      8207,
+      8208,
+      8209,
+      8210
+    ],
+    "demand_scales": [
+      0.75,
+      1,
+      1.25
+    ],
+    "formal_confirmation_blocks": [
+      "v20-formal-confirmation-01",
+      "v20-formal-confirmation-02",
+      "v20-formal-confirmation-03",
+      "v20-formal-confirmation-04",
+      "v20-formal-confirmation-05",
+      "v20-formal-confirmation-06",
+      "v20-formal-confirmation-07",
+      "v20-formal-confirmation-08",
+      "v20-formal-confirmation-09",
+      "v20-formal-confirmation-10"
+    ],
+    "gpu_count": 0,
+    "jobs_per_block": 135,
+    "physical_methods": 45,
+    "planned_host": "jtl110gpu",
+    "planned_new_remote_sumo_episodes": 1350,
+    "ram_mb": 32768,
+    "submission_authorized": false,
+    "sumo_seeds": [
+      8101,
+      8102,
+      8103,
+      8104,
+      8105,
+      8106,
+      8107,
+      8108,
+      8109,
+      8110
+    ],
+    "training_seeds": [
+      6201,
+      6202,
+      6203,
+      6204,
+      6205
+    ],
+    "workers": 12
+  },
+  "formal_confirmation_outcomes_read": false,
+  "formal_held_out_outcomes_read": false,
+  "matrix_type": "endpoint-only-formal-confirmation",
+  "minimal_remote_sync_policy": {
+    "bytes": 1601,
+    "path": "reproducibility/h2oplus_minimal_remote_sync_policy_v1.json",
+    "sha256": "20b313b7b8cc13a0a8df7c2a137a4b0713c621a33ef8e2e314fb69d03de1a531"
+  },
+  "parent_v20_closeout": {
+    "bytes": 27431,
+    "path": "reproducibility/h2oplus_v20_full_control_results/evaluation_closeout_v1.json",
+    "sha256": "dbd1da5442219f404f90da6fbc415b0755f7dddd41d28b9b581039d359882132"
+  },
+  "parent_v20_evidence": {
+    "v20_analysis": {
+      "bytes": 176722,
+      "path": "reproducibility/h2oplus_v20_full_control_results/full_control_analysis_v1.json",
+      "sha256": "f7de8ca7ea82098a89383f1fe0e9e234f8c1acab1c030d66494100744cd9455b"
+    },
+    "v20_audit": {
+      "bytes": 156249,
+      "path": "reproducibility/h2oplus_v20_full_control_results/evaluation_audit_v1.json",
+      "sha256": "2e516ab3ea0cff10dc88607d6fb8adf3e3888a822e32a14f84a86953a466f583"
+    },
+    "v20_closeout": {
+      "bytes": 27431,
+      "path": "reproducibility/h2oplus_v20_full_control_results/evaluation_closeout_v1.json",
+      "sha256": "dbd1da5442219f404f90da6fbc415b0755f7dddd41d28b9b581039d359882132"
+    },
+    "v20_closeout_verification": {
+      "bytes": 1413,
+      "path": "reproducibility/h2oplus_v20_full_control_results/evaluation_closeout_verification_v1.json",
+      "sha256": "08b25f8b229a9fefbfec198f8198aff5db4f9f2680f16d9bf5521985cdfe7f7e"
+    },
+    "v20_manifest_verification": {
+      "bytes": 995,
+      "path": "reproducibility/h2oplus_v20_full_control_results/evaluation_file_manifest_verification_v1.json",
+      "sha256": "6f50f7de8b87519349d48805e2ac7f98a6ac7d9ed2df989378fd2448a95c5cb0"
+    },
+    "v20_methods": {
+      "bytes": 41288,
+      "path": "reproducibility/h2oplus_v20_full_control_evaluation_methods_v1.json",
+      "sha256": "77162e22cc3b748fc2ad65a229ebca5c9212fd2af172b37ba81cdaded2d2e2e9"
+    }
+  },
+  "rationale": {
+    "bytes": 4388,
+    "path": "reproducibility/h2oplus_v20_formal_confirmation_rationale_v1.json",
+    "sha256": "72e6d2961846e458721f121ae75eded862bed0556c929dc38015a3b2d9103a4d"
+  },
+  "registration": {
+    "bytes": 2458,
+    "path": "reproducibility/h2oplus_v20_formal_confirmation_registration_v1.json",
+    "sha256": "c33111cd72b741a801804cd065f42629094d45c0fe03a5b88f9d95dba62149ce"
+  },
+  "sample_size_justification": {
+    "independent_blocks": 10,
+    "paired_observations_per_block": 15,
+    "reason": "ten blocks make nine directional wins sufficient at one-sided alpha 0.025 under the preregistered exact sign test"
+  },
+  "schema_version": "transit-h2oplus-v20-formal-confirmation-protocol-v1",
+  "status": "frozen-before-any-v20-formal-confirmation-outcome",
+  "study_stage": "formal-confirmation",
+  "sumo_runtime_lock": {
+    "bytes": 41885,
+    "path": "reproducibility/h2oplus_v8_stage_a_sumo_runtime_lock_py38.json",
+    "sha256": "ac60ae58e0e6db6bb1386ffdfe0d164b96f81e49e4983b8b062ceddb65da51a4"
+  }
+}

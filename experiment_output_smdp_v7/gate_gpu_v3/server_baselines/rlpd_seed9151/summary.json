@@ -1,0 +1,183 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/experiment_output_smdp_v7/gate_gpu_v3/server_baselines/rlpd_seed9151/checkpoints/latest.pt",
+    "sha256": "67661fad8cb4c2c6db9d53ab6b4f34c0fd18861e34188654d9a073ad253b4947"
+  },
+  "completed_epochs": 3,
+  "completed_utc": "2026-08-11T01:14:51.040899+00:00",
+  "final_blocked_simultaneous_batch_size": 0,
+  "final_policy": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/experiment_output_smdp_v7/gate_gpu_v3/server_baselines/rlpd_seed9151/checkpoints/final_actor.pt",
+    "sha256": "5578ab1c07a7e8dd91a273ff92c59ae052ca6b4a32050ac1656dfdd3aa9c7eb2",
+    "source_training_checkpoint_sha256": "67661fad8cb4c2c6db9d53ab6b4f34c0fd18861e34188654d9a073ad253b4947"
+  },
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 304.201171875,
+  "max_rss_mb": 1526.9765625,
+  "maximum_simultaneous_decisions": 2,
+  "mdp_version": "v7",
+  "method": "rlpd",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "mean-all",
+    "actor_update_interval": 20,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "cql_penalty_subset_replacement": false,
+    "cql_penalty_subset_size": null,
+    "critic_layer_norm": true,
+    "critic_learning_rate": 0.0003,
+    "critic_loss": "mse",
+    "default_offline_updates": 0,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 5000,
+    "description": "source-aligned state-based RLPD update protocol: random initialization, 50/50 prior/online replay, ten Q heads, and UTD 20",
+    "ensemble_size": 10,
+    "gradient_clip_norm": null,
+    "huber_delta": 1.0,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.0,
+    "offline_initializer": null,
+    "offline_objective": "none",
+    "offline_temperature_action_samples": 1,
+    "offline_update_order": "critic-before-actor",
+    "online_backup": "sac",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "online_update_order": "critic-before-actor",
+    "ratio_update_interval": 4,
+    "reference": "https://proceedings.mlr.press/v202/ball23a.html",
+    "reference_commit": "c90fd4baf28c9c9ef40a81460a2e395092844f88",
+    "reference_implementation": "https://github.com/ikostrikov/rlpd",
+    "target_entropy": -0.5,
+    "target_subset_replacement": false,
+    "target_subset_size": 2,
+    "temperature_state_source": "actor",
+    "use_ratio_correction": false,
+    "utd_ratio": 20,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003,
+    "warmup_action_mode": "uniform-box"
+  },
+  "method_protocol": "source-aligned state-based RLPD update protocol: random initialization, 50/50 prior/online replay, ten Q heads, and UTD 20",
+  "offline_initializer_consumed": null,
+  "offline_initializer_produced": null,
+  "offline_metrics": {},
+  "online_buffer_size": 63,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 256,
+        "profile": 256
+      },
+      "critic_loss": {
+        "effective": "huber",
+        "profile": "mse"
+      },
+      "ensemble_size": {
+        "effective": 10,
+        "profile": 10
+      },
+      "huber_delta": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "initial_temperature": {
+        "effective": 1.0,
+        "profile": 1.0
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.0,
+        "profile": 0.0
+      },
+      "offline_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "online_fraction": {
+        "effective": 0.5,
+        "profile": 0.5
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": 0.0,
+        "profile": -0.5
+      },
+      "updates_per_epoch": {
+        "effective": 320,
+        "profile": 320
+      },
+      "utd_ratio": {
+        "effective": 20,
+        "profile": 20
+      },
+      "warmup_events": {
+        "effective": 16,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/deployments/v7_formal_v2_gpu_gate_v3/workspace/experiment_output_smdp_v7/gate_gpu_v3/server_baselines/rlpd_seed9151",
+  "run_signature": "58da5edf915d85c45d149d734c7cefd788493033d1d08cd5e2402761f1cb12a6",
+  "schema_version": "transit-training-summary-v8",
+  "seed": 9151,
+  "simulator_decision_event_cap": 64,
+  "simulator_decision_event_underfill": 0,
+  "simulator_decision_events": 64,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 2.1393626969947945,
+    "data_load": 11.5483641000028,
+    "device_cache": 0.0016912379942368716,
+    "model_init": 1.9867575460011722,
+    "online_rollout": 2.907934214992565,
+    "online_training": 36.83693191900238,
+    "online_warmup_rollout": 1.472629837000568,
+    "provenance_audit": 0.8335764949952136,
+    "simulator_init": 4.066202560999955
+  },
+  "total_updates": 960,
+  "warmup_metrics": {
+    "action_mode": "uniform-box",
+    "blocked_simultaneous_batch_size": 0,
+    "current_demand_scale": 0.75,
+    "demand_scale_episode_starts": {
+      "0.75": 1,
+      "1": 0,
+      "1.25": 0
+    },
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 16,
+    "hard_event_cap_reached": false,
+    "maximum_simultaneous_decisions": 1,
+    "mean_delta_t": 27.0,
+    "mean_hold_seconds": 27.70686016185209,
+    "mean_reward": -1026.3333333333333,
+    "online_buffer_size": 15,
+    "transitions": 15,
+    "trip_boundaries_total": 0
+  }
+}

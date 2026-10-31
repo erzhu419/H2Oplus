@@ -1,0 +1,128 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/h2oplus-no-ratio_seed5101/checkpoints/latest.pt",
+    "sha256": "c1fa9256efa2bd9afff95ad26f96d57af6555e1927f6829af4db031ade476262"
+  },
+  "completed_epochs": 5,
+  "completed_utc": "2026-08-03T16:29:00.367410+00:00",
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 139.470703125,
+  "max_rss_mb": 1713.4296875,
+  "mdp_version": "v4",
+  "method": "h2oplus-no-ratio",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 50000,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 5000,
+    "description": "H2O+ mixed value backup without conditional dynamics-ratio correction",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.1,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "iql",
+    "online_backup": "h2oplus",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "reference": "https://doi.org/10.1109/ICRA55743.2025.11127503",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "H2O+ mixed value backup without conditional dynamics-ratio correction",
+  "offline_metrics": {
+    "train/actor_grad_norm": 1.1626052856445312,
+    "train/actor_loss": 0.20009464025497437,
+    "train/actor_updated": 1.0,
+    "train/alpha": 1.0,
+    "train/alpha_loss": 0.0,
+    "train/cql_penalty": 0.0,
+    "train/critic_grad_norm": 26.60280990600586,
+    "train/critic_loss": 1.13392174243927,
+    "train/offline_td_loss": 1.13392174243927,
+    "train/online_critic_update": 0.0,
+    "train/q_data_mean": -6.301020622253418,
+    "train/sim_td_loss": 0.0,
+    "train/update": 2000.0,
+    "train/value_advantage": -0.5834312438964844,
+    "train/value_grad_norm": 6.066645622253418,
+    "train/value_loss": 2.226346731185913
+  },
+  "online_buffer_size": 1690,
+  "protocol_resolution": {
+    "defaults_applied": {
+      "batch_size": 256,
+      "ensemble_size": 2,
+      "initial_temperature": 1.0,
+      "iql_advantage_temperature": 3.0,
+      "offline_cql_alpha": 0.0,
+      "online_fraction": 0.5,
+      "target_entropy": -1.0,
+      "updates_per_epoch": 256,
+      "utd_ratio": 1
+    },
+    "overrides": {
+      "offline_updates": {
+        "effective": 2000,
+        "profile": 50000
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "warmup_events": {
+        "effective": 500,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/h2oplus-no-ratio_seed5101",
+  "run_signature": "50a7d8c665186b00dc15df779ef72e469edf33cb79caf79c47c13266eb5e97c6",
+  "schema_version": "transit-training-summary-v5",
+  "seed": 5101,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 1.8010793070134241,
+    "data_load": 0.6271289869982866,
+    "device_cache": 0.016658913002174813,
+    "model_init": 0.9300587300022016,
+    "offline_pretraining": 20.63285303200246,
+    "online_rollout": 7.291257122007664,
+    "online_training": 36.29931624700839,
+    "online_warmup_rollout": 2.7224245379984495,
+    "provenance_audit": 0.10684420400502859,
+    "simulator_init": 2.646103832004883
+  },
+  "total_updates": 3280,
+  "warmup_metrics": {
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 500,
+    "mean_delta_t": 63.01086956521739,
+    "mean_hold_seconds": 0.4540081708431244,
+    "mean_reward": -0.006349926799455102,
+    "online_buffer_size": 460,
+    "transitions": 460,
+    "trip_boundaries_total": 0
+  }
+}

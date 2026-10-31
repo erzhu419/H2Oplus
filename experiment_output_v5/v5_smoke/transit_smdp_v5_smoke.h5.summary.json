@@ -1,0 +1,88 @@
+{
+  "build_provenance": {
+    "builder": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/build_transit_v5_dataset.py",
+      "sha256": "f6f84c5983c9d424d00e6aabf1261a820f6b9896095aad4a6fca01d2ed4e0340"
+    },
+    "derivation_signature": "c567771a81d1e0fa6fde3dbd3f3a72955e0da2d0daa09244293c10518900e890",
+    "mdp_contract": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py",
+      "sha256": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a"
+    },
+    "measurement_resolution_correction": {
+      "fields": {
+        "next_observations.backward_headway_seconds": {
+          "corrected_values": 0,
+          "minimum_source_seconds": 377.0
+        },
+        "next_observations.forward_headway_seconds": {
+          "corrected_values": 0,
+          "minimum_source_seconds": 360.0
+        },
+        "observations.backward_headway_seconds": {
+          "corrected_values": 0,
+          "minimum_source_seconds": 377.0
+        },
+        "observations.forward_headway_seconds": {
+          "corrected_values": 0,
+          "minimum_source_seconds": 360.0
+        }
+      },
+      "rule": "negative headways within the SUMO one-second measurement resolution are simultaneous events and are mapped to zero; lower values fail",
+      "tolerance_seconds": 1.0,
+      "total_corrected_values": 0
+    },
+    "passenger_time": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py",
+      "sha256": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7"
+    },
+    "runtime": {
+      "h5py": "3.16.0",
+      "numpy": "2.2.6",
+      "python": "3.10.12"
+    },
+    "source_shard_sha256": [
+      "a637ce1d655d0f09c22f321ddcaab163395bae399f818c33f49bebcf091bd89c"
+    ],
+    "transform_version": "transit-smdp-v5-derived-transform-v1"
+  },
+  "content_signature": "79b263845fe897e3a737eb79d1acff7efb1b2d9948fd195922bc4d213f32d003",
+  "created_utc": "2026-08-03T18:10:23.765863+00:00",
+  "dataset": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/v5_smoke/transit_smdp_v5_smoke.h5",
+  "dataset_sha256": "c0cdcdc25582bd1ccd275274f9c64ec52468527d7a73ba5ffc7df16ab13e0bdf",
+  "derivation_signature": "c567771a81d1e0fa6fde3dbd3f3a72955e0da2d0daa09244293c10518900e890",
+  "episodes": 1,
+  "exact_zero_action_rate": 1.0,
+  "formal_full_horizon_only": false,
+  "in_vehicle_passenger_seconds_mean": 107.9137954711914,
+  "policy_counts": {
+    "zero-v5-smoke": 58
+  },
+  "raw_state_dim": 16,
+  "reward": {
+    "max": -0.0003800000122282654,
+    "mean": -0.03890637680888176,
+    "min": -0.10533000528812408
+  },
+  "rows": 58,
+  "schema_version": "transit-smdp-v5-dataset-summary-v1",
+  "source_shards": 1,
+  "state_dim": 15,
+  "station_max_by_line": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    18.0,
+    16.0
+  ],
+  "terminal_rows": 5,
+  "trajectories": 5,
+  "wait_passenger_seconds_mean": 1891.362060546875
+}

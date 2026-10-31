@@ -1,0 +1,101 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v6/smoke/v5-contract-smoke-bc/checkpoints/latest.pt",
+    "sha256": "e80d2ca2258e8735619a56bf02455ed3d7ab9d0f4a8e7aba1e301fca7c5e9dd0"
+  },
+  "completed_epochs": 0,
+  "completed_utc": "2026-08-03T18:13:54.698345+00:00",
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 0.0,
+  "max_rss_mb": 3273.06640625,
+  "mdp_version": "v5",
+  "method": "bc",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 100000,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 0,
+    "description": "offline-only maximum-likelihood behavior cloning",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "bc",
+    "online_backup": "sac",
+    "online_fraction": 0.0,
+    "online_update_mode": "none",
+    "reference": "https://proceedings.mlr.press/v15/ross11a.html",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "offline-only maximum-likelihood behavior cloning",
+  "offline_metrics": {
+    "train/action_log_probability": -0.42098668217658997,
+    "train/actor_grad_norm": 0.8446769118309021,
+    "train/actor_loss": 0.42098668217658997,
+    "train/update": 10.0
+  },
+  "online_buffer_size": 0,
+  "protocol_resolution": {
+    "defaults_applied": {
+      "initial_temperature": 1.0,
+      "iql_advantage_temperature": 3.0,
+      "offline_cql_alpha": 0.0,
+      "online_fraction": 0.0,
+      "ratio_pretrain_updates": 0,
+      "target_entropy": -1.0,
+      "updates_per_epoch": 0,
+      "utd_ratio": 1,
+      "warmup_events": 0
+    },
+    "overrides": {
+      "batch_size": {
+        "effective": 16,
+        "profile": 256
+      },
+      "ensemble_size": {
+        "effective": 2,
+        "profile": 2
+      },
+      "offline_updates": {
+        "effective": 10,
+        "profile": 100000
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v6/smoke/v5-contract-smoke-bc",
+  "run_signature": null,
+  "schema_version": "transit-training-summary-v6",
+  "seed": 6101,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 0.011917758005438372,
+    "data_load": 0.005435972998384386,
+    "model_init": 0.7100844880042132,
+    "offline_pretraining": 0.012298746994929388,
+    "provenance_audit": 0.06200778800121043
+  },
+  "total_updates": 10,
+  "warmup_metrics": {}
+}

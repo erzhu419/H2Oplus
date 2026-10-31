@@ -1,0 +1,84 @@
+========================================================================
+SimpleSim + SUMO  Log Analysis
+========================================================================
+Total decision rows: sim=2431863  sumo=0
+Total execution rows: sim=708451
+
+── [sim] Per-line decisions ──
+  102X  : 1545
+  122S  : 317229
+  122X  : 15296
+  311S  : 4840
+  311X  : 35916
+  406S  : 83997
+  705S  : 28173
+  7S    : 1337505
+  7X    : 607362
+
+── [sim] Episode 1 — first 15 decisions ──
+   ep   step   sim_t  line   bus              station dir   fwd_hw   bwd_hw   act      rew
+    1      1     972    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1      2     973    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1      3     974    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1      4     975    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1      5     976    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1      6     977    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1      7     978    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1      8     979    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1      9     980    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1     10     981    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1     11     982    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1     12     983    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1     13     984    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1     14     985    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+    1     15     986    7S     0                 7S10   1    360.0    360.0   0.0    0.000
+
+── [sim] Episode 1 — first 10 executions ──
+   ep   step   sim_t  line   bus              station dir  hold onboard    wait
+    1      1     972    7S     0                 7S10   1   0.0      50      11
+    1      1     972    7S     1                 7S05   1  16.0      50       1
+    1      2     973    7S     1                 7S05   1  15.0      50       1
+    1      2     973    7X     1                 7X03   1  34.0      22       0
+    1      3     974    7S     1                 7S05   1  14.0      50       1
+    1      3     974    7X     1                 7X03   1  33.0      22       0
+    1      4     975    7S     1                 7S05   1  13.0      50       1
+    1      4     975    7X     1                 7X03   1  32.0      22       0
+    1      5     976    7S     1                 7S05   1  12.0      50       1
+    1      5     976    7X     1                 7X03   1  31.0      22       0
+
+── Obs Range (sim) ──
+  obs_line_idx          : min=     0.000  max=     9.000  mean=     7.098
+  obs_bus_idx           : min=     0.000  max=    16.000  mean=     2.367
+  obs_station_id        : min=     1.000  max=    16.000  mean=     7.034
+  obs_time_period       : min=     0.000  max=     1.000  mean=     0.005
+  obs_direction         : min=     1.000  max=     1.000  mean=     1.000
+  obs_forward_hw        : min=    10.990  max=  1634.990  mean=   616.045
+  obs_backward_hw       : min=    10.990  max=  1392.990  mean=   542.448
+  obs_waiting_pax       : min=     0.000  max=   152.000  mean=    30.999
+  obs_target_hw         : min=   360.000  max=   360.000  mean=   360.000
+  obs_base_dwell        : min=     0.000  max=     0.000  mean=     0.000
+  obs_sim_time          : min=   960.000  max=  4001.000  mean=  2091.484
+  obs_gap               : min= -1274.990  max=   349.010  mean=  -256.045
+  obs_co_fwd_hw         : min=   360.000  max=   360.000  mean=   360.000
+  obs_co_bwd_hw         : min=   360.000  max=   360.000  mean=   360.000
+  obs_seg_speed         : min=     2.000  max=    10.000  mean=     4.778
+
+── Bug Checks ──
+  All-zero obs rows: 0
+  NaN/Inf obs values: 0
+  obs_line_idx consistency per line:
+    102X  : {0.0}  ✓
+    122S  : {1.0}  ✓
+    122X  : {2.0}  ✓
+    311S  : {3.0}  ✓
+    311X  : {4.0}  ✓
+    406S  : {5.0}  ✓
+    705S  : {6.0}  ✓
+    7S    : {8.0}  ✓
+    7X    : {9.0}  ✓
+
+  No SUMO rows (run with --with_sumo for comparison)
+
+========================================================================
+End of Analysis
+========================================================================

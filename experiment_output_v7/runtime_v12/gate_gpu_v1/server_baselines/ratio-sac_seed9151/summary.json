@@ -1,0 +1,179 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v12/gate_gpu_v1/server_baselines/ratio-sac_seed9151/checkpoints/latest.pt",
+    "sha256": "39f408ad3c9f9799a601b1ab6e622187713489bb358adc1daa0cf021f4063605"
+  },
+  "completed_epochs": 3,
+  "completed_utc": "2026-08-08T12:08:00.312190+00:00",
+  "final_ratio_validation": {
+    "ratio/validation_available": 0.0
+  },
+  "max_cuda_memory_mb": 645.01611328125,
+  "max_rss_mb": 4684.83203125,
+  "mdp_version": "v6",
+  "method": "ratio-sac",
+  "method_profile": {
+    "activation": "silu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": true,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-subset",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 512,
+    "bootstrap_probability": 0.8,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": true,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 50000,
+    "default_ratio_pretrain_updates": 1000,
+    "default_warmup_events": 5000,
+    "description": "CQL warm start and mixed SAC with conditional dynamics-ratio correction; retained as a non-H2O+ ablation",
+    "ensemble_size": 5,
+    "initial_temperature": 0.1,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.2,
+    "offline_initializer": null,
+    "offline_objective": "cql",
+    "online_backup": "sac",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "ratio_update_interval": 4,
+    "reference": "https://doi.org/10.1109/ICRA55743.2025.11127503",
+    "reference_commit": "02171768283d307244700c69003423704db83b05",
+    "reference_implementation": "https://github.com/t6-thu/H2Oplus",
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": true,
+    "utd_ratio": 1,
+    "value_layer_norm": true,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "CQL warm start and mixed SAC with conditional dynamics-ratio correction; retained as a non-H2O+ ablation",
+  "offline_metrics": {
+    "train/actor_grad_norm": 0.4242778420448303,
+    "train/actor_loss": -0.12282590568065643,
+    "train/actor_updated": 1.0,
+    "train/alpha": 0.09975986182689667,
+    "train/alpha_loss": -3.7500531673431396,
+    "train/cql_penalty": 0.8979818224906921,
+    "train/critic_grad_norm": 0.19302041828632355,
+    "train/critic_loss": 0.1831384301185608,
+    "train/offline_td_loss": 0.0035420625936239958,
+    "train/online_critic_update": 0.0,
+    "train/q_data_mean": 0.06691008061170578,
+    "train/sim_td_loss": 0.0,
+    "train/update": 8.0,
+    "train/value_advantage": 0.0,
+    "train/value_grad_norm": 0.0,
+    "train/value_loss": 0.0
+  },
+  "online_buffer_size": 63,
+  "protocol_resolution": {
+    "defaults_applied": {},
+    "overrides": {
+      "batch_size": {
+        "effective": 512,
+        "profile": 512
+      },
+      "ensemble_size": {
+        "effective": 5,
+        "profile": 5
+      },
+      "initial_temperature": {
+        "effective": 0.1,
+        "profile": 0.1
+      },
+      "iql_advantage_temperature": {
+        "effective": 3.0,
+        "profile": 3.0
+      },
+      "offline_cql_alpha": {
+        "effective": 0.2,
+        "profile": 0.2
+      },
+      "offline_updates": {
+        "effective": 8,
+        "profile": 50000
+      },
+      "online_fraction": {
+        "effective": 0.5,
+        "profile": 0.5
+      },
+      "ratio_pretrain_updates": {
+        "effective": 4,
+        "profile": 1000
+      },
+      "ratio_update_interval": {
+        "effective": 4,
+        "profile": 4
+      },
+      "target_entropy": {
+        "effective": -1.0,
+        "profile": -1.0
+      },
+      "updates_per_epoch": {
+        "effective": 16,
+        "profile": 16
+      },
+      "utd_ratio": {
+        "effective": 1,
+        "profile": 1
+      },
+      "warmup_events": {
+        "effective": 16,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {
+    "ratio/joint_accuracy": 0.96484375,
+    "ratio/joint_auc": 0.9986915588378906,
+    "ratio/joint_brier": 0.24345926940441132,
+    "ratio/joint_loss": 0.6800646781921387,
+    "ratio/joint_real_logit_mean": 0.019977834075689316,
+    "ratio/joint_sim_logit_mean": -0.03275640308856964,
+    "ratio/loss": 1.3658758401870728,
+    "ratio/state_action_accuracy": 0.96484375,
+    "ratio/state_action_auc": 0.9981956481933594,
+    "ratio/state_action_brier": 0.24633213877677917,
+    "ratio/state_action_loss": 0.6858111619949341,
+    "ratio/state_action_real_logit_mean": 0.010713441297411919,
+    "ratio/state_action_sim_logit_mean": -0.01876898482441902,
+    "ratio/validation_available": 0.0
+  },
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/runtime_v12/gate_gpu_v1/server_baselines/ratio-sac_seed9151",
+  "run_signature": "4115556dd27cad4b6853389da4694a005a4738b95d988805c19c2d5031b75494",
+  "schema_version": "transit-training-summary-v7",
+  "seed": 9151,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 1.5794687420129776,
+    "data_load": 13.418929872103035,
+    "device_cache": 0.0026860448997467756,
+    "model_init": 2.439026040956378,
+    "offline_pretraining": 33.26760788192041,
+    "online_rollout": 0.46583324088715017,
+    "online_training": 7.7898309412412345,
+    "online_warmup_rollout": 4.096930094994605,
+    "provenance_audit": 0.7072374289855361,
+    "ratio_pretraining": 14.11813253397122,
+    "simulator_init": 4.808728654868901
+  },
+  "total_updates": 56,
+  "warmup_metrics": {
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 16,
+    "maximum_simultaneous_decisions": 1,
+    "mean_delta_t": 23.8,
+    "mean_hold_seconds": 4.74241029471159,
+    "mean_reward": -0.00148,
+    "online_buffer_size": 15,
+    "transitions": 15,
+    "trip_boundaries_total": 0
+  }
+}

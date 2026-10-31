@@ -1,0 +1,42 @@
+13:42:58 [INFO] ============================================================
+13:42:58 [INFO] H2O+ Bus Training
+13:42:58 [INFO] ============================================================
+13:42:58 [INFO] Log directory: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-13-42-58
+13:42:58 [INFO] Seed: 42, Device: cpu
+13:42:58 [INFO] Snapshot reset: True, JTT: False
+13:42:58 [INFO] Config saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-13-42-58/config.json
+13:43:11 [INFO] Route length set to 13149.8 m
+13:43:11 [INFO] Loading offline data: file=/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5, dir=None
+13:43:22 [INFO] Loaded 3,104,419 offline transitions, max buffer size 9,313,257, valid snapshots: 0
+13:43:22 [INFO] Offline reward stats: mean=-118.49, std=133.81
+13:43:22 [INFO] Creating MultiLineSimEnv from /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env
+13:43:24 [INFO] Traffic signal model (per line):
+13:43:24 [INFO]   102S: 31 signals, green_frac=0.37, cycle=90s
+13:43:24 [INFO]   102X: 26 signals, green_frac=0.37, cycle=90s
+13:43:24 [INFO]   122S: 26 signals, green_frac=0.39, cycle=90s
+13:43:24 [INFO]   122X: 26 signals, green_frac=0.39, cycle=90s
+13:43:24 [INFO]   311S: 36 signals, green_frac=0.40, cycle=90s
+13:43:24 [INFO]   311X: 36 signals, green_frac=0.40, cycle=90s
+13:43:24 [INFO]   406S: 30 signals, green_frac=0.39, cycle=90s
+13:43:24 [INFO]   406X: 29 signals, green_frac=0.40, cycle=90s
+13:43:24 [INFO]   705S: 35 signals, green_frac=0.40, cycle=90s
+13:43:24 [INFO]   705X: 34 signals, green_frac=0.40, cycle=90s
+13:43:24 [INFO]   7S: 17 signals, green_frac=0.39, cycle=90s
+13:43:24 [INFO]   7X: 17 signals, green_frac=0.38, cycle=90s
+13:43:24 [INFO] Online env: SIM (MultiLineSimEnv)
+13:43:24 [INFO] EmbeddingLayer output_dim=29, cont_features=12, internal_state_dim=41
+13:43:25 [INFO] Using H2OPlusBus (twin-Q + V)
+13:43:25 [INFO] JTT DISABLED (use_jtt=False)
+13:43:25 [INFO] Pretraining for 1000 steps (offline only)...
+13:44:02 [INFO] Pretrain done in 37.5s: policy_loss=-79.1384, qf1_loss=97.1856, qf2_loss=84.2333
+13:44:02 [INFO] Warmup collect: 5 epochs of online rollout WITHOUT training...
+13:44:03 [DEBUG] [Warmup 0] events=103, trans=96
+13:44:05 [DEBUG] [Warmup 1] events=101, trans=94
+13:44:06 [DEBUG] [Warmup 2] events=100, trans=93
+13:44:08 [DEBUG] [Warmup 3] events=100, trans=93
+13:44:09 [DEBUG] [Warmup 4] events=102, trans=95
+13:44:09 [INFO] Warmup collect done. Online buffer: 471 transitions
+13:44:09 [INFO] KL(π, π₀) regularization enabled: coeff=0.5
+13:44:09 [INFO] Starting training for 10 epochs
+13:44:09 [INFO]   rollout_events/epoch=100, train_steps/epoch=50, eval_period=10, checkpoint_period=50
+13:44:11 [DEBUG] [Epoch 0] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1

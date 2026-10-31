@@ -1,0 +1,135 @@
+{
+  "build_provenance": {
+    "builder": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/build_transit_v5_dataset.py",
+      "sha256": "5065805232a8c1cfbe716f21c32448a65e16070cbb40618e789e7274629fb40f"
+    },
+    "derivation_signature": "b3c3944a2f878e1a155b97b21b1cc3f0f33d2eaaf6bbda5a6a2c4b293738cac7",
+    "mdp_contract": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py",
+      "sha256": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a"
+    },
+    "measurement_resolution_correction": {
+      "fields": {
+        "next_observations.backward_headway_seconds": {
+          "corrected_values": 0,
+          "minimum_source_seconds": 442.0
+        },
+        "next_observations.forward_headway_seconds": {
+          "corrected_values": 0,
+          "minimum_source_seconds": 360.0
+        },
+        "observations.backward_headway_seconds": {
+          "corrected_values": 0,
+          "minimum_source_seconds": 442.0
+        },
+        "observations.forward_headway_seconds": {
+          "corrected_values": 0,
+          "minimum_source_seconds": 360.0
+        }
+      },
+      "rule": "negative headways within the SUMO one-second measurement resolution are simultaneous events and are mapped to zero; lower values fail",
+      "tolerance_seconds": 1.0,
+      "total_corrected_values": 0
+    },
+    "passenger_time": {
+      "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py",
+      "sha256": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7"
+    },
+    "runtime": {
+      "h5py": "3.16.0",
+      "numpy": "2.2.6",
+      "python": "3.10.12"
+    },
+    "source_shard_sha256": [
+      "d4ed86b05a4a5ef22e2d40b9818f9c2c95a661132d3e57feff9ac6c529af82a9"
+    ],
+    "transform_version": "transit-smdp-v5-derived-transform-v1"
+  },
+  "collection_matrix": {
+    "collector_sha256": "fb52479d1095048dcc604cf2b6733230ae0fa9fbfca35d53e9da8dcad9d2a136",
+    "environment_design": "paired",
+    "independent_environment_blocks": 1,
+    "jobs": 1,
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/v5_matrix_smoke_v2_precision/matrix_manifest.json",
+    "policies": [
+      "zero"
+    ],
+    "runner_sha256": "dabc4ec440e16b3a7e4b0dd66d128e882476e9cfabd02e62f6afef4bae945601",
+    "sha256": "ba130f8684018e5f36d85295504fcd38dc8fa330ba71c1011fb5727f21441fac",
+    "source_sha256": {
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/evaluation.py": "2419ebc3a56d95e0048f1a2b462ae4da3d5575ee295a8ef2e40de971769b573e",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/policies.py": "f1cf7a5dbdda7360ce17deb687f13591dd4457d1bd0436ac87b04a18c25767f6",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/common/data_utils.py": "ed1ec95396889cf5b0b589a8b8ccfdb4ab7b8b6d7d4f7d8dbaed22033b04c4b8",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/all_lines_sumo_env.py": "fcbaf16a9b08afb2e29f8af3c15b9fe3436f568b88e08e7dda9e9f08e031ccbc",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/envs/sumo_gym_env.py": "53b855e4bf3e689c97549a4bdc83300ffbf146d389fa4175ac9a8a10ff8b8d6a",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v4.py": "467d2482d7905a874d81bed1bfde5c888204946d69dba91ee28954e6c69b8e07",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/mdp_contract_v5.py": "712aadad1dbb3a6531f62545f561bbb0dcb7b6b7e72f35dfd17594b2e232d26a",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/network_data/a_sorted_busline_edge.xml": "7d26e30d1a1b81a4a94363dfd6788566ba746a4deb8fef5d73fbca8e051d2332",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/passenger_time.py": "433c23897e7410954dea75b27ad648f3425526d997fe47ca1f4a8f47919d05b7",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/d_8_compute_running_time.py": "46ee8472607754ce7e99023f860ed5e5206b1803dfbc33292198e26e32afa709",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/e_8_gurobi_test_considerbusnum_V3.py": "973a6d099d1880c1d93acbdd9312d08633276f4dea554ed6701087a938b9897c",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/case/f_8_create_obj.py": "f4d5feefa32b5a2e787fcb01f33ba73e3dd77d49db729d5c60cfd57b77c66012",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_bridge.py": "71962b6a10836b38421fc3d4eb25f6e7cc5b5cc828a71f3d746352fa93760ef9",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_env/rl_env.py": "3dbcda82e179bcc904b64d213816ea5ece681a0034564e17e87e00d03598bed5",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/sumo_provenance.py": "a07e01652e6dcb029f40a5b8996b02ad0c6fc2b05bcab7178440eb315e197daa",
+      "/home/erzhu419/mine_code/sumo-rl/H2Oplus/collect_policy/collect_transit_v5.py": "fb52479d1095048dcc604cf2b6733230ae0fa9fbfca35d53e9da8dcad9d2a136",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_bus.add.xml": "1d12e7e8bcbe552a98757da85ba05a2e7f3232649d017f2e625c25918476a1dd",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_lane.add.xml": "6d083e597fc8b19cfde874488a4c0921abee738ea3ea1ba1f154611f7f9ccc03",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_line.add.xml": "3436791192adf67e927873637a61718471dabe1afc03b1b679db4ba0327560aa",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_signal.add.xml": "4ee961a5d9263b9fc2c8e5ced272f7bb06c80636ffe15bf2b7fae0fa013a4240",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/initialize_obj/save_obj_stop.add.xml": "afd2d4099971465258e5acc86943ae34ef9191638b72665516b4888687c392b8",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/bus.py": "a088753355fb1a392a870add678346af0a709c0a5d7097e88ec37a801b43d29e",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/lane.py": "6320f73be0ef0efa8dafc7eaf7a8f951f04232210dda5d6b06681ccb264a8ab1",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/line.py": "1f4e8f15b8e225a8647326e163594d5b7fac286d39103a6ca3b124265359f0ff",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/passenger.py": "ea973ae4919dd30e0b1274dea5a128b3ee49d241313c9c65d15f01df91afaf06",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/signal.py": "f4257a80c31bc9fd6558ec432bd91d44a2a957fdaa7f1f753819a837cd6b9c1e",
+      "/home/erzhu419/mine_code/sumo-rl/SUMO_ruiguang/online_control/sim_obj/stop.py": "ec04c67bcc68a793dabc6553f68ac1012b9b77ddd1abb5152336b3c1da3033d8"
+    },
+    "study_stage": "pilot",
+    "sumo_version": "Eclipse SUMO sumo 1.27.1"
+  },
+  "content_signature": "7addf98fe4698aaf3704d0739cb153d0dee86f858e70006f488670926b347a05",
+  "created_utc": "2026-08-03T18:41:45.322861+00:00",
+  "dataset": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/v5_matrix_smoke_v2_precision/dataset.h5",
+  "dataset_sha256": "769e8d2f511da1c7c8f034e6b74cb0acb79e3cb53aad8a8f4a1d4c3e8f8b47a1",
+  "demand_scale_counts": {
+    "1.0": 59
+  },
+  "derivation_signature": "b3c3944a2f878e1a155b97b21b1cc3f0f33d2eaaf6bbda5a6a2c4b293738cac7",
+  "episodes": 1,
+  "exact_zero_action_rate": 1.0,
+  "formal_full_horizon_only": false,
+  "in_vehicle_passenger_seconds_mean": 110.84745762711864,
+  "policy_counts": {
+    "zero": 59
+  },
+  "raw_state_dim": 16,
+  "reward": {
+    "max": -0.00088,
+    "mean": -0.03998610169491526,
+    "min": -0.10673
+  },
+  "rows": 59,
+  "schema_version": "transit-smdp-v5-dataset-summary-v1",
+  "source_shards": 1,
+  "state_dim": 15,
+  "station_max_by_line": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    18.0,
+    16.0
+  ],
+  "terminal_rows": 5,
+  "trajectories": 5,
+  "wait_passenger_seconds_mean": 1943.8813559322034
+}

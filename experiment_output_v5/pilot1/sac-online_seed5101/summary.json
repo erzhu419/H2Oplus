@@ -1,0 +1,110 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/sac-online_seed5101/checkpoints/latest.pt",
+    "sha256": "5db17e0e3e1809641e78b661fbc48adaf28995b831c871d46816f648f6271374"
+  },
+  "completed_epochs": 5,
+  "completed_utc": "2026-08-03T16:38:44.978660+00:00",
+  "final_ratio_validation": {},
+  "max_cuda_memory_mb": 138.96875,
+  "max_rss_mb": 1708.83203125,
+  "mdp_version": "v4",
+  "method": "sac-online",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 0,
+    "default_ratio_pretrain_updates": 0,
+    "default_warmup_events": 5000,
+    "description": "randomly initialized online-only Soft Actor-Critic",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "none",
+    "online_backup": "sac",
+    "online_fraction": 0.0,
+    "online_update_mode": "online-only",
+    "reference": "https://proceedings.mlr.press/v80/haarnoja18b.html",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "randomly initialized online-only Soft Actor-Critic",
+  "offline_metrics": {},
+  "online_buffer_size": 1687,
+  "protocol_resolution": {
+    "defaults_applied": {
+      "batch_size": 256,
+      "ensemble_size": 2,
+      "initial_temperature": 1.0,
+      "iql_advantage_temperature": 3.0,
+      "offline_cql_alpha": 0.0,
+      "online_fraction": 0.0,
+      "target_entropy": -1.0,
+      "updates_per_epoch": 256,
+      "utd_ratio": 1
+    },
+    "overrides": {
+      "offline_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "ratio_pretrain_updates": {
+        "effective": 0,
+        "profile": 0
+      },
+      "warmup_events": {
+        "effective": 500,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {},
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v5/pilot1/sac-online_seed5101",
+  "run_signature": "0c4ba1632a449d723964997d8896c669fc13bd2c39613f9863ca36708d8787a5",
+  "schema_version": "transit-training-summary-v5",
+  "seed": 5101,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 1.0083121990028303,
+    "data_load": 1.2636073859976023,
+    "device_cache": 0.018837842995708343,
+    "model_init": 0.7784546719994978,
+    "online_rollout": 5.895139765962085,
+    "online_training": 17.538425480990554,
+    "online_warmup_rollout": 3.521799711001222,
+    "provenance_audit": 0.13527850900572957,
+    "simulator_init": 2.664384569005051
+  },
+  "total_updates": 1280,
+  "warmup_metrics": {
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 500,
+    "mean_delta_t": 68.16122004357298,
+    "mean_hold_seconds": 4.308288128852844,
+    "mean_reward": -0.07985441560052392,
+    "online_buffer_size": 459,
+    "transitions": 459,
+    "trip_boundaries_total": 0
+  }
+}

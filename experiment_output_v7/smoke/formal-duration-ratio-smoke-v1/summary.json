@@ -1,0 +1,150 @@
+{
+  "checkpoint": {
+    "path": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/smoke/formal-duration-ratio-smoke-v1/checkpoints/latest.pt",
+    "sha256": "747cb70681af543494d913d69588974422a5a87822440fd42fb99773a2575518"
+  },
+  "completed_epochs": 1,
+  "completed_utc": "2026-08-08T04:09:53.428054+00:00",
+  "final_ratio_validation": {
+    "ratio/validation_available": 0.0
+  },
+  "max_cuda_memory_mb": 0.0,
+  "max_rss_mb": 2285.57421875,
+  "mdp_version": "v6",
+  "method": "h2oplus",
+  "method_profile": {
+    "activation": "relu",
+    "actor_batch_mode": "latest",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "actor_update_interval": 1,
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "default_offline_updates": 50000,
+    "default_ratio_pretrain_updates": 1000,
+    "default_warmup_events": 5000,
+    "description": "IQL warm start, H2O+ mixed value backup, balanced real/simulator replay, and conditional dynamics-ratio correction",
+    "ensemble_size": 2,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "mixed_backup_lambda": 0.1,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "iql",
+    "online_backup": "h2oplus",
+    "online_fraction": 0.5,
+    "online_update_mode": "mixed",
+    "reference": "https://doi.org/10.1109/ICRA55743.2025.11127503",
+    "reference_commit": null,
+    "reference_implementation": null,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": true,
+    "utd_ratio": 1,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "method_protocol": "IQL warm start, H2O+ mixed value backup, balanced real/simulator replay, and conditional dynamics-ratio correction",
+  "offline_metrics": {
+    "train/actor_grad_norm": 4.666263103485107,
+    "train/actor_loss": 2.3404645919799805,
+    "train/actor_updated": 1.0,
+    "train/alpha": 1.0,
+    "train/alpha_loss": 0.0,
+    "train/cql_penalty": 0.0,
+    "train/critic_grad_norm": 0.000991571112535894,
+    "train/critic_loss": 1.2139494174334686e-05,
+    "train/offline_td_loss": 1.2139494174334686e-05,
+    "train/online_critic_update": 0.0,
+    "train/q_data_mean": -0.0029370319098234177,
+    "train/sim_td_loss": 0.0,
+    "train/update": 2.0,
+    "train/value_advantage": 0.00014267023652791977,
+    "train/value_grad_norm": 0.00019976623298134655,
+    "train/value_loss": 1.5893165894453887e-08
+  },
+  "online_buffer_size": 47,
+  "protocol_resolution": {
+    "defaults_applied": {
+      "batch_size": 256,
+      "ensemble_size": 2,
+      "initial_temperature": 1.0,
+      "iql_advantage_temperature": 3.0,
+      "offline_cql_alpha": 0.0,
+      "online_fraction": 0.5,
+      "target_entropy": -1.0,
+      "utd_ratio": 1
+    },
+    "overrides": {
+      "offline_updates": {
+        "effective": 2,
+        "profile": 50000
+      },
+      "ratio_pretrain_updates": {
+        "effective": 2,
+        "profile": 1000
+      },
+      "updates_per_epoch": {
+        "effective": 4,
+        "profile": 16
+      },
+      "warmup_events": {
+        "effective": 32,
+        "profile": 5000
+      }
+    }
+  },
+  "ratio_metrics": {
+    "ratio/joint_accuracy": 0.572265625,
+    "ratio/joint_auc": 1.0,
+    "ratio/joint_brier": 0.24863076210021973,
+    "ratio/joint_loss": 0.6904085874557495,
+    "ratio/joint_real_logit_mean": -0.0015211508143693209,
+    "ratio/joint_sim_logit_mean": -0.012519050389528275,
+    "ratio/loss": 1.3816170692443848,
+    "ratio/state_action_accuracy": 0.51171875,
+    "ratio/state_action_auc": 0.997589111328125,
+    "ratio/state_action_brier": 0.24903066456317902,
+    "ratio/state_action_loss": 0.6912084817886353,
+    "ratio/state_action_real_logit_mean": -0.006125657819211483,
+    "ratio/state_action_sim_logit_mean": -0.013941739685833454,
+    "ratio/validation_available": 0.0
+  },
+  "run_dir": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output_v7/smoke/formal-duration-ratio-smoke-v1",
+  "run_signature": null,
+  "schema_version": "transit-training-summary-v7",
+  "seed": 42,
+  "start_epoch": 0,
+  "timings_sec": {
+    "checkpoint": 0.659769605999827,
+    "data_load": 11.33338084800016,
+    "device_cache": 0.00022893800087331329,
+    "model_init": 0.8822556200002509,
+    "offline_pretraining": 0.14021713600050134,
+    "online_rollout": 0.09172557599958964,
+    "online_training": 0.36760719399990194,
+    "online_warmup_rollout": 0.8851684979999845,
+    "provenance_audit": 0.4490626320002775,
+    "ratio_pretraining": 0.07950815399999556,
+    "simulator_init": 2.653941253999619
+  },
+  "total_updates": 6,
+  "warmup_metrics": {
+    "discarded_pending_total": 0,
+    "episodes_started": 1,
+    "events": 32,
+    "maximum_simultaneous_decisions": 2,
+    "mean_delta_t": 18.225806451612904,
+    "mean_hold_seconds": 3.978145033121109,
+    "mean_reward": -0.0013067096774193546,
+    "online_buffer_size": 31,
+    "transitions": 31,
+    "trip_boundaries_total": 0
+  }
+}

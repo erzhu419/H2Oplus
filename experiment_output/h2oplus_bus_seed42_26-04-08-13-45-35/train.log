@@ -1,0 +1,68 @@
+13:45:35 [INFO] ============================================================
+13:45:35 [INFO] H2O+ Bus Training
+13:45:35 [INFO] ============================================================
+13:45:35 [INFO] Log directory: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-13-45-35
+13:45:35 [INFO] Seed: 42, Device: cpu
+13:45:35 [INFO] Snapshot reset: True, JTT: False
+13:45:35 [INFO] Config saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-13-45-35/config.json
+13:45:45 [INFO] Route length set to 13149.8 m
+13:45:45 [INFO] Loading offline data: file=/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v2/merged_all_v2.h5, dir=None
+13:45:56 [INFO] Loaded 3,104,419 offline transitions, max buffer size 9,313,257, valid snapshots: 0
+13:45:56 [INFO] Offline reward stats: mean=-118.49, std=133.81
+13:45:56 [INFO] Creating MultiLineSimEnv from /home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/calibrated_env
+13:46:00 [INFO] Traffic signal model (per line):
+13:46:00 [INFO]   102S: 31 signals, green_frac=0.37, cycle=90s
+13:46:00 [INFO]   102X: 26 signals, green_frac=0.37, cycle=90s
+13:46:00 [INFO]   122S: 26 signals, green_frac=0.39, cycle=90s
+13:46:00 [INFO]   122X: 26 signals, green_frac=0.39, cycle=90s
+13:46:00 [INFO]   311S: 36 signals, green_frac=0.40, cycle=90s
+13:46:00 [INFO]   311X: 36 signals, green_frac=0.40, cycle=90s
+13:46:00 [INFO]   406S: 30 signals, green_frac=0.39, cycle=90s
+13:46:00 [INFO]   406X: 29 signals, green_frac=0.40, cycle=90s
+13:46:00 [INFO]   705S: 35 signals, green_frac=0.40, cycle=90s
+13:46:00 [INFO]   705X: 34 signals, green_frac=0.40, cycle=90s
+13:46:00 [INFO]   7S: 17 signals, green_frac=0.39, cycle=90s
+13:46:00 [INFO]   7X: 17 signals, green_frac=0.38, cycle=90s
+13:46:00 [INFO] Online env: SIM (MultiLineSimEnv)
+13:46:00 [INFO] EmbeddingLayer output_dim=29, cont_features=12, internal_state_dim=41
+13:46:00 [INFO] Using H2OPlusBus (twin-Q + V)
+13:46:00 [INFO] JTT DISABLED (use_jtt=False)
+13:46:00 [INFO] Pretraining for 1000 steps (offline only)...
+13:46:41 [INFO] Pretrain done in 40.4s: policy_loss=-79.1384, qf1_loss=97.1856, qf2_loss=84.2333
+13:46:41 [INFO] Warmup collect: 5 epochs of online rollout WITHOUT training...
+13:46:42 [DEBUG] [Warmup 0] events=103, trans=96
+13:46:44 [DEBUG] [Warmup 1] events=101, trans=94
+13:46:46 [DEBUG] [Warmup 2] events=100, trans=93
+13:46:47 [DEBUG] [Warmup 3] events=100, trans=93
+13:46:49 [DEBUG] [Warmup 4] events=102, trans=95
+13:46:49 [INFO] Warmup collect done. Online buffer: 471 transitions
+13:46:49 [INFO] KL(π, π₀) regularization enabled: coeff=0.5
+13:46:49 [INFO] Starting training for 10 epochs
+13:46:49 [INFO]   rollout_events/epoch=100, train_steps/epoch=50, eval_period=10, checkpoint_period=50
+13:46:50 [DEBUG] [Epoch 0] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+13:46:54 [DEBUG] [Epoch 0] Train: steps=50/50, sim_ratio=0.10, avg_ploss=8.042080383300782, avg_qloss=95.07384872436523, avg_dloss=23.56988971710205
+13:46:58 [INFO] [Epoch 1/10] avg_return=-10972.52, avg_len=94, online_buf=565, train=50/50, sim_ratio=0.10, disc_active=False, disc_acc(R/S)=0.129/1.000, phase=main, IS_ratio=1.0, disc_loss=15.405162811279297, mean_w=0.0000, trunc=0
+13:46:58 [INFO] New best checkpoint (ep1, return=-10972.5): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-13-45-35/checkpoint_best.pt
+13:46:59 [DEBUG] [Epoch 1] Rollout: events=103, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+13:47:03 [DEBUG] [Epoch 1] Train: steps=50/50, sim_ratio=0.11, avg_ploss=12.632260131835938, avg_qloss=95.06641677856446, avg_dloss=15.395150051116943
+13:47:05 [DEBUG] [Epoch 2] Rollout: events=101, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+13:47:09 [DEBUG] [Epoch 2] Train: steps=50/50, sim_ratio=0.12, avg_ploss=13.988469352722168, avg_qloss=98.06657379150391, avg_dloss=12.93735179901123
+13:47:11 [DEBUG] [Epoch 3] Rollout: events=101, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+13:47:14 [DEBUG] [Epoch 3] Train: steps=50/50, sim_ratio=0.12, avg_ploss=14.60486083984375, avg_qloss=100.28878341674805, avg_dloss=11.483945560455322
+13:47:15 [DEBUG] [Epoch 4] Rollout: events=101, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+13:47:19 [DEBUG] [Epoch 4] Train: steps=50/50, sim_ratio=0.13, avg_ploss=14.411570110321044, avg_qloss=102.97127059936524, avg_dloss=10.889943943023681
+13:47:20 [DEBUG] [Epoch 5] Rollout: events=102, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+13:47:23 [DEBUG] [Epoch 5] Train: steps=50/50, sim_ratio=0.14, avg_ploss=14.683931789398194, avg_qloss=105.13834106445313, avg_dloss=10.673368129730225
+13:47:27 [DEBUG] [Epoch 6] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+13:47:30 [DEBUG] [Epoch 6] Train: steps=50/50, sim_ratio=0.15, avg_ploss=15.194763870239258, avg_qloss=107.04280670166015, avg_dloss=10.546444454193114
+13:47:32 [DEBUG] [Epoch 7] Rollout: events=102, trans=94, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+13:47:35 [DEBUG] [Epoch 7] Train: steps=50/50, sim_ratio=0.16, avg_ploss=15.013003063201904, avg_qloss=109.60167572021484, avg_dloss=10.446581115722656
+13:47:37 [DEBUG] [Epoch 8] Rollout: events=103, trans=95, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+13:47:39 [DEBUG] [Epoch 8] Train: steps=50/50, sim_ratio=0.16, avg_ploss=15.510799198150634, avg_qloss=112.89559860229492, avg_dloss=10.357828063964844
+13:47:42 [DEBUG] [Epoch 9] Rollout: events=100, trans=93, trunc=0, mean_w=0.0000, disc=False, resets(jtt/uni/fresh)=0/0/1
+13:47:45 [DEBUG] [Epoch 9] Train: steps=50/50, sim_ratio=0.17, avg_ploss=15.724500465393067, avg_qloss=116.39892211914062, avg_dloss=10.273053665161132
+13:47:48 [INFO] [Epoch 10/10] avg_return=-8866.21, avg_len=94, online_buf=1410, train=50/50, sim_ratio=0.17, disc_active=False, disc_acc(R/S)=0.896/0.923, phase=main, IS_ratio=1.0, disc_loss=10.230583190917969, mean_w=0.0000, trunc=0
+13:47:48 [INFO] New best checkpoint (ep10, return=-8866.2): /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-13-45-35/checkpoint_best.pt
+13:47:48 [INFO] Final model saved to /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-13-45-35/model_final.pt
+13:47:48 [INFO] Training complete!  CSV log: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-13-45-35/train_steps.csv  (1500 steps)
+13:47:48 [INFO] All outputs in: /home/erzhu419/mine_code/sumo-rl/H2Oplus/experiment_output/h2oplus_bus_seed42_26-04-08-13-45-35

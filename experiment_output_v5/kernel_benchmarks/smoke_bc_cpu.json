@@ -1,0 +1,98 @@
+{
+  "chunk_updates_per_second": {
+    "maximum": 256.72233883900844,
+    "median": 165.48398216461788,
+    "minimum": 74.2456254902273
+  },
+  "chunks": [
+    {
+      "seconds": 0.013468806995660998,
+      "updates": 1
+    },
+    {
+      "seconds": 0.0038952589966356754,
+      "updates": 1
+    }
+  ],
+  "compile_networks": false,
+  "compiled_modules": [],
+  "created_utc": "2026-08-03T17:30:26.621690+00:00",
+  "dataset": "/home/erzhu419/mine_code/sumo-rl/H2Oplus/bus_h2o/datasets_v4/transit_smdp_v4_formal_v1.h5",
+  "dataset_sha256": "4edbeea63f57c00fcd90f81ed2c159e00652415bcc9ce8b6f3919f2d7889f11b",
+  "device_cache": {
+    "bytes": 113152800,
+    "offline_rows": 942940,
+    "online_rows": 0
+  },
+  "disclosure": "performance-only benchmark; online rows are copied offline rows and outputs are not valid policy checkpoints or scientific results",
+  "measured_seconds": 0.017364065992296673,
+  "measured_updates": 2,
+  "method": "bc",
+  "phase": "offline",
+  "runtime": {
+    "cpu_threads": 8,
+    "device": "cpu",
+    "float32_matmul_precision": "high",
+    "gpu": null,
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+    "torch": "2.8.0+cu128"
+  },
+  "schema_version": "transit-training-kernel-benchmark-v1",
+  "seed": 9101,
+  "setup_seconds": 1.7231012560005183,
+  "source_sha256": {
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/domain_ratio.py": "4fccb6c0262062d47333b1c8c10b15d347627bf95542f9a76a1cc3f614e517c1",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/networks.py": "c88df413ab33583721a1fbb4eafce2b1e939b5a4dae74f2ca673322e7b31e3cc",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/protocols.py": "38384073d519cc6c78c0ff8d22e950f3c3cfd6e88b6e1794f3c5d45d11af35a8",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/replay_buffer.py": "f3c5c33709fc1a040332c26499d79094b0af1e4b95757e06ae5d6c5eded885c9",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v3/trainer.py": "0a8311ae7508160023612d1895684cc0f470e84f8a8d313a04f3f39afe05a20a",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/networks.py": "fc7f771adcf0cede45299bdca2cb0c7aa420e7e34697f0071cf6cc6683680cc3",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/replay_buffer.py": "0fa381c97a95149ee5b6c44e08499c9e014d0e1c9a22929f03291a3b575c4160",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/SimpleSAC/transit_v4/trainer.py": "a03c1a86f49bed6925f09fc839404a56777bdc9b04b8dbf2edf92e806a211a72",
+    "/home/erzhu419/mine_code/sumo-rl/H2Oplus/reproducibility/benchmark_training_kernel_v4.py": "87983234baa54ce25b3a0f6c7efbb9f4289231fdde86f2da4020dd9fbd2f1617"
+  },
+  "trainer_config": {
+    "activation": "relu",
+    "actor_layer_norm": false,
+    "actor_learning_rate": 0.0003,
+    "actor_q_reduction": "min-all",
+    "alpha_learning_rate": 0.0003,
+    "backup_entropy": true,
+    "batch_size": 256,
+    "bootstrap_probability": 1.0,
+    "cql_max_target_backup": false,
+    "cql_n_actions": 10,
+    "critic_layer_norm": false,
+    "critic_learning_rate": 0.0003,
+    "ensemble_size": 2,
+    "gradient_clip_norm": 10.0,
+    "hidden_dim": 256,
+    "initial_temperature": 1.0,
+    "iql_advantage_temperature": 3.0,
+    "iql_expectile": 0.7,
+    "iql_max_weight": 100.0,
+    "mixed_backup_lambda": 0.0,
+    "offline_cql_alpha": 0.0,
+    "offline_objective": "bc",
+    "online_actor_batch_mode": "latest",
+    "online_actor_update_interval": 1,
+    "online_backup": "sac",
+    "online_cql_alpha": 0.0,
+    "online_fraction": 0.0,
+    "ratio_learning_rate": 0.0001,
+    "ratio_max_weight": 1.0,
+    "ratio_min_weight": 1e-05,
+    "ratio_update_interval": 4,
+    "reward_scale": 1.0,
+    "soft_target_rate": 0.005,
+    "target_entropy": -1.0,
+    "target_subset_size": 2,
+    "use_ratio_correction": false,
+    "value_layer_norm": false,
+    "value_learning_rate": 0.0003
+  },
+  "updates_per_second": 115.18039616339124,
+  "warmup_seconds": 0.12678199599758955,
+  "warmup_updates": 1
+}
